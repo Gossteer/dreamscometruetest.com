@@ -2,73 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5309d5af-012e-4e9f-bbcf-37f7ca59e10f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/.idea/artprime.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/.idea/artprime.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Author.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/Author.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/AuthorController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/BiletController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/Http/Controllers/BiletController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/CertificatePodlController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/MestVistavController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/ProductController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/ProductNaProdController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/SotrRabController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/SpisokUchProdController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/VibrannieRabController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Http/Controllers/VisravkaController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Mest_vistav.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/Mest_vistav.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Product_na_prod.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Spisok_uch_prod.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/Spisok_uch_prod.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/app/Visravka.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/config/mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/config/mail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/factories/SotrRabFactory.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/factories/VisravkaFactory.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190643_create_authors_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190643_create_authors_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190704_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190704_create_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190719_create_product_na_prods_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190737_create_spisok_uch_prods_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190737_create_spisok_uch_prods_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190749_create_visravkas_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190802_create_organiz_vists_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190802_create_organiz_vists_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190925_create_mest_vistavs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190925_create_mest_vistavs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190932_create_contracts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190932_create_contracts_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190943_create_oboruds_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_190943_create_oboruds_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191022_create_zakl_o_sozd_vists_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191022_create_zakl_o_sozd_vists_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191031_create_bilets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191031_create_bilets_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191046_create_zakaz_na_rabs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191046_create_zakaz_na_rabs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191102_create_vibrannie_rabs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191102_create_vibrannie_rabs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191118_create_strahov_svids_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191118_create_strahov_svids_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191128_create_t_t_n_s_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191128_create_t_t_n_s_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191145_create_pasp_na_rabs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191145_create_pasp_na_rabs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191214_create_zakluch_isks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191214_create_zakluch_isks_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191223_create_certificate_podls_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191223_create_certificate_podls_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191233_create_postavshiks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191233_create_postavshiks_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191244_create_postupivsh_rabs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191244_create_postupivsh_rabs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191316_create_contrakt_o_transps_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191316_create_contrakt_o_transps_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191559_create_sort_rabs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191559_create_sort_rabs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191627_create_prod_rabs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/database/migrations/2019_05_28_191627_create_prod_rabs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/resources/lang/en/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/resources/lang/en/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/resources/lang/en/passwords.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/resources/lang/en/passwords.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/resources/views/auth/passwords/email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/resources/views/auth/passwords/email.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/resources/views/auth/passwords/reset.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/resources/views/auth/passwords/reset.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/resources/views/auth/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/resources/views/auth/verify.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/resources/views/auth/verify.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/resources/views/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../artprime/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../artprime/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bokarev/php/phpunit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../bokarev/php/phpunit/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,34 +10,135 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="63548608">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-    </session>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_132237_create_type_tours_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_05_113126_create_contrancts_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_05_113544_create_tours_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_134042_create_passengers_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="30" column="48" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_140046_create_customers_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="44" column="57" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_133935_create_buses_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_133856_create_routes_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_05_114919_create_workers_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_142359_create_employees_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_143621_create_photos_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="19" selection-start-line="19" selection-end-line="20" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
-    <package-json value="$PROJECT_DIR$/package.json" />
-  </component>
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/package.json" />
-    </packageJsonPaths>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_133856_create_routes_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_133935_create_buses_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_142412_create_jobs_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_142359_create_employees_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_143513_create_albums_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_143115_create_news_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_143621_create_photos_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_05_104441_create_news_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_132237_create_type__tours_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_134007_create_type__contracts_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_142255_create_type__activities_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_142444_create_work__schedules_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_143838_create_new__categories_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_05_102059_create_driving__license__categories_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_143820_create_attached__categories_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_143820_create_attached_categories_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_142659_create_posts_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_142558_create_sources_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_142110_create_partners_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_05_113126_create_contrancts_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_05_114919_create_workers_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_05_113544_create_tours_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_134042_create_passengers_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_04_140046_create_customers_table.php" />
+      </list>
+    </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -190,11 +225,11 @@
       <path value="$PROJECT_DIR$/vendor/dragonmantank/cron-expression" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="697" />
-    <option name="height" value="745" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="44" />
+    <option name="y" value="152" />
+    <option name="width" value="1191" />
+    <option name="height" value="740" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -209,6 +244,32 @@
               <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
               <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -217,7 +278,15 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sadasdasd" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -246,24 +315,22 @@
       <option name="presentableId" value="Default" />
       <updated>1564918761469</updated>
       <workItem from="1564918763188" duration="1379000" />
+      <workItem from="1564924016721" duration="4936000" />
+      <workItem from="1564994368308" duration="13654000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1379000" />
+    <option name="totallyTimeSpent" value="19969000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="44" y="152" width="1191" height="740" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="npm" side_tool="true" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24962178" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.4297082" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.5354839" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -271,16 +338,191 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.33772653" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_143115_create_news_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_100000_create_password_resets_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/factories/RouteFactory.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_142255_create_type_activities_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_142412_create_jobs_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_142444_create_work_schedules_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_05_104441_create_news_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_05_102059_create_driving_license_categories_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_143838_create_new_categories_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_143820_create_attached_categories_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="21" selection-start-line="21" selection-end-line="22" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_143513_create_albums_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_142659_create_posts_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_142558_create_sources_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="19" column="40" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_134007_create_type_contracts_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_142110_create_partners_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_05_113126_create_contrancts_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_143621_create_photos_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="19" selection-start-line="19" selection-end-line="20" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_132237_create_type_tours_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_142359_create_employees_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_05_114919_create_workers_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_133856_create_routes_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_133935_create_buses_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_05_113544_create_tours_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_134042_create_passengers_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="30" column="48" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_140046_create_customers_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="44" column="57" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

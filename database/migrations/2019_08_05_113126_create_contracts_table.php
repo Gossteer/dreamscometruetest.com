@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWorkersTable extends Migration
+class CreateContractsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,19 @@ class CreateWorkersTable extends Migration
      */
     public function up()
     {
-        Schema::create('workers', function (Blueprint $table) {
+        Schema::create('contracts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->bigInteger('type_contracts_id')->unsigned();
+            $table->foreign('type_contracts_id')->references('id')
+                ->on('type_contracts');
             $table->bigInteger('tours_id')->unsigned();
             $table->foreign('tours_id')->references('id')
                 ->on('tours');
-            $table->bigInteger('employees_id')->unsigned();
-            $table->foreign('employees_id')->references('id')
-                ->on('employees');
+            $table->bigInteger('partners_id')->unsigned();
+            $table->foreign('partners_id')->references('id')
+                ->on('partners');
+            $table->string('Document_Contract', 191);
             $table->boolean('LogicalDelete')->default(0);
         });
     }
@@ -33,6 +37,6 @@ class CreateWorkersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workers');
+        Schema::dropIfExists('contrancts');
     }
 }

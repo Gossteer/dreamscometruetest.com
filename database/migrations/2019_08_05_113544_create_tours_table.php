@@ -22,10 +22,10 @@ class CreateToursTable extends Migration
             $table->bigInteger('type_tours_id')->unsigned();
             $table->foreign('type_tours_id')->references('id')
                 ->on('type_tours')->onDelete('SET NULL');
-            $table->bigInteger('routes_id')->unsigned();
+            $table->bigInteger('routes_id')->unsigned()->nullable();
             $table->foreign('routes_id')->references('id')
                 ->on('routes');
-            $table->bigInteger('buses_id')->unsigned();
+            $table->bigInteger('buses_id')->unsigned()->nullable();
             $table->foreign('buses_id')->references('id')
                 ->on('buses');
             $table->string('Name_Tours', 191);
@@ -38,7 +38,7 @@ class CreateToursTable extends Migration
             $table->mediumInteger('Privilegens_Price');
             $table->mediumInteger('Amount_Place');
             $table->mediumInteger('Occupied_Place')->default(0);
-            $table->boolean('Confirmation_Tours')->default(0);
+            $table->tinyInteger('Confirmation_Tours')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 
         });

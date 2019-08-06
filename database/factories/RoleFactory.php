@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Attached_Category;
+use App\role;
 use Faker\Generator as Faker;
 
-$factory->define(Attached_Category::class, function (Faker $faker) {
+$factory->define(role::class, function (Faker $faker) {
     return [
         //
     ];

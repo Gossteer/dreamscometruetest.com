@@ -16,6 +16,7 @@ class CreateTypeActivitiesTable extends Migration
         Schema::create('type_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->string('Name_Type_Activity', 191)->unique();
             $table->boolean('LogicalDelete')->default(0);
         });
     }

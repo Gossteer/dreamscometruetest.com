@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNewCategoriesTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateNewCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('new_categories', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string('Name_New_Category')->unique();
+            $table->boolean('Tours')->default(0);
+            $table->boolean('Partners')->default(0);
+            $table->boolean('Customers')->default(0);
+            $table->boolean('Employee')->default(0);
+            $table->boolean('Passengers')->default(0);
             $table->boolean('LogicalDelete')->default(0);
         });
     }
@@ -28,6 +32,6 @@ class CreateNewCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('new__categories');
+        Schema::dropIfExists('roles');
     }
 }

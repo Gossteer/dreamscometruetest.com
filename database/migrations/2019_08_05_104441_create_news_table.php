@@ -16,7 +16,7 @@ class CreateNewsTable extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->bigInteger('albums_Id')->unsigned();
+            $table->bigInteger('albums_id')->unsigned();
             $table->foreign('albums_id')->references('id')
                 ->on('albums')->onDelete('CASCADE');
             $table->string('Headline',191);

@@ -16,7 +16,7 @@ class CreateDrivingLicenseCategoriesTable extends Migration
         Schema::create('driving_license_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string('Name_Driving_Category', 191);
+            $table->string('Name_Driving_Category', 5)->unique();
             $table->boolean('LogicalDelete')->default(0);
         });
     }

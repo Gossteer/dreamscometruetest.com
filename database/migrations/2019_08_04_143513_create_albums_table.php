@@ -19,6 +19,7 @@ class CreateAlbumsTable extends Migration
             $table->string('Album_Title', 191)->unique();
             $table->text('Album_Description');
             $table->string('Album_Cover', 191);
+            $table->boolean('Confidentiality')->default(0);
             $table->boolean('LogicalDelete')->default(0);
         });
     }

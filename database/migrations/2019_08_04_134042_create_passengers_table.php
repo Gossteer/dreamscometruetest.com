@@ -25,7 +25,7 @@ class CreatePassengersTable extends Migration
             $table->boolean('Preferential_Terms')->default(0);
             $table->boolean('Accompanying')->default(0);
             $table->tinyInteger('Amount_Children')->default(0);
-            $table->boolean('Presence')->default(0);
+            $table->tinyInteger('Presence')->default(0);
             $table->smallInteger('Occupied_Place_Bus')->nullable();
             $table->string('Document')->nullable();
             $table->boolean('Paid')->default(0);

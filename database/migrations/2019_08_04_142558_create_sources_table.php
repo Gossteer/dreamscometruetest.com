@@ -16,8 +16,9 @@ class CreateSourcesTable extends Migration
         Schema::create('sources', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string('Name_Source', 191);
-            $table->string('Site', 191);
+            $table->string('Name_Source', 191)->unique();
+            $table->string('Site', 191)->unique();
+            $table->string('Photo', 191);
             $table->boolean('LogicalDelete')->default(0);
         });
     }

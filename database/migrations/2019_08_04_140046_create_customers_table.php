@@ -23,14 +23,18 @@ class CreateCustomersTable extends Migration
             $table->smallInteger('Black_Days')->default(0);
             $table->smallInteger('Number_Customers_Listed')->default(0);
             $table->string('Phone_Number_Customer', 20)->unique();
-            $table->date('Data_Registration');
-            $table->bigInteger('customers_id')->unsigned()->nullable();
-            $table->foreign('customers_id')->references('id')
-                ->on('customers');
+            $table->date('Data_Registration')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->string('Phone_Customer_Inviter', 20)->nullable();
+            $table->bigInteger('sources_id')->unsigned()->nullable();
+            $table->foreign('sources_id')->references('id')
+                ->on('sources');
+            $table->bigInteger('users_id')->unsigned()->nullable();
+            $table->foreign('users_id')->references('id')
+                ->on('users')->onDelete('SET NULL');
             $table->date('Date_Birth_Customer')->nullable();
             $table->string('Preferred_Type_Tours', 191)->nullable();
-            $table->tinyInteger('floor');
-            $table->string('Registration_Address', 191);
+            $table->boolean('floor');
+            $table->string('Registration_Address', 191)->nullable();
             $table->smallInteger('Age_Group')->nullable();
             $table->mediumInteger('PRF_Series')->nullable();
             $table->mediumInteger('PRF_Number')->nullable();
@@ -43,6 +47,7 @@ class CreateCustomersTable extends Migration
             $table->text('Issued_ZGP')->nullable();
             $table->date('Valid_Until_ZGP')->nullable();
             $table->tinyInteger('Condition')->default(0);
+            $table->mediumInteger('Debt')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 
         });

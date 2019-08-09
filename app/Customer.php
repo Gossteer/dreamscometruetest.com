@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
+
+    protected $guarded = [
+        'White_Days', 'Black_Days', 'users_id', 'Age_Group', 'Condition', 'Debt', 'LogicalDelete'
+    ];
+
     public function source()
     {
         return $this->belongsTo('App\Source', 'sources_id');

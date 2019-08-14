@@ -18,6 +18,9 @@ class CreateSourcesTable extends Migration
             $table->timestamps();
             $table->string('Name_Source', 191)->unique();
             $table->string('Site', 191)->unique();
+            $table->bigInteger('Category_Sources_id')->unsigned();
+            $table->foreign('Category_Sources_id')->references('id')
+                ->on('category_sources')->onDelete('CASCADE');
             $table->string('Photo', 191);
             $table->boolean('LogicalDelete')->default(0);
         });

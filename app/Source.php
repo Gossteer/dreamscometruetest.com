@@ -15,4 +15,9 @@ class Source extends Model
     {
         return $this->hasOne('App\Customer', 'sources_id');
     }
+
+    public function category_source()
+    {
+        return $this->belongsTo('App\Category_Source', 'Category_Sources_id' );
+    }
 }

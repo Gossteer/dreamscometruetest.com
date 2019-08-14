@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-<title>Grand Tour Travel Category Flat Bootstrap Responsive Web Template | Home :: w3layouts</title>
+<title>Мечты сбываются</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <meta name="keywords" content="Grand Tour Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -22,7 +22,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<!-- Scripts -->
 	<script src="{{ asset('js/bootstrap.js') }}" defer></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://kit.fontawesome.com/6947640373.js"></script>
 
 	<!-- Fonts -->
 	<link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
@@ -52,9 +54,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</style>
 
 	<script>
-
-
-
 		$(document).ready(function(){
 			// Фикмированная шапка при скролле
 			$("#header").removeClass("default");
@@ -72,8 +71,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 
 <!-- header -->
-
-	<header class="" id="header">
+<header class="" id="header">
 	<div class="container ">
 		<!-- nav -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -81,24 +79,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</button>
 		<nav class="py-md-4 py-3 d-lg-flex">
 			<div id="logo">
-				<h1 class="mt-md-0 mt-2"> <a href="index.html"><span class="fa fa-map-signs"></span> Grand Tour </a></h1>
+				<h1 class="mt-md-0 mt-2"> <a href="index.html"><span class="fa fa-map-signs"></span> Мечты сбываются </a></h1>
 			</div>
 			<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
 			<input type="checkbox" id="drop" />
 			<ul class="menu ml-auto mt-1">
-				<li class=""><a href="index.html">Home</a></li>
-				<li class=""><a href="../site/about.html">About Us</a></li>
-				<li class=""><a href="../site/services.html">Services</a></li>
-				<li class=""><a href="../site/packages.html">Packages</a></li>
-				<li class=""><a href="../site/contact.html">Contact</a></li>
-				<li class=""><a href="../site/booking.html">Book Now</a></li>
+				<li class=""><a href="index.html">Главная</a></li>
+				<li class=""><a href="../site/about.html">О нас</a></li>
+				<li class=""><a href="../site/packages.html">Экскурсии</a></li>
+				<li class=""><a href="../site/contact.html">Контакты</a></li>
+				<li class=""><a href="../site/booking.html">Индивидуальные заказы</a></li>
 				@guest
-					<li class="nav-item ">
-						<a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+					<li class=" ">
+						<a class="" href="{{ route('login') }}" style="align-self: flex-end">Войти</a>
 					</li>
 					@if (Route::has('register'))
-						<li class="nav-item">
-							<a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+						<li class="">
+							<a class="" href="{{ route('register') }}"  style="align-self: flex-end">Регистрация</a>
 						</li>
 					@endif
 				@else
@@ -124,9 +121,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</nav>
 		<!-- //nav -->
 	</div>
-	</header>
-
-
+</header>
 <!-- //header -->
 
 
@@ -136,65 +131,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!--footer -->
 <footer>
-<section class="footer footer_w3layouts_section_1its py-5">
+<section class="footer footer_w3layouts_section_1its py-4">
 	<div class="container py-lg-4 py-3">
 		<div class="row footer-top">
-			<div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
+			<div class="col-lg-4 col-sm-6 footer-grid_section_1its_w3">
 				<div class="footer-title">
-					<h3>Address</h3>
+					<h3>Контакты</h3>
 				</div>
 				<div class="footer-text">
-					<p>Location : 1234 lock, Charlotte, North Carolina, United States</p>
-					<p>Phone : +12 534894364</p>
-					<p>Email : <a href="mailto:info@example.com">info@example.com</a></p>
-					<p>Fax : +12 534894364</p>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
-				<div class="footer-title">
-					<h3>About Us</h3>
-				</div>
-				<div class="footer-text">
-					<p>Vivamus magna justo, laci niats eget consectetur sed, conval lis at tellus. Nulla quis lorem ipnt libero.
-					Lorem ipsum dolor.</p>
-				</div>
-				<ul class="social_section_1info">
-					<li class="mb-2 facebook"><a href="#"><span class="fa fa-facebook"></span></a></li>
-					<li class="mb-2 twitter"><a href="#"><span class="fa fa-twitter"></span></a></li>
-					<li class="google"><a href="#"><span class="fa fa-google-plus"></span></a></li>
-					<li class="linkedin"><a href="#"><span class="fa fa-linkedin"></span></a></li>
-				</ul>
-			</div>
-			<div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
-				<div class="footer-title">
-					<h3>Travel Places</h3>
-				</div>
-				<div class="row">
-					<ul class="col-6 links">
-						<li><a href="#choose" class="scroll">New Zealand </a></li>
-						<li><a href="#overview" class="scroll">Paris, France </a></li>
-						<li><a href="#pricing" class="scroll">Los Angles</a></li>
-						<li><a href="#faq" class="scroll"> Darlington</a></li>
-						<li><a href="#testimonials" class="scroll">Canada </a></li>
-						<li><a href="#contact" class="scroll"> South Africa </a></li>
-					</ul>
-					<ul class="col-6 links">
-						<li><a href="#">Spain </a></li>
-						<li><a href="#">Turkey </a></li>
-						<li><a href="#faq" class="scroll">Europe </a></li>
-						<li><a href="#">Italy </a></li>
-						<li><a href="#">Sweden </a></li>
+					<p>Расположение: г. Домодедово, ул. Корнеева</p>
+					<p>Телефон: +7 (903) 222-76-59</p>
+					<p>Email: <a href="mailto:vidnoe1976@mail.ru">vidnoe1976@mail.ru</a></p>
+					<ul class="social_section_1info">
+						<li class="mb-2 facebook"><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
+						<li class="mb-2 vk"><a href="#" class=""><span class="fa fa-vk"></span></a></li>
+						<li class="mb-2 instagram"><a href="#"><span class="fa fa-instagram"></span></a></li>
+						<li class="mb-2 odnoklassniki"><a href="#"><span class="fa fa-odnoklassniki"></span></a></li>
 					</ul>
 				</div>
 			</div>
-			<div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+			<div class="col-lg-4 col-sm-6 footer-grid_section mt-sm-0 mt-4">
 				<div class="footer-title">
-					<h3>Newsletter</h3>
+					<h3>Насчёт нас</h3>
 				</div>
 				<div class="footer-text">
-					<p>By subscribing to our mailing list you will always get latest news and updates from us.</p>
+					<p>Комфортабельный транспорт, вариативность по тематике, количеству человек, приятные цены, бонусы.
+						Организация вашего отдыха в надёжных руках.🎈</p>
+					<p><a href="">Подробнее...</a></p>
+				</div>
+
+			</div>
+
+			<div class="col-lg-4 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+				<div class="footer-title">
+					<h3>Новости</h3>
+				</div>
+				<div class="footer-text">
+					<p>Для тех кто очень любит путешествовать, открывать новое и культурно отдыхать, мы предлагаем подписаться на наши новости.</p>
 					<form action="#" method="post">
-						<input type="email" name="Email" placeholder="Enter your email..." required="">
+						<input type="email" name="Email" placeholder="Введите ваш Email..." required="">
 						<button class="btn1"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 						<div class="clearfix"> </div>
 					</form>
@@ -207,7 +182,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //footer -->
 
 <!-- copyright -->
-<div class="copyright py-3 text-center">
+<div class="copyright py-2 text-center">
 	<p>© 2019 Grand Tour. All Rights Reserved | Design by <a href="http://w3layouts.com/" target="=_blank"> W3layouts </a></p>
 </div>
 <!-- //copyright -->

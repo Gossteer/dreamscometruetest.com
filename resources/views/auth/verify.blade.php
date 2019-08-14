@@ -11,7 +11,7 @@
 <div class="container py-lg-5 py-sm-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="col-lg-12 contact-left-form">
                 <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
                 <div class="card-body">

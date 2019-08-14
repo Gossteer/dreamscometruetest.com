@@ -84,98 +84,66 @@
 	</section>
 	<!-- //banner -->
 
-	<!-- about -->
-	<section class="about py-5">
-		<div class="container py-lg-5 py-sm-4">
-			<div class="row">
-				<div class="col-lg-6 about-left">
-					<h3 class="mt-lg-3">We will take you to the Top destination in the world, <strong>Explore with us!</strong></h3>
-					<p class="mt-4">Duis nisi sapien, elementum finibus fermentum eget, aliquet leo et. Mauris hendrerit vel ex.
-						Quisque vitae luctus massa. Phasellus sed aliquam leo. Vestibulum ullamcorper a massa eu fringilla. Integer ultrices finibus sed nisi.
-						in convallis felis dapibus sit amet.</p>
-					<p class="mt-3"> Donec a arcu et sapien hendrerit accumsan. Pellentesque sit amet eros iac, elementum
-						urna ipsum accumsan, iaculis ligula. Aenean quam eget maximus in convallis felis dapibus sit amet.</p>
-				</div>
-				<div class="col-lg-6 about-right text-lg-right mt-lg-0 mt-5">
-					<img src="images/about.jpg" alt="" class="img-fluid abt-image" />
-				</div>
-			</div>
-			<div class="row mt-5 text-center">
-				<div class="col-lg-3 col-6">
-					<div class="counter">
-						<span class="fa fa-smile-o"></span>
-						<div class="timer count-title count-number">1000+</div>
-						<p class="count-text text-uppercase">happy customers</p>
-					</div>
-				</div>
-				<div class="col-lg-3 col-6">
-					<div class="counter">
-						<span class="fa fa-ship"></span>
-						<div class="timer count-title count-number">2271</div>
-						<p class="count-text text-uppercase">Tours & Travels </p>
-					</div>
-				</div>
-				<div class="col-lg-3 col-6 mt-lg-0 mt-5">
-					<div class="counter">
-						<span class="fa fa-users"></span>
-						<div class="timer count-title count-number">200</div>
-						<p class="count-text text-uppercase">destinations</p>
-					</div>
-				</div>
-				<div class="col-lg-3 col-6 mt-lg-0 mt-5">
-					<div class="counter">
-						<span class="fa fa-gift"></span>
-						<div class="timer count-title count-number">20+<span>years</span></div>
-						<p class="count-text text-uppercase">experience</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- //about -->
-
-	<!-- how to book -->
-	<section class="book py-5">
-		<div class="container py-lg-5 py-sm-3">
-			<h2 class="heading text-capitalize text-center"> How To Plan Your Trip</h2>
+	<!-- destinations -->
+	<section class="destinations py-4" id="destinations">
+		<div class="container py-xl-2 py-lg-3">
+			<h3 class="heading text-capitalize text-center">Как спланировать поездку</h3>
 			<div class="row mt-5 text-center">
 				<div class="col-lg-4 col-sm-6">
-					<div class="grid-info">
+					<div >
 						<div class="icon">
 							<span class="fa fa-map-signs"></span>
 						</div>
-						<h4>Pick Destination</h4>
-						<p class="mt-3">Vestibulum urna ligula, molestie at ante ut, finibus. Integer ultrices finibus sed nisi in convallis sed dolor.</p>
+						<h3>Выбрать направление</h3>
+						<p class="text mt-3 mb-5 text-center">Разобраться в своих желаниях, посмотреть доступные предложения, попытаться всё совместить.</p>
 					</div>
 				</div>
 				<div class="col-lg-4 col-sm-6 mt-sm-0 mt-5">
-					<div class="grid-info">
+					<div class="">
 						<div class="icon">
 							<span class="fa fa-calendar"></span>
 						</div>
-						<h4>Select Date</h4>
-						<p class="mt-3">Vestibulum urna ligula, molestie at ante ut, finibus. Integer ultrices finibus sed nisi in convallis sed dolor.</p>
+						<h3>Выбрать дату</h3>
+						<p class="text mt-3 mb-5 text-center">Многие из нас весьма занятые люди и на отдых нам порой совсем не хватает время. Решитесь и сделайте себе подарок!</p>
 					</div>
 				</div>
 				<div class="col-lg-4 col-sm-6 mt-lg-0 mt-5">
-					<div class="grid-info">
+					<div class="">
 						<div class="icon">
 							<span class="fa fa-gift"></span>
 						</div>
-						<h4>Enjoy the Trip</h4>
-						<p class="mt-3">Vestibulum urna ligula, molestie at ante ut, finibus. Integer ultrices finibus sed nisi in convallis sed dolor.</p>
+						<h3>Наслаждайтесь</h3>
+						<p class="text mt-3 mb-5 text-center">Выбрав направление, обозначив дату поездки, оставьте всё плохое позади и наслаждайтесь!</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- //how to book -->
+	<!-- destinations -->
+
+	<!-- text -->
+	<section class="text-content">
+		<div class="overlay-inner py-5">
+			<div class="container py-md-3">
+				<div class="test-info">
+					<h4 class="tittle">Ваш выбор</h4>
+					<p class="mt-3">Все мы люди и нам свойственно переживать, к примеру за свой выбор. Для того, чтобы от зародившегося желания и
+						до его исполнения вы испытывали лишь радость, нами был создан проект - 'Реальные мечты', а так же вы можете ознакомиться с более подробной информацией
+					о нашей организации.</p>
+					<div class="text-left mt-4">
+						<a href="booking.html">Реальные мечты</a>
+						<a href="booking.html" style="margin-left: 10px">О нас</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //text -->
 
 	<!-- tour packages -->
 	<section class="packages py-5">
 		<div class="container py-lg-4 py-sm-3">
-			<h3 class="heading text-capitalize text-center"> Discover our tour packages</h3>
-			<p class="text mt-2 mb-5 text-center">Vestibulum tellus neque, sodales vel mauris at, rhoncus finibus augue. Vestibulum urna ligula, molestie at ante ut, finibus vulputate felis.</p>
+			<h3 class="heading text-capitalize text-center mt-2 mb-5">Наши предложения</h3>
 			<div class="row">
 				<div class="col-lg-3 col-sm-6">
 					<div class="image-tour position-relative">
@@ -241,118 +209,7 @@
 	</section>
 	<!-- tour packages -->
 
-	<!-- text -->
-	<section class="text-content">
-		<div class="overlay-inner py-5">
-			<div class="container py-md-3">
-				<div class="test-info">
-					<h4 class="tittle">Enjoy The Trip</h4>
-					<p class="mt-3">Duis nisi sapien, elementum finibus fermentum eget, aliquet leo et. Mauris hendrerit vel ex. Quisque vitae luctus massa.
-						Phasellus sed aliquam leo a massa eu fringilla. Integer ultrices finibus sed nisi. in convallis felis dapibus
-						sit amet.</p>
-					<div class="text-left mt-4">
-						<a href="booking.html">Book Now</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- //text -->
 
-	<!-- destinations -->
-	<section class="destinations py-5" id="destinations">
-		<div class="container py-xl-5 py-lg-3">
-			<h3 class="heading text-capitalize text-center"> Popular Destinations</h3>
-			<p class="text mt-2 mb-5 text-center">Vestibulum tellus neque, sodales vel mauris at, rhoncus finibus augue. Vestibulum urna ligula, molestie at ante ut, finibus vulputate felis.</p>
-			<div class="row inner-sec-w3layouts-w3pvt-lauinfo">
-				<div class="col-md-3 col-sm-6 col-6 destinations-grids text-center">
-					<h4 class="destination mb-3">China</h4>
-					<div class="image-position position-relative">
-						<img src="images/china.jpg" class="img-fluid" alt="">
-						<div class="rating">
-							<ul>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-							</ul>
-						</div>
-					</div>
-					<div class="destinations-info">
-						<div class="caption mb-lg-3">
-							<h4>China</h4>
-							<a href="booking.html">Book Now</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-6 destinations-grids text-center">
-					<h4 class="destination mb-3">Malaysia</h4>
-					<div class="image-position position-relative">
-						<img src="images/malaysia.jpg" class="img-fluid" alt="">
-						<div class="rating">
-							<ul>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-							</ul>
-						</div>
-					</div>
-					<div class="destinations-info">
-						<div class="caption mb-lg-3">
-							<h4>Malaysia</h4>
-							<a href="booking.html">Book Now</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-6 destinations-grids text-center mt-md-0 mt-4">
-					<h4 class="destination mb-3">Japan</h4>
-					<div class="image-position position-relative">
-						<img src="images/japan.jpg" class="img-fluid" alt="">
-						<div class="rating">
-							<ul>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-							</ul>
-						</div>
-					</div>
-					<div class="destinations-info">
-						<div class="caption mb-lg-3">
-							<h4>Japan</h4>
-							<a href="booking.html">Book Now</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-6 destinations-grids text-center mt-md-0 mt-4">
-					<h4 class="destination mb-3">Singapore</h4>
-					<div class="image-position position-relative">
-						<img src="images/singapore.jpg" class="img-fluid" alt="">
-						<div class="rating">
-							<ul>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-								<li><span class="fa fa-star"></span></li>
-							</ul>
-						</div>
-					</div>
-					<div class="destinations-info">
-						<div class="caption mb-lg-3">
-							<h4>Singapore</h4>
-							<a href="booking.html">Book Now</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- destinations -->
 @endsection
 
 

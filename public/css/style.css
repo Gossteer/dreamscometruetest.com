@@ -13,6 +13,36 @@ body {
 }
 
 
+select:required:invalid {
+	color: gray;
+}
+option[value=""][disabled] {
+	display: none;
+}
+option {
+	color: black;
+}
+
+.slide-fade-enter-active {
+	transition: all .3s ease;
+}
+.slide-fade-leave-active {
+	transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+	/* .slide-fade-leave-active до версии 2.1.8 */ {
+	transform: translateX(10px);
+	opacity: 0;
+}
+
+.component-fade-enter-active, .component-fade-leave-active {
+	transition: opacity .3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+	/* .component-fade-leave-active до версии 2.1.8 */ {
+	opacity: 0;
+}
+
 #header {
 	position: absolute;
 	left: 0;
@@ -548,7 +578,7 @@ p.count-text {
     color: #ddd;
 }
 .icon {
-    background: #fff;
+    background: #047ffc;
     width: 80px;
     height: 80px;
     line-height: 80px;
@@ -558,7 +588,7 @@ p.count-text {
 .icon span.fa{
 	font-size: 25px;
     line-height: 80px;
-    color: #047ffc;
+    color: #fff;
 }
 .grid-info {
     padding: 0 1em;
@@ -728,12 +758,37 @@ ul.links li a:hover{
 
 li.facebook a {
     color: #fff;
-    background: #3b5998;
+	border-radius: 40px;
+    background: #3f729b;
 }
+
+li.vk a {
+	color: #fff;
+	border-radius: 40px;
+	background: #4a76a8;
+}
+
+li.instagram a {
+	display: inline-block;
+	border-radius: 40px;
+	color: #fff;
+	font-size: 16px;
+	background: #d6249f;
+	background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+	box-shadow: 0px 3px 10px rgba(0,0,0,.25);
+}
+
 li.twitter a  {
     color: #fff;
     background: #1da1f2;
 }
+
+li.odnoklassniki a  {
+	color: #fff;
+	border-radius: 40px;
+	background: #f4731c;
+}
+
 li.google a  {
     color: #fff;
     background: #dd4b39;

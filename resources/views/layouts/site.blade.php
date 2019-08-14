@@ -88,7 +88,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<li class=""><a href="../site/about.html">О нас</a></li>
 				<li class=""><a href="../site/packages.html">Экскурсии</a></li>
 				<li class=""><a href="../site/contact.html">Контакты</a></li>
-				<li class=""><a href="../site/booking.html">Индивидуальные заказы</a></li>
 				@guest
 					<li class=" ">
 						<a class="" href="{{ route('login') }}" style="align-self: flex-end">Войти</a>

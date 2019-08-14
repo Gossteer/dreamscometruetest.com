@@ -14,25 +14,25 @@
 <!-- Contact -->
 <section class="contact py-5">
 	<div class="container py-lg-5 py-sm-3">
-			<h2 class="heading text-capitalize text-center mb-sm-5 mb-4"> Get In Touch with us</h2>
+			<h2 class="heading text-capitalize text-center mb-sm-5 mb-4">Свяжись с нами</h2>
 			<ul class="list-unstyled row text-center mt-lg-5 mt-4 px-lg-5">
                 <li class="col-md-4 col-sm-6 adress-w3pvt-info">
                     <div class=" adress-icon">
                         <span class="fa fa-map-marker"></span>
                     </div>
 
-                    <h6>Location</h6>
-                    <p>The company name
-                        <br>Addison Township, IL, USA. </p>
+                    <h6>Расположение</h6>
+                    <p>Мечты сбываются
+                        <br>г. Домодедово, ул. Корнеева </p>
                 </li>
 
                 <li class="col-md-4 col-sm-6 adress-w3pvt-info mt-sm-0 mt-4">
                     <div class="adress-icon">
                         <span class="fa fa-envelope-open-o"></span>
                     </div>
-                    <h6>Phone & Email</h6>
-                    <p>+(122) 123 456 7890</p>
-                    <a href="mailto:info@example.com" class="mail">info@examplemail.com</a>
+                    <h6>Телефон и Email</h6>
+                    <p>+7 (903) 222-76-59</p>
+                    <a href="mailto:info@example.com" class="mail">vidnoe1976@mail.ru</a>
                 </li>
                 <li class="col-md-4 col-sm-6 adress-w3pvt-info mt-md-0 mt-4">
 
@@ -40,12 +40,12 @@
                         <span class="fa fa-comments-o"></span>
                     </div>
 
-                    <h6>Stay In Touch</h6>
-					<ul class="social_section_1info mt-2">
-						<li class="mb-2 facebook"><a href="#"><span class="fa fa-facebook"></span></a></li>
-						<li class="mb-2 twitter"><a href="#"><span class="fa fa-twitter"></span></a></li>
-						<li class="google"><a href="#"><span class="fa fa-google-plus"></span></a></li>
-						<li class="linkedin"><a href="#"><span class="fa fa-linkedin"></span></a></li>
+                    <h6>Оставайтесь на связи</h6>
+					<ul class="social_section_1info">
+						<li class="mb-2 facebook"><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
+						<li class="mb-2 vk"><a href="#" class=""><span class="fa fa-vk"></span></a></li>
+						<li class="mb-2 instagram"><a href="#"><span class="fa fa-instagram"></span></a></li>
+						<li class="mb-2 odnoklassniki"><a href="#"><span class="fa fa-odnoklassniki"></span></a></li>
 					</ul>
                 </li>
             </ul>
@@ -55,28 +55,27 @@
 					<div class="col-lg-6 col-md-6 contact-left-form">
 						<form action="#" method="post">
 							<div class=" form-group contact-forms">
-							  <input type="text" class="form-control" placeholder="Name" required="">
+							  <input type="text" class="form-control" placeholder="Имя" required autocomplete="name" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="email" class="form-control" placeholder="Email" required="">
+							  <input type="email" class="form-control" required placeholder="Email" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="text" class="form-control" placeholder="Phone" required=""> 
+							  <input type="text" class="form-control" placeholder="Телефон" autocomplete="tel" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <textarea class="form-control" placeholder="Message" rows="3" required=""></textarea>
+							  <textarea class="form-control" placeholder="Сообщение" required=""></textarea>
 							</div>
-							<button class="btn btn-block sent-butnn">Send</button>
+							<button class="btn btn-block sent-butnn">Отправить</button>
 						</form>
 					</div>
 					<div class="col-lg-6 col-md-6 contact-right pl-lg-5">
-						<h4>Do you have any questions about us? write to us.</h4>
-						<p class="mt-md-4 mt-2">Duis nisi sapien, elementum finibus fermentum eget, aliquet et leo. Mauris hendrerit vel ex.
-						Quisque vitae luctus massa. Phas ellus sed aliquam leo. Vestibulum ullamcorper massa eut sed fringilla. Integer ultrices finibus sed nisi.
-						in convallis felis da bus sit amet  aliquet et leo dolor sit amet aliquet.</p>
-						<h5 class="mt-lg-5 mt-3">Office Hours</h5>
-						<p class="mt-3">Monday to Friday : 09 am to 06 pm</p>
-						<p>Saturday and Sunay : 10 am to 04 pm</p>
+						<h4>У вас есть вопросы? Хотите заказать индивидульный тур? Напишите нам.</h4>
+						<p class="mt-md-4 mt-2">Всегда рады видеть ваши сообщения и ваш интерес. Постараемся предоставить
+							любую информацию в зоне нашей компетенции. Составим индивидуальную программу основываясь на озвученных пожеланиях.</p>
+						<h5 class="mt-lg-5 mt-3">Часы работы</h5>
+						<p class="mt-3">Будни : 10:00 до 21:00</p>
+						<p>Выходные : 12:00 до 20:00</p>
 					</div>
 				</div>
 			</div>
@@ -86,7 +85,7 @@
 
 <!-- map -->	
 <div class="map p-2">
-	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158857.728106568!2d-0.24168153701090248!3d51.52877184090542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C+UK!5e0!3m2!1sen!2sin!4v1544074523717"></iframe>
+	<iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=ru&amp;coord=55.444794, 37.754272&amp;q=Domodedovo%2C%20Kashira%20Highway%2C%20100%D0%90+(%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE)&amp;ie=UTF8&amp;t=&amp;z=12&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
 </div>
 <!-- //map -->
 

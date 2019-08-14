@@ -203,7 +203,8 @@
 				</div>
 			</div>
 			<div class="view-package text-center mt-4">
-				<a href="packages.html">View All Packages</a>
+				<a href="packages.html" style="margin-right: 15px">Посмотреть все</a>
+				<a href="packages.html">Индивидуальный заказ</a>
 			</div>
 		</div>
 	</section>

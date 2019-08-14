@@ -2,27 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5309d5af-012e-4e9f-bbcf-37f7ca59e10f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/js/vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Source.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_04_142558_create_sources_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_04_142558_create_sources_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/about.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/about.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/banner4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/banner4.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/china.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/china.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/japan.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/japan.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/malaysia.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/malaysia.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/singapore.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/singapore.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/te2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/te2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/te3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/te3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/site.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/site.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/about.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/about.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/contact.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/site/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/services.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,17 +23,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/layouts/site.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1190">
-              <caret line="133" column="57" selection-start-line="133" selection-start-column="57" selection-end-line="133" selection-end-column="57" />
+            <state relative-caret-position="442">
+              <caret line="89" column="77" selection-start-line="89" selection-start-column="77" selection-end-line="89" selection-end-column="77" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DreamsComeTrue/web/css/style.css">
+        <entry file="file://$PROJECT_DIR$/public/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="522" column="7" selection-start-line="522" selection-start-column="7" selection-end-line="522" selection-end-column="7" />
+            <state relative-caret-position="652">
+              <caret line="791" column="45" selection-start-line="791" selection-start-column="45" selection-end-line="791" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/site/contact.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="87" column="107" selection-start-line="87" selection-start-column="107" selection-end-line="87" selection-end-column="107" />
             </state>
           </provider>
         </entry>
@@ -56,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/site/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1581">
-              <caret line="109" column="59" selection-start-line="109" selection-start-column="59" selection-end-line="109" selection-end-column="59" />
+            <state relative-caret-position="540">
+              <caret line="205" column="65" selection-start-line="205" selection-start-column="65" selection-end-line="205" selection-end-column="65" />
               <folding>
                 <element signature="e#3049#3390#0#HTML" />
                 <element signature="e#3099#3175#0#HTML" />
@@ -65,6 +59,7 @@
                 <element signature="e#3756#4111#0#HTML" />
                 <element signature="e#3806#4100#0#HTML" />
                 <element signature="e#4747#4771#0#HTML" expanded="true" />
+                <element signature="e#7612#7638#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -73,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/auth/register.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="39" column="28" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
+            <state relative-caret-position="581">
+              <caret line="105" column="154" selection-start-line="105" selection-start-column="120" selection-end-line="105" selection-end-column="154" />
             </state>
           </provider>
         </entry>
@@ -92,25 +87,7 @@
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_140046_create_customers_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-289">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+              <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -153,6 +130,8 @@
       <find>&lt;span class=&quot;fa fa-map-signs&quot;&gt;&lt;/span&gt;</find>
       <find>span.fa</find>
       <find>.icon span.fa</find>
+      <find>fa-instagram</find>
+      <find>instagram</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -191,7 +170,6 @@
         <option value="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/site/about.html" />
         <option value="$PROJECT_DIR$/resources/views/site/booking.html" />
-        <option value="$PROJECT_DIR$/resources/views/site/contact.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/site/booking.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/site/packages.html" />
         <option value="$PROJECT_DIR$/public/css/bootstrap.css" />
@@ -207,11 +185,12 @@
         <option value="$PROJECT_DIR$/resources/views/site/services.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/site/about.blade.php" />
         <option value="$PROJECT_DIR$/DreamsComeTrue/web/css/style.css" />
-        <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/resources/views/layouts/site.blade.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
         <option value="$PROJECT_DIR$/resources/views/site/index.blade.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
+        <option value="$PROJECT_DIR$/public/css/style.css" />
+        <option value="$PROJECT_DIR$/resources/views/layouts/site.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/site/contact.blade.php" />
       </list>
     </option>
   </component>
@@ -301,8 +280,8 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="386" />
-    <option name="y" value="65" />
+    <option name="x" value="369" />
+    <option name="y" value="179" />
     <option name="width" value="1206" />
     <option name="height" value="887" />
   </component>
@@ -324,17 +303,6 @@
               <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
               <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DreamsComeTrue" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DreamsComeTrue" type="b2602c69:ProjectViewProjectNode" />
@@ -431,18 +399,18 @@
       <workItem from="1565545128266" duration="4980000" />
       <workItem from="1565596722736" duration="9621000" />
       <workItem from="1565682274334" duration="11530000" />
-      <workItem from="1565782533241" duration="10746000" />
+      <workItem from="1565782533241" duration="16752000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="120934000" />
+    <option name="totallyTimeSpent" value="126940000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1989" y="99" width="1206" height="887" extended-state="0" />
+    <frame x="369" y="179" width="1206" height="887" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.37609076" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.37609076" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -457,7 +425,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32917964" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50100404" side_tool="true" weight="0.33772653" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.498996" visible="true" weight="0.27188328" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.498996" visible="true" weight="0.27188328" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -574,13 +542,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DreamsComeTrue/web/css/font-awesome.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_143820_create_new_category_news_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -637,17 +598,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/home.blade.php" />
-    <entry file="file://$PROJECT_DIR$/resources/views/site/contact.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="92" column="11" selection-start-line="92" selection-start-column="11" selection-end-line="92" selection-end-column="11" />
-          <folding>
-            <element signature="n#section#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DreamsComeTrue/quixlab-master/plugins/bootstrap-v4-rtl/scss/mixins/_caret.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -757,13 +707,6 @@
         <state relative-caret-position="-1377" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/font-awesome.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="7878" selection-start-line="3" selection-start-column="7878" selection-end-line="3" selection-end-column="7878" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-100501">
@@ -776,10 +719,24 @@
         <state relative-caret-position="-104377" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/auth/register.blade.php">
+    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="39" column="28" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
+        <state relative-caret-position="306">
+          <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_140046_create_customers_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-289">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -790,17 +747,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+    <entry file="file://$PROJECT_DIR$/DreamsComeTrue/web/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="580" column="23" selection-start-line="580" selection-start-column="23" selection-end-line="580" selection-end-column="23" />
+        <state relative-caret-position="409">
+          <caret line="522" column="7" selection-start-line="522" selection-start-column="7" selection-end-line="522" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DreamsComeTrue/web/css/style.css">
+    <entry file="file://$PROJECT_DIR$/DreamsComeTrue/web/css/font-awesome.min.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="522" column="7" selection-start-line="522" selection-start-column="7" selection-end-line="522" selection-end-column="7" />
+        <state relative-caret-position="51">
+          <caret line="3" column="16192" selection-start-line="3" selection-start-column="16192" selection-end-line="3" selection-end-column="16192" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/font-awesome.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="16192" selection-start-line="3" selection-start-column="16192" selection-end-line="3" selection-end-column="16192" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="791" column="45" selection-start-line="791" selection-start-column="45" selection-end-line="791" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/auth/register.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="105" column="154" selection-start-line="105" selection-start-column="120" selection-end-line="105" selection-end-column="154" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/site/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="205" column="65" selection-start-line="205" selection-start-column="65" selection-end-line="205" selection-end-column="65" />
+          <folding>
+            <element signature="e#3049#3390#0#HTML" />
+            <element signature="e#3099#3175#0#HTML" />
+            <element signature="e#3395#3751#0#HTML" />
+            <element signature="e#3756#4111#0#HTML" />
+            <element signature="e#3806#4100#0#HTML" />
+            <element signature="e#4747#4771#0#HTML" expanded="true" />
+            <element signature="e#7612#7638#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -813,44 +807,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layouts/site.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="133" column="57" selection-start-line="133" selection-start-column="57" selection-end-line="133" selection-end-column="57" />
+        <state relative-caret-position="442">
+          <caret line="89" column="77" selection-start-line="89" selection-start-column="77" selection-end-line="89" selection-end-column="77" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/site/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/site/contact.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1581">
-          <caret line="109" column="59" selection-start-line="109" selection-start-column="59" selection-end-line="109" selection-end-column="59" />
-          <folding>
-            <element signature="e#3049#3390#0#HTML" />
-            <element signature="e#3099#3175#0#HTML" />
-            <element signature="e#3395#3751#0#HTML" />
-            <element signature="e#3756#4111#0#HTML" />
-            <element signature="e#3806#4100#0#HTML" />
-            <element signature="e#4747#4771#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_04_140046_create_customers_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+        <state relative-caret-position="357">
+          <caret line="87" column="107" selection-start-line="87" selection-start-column="107" selection-end-line="87" selection-end-column="107" />
         </state>
       </provider>
     </entry>

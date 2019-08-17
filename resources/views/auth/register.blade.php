@@ -16,51 +16,6 @@
                 <div class="contact-grids">
                     <h4 class="heading text-capitalize text-center mb-lg-5 mb-4"> Регистрация</h4>
 
-
-
-                    <div id="example-1">
-                        <button @click="show = !show">
-                            Переключить отрисовку
-                        </button>
-                        <transition name="slide-fade">
-                            <p v-if="show">привет</p>
-                        </transition>
-                    </div>
-
-                    <div id="transition-components-demo"  >
-                        <input type="radio" value="v-a" id="a" name="view">
-                        <label for="a">А</label>
-                        <input type="radio" value="v-b" id="b" name="view">
-                        <label for="b">Б</label>
-                        <transition name="component-fade" mode="out-in">
-                        <component v-bind:is="view"></component>
-                        </transition>
-                    </div>
-
-                    <script>
-                        new Vue({
-                            el: '#example-1',
-                            data: {
-                                show: true
-                            }
-                        });
-
-                        new Vue({
-                            el: '#transition-components-demo',
-                            data: {
-                                view: 'v-b'
-                            },
-                            components: {
-                                'v-a': {
-                                    template: '<div>Компонент А</div>'
-                                },
-                                'v-b': {
-                                    template: '<div>Компонент Б</div>'
-                                }
-                            }
-                        })
-                    </script>
-
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="row">
@@ -111,38 +66,97 @@
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
-                                <input id="Phone_Number_Customer" type="tel" class="form-control" name="Phone_Number_Customer" required autocomplete="tel" placeholder="Телефон">
+                                <input id="Date_Birth_Customer" type="text" class="form-control" name="Date_Birth_Customer" required placeholder="Дата рождения">
                             </div>
 
-
-
-                            <div class="col-md-12 form-group contact-forms">
-                                <select class="form-control" id="Sources"name="Sources" required>
-                                    <option value="" disabled selected>Как о нас узнали</option>
-                                    <option value="1">От знакомых</option>
-                                    <option value="2">Из рекламы</option>
-                                    <option value="3">Луль</option>
+                            <div class="col-sm-6 form-group contact-forms" id="">
+                                <select class="form-control" id="Floor" name="Floor" required>
+                                    <option value="" disabled selected>Пол</option>
+                                    <option value="1">Мужской</option>
+                                    <option value="2">Женский</option>
                                 </select>
                             </div>
 
+                            <div class="col-sm-6 form-group contact-forms">
+                                <input type="tel" class="form-control" id="Phone_Number_Customer" placeholder="Номер телефона" name="Phone_Number_Customer" required autocomplete="tel" >
+                            </div>
+
+                            <div class="col-sm-6 form-group contact-forms" id="">
+                                <select class="form-control" id="Name_Category_Source" name="Name_Category_Source" required>
+                                    <option value="" disabled selected>Как вы о нас узнали</option>
+                                    <option value="1">От знакомых</option>
+                                    <option value="2">Из рекламы</option>
+                                    <option value="3">Социальные сети</option>
+                                    <option value="4">Другое</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6 form-group contact-forms" id="addSelect">
+
+                            </div>
+
+                            <div class="col-md-12 form-group contact-forms" >
+                                <input class="form-check-input" type="checkbox" id="Processing_Personal_Data" value="option1" style="margin-left: 0px !important;" required>
+                                <label class="form-check-label" for="Processing_Personal_Data" style="margin-left: 20px !important;" >Разрешить обработку персональных данных.</label>
+                            </div>
+                            <div class="col-md-12 form-group contact-forms" >
+                                <input class="form-check-input" type="checkbox" id="Notifications" value="option1" style="margin-left: 0px !important;" required>
+                                <label class="form-check-label" for="Notifications" style="margin-left: 20px !important;" >Подписаться на уведомления о новых экскурсиях и скидках.</label>
+                            </div>
 
                             <script>
                                 $(function() {
+                                    $("#Phone_Number_Customer").mask("+7 (999) 99-99-999");
+                                    $("#Date_Birth_Customer").mask("99-99-9999");
+                                });
+                            </script>
 
-                                    $('select[name="Sources"]').change(function() {
-                                        alert($(this).val());
-                                        var $selected =  $(this).val();
-
-                                        if(($selected == "1") || ($selected == "2")) {
-                                            $("#Sources").addClass('default').fadeIn('fast');
-                                        }
-                                        else {
-                                            $("#Sources").removeClass("default").fadeIn('fast');
+                            <script>
+                                $(function() {
+                                    $('select[name="Name_Category_Source"]').change(function (Retailer) {
+                                        if ($("#Name_Category_Source option:selected").text() != "От знакомых") {
+                                            //$("#Sources").addClass('animateSelect').fadeIn('fast');
+                                            //$("#SourcesDiv").removeClass('col-md-12').fadeIn('fast');
+                                            //$("#SourcesDiv").addClass('col-sm-6').fadeIn('fast');
+                                            if ($("#Name_Category_Source option:selected").text() == "Другое"){
+                                                if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
+                                                    $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input id="Name_Source" type="text" class="form-control" name="Name_Source" required placeholder="А именно?">');
+                                                }
+                                                else {
+                                                    $('#Number_Customers_Inviter').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input id="Name_Source" type="text" class="form-control" required  name="Name_Source"  placeholder="А именно?">');
+                                                    $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input id="Name_Source" type="text" class="form-control" name="Name_Source" required placeholder="А именно?">');
+                                                }
+                                            }
+                                            else {
+                                                if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
+                                                    $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('' +
+                                                        '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
+                                                        '<option value="" disabled selected>Выберите источник</option>' +
+                                                        '</select>');
+                                                }
+                                                else {
+                                                    $('#Number_Customers_Inviter').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('' +
+                                                        '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
+                                                        '<option value="" disabled selected>Выберите источник</option>' +
+                                                        '</select>');
+                                                    $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('' +
+                                                        '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
+                                                        '<option value="" disabled selected>Выберите источник</option>' +
+                                                        '</select>');
+                                                }
+                                            }
+                                            $("#Name_Source").prop('disabled', false);
+                                        } else if ($("#Name_Category_Source option:selected").text() == "От знакомых") {
+                                            if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
+                                                $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input type="tel" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Phone_Number_Customer" required autocomplete="tel" >');
+                                            }
+                                            else {
+                                                $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input type="tel" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Phone_Number_Customer" required autocomplete="tel" >');
+                                            }
+                                            $("#Number_Customers_Inviter").mask("+7 (999) 99-99-999");
                                         }
                                     });
                                 });
-
-
                             </script>
 
                             <div class="col-md-12 booking-button">

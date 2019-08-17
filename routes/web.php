@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('site.contact');
+    return view('auth.register');
 });
 
 Auth::routes();

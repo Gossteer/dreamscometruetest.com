@@ -22,9 +22,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<!-- Scripts -->
 	<script src="{{ asset('js/bootstrap.js') }}" defer></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="https://kit.fontawesome.com/6947640373.js"></script>
+	<script src="{{ asset('js/jquery.maskedinput.min.js') }}" defer></script>
 
 	<!-- Fonts -->
 	<link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
@@ -74,9 +74,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <header class="" id="header">
 	<div class="container ">
 		<!-- nav -->
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-			<span class="navbar-toggler-icon"></span>
-		</button>
 		<nav class="py-md-4 py-3 d-lg-flex">
 			<div id="logo">
 				<h1 class="mt-md-0 mt-2"> <a href="index.html"><span class="fa fa-map-signs"></span> Мечты сбываются </a></h1>

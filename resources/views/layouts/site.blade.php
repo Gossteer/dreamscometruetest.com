@@ -24,8 +24,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="{{ asset('js/bootstrap.js') }}" defer></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="https://kit.fontawesome.com/6947640373.js"></script>
+	<script src="https://unpkg.com/tooltip.js"></script>
+	<script src="https://unpkg.com/popper.js"></script>
 	<script src="{{ asset('js/jquery.maskedinput.min.js') }}" defer></script>
-	<script src="{{ asset('js/jquery.dialog.min.js') }}"></script>
 
 
 	<!-- Fonts -->
@@ -99,15 +100,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</li>
 					@endif
 				@else
-					<li class="nav-item dropdown">
-						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-							{{ Auth::user()->name }} <span class="caret"></span>
+					<li class="nav-item dropdown" >
+						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre >
+							{{ Auth::user()->login }} <span class="caret"></span>
 						</a>
 
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-							<a id="autorizStile" class="dropdown-item" href="{{ route('logout') }}"
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" id="navbarDropdownActiv">
+							<a  class="dropdown-item" href="{{ route('logout') }}"
 							   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();" style="display: inline !important;">
 								Выйти
 							</a>
 

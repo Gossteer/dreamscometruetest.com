@@ -36,4 +36,9 @@ class Customer extends Model
         return $this->hasOne('App\zgp','z_g_p_s_id');
     }
 
+    public static function CreateCastomers (Request $request)
+    {
+        return Customer::create($request);
+    }
+
 }

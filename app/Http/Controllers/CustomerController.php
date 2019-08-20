@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -27,6 +28,14 @@ class CustomerController extends Controller
         //
     }
 
+
+    protected function validator(Request $request)
+    {
+        return Validator::make($request, [
+            'Phone_Number_Customer' => ['required', 'string', 'unique:customers'],
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +44,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

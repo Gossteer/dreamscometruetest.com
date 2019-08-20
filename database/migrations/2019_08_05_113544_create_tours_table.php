@@ -34,7 +34,7 @@ class CreateToursTable extends Migration
             $table->date('Start_Date_Tours');
             $table->date('End_Date_Tours')->nullable();
             $table->mediumInteger('Price');
-            $table->string('Notification_OPDA',191);
+            $table->string('Notification_OPDA',191)->nullable();
             $table->integer('Profit')->default(0);
             $table->integer('Expenses');
             $table->mediumInteger('Privilegens_Price');

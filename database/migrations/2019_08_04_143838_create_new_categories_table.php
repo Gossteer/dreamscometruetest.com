@@ -16,7 +16,7 @@ class CreateNewCategoriesTable extends Migration
         Schema::create('new_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string('Name_New_Category')->unique();
+            $table->string('Name_New_Category',191)->unique();
             $table->boolean('LogicalDelete')->default(0);
         });
     }

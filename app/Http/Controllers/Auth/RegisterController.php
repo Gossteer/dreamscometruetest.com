@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Customer;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Redirect;
 
 class RegisterController extends Controller
 {
@@ -52,7 +54,7 @@ class RegisterController extends Controller
             'login' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'Phone_Number_Customer' => ['required', 'string', 'unique:users'],
+            'Phone_Number_Customer' => ['required', 'string', 'unique:customers'],
         ]);
     }
 
@@ -72,13 +74,15 @@ class RegisterController extends Controller
             'Notifications' => $data['Notifications'],
         ]);
 
-      /**
-       *             'Surname' => $data['Surname'],
-      'Name' => $data['Name'],
-      'Middle_Name' => $data['Middle_Name'],
-      'Date_Birth_Customer' => $data['Date_Birth_Customer'],
-      'Phone_Number_Customer' => $data['Phone_Number_Customer'],
-       */
+      Customer::create([
+          'Surname' => $data['Surname'],
+          'Name' => $data['Name'],
+          'Middle_Name' => $data['Middle_Name'],
+          'Date_Birth_Customer' => date('Y-m-d', strtotime( $data['Date_Birth_Customer'])),
+          'Phone_Number_Customer' => $data['Phone_Number_Customer'],
+          'Floor' => $data['Floor'],
+      ]);
 
+         return $user;
     }
 }

@@ -23,7 +23,6 @@ class CreateCustomersTable extends Migration
             $table->smallInteger('Black_Days')->default(0);
             $table->smallInteger('Number_Customers_Listed')->default(0);
             $table->string('Phone_Number_Customer', 20)->unique();
-            $table->date('Data_Registration')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('Phone_Customer_Inviter', 20)->nullable();
             $table->bigInteger('sources_id')->unsigned()->nullable();
             $table->foreign('sources_id')->references('id')

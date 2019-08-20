@@ -96,11 +96,11 @@
                             </div>
 
                             <div class="col-md-12 form-group contact-forms" >
-                                <input class="form-check-input" type="checkbox" id="Processing_Personal_Data" value="option1" style="margin-left: 0px !important;" required>
+                                <input class="form-check-input" type="checkbox" id="Processing_Personal_Data" style="margin-left: 0px !important;" required>
                                 <label class="form-check-label" for="Processing_Personal_Data" style="margin-left: 20px !important;" >Разрешить обработку персональных данных.</label>
                             </div>
                             <div class="col-md-12 form-group contact-forms" >
-                                <input class="form-check-input" type="checkbox" id="Notifications" value="option1" style="margin-left: 0px !important;">
+                                <input class="form-check-input" type="checkbox" id="Notifications"  style="margin-left: 0px !important;">
                                 <label class="form-check-label" for="Notifications" style="margin-left: 20px !important;" >Подписаться на уведомления о новых экскурсиях и скидках.</label>
                             </div>
 

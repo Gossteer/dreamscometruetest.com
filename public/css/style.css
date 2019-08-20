@@ -177,6 +177,11 @@ nav {
     color: #fff;
 }
 
+#autorizStile, #navbarDropdown {
+	position: relative;
+	left: 5px;
+	top: 12px;
+}
 
 /* Since we'll have the "ul li" "float:left"
  * we need to add a clear after the container. */
@@ -213,7 +218,7 @@ nav a {
     padding-right: 0;
 	padding: 10px 13px;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 15.5px;
     vertical-align: middle;
 }
 nav li.booking a {
@@ -303,6 +308,20 @@ li > a:only-child:after { content: ''; }
 	}
 	nav a {
 		color: #333;
+	}
+
+	#autorizStile, navbarDropdown {
+		left: 0 !important;
+		top: 6px;
+	}
+
+	#lineNavbar {
+		border: none; /* Убираем границу */
+		background-color: #047ffc; /* Цвет линии */
+		color: #047ffc; /* Цвет линии для IE6-7 */
+		height: 3px !important; /* Толщина линии */
+		margin-top: 6px;
+		padding: 0 !important;
 	}
 
 	/* Hide the navigation menu by default */

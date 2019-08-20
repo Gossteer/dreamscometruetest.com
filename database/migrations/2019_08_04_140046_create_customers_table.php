@@ -31,21 +31,16 @@ class CreateCustomersTable extends Migration
             $table->bigInteger('users_id')->unsigned()->nullable();
             $table->foreign('users_id')->references('id')
                 ->on('users')->onDelete('SET NULL');
+            $table->bigInteger('z_g_p_s_id')->unsigned()->nullable();
+            $table->foreign('z_g_p_s_id')->references('id')
+                ->on('z_g_p_s')->onDelete('SET NULL');
+            $table->bigInteger('p_r_f_s_id')->unsigned()->nullable();
+            $table->foreign('p_r_f_s_id')->references('id')
+                ->on('p_r_f_s')->onDelete('SET NULL');
             $table->date('Date_Birth_Customer')->nullable();
             $table->string('Preferred_Type_Tours', 191)->nullable();
             $table->boolean('floor');
-            $table->string('Registration_Address', 191)->nullable();
             $table->smallInteger('Age_Group')->nullable();
-            $table->mediumInteger('PRF_Series')->nullable();
-            $table->mediumInteger('PRF_Number')->nullable();
-            $table->date('Date_Issue_PRF')->nullable();
-            $table->text('Issued_PRF')->nullable();
-            $table->string('Code_Division_PRF',10)->nullable();
-            $table->mediumInteger('ZGP_Series')->nullable();
-            $table->mediumInteger('ZGP_Number')->nullable();
-            $table->date('Date_Issue_ZGP')->nullable();
-            $table->text('Issued_ZGP')->nullable();
-            $table->date('Valid_Until_ZGP')->nullable();
             $table->tinyInteger('Condition')->default(0);
             $table->mediumInteger('Debt')->default(0);
             $table->boolean('LogicalDelete')->default(0);

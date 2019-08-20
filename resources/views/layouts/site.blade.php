@@ -25,8 +25,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="https://kit.fontawesome.com/6947640373.js"></script>
 	<script src="{{ asset('js/jquery.maskedinput.min.js') }}" defer></script>
+	<script src="{{ asset('js/jquery.dialog.min.js') }}"></script>
+
 
 	<!-- Fonts -->
+	<link rel="stylesheet" href="{{ asset('css/jquery.dialog.min.css') }}">
 	<link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
 	<link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css' /><!-- custom css -->
 	<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"><!-- fontawesome css -->
@@ -85,13 +88,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<li class=""><a href="../site/about.html">О нас</a></li>
 				<li class=""><a href="../site/packages.html">Экскурсии</a></li>
 				<li class=""><a href="../site/contact.html">Контакты</a></li>
+				<li id="lineNavbar"><br ></li>
 				@guest
 					<li class=" ">
-						<a class="" href="{{ route('login') }}" style="align-self: flex-end">Войти</a>
+						<a id="autorizStile" class="" href="{{ route('login') }}" >Войти</a>
 					</li>
 					@if (Route::has('register'))
 						<li class="">
-							<a class="" href="{{ route('register') }}"  style="align-self: flex-end">Регистрация</a>
+							<a id="autorizStile" class="" href="{{ route('register') }}" >Регистрация</a>
 						</li>
 					@endif
 				@else
@@ -101,10 +105,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="{{ route('logout') }}"
+							<a id="autorizStile" class="dropdown-item" href="{{ route('logout') }}"
 							   onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-								{{ __('Logout') }}
+								Выйти
 							</a>
 
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -113,6 +117,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</li>
 				@endguest
+
 			</ul>
 		</nav>
 		<!-- //nav -->

@@ -29,6 +29,7 @@ class CreatePassengersTable extends Migration
             $table->smallInteger('Occupied_Place_Bus')->nullable();
             $table->string('Document')->nullable();
             $table->boolean('Paid')->default(0);
+            $table->tinyInteger('Stars')->nullable();
             $table->boolean('LogicalDelete')->default(0);
         });
     }

@@ -100,7 +100,7 @@
                                 <label class="form-check-label" for="Processing_Personal_Data" style="margin-left: 20px !important;" >Разрешить обработку персональных данных.</label>
                             </div>
                             <div class="col-md-12 form-group contact-forms" >
-                                <input class="form-check-input" type="checkbox" id="Notifications" value="option1" style="margin-left: 0px !important;" required>
+                                <input class="form-check-input" type="checkbox" id="Notifications" value="option1" style="margin-left: 0px !important;">
                                 <label class="form-check-label" for="Notifications" style="margin-left: 20px !important;" >Подписаться на уведомления о новых экскурсиях и скидках.</label>
                             </div>
 
@@ -113,6 +113,38 @@
 
                             <script>
                                 $(function() {
+                                    var ClickReg = 0;
+                                    $('#Registr').click(function () {
+                                        ClickReg++;
+                                        if (ClickReg == 4)
+                                        {
+                                            ClickReg = 0;
+                                            dialog.prompt({
+                                                title: "Проблемы с регистрацией",
+                                                message: "Если регистрация вызывает у вас трудности, можете обратиться к нам по номеру +7 (903) 222-76-59 или оставить свой. Наш менеджер проконсультирует вас или самостоятельно зарегистрирует.",
+                                                button: "Окей",
+                                                //required: true,
+                                                position: "static",
+                                                animation: "slide",
+                                                input: {
+                                                    type: "tel",
+                                                    placeholder: "Введите номер вашего телефона",
+                                                    id: "amswerForPromt"
+                                                },
+                                                validate: function(value){
+                                                    if( $.trim(value) === "" ){
+                                                        return false;
+                                                    }
+                                                },
+                                                callback: function(value){
+                                                    console.log(value);
+                                                }
+                                            });
+                                            //$("#amswerForPromt").mask("+7 (999) 99-99-999");
+                                        }
+                                    })
+
+
                                     $('select[name="Name_Category_Source"]').change(function (Retailer) {
                                         if ($("#Name_Category_Source option:selected").text() != "От знакомых") {
                                             //$("#Sources").addClass('animateSelect').fadeIn('fast');
@@ -160,7 +192,7 @@
                             </script>
 
                             <div class="col-md-12 booking-button">
-                                    <button type="submit" class="btn btn-block sent-butnn">
+                                    <button type="submit" class="btn btn-block sent-butnn" id="Registr">
                                         Зарегистрироваться
                                     </button>
                             </div>

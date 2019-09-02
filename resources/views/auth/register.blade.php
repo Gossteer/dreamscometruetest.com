@@ -78,6 +78,9 @@
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
+                                @if (session('error'))
+                                    <div class="alert alert-danger">{{ session('error') }}</div>
+                                @endif
                                 <input type="tel" class="form-control" id="Phone_Number_Customer" placeholder="Номер телефона" name="Phone_Number_Customer" value="{{ old('Phone_Number_Customer') }}" required autocomplete="tel" >
                             </div>
 
@@ -106,7 +109,7 @@
 
                             <script>
                                 $(function() {
-                                    $("#Phone_Number_Customer").mask("+7 (999) 99-99-999");
+                                    $("#Phone_Number_Customer").mask("+7 (999) 999-99-99");
                                     $("#Date_Birth_Customer").mask("99-99-9999");
                                 });
                             </script>
@@ -136,13 +139,17 @@
                                                     }
                                                 },
                                                 callback: function(value){
-                                                    console.log(value);
+                                                    dialog.alert({
+                                                        title: "Уведомление",
+                                                        message: "Спасибо за обращение. В ближайшее время с вами свяжется наш менеджер."
+                                                    });
                                                 }
                                             });
                                             //$("#amswerForPromt").mask("+7 (999) 99-99-999");
                                         }
                                     })
 
+                                    $('#Name_Category_Source').prop('selectedIndex',"");
 
                                     $('select[name="Name_Category_Source"]').change(function (Retailer) {
                                         if ($("#Name_Category_Source option:selected").text() != "От знакомых") {
@@ -179,17 +186,16 @@
                                             $("#Name_Source").prop('disabled', false);
                                         } else if ($("#Name_Category_Source option:selected").text() == "От знакомых") {
                                             if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
-                                                $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input type="tel" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Phone_Number_Customer" required autocomplete="tel" >');
+                                                $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input type="text" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Number_Customers_Inviter" required autocomplete="tel" >');
                                             }
                                             else {
-                                                $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input type="tel" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Phone_Number_Customer" required autocomplete="tel" >');
+                                                $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input type="text" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Number_Customers_Inviter" required autocomplete="tel" >');
                                             }
-                                            $("#Number_Customers_Inviter").mask("+7 (999) 99-99-999");
+                                            $("#Number_Customers_Inviter").mask("+7 (999) 999-99-99");
                                         }
                                     });
                                 });
                             </script>
-
 
 
                             <div class="col-md-12 booking-button">

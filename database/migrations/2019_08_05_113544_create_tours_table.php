@@ -28,6 +28,8 @@ class CreateToursTable extends Migration
             $table->bigInteger('buses_id')->unsigned()->nullable();
             $table->foreign('buses_id')->references('id')
                 ->on('buses');
+            $table->string('Duration', 191)->default('узнавайте');
+            $table->boolean('Popular')->default(0);
             $table->boolean('ZGP')->default(0);
             $table->boolean('PRF')->default(0);
             $table->string('Name_Tours', 191);

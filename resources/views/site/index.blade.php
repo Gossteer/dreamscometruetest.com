@@ -132,7 +132,7 @@
 					о нашей организации.</p>
 					<div class="text-left mt-4">
 						<a href="booking.html">Реальные мечты</a>
-						<a href="booking.html" style="margin-left: 10px">О нас</a>
+						<a href="{{route('/about')}}" style="margin-left: 10px">О нас</a>
 					</div>
 				</div>
 			</div>
@@ -145,66 +145,24 @@
 		<div class="container py-lg-4 py-sm-3">
 			<h3 class="heading text-capitalize text-center mt-2 mb-5">Наши предложения</h3>
 			<div class="row">
-				<div class="col-lg-3 col-sm-6">
+				<div class="col-lg-3 col-sm-6 " href="">
 					<div class="image-tour position-relative">
 						<img src="images/p1.jpg" alt="" class="img-fluid" />
-						<p><span class="fa fa-tags"></span> <span>20$</span></p>
+						<p><span class="fa fa-tags"></span> <span>Цена₽</span></p>
 					</div>
 					<div class="package-info">
-						<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>Paris, France.</h6>
-						<h5 class="my-2">Sodales vel mauris</h5>
-						<p class="">Vestibulum tellus neque, et velit mauris at, augue.</p>
+						<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>Место назначение</h6>
+						<h5 class="my-2">Название</h5>
+						<p class="">Краткое описания (продолжение на ...)</p>
 						<ul class="listing mt-3">
-							<li><span class="fa fa-clock-o mr-2"></span>Duration : <span>10 Days</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="image-tour position-relative">
-						<img src="images/p2.jpg" alt="" class="img-fluid" />
-						<p><span class="fa fa-tags"></span> <span>20$</span></p>
-					</div>
-					<div class="package-info">
-						<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>Los Angles, USA.</h6>
-						<h5 class="my-2">Sodales vel mauris</h5>
-						<p class="">Vestibulum tellus neque, et velit mauris at, augue.</p>
-						<ul class="listing mt-3">
-							<li><span class="fa fa-clock-o mr-2"></span>Duration : <span>10 Days</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6 mt-lg-0 mt-5">
-					<div class="image-tour position-relative">
-						<img src="images/p3.jpg" alt="" class="img-fluid" />
-						<p><span class="fa fa-tags"></span> <span>20$</span></p>
-					</div>
-					<div class="package-info">
-						<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>Agra, India.</h6>
-						<h5 class="my-2">Sodales vel mauris</h5>
-						<p class="">Vestibulum tellus neque, et velit mauris at, augue.</p>
-						<ul class="listing mt-3">
-							<li><span class="fa fa-clock-o mr-2"></span>Duration : <span>10 Days</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6 mt-lg-0 mt-5">
-					<div class="image-tour position-relative">
-						<img src="images/p4.jpg" alt="" class="img-fluid" />
-						<p><span class="fa fa-tags"></span> <span>20$</span></p>
-					</div>
-					<div class="package-info">
-						<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>Paris, France.</h6>
-						<h5 class="my-2">Sodales vel mauris</h5>
-						<p class="">Vestibulum tellus neque, et velit mauris at, augue.</p>
-						<ul class="listing mt-3">
-							<li><span class="fa fa-clock-o mr-2"></span>Duration : <span>10 Days</span></li>
+							<li><span class="fa fa-clock-o mr-2"></span>Длительность: <span>10 дней</span></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="view-package text-center mt-4">
-				<a href="packages.html" style="margin-right: 15px">Посмотреть все</a>
-				<a href="packages.html">Индивидуальный заказ</a>
+				<a href="{{ route('/packages') }}" style="margin-right: 15px">Посмотреть все</a>
+				<a href="{{ route('/contact') }}">Индивидуальный заказ</a>
 			</div>
 		</div>
 	</section>

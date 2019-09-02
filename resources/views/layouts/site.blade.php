@@ -27,6 +27,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="https://unpkg.com/tooltip.js"></script>
 	<script src="https://unpkg.com/popper.js"></script>
 	<script src="{{ asset('js/jquery.maskedinput.min.js') }}" defer></script>
+	<script src="{{ asset('js/jquery.dialog.min.js') }}" defer></script>
 
 
 	<!-- Fonts -->
@@ -80,15 +81,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- nav -->
 		<nav class="py-md-4 py-3 d-lg-flex">
 			<div id="logo">
-				<h1 class="mt-md-0 mt-2"> <a href="index.html"><span class="fa fa-map-signs"></span> Мечты сбываются </a></h1>
+				<h1 class="mt-md-0 mt-2"> <a href="{{ route('/') }}"><span class="fa fa-map-signs"></span> Мечты сбываются </a></h1>
 			</div>
 			<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
 			<input type="checkbox" id="drop" />
 			<ul class="menu ml-auto mt-1">
-				<li class=""><a href="index.html">Главная</a></li>
-				<li class=""><a href="../site/about.html">О нас</a></li>
-				<li class=""><a href="../site/packages.html">Экскурсии</a></li>
-				<li class=""><a href="../site/contact.html">Контакты</a></li>
+				<li class=""><a href="{{ route('/') }}">Главная</a></li>
+				<li class=""><a href="{{ route('/about') }}">О нас</a></li>
+				<li class=""><a href="{{ route('/packages') }}">Экскурсии</a></li>
+				<li class=""><a href="{{ route('/contact') }}">Контакты</a></li>
 				<li id="lineNavbar"><br ></li>
 				@guest
 					<li class=" ">
@@ -145,10 +146,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<p>Телефон: +7 (903) 222-76-59</p>
 					<p>Email: <a href="mailto:vidnoe1976@mail.ru">vidnoe1976@mail.ru</a></p>
 					<ul class="social_section_1info">
-						<li class="mb-2 facebook"><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-						<li class="mb-2 vk"><a href="#" class=""><span class="fa fa-vk"></span></a></li>
-						<li class="mb-2 instagram"><a href="#"><span class="fa fa-instagram"></span></a></li>
-						<li class="mb-2 odnoklassniki"><a href="#"><span class="fa fa-odnoklassniki"></span></a></li>
+						<li class="mb-2 facebook"><a href="https://www.facebook.com/groups/1537362279648252/about/" class=""><span class="fa fa-facebook"></span></a></li>
+						<li class="mb-2 vk"><a href="https://vk.com/dreams_comet" class=""><span class="fa fa-vk"></span></a></li>
+						<li class="mb-2 instagram"><a href="https://www.instagram.com/elena_mehtu_sbuvaytsa/"><span class="fa fa-instagram"></span></a></li>
+						<li class="mb-2 odnoklassniki"><a href="https://ok.ru/group/55076417896460"><span class="fa fa-odnoklassniki"></span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -159,7 +160,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="footer-text">
 					<p>Комфортабельный транспорт, вариативность по тематике, количеству человек, приятные цены, бонусы.
 						Организация вашего отдыха в надёжных руках.🎈</p>
-					<p><a href="">Подробнее...</a></p>
+					<p><a href="{{ route('/about') }}">Подробнее...</a></p>
 				</div>
 
 			</div>

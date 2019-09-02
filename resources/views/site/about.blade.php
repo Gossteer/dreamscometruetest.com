@@ -260,13 +260,13 @@
 
 <!-- testimonials -->
 <section class="testimonials py-5" id="testi">
-	<div class="container py-lg-5 py-md-3">
+	<div class="container py-md-3 ">
 			<h3 class="heading  text-center mb-lg-5 mb-4">Что говорят наши клиенты</h3>
-		<div class="row pt-xl-4">
+		<div class="row pt-xl-4 ">
 			<div class="col-md-4 test-grid px-lg-4">
 				<div class="testi-info text-center">
 					<p class="text-li">"Пока свежи мои воспоминания о вчерашнем незабываемом дне, я решила написать отзыв😉
-						Скажу сразу, что название "Мечты сбываются" самое точное какое можно придумать<a href="https://vk.com/topic-147694504_35442023?post=36">..."</a></p>
+						Скажу сразу, что название "Мечты сбываются" самое точное какое можно придумать<a href="https://vk.com/topic-147694504_35442023?post=36">...</a>"</p>
 					<div class="test-img text-center mt-4">
 						<img src="images/te1.jpg" class="img-fluid" alt="user-image">
 					</div>
@@ -283,7 +283,7 @@
 					<h3 class="mt-md-4 mt-3">Валентина</h3>
 				</div>
 			</div>
-			<div class="col-md-4 test-grid px-lg-4">
+			<div class="col-md-4 test-grid px-lg-4 mb-5">
 				<div class="testi-info text-center">
 					<p class="text-li">"Все нравится!! Погода великолепная, отель хороший,
 							отличное питание, киприоты жизнерадостные и гостеприимные люди! Море впечатлений и позитива<a href="https://vk.com/dreams_comet?w=wall-147694504_1079">...</a>"</p>
@@ -293,7 +293,14 @@
 					<h3 class="mt-md-4 mt-3">Анастасия</h3>
 				</div>
 			</div>
+
+
+
 		</div>
+		<div class="row justify-content-md-center">
+			<a class="btn sent-butnn col-md-6 " href="">Оставить свой отзыв</a>
+		</div>
+
 	</div>
 </section>
 <!-- //testimonials -->

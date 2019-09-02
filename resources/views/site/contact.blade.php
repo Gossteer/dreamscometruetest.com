@@ -42,10 +42,10 @@
 
                     <h6>Оставайтесь на связи</h6>
 					<ul class="social_section_1info">
-						<li class="mb-2 facebook"><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-						<li class="mb-2 vk"><a href="#" class=""><span class="fa fa-vk"></span></a></li>
-						<li class="mb-2 instagram"><a href="#"><span class="fa fa-instagram"></span></a></li>
-						<li class="mb-2 odnoklassniki"><a href="#"><span class="fa fa-odnoklassniki"></span></a></li>
+						<li class="mb-2 facebook"><a href="https://www.facebook.com/groups/1537362279648252/about/" class=""><span class="fa fa-facebook"></span></a></li>
+						<li class="mb-2 vk"><a href="https://vk.com/dreams_comet" class=""><span class="fa fa-vk"></span></a></li>
+						<li class="mb-2 instagram"><a href="https://www.instagram.com/elena_mehtu_sbuvaytsa/"><span class="fa fa-instagram"></span></a></li>
+						<li class="mb-2 odnoklassniki"><a href="https://ok.ru/group/55076417896460"><span class="fa fa-odnoklassniki"></span></a></li>
 					</ul>
                 </li>
             </ul>

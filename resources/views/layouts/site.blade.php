@@ -10,8 +10,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <title>Мечты сбываются</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<meta name="keywords" content="Grand Tour Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<meta name="keywords" content="ЛЯЛЯ сделать что-нибудь здесь" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -111,6 +110,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							   onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" style="display: inline !important;">
 								Выйти
+							</a>
+
+							<a  class="dropdown-item" href="{{ route('/admin') }}">
+								Админка
 							</a>
 
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

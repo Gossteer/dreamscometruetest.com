@@ -11,8 +11,10 @@
 |
 */
 
+use App\tour;
+
 Route::get('/', function () {
-    return view('site.index');
+    return view('site.index', ['tours' => Tour::orderByDesc('Price')->paginate(4)]);
 })->name('/');
 
 Route::get('/about', function () {
@@ -26,7 +28,7 @@ Route::get('/contact', function () {
 // Что делать с экскурсиями?
 
 Route::get('/packages', function () {
-    return view('site.packages');
+    return view('site.packages', ['tours' => Tour::paginate(12)]);
 })->name('/packages');
 
 Route::get('/admin', function () {
@@ -35,8 +37,10 @@ Route::get('/admin', function () {
 
 Route::resource('admin/tours', 'TourController');
 
+Route::resource('admin/employees', 'EmployeeController');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/lol','CustomerController');
+//Route::resource('/lol','CustomerController');

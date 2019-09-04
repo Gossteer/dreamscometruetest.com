@@ -50,7 +50,7 @@
     ***********************************-->
     <div class="nav-header">
         <div class="brand-logo">
-            <a href="index.html">
+            <a href="{{ route('/') }}">
                 <b class="logo-abbr"><img src=" {{ asset('images/logo.png') }} " alt=""> </b>
                 <span class="logo-compact"><img src="{{ asset('images/logo-compact.png') }}" alt=""></span>
                 <span class="brand-title">
@@ -59,6 +59,7 @@
             </a>
         </div>
     </div>
+
     <!--**********************************
         Nav header end
     ***********************************-->
@@ -165,7 +166,7 @@
                         <i class="icon-speedometer menu-icon"></i><span class="nav-text">Работники</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="#">Работники</a></li>
+                        <li><a href="{{ route('employees.index') }}">Работники</a></li>
                         <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                     </ul>
                 </li>

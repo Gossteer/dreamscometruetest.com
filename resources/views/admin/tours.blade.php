@@ -27,7 +27,7 @@
                                 {{ ($tour->Amount_Place - $tour->Occupied_Place) }}
                             </td>
                             <td> {{ $tour->Start_Date_Tours }}</td>
-                            <td><span class="label gradient-1 btn-rounded">{{ $tour->Price }} р</span>
+                            <td><span class="label gradient-1 btn-rounded">{{ $tour->Price }} ₽</span>
                             </td>
                             <td>
                                 <span><a href="#" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i>
@@ -38,7 +38,17 @@
                         </tr>
                             @endforeach
                         </tbody>
+
                     </table>
+                    @if($tours->total() > $tours->count())
+                        <div class="bootstrap-pagination">
+                            <nav>
+                                <ul class="pagination">
+                                    {{ $tours->links() }}
+                                </ul>
+                            </nav>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.employees.employees', ['employees' => Employee::paginate(12)]);
     }
 
     /**
@@ -24,7 +24,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.employees.create',[
+            'Employee' => [],
+        ]);
     }
 
     /**
@@ -35,7 +37,11 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attribute =['Name' => $request->Name, 'Surname' => $request->Surname,
+            'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Date_Birth_Customer)), 'Phone_Number' => $request->Phone_Number,];
+        Employee::create($attribute);
+
+        return redirect()->route('employees.index');
     }
 
     /**

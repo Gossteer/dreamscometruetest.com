@@ -15,7 +15,7 @@ class TourController extends Controller
      */
     public function index()
     {
-        return view('admin.tours', ['tours' => Tour::all()]);
+        return view('admin.tours', ['tours' => Tour::paginate(12)]);
     }
 
     /**
@@ -47,7 +47,7 @@ class TourController extends Controller
             'Start_Date_Tours'=> $request->Start_Date_Tours,
         ]);
 
-        return view('admin.tours');
+        return redirect()->route('tours.index');
     }
 
     /**

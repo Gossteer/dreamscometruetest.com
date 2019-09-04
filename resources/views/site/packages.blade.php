@@ -16,30 +16,37 @@
 		<h2 class="heading text-capitalize text-center"> Ознакомьтесь с нашими предложениями </h2>
 		<p class="text mt-2 mb-5 text-center">Инфо... необязательно</p>
 		<div class="row">
-			
+			@foreach($tours as $tour)
 			<div class="col-lg-3 col-sm-6 mb-5" href="">
 				<div class="image-tour position-relative">
 					<img src="images/p1.jpg" alt="" class="img-fluid" />
-					<p><span class="fa fa-tags"></span> <span>Цена₽</span></p>
+					<p><span class="fa fa-tags"></span> <span>{{ $tour->Price }}₽</span></p>
 				</div>
 				<div class="package-info">
-					<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>Место назначение</h6>
-					<h5 class="my-2">Название</h5>
-					<p class="">Краткое описания (продолжение на ...)</p>
+					<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
+					<h5 class="my-2">{{ $tour->Name_Tours }}</h5>
+					<p class="">{{str_limit($tour->Description,22,'...')}}</p>
 					<ul class="listing mt-3">
-						<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> 23.10.19</span></li>
+						<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
 					</ul>
 				</div>
 			</div>
+				@endforeach
 
 		</div>
+
+				<ul class="pagination pagination-lg justify-content-center">
+					{{ $tours->links() }}
+				</ul>
+		</div>
 	</div>
+
 </section>
 <!-- tour packages -->
 
 <!-- destinations -->
 <section class="destinations py-5" id="destinations">
-	<div class="container py-xl-5 py-lg-3">
+	<div class="container py-xl-5 py-lg-3" style="padding-top: 0 !important;">
 		<h3 class="heading text-capitalize text-center"> Популярные направления </h3>
 		<p class="text mt-2 mb-5 text-center">Инфо... необязательно</p>
 		<div class="row inner-sec-w3layouts-w3pvt-lauinfo">

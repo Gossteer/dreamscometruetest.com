@@ -20,4 +20,9 @@ class Passenger extends Model
     {
         return $this->belongsTo('App\Tour', 'tours_id');
     }
+
+    public function stock()
+    {
+        return $this->belongsTo('App\Stock','stock_id');
+    }
 }

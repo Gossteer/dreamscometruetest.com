@@ -27,7 +27,7 @@
 					<h5 class="my-2">Название</h5>
 					<p class="">Краткое описания (продолжение на ...)</p>
 					<ul class="listing mt-3">
-						<li><span class="fa fa-clock-o mr-2"></span>Длительность: <span>10 дней</span></li>
+						<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> 23.10.19</span></li>
 					</ul>
 				</div>
 			</div>

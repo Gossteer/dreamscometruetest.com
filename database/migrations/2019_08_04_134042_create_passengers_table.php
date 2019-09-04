@@ -28,6 +28,9 @@ class CreatePassengersTable extends Migration
             $table->tinyInteger('Presence')->default(0);
             $table->smallInteger('Occupied_Place_Bus')->nullable();
             $table->string('Document')->nullable();
+            $table->bigInteger('stock_id')->unsigned()->nullable();
+            $table->foreign('stock_id')->references('id')
+                ->on('stocks')->onDelete('SET NULL');
             $table->boolean('Paid')->default(0);
             $table->tinyInteger('Stars')->nullable();
             $table->boolean('LogicalDelete')->default(0);

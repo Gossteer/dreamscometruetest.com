@@ -29,6 +29,10 @@ Route::get('/packages', function () {
     return view('site.packages');
 })->name('/packages');
 
+Route::get('/admin', function () {
+    return view('admin.tours');
+})->name('/admin');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

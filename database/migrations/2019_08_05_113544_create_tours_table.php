@@ -34,6 +34,8 @@ class CreateToursTable extends Migration
             $table->boolean('PRF')->default(0);
             $table->string('Name_Tours', 191);
             $table->date('Start_Date_Tours');
+            $table->text('Description');
+            $table->mediumInteger('Count_Tokens')->default(0);
             $table->date('End_Date_Tours')->nullable();
             $table->mediumInteger('Price');
             $table->string('Notification_OPDA',191)->nullable();

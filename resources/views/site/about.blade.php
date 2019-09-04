@@ -209,7 +209,7 @@
 								<li><span class="fa fa-star"></span></li>
 							</ul>
 							<p class="mt-3">Искрящееся Чёрное море, залитые солнцем пляжи, цветущие магнолии, стройные кипарисы и горные лыжи. Это ли не отдых мечты?</p>
-							<p class="duration mt-2"><span class="fa fa-clock-o mr-2"></span><strong>Длительность</strong> : 4 дня</p>
+							<p class="duration mt-2"><span class="fa fa-clock-o mr-2"></span><strong>Дата</strong> : 23.10.19</p>
 						</div>
 					</div>
 				</div>

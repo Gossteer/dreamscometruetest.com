@@ -51,10 +51,10 @@
     <div class="nav-header">
         <div class="brand-logo">
             <a href="index.html">
-                <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
+                <b class="logo-abbr"><img src=" {{ asset('images/logo.png') }} " alt=""> </b>
+                <span class="logo-compact"><img src="{{ asset('images/logo-compact.png') }}" alt=""></span>
                 <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
+                        <img src="{{ asset('images/logo-text.png') }}" alt="">
                     </span>
             </a>
         </div>
@@ -82,7 +82,7 @@
                         </a>
                         <div class="drop-down animated fadeIn dropdown-menu">
                             <div class="dropdown-content-heading d-flex justify-content-between">
-                                <span class="">New Messages</span>
+                                <span class="">Новые сообщения</span>
 
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                         </a>
                         <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
                             <div class="dropdown-content-heading d-flex justify-content-between">
-                                <span class="">New Notifications</span>
+                                <span class="">Новые уведомления</span>
 
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                             <span class="activity active"></span>
                             Кружок непрочтённых сообщений
                             ***********************************-->
-                            <img src="images/user/1.png" height="40" width="40" alt="">
+                            <img src="{{ asset('images/user/1.png') }}" height="40" width="40" alt="">
                         </div>
                         <div class="drop-down dropdown-profile   dropdown-menu">
                             <div class="dropdown-content-body">
@@ -192,7 +192,7 @@
                         <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Экскурсии</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="#">Экскурсии</a></li>
+                        <li><a href="{{ route('tours.index') }}">Экскурсии</a></li>
                     </ul>
                 </li>
             </ul>
@@ -221,7 +221,7 @@
     ***********************************-->
     <div class="footer">
         <div class="copyright">
-            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            <p>&copy;  <a href="https://themeforest.net/user/quixlab">Мечты сбываются</a> 2019</p>
         </div>
     </div>
     <!--**********************************
@@ -238,6 +238,24 @@
 <script src="{{ asset('js/js/styleSwitcher.js') }}"></script>
 
 
+<script src="{{ asset('js/plugins/moment/moment.js') }}"></script>
+<script src="{{ asset('js/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+<!-- Clock Plugin JavaScript -->
+<script src="{{ asset('js/plugins/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
+<!-- Color Picker Plugin JavaScript -->
+<script src="{{ asset('js/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js') }}"></script>
+<script src="{{ asset('js/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js') }}"></script>
+<script src="{{ asset('js/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js') }}"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="{{ asset('js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+<!-- Date range Plugin JavaScript -->
+<script src="{{ asset('js/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
+<script src="{{ asset('js/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+<script src="{{ asset('js/js/plugins-init/form-pickers-init.js') }}"></script>
+
+<script src="{{ asset('js/plugins/validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('js/plugins/validation/jquery.validate-init.js') }}"></script>
 
 </div>
 

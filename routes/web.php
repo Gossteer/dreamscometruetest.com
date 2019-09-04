@@ -30,8 +30,10 @@ Route::get('/packages', function () {
 })->name('/packages');
 
 Route::get('/admin', function () {
-    return view('admin.tours');
+    return view('layouts.admin');
 })->name('/admin');
+
+Route::resource('admin/tours', 'TourController');
 
 Auth::routes();
 

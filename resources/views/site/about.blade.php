@@ -294,8 +294,6 @@
 				</div>
 			</div>
 
-
-
 		</div>
 		<div class="row justify-content-md-center">
 			<a class="btn sent-butnn col-md-6 " href="">Оставить свой отзыв</a>

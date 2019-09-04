@@ -50,6 +50,18 @@ jQuery(".form-valide").validate({
             required: !0,
             number: !0
         },
+        "Privilegens_Price": {
+            required: !0,
+            number: !0
+        },
+        "Expenses": {
+            required: !0,
+            number: !0
+        },
+        "Price": {
+            required: !0,
+            number: !0
+        },
         "val-range": {
             required: !0,
             range: [1, 5]
@@ -81,7 +93,10 @@ jQuery(".form-valide").validate({
         "val-website": "Please enter your website!",
         "val-phoneus": "Please enter a US phone!",
         "val-digits": "Please enter only digits!",
-        "val-number": "Please enter a number!",
+        "val-number": "Пожалуйста введите только цифры!",
+        "Price": "Пожалуйста введите только цифры!",
+        "Privilegens_Price": "Пожалуйста введите только цифры!",
+        "Expenses": "Пожалуйста введите только цифры!",
         "val-range": "Please enter a number between 1 and 5!",
         "val-terms": "You must agree to the service terms!"
     },

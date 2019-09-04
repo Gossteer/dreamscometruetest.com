@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\tour;
+use App\Type_Tour;
 use Illuminate\Http\Request;
 
 class TourController extends Controller
@@ -14,7 +15,7 @@ class TourController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.tours', ['tours' => Tour::all()]);
     }
 
     /**
@@ -24,7 +25,7 @@ class TourController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tours.create', ['type_tours' => Type_Tour::all(), 'Tour' => []]);
     }
 
     /**
@@ -35,7 +36,18 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Tour::create([
+          'Name_Tours'=> $request->Name_Tours,
+           'Description'=> $request->Description,
+           'type_tours_id' => $request->type_tours_id,
+            'Price'=> $request->Price,
+            'Privilegens_Price'=> $request->Privilegens_Price,
+            'Expenses'=> $request->Expenses,
+            'Amount_Place'=> $request->Amount_Place,
+            'Start_Date_Tours'=> $request->Start_Date_Tours,
+        ]);
+
+        return view('admin.tours');
     }
 
     /**

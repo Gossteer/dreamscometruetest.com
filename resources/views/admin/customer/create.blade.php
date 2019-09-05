@@ -2,7 +2,6 @@
 
 @section('content')
 <form method="POST" action="{{ route('customer.store') }}">
-    <input type="hidden" name="_method" value="put">
     @csrf
     <div class="row">
         <div class="col-sm-6 form-group contact-forms">

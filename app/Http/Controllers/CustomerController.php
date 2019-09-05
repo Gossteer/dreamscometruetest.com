@@ -69,8 +69,9 @@ class CustomerController extends Controller
                 'users_id' => $user->id,
             ]);
         } catch (ModelNotFoundException $exception) {
-            return redirect()->route('customer.index');
+
         }
+        return redirect()->route('customer.index');
     }
 
     /**

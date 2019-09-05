@@ -18,7 +18,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-validation">
-                            <form class="form-valide" action="{{ route('tours.update', $tour->id) }}" method="PATCH" enctype="multipart/form-data">
+                            <form class="form-valide" action="{{ route('tours.update',$tour) }}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="_method" value="put">
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Tours">Название <span class="text-danger">*</span>
@@ -39,7 +40,6 @@
                                     </label>
                                     <div class="col-lg-6">
                                         <select class="form-control"  name="type_tours_id">
-                                                <option value="{{ $tour->type_tour }}" selected>{{ $tour->type_tour->Name_Type_Tours }}</option>
                                             @foreach($type_tours as $type)
                                                 @if($type->id != $tour->type_tours_id)
                                                 <option value="{{ $type->id }}">{{ $type->Name_Type_Tours }}</option>

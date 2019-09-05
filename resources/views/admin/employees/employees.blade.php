@@ -26,7 +26,7 @@
                                         {{ $employee->Byrthday }}
                                     </td>
                                     <td> {{ $employee->Phone_Number }}</td>
-                                    <td><span class="label gradient-1 btn-rounded">ДОЛЖНОСТЬ</span>
+                                    <td><span class="label gradient-1 btn-rounded">{{ $employee->job->Job_Title . ' зп: ' . $employee->job->Salary }}</span>
                                     </td>
                                     <td>
                                 <span><a href="#" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i>

@@ -14,7 +14,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.job', ['jobs' => Job::paginate(12)]);
     }
 
     /**
@@ -24,7 +24,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.job.create', [ 'Job' => []]);
     }
 
     /**
@@ -35,7 +35,12 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Job::create([
+            'Job_Title' => $request->Job_Title,
+            'Salary' => $request->Salary,
+        ]);
+
+        return redirect()->route('job.index');
     }
 
     /**

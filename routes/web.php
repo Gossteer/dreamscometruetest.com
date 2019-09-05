@@ -39,6 +39,8 @@ Route::resource('admin/tours', 'TourController');
 
 Route::resource('admin/employees', 'EmployeeController');
 
+Route::resource('admin/job', 'JobController');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

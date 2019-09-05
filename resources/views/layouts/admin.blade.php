@@ -167,6 +167,7 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('employees.index') }}">Работники</a></li>
+                        <li><a href="{{ route('job.index') }}">Должности</a></li>
                         <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                     </ul>
                 </li>

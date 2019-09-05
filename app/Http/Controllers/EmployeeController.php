@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Job;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -25,7 +26,7 @@ class EmployeeController extends Controller
     public function create()
     {
         return view('admin.employees.create',[
-            'Employee' => [],
+            'Employee' => [], 'jobs' => Job::all(),
         ]);
     }
 
@@ -38,7 +39,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $attribute =['Name' => $request->Name, 'Surname' => $request->Surname,
-            'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Date_Birth_Customer)), 'Phone_Number' => $request->Phone_Number,];
+            'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Date_Birth_Customer)), 'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,];
         Employee::create($attribute);
 
         return redirect()->route('employees.index');

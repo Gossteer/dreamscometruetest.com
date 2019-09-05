@@ -69,7 +69,7 @@ class TourController extends Controller
      */
     public function edit(tour $tour)
     {
-        //
+        return view('admin.tours.update', ['type_tours' => Type_Tour::all(), 'tour' => $tour,]);
     }
 
     /**
@@ -81,7 +81,9 @@ class TourController extends Controller
      */
     public function update(Request $request, tour $tour)
     {
-        //
+        Tour::findOrFail($tour->id)->update($request->all());
+
+        return redirect()->route('tours.index');
     }
 
     /**

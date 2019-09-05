@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\User;
+use Hash;
 use Illuminate\Http\Request;
+use DB;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -25,7 +28,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.customer.create');
     }
 
 
@@ -44,7 +47,30 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::create([
+            'login' => $request['login'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'Processing_Personal_Data' => $request['Processing_Personal_Data'],
+            'Notifications' => $request['Notifications'],
+        ]);
 
+        // $Phone_Customer_Inviter = ();
+        try {
+            Customer::create([
+                'Surname' => $request['Surname'],
+                'Name' => $request['Name'],
+                'Middle_Name' => $request['Middle_Name'],
+                'Date_Birth_Customer' => date('Y-m-d', strtotime( $request['Date_Birth_Customer'])),
+                'Phone_Number_Customer' => $request['Phone_Number_Customer'],
+                'Floor' => $request['Floor'],
+                'Phone_Customer_Inviter' =>  $request['Number_Customers_Inviter'] ?? null,
+                'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
+                'users_id' => $user->id,
+            ]);
+        } catch (ModelNotFoundException $exception) {
+            return redirect()->route('customer.index');
+        }
     }
 
     /**
@@ -66,7 +92,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return view('admin.customer.update', ['customer' => $customer ]);
     }
 
     /**

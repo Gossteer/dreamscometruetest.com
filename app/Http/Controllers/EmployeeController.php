@@ -39,7 +39,8 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $attribute =['Name' => $request->Name, 'Surname' => $request->Surname,
-            'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Date_Birth_Customer)), 'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,];
+            'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Date_Birth_Customer)),
+            'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,];
         Employee::create($attribute);
 
         return redirect()->route('employees.index');
@@ -64,7 +65,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        return view('admin.employees.update', ['employees' => $employee, 'jobs' => Job::all() ]);
     }
 
     /**
@@ -76,7 +77,9 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        Employee::findOrFail($employee->id)->update($request->all());
+
+        return redirect()->route('employees.index');
     }
 
     /**

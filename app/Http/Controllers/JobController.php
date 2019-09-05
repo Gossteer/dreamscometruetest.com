@@ -62,7 +62,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        return view('admin.job.update', [ 'job' => $job]);
     }
 
     /**
@@ -74,7 +74,9 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
-        //
+        Job::findOrFail($job->id)->update($request->all());
+
+        return redirect()->route('job.index');
     }
 
     /**

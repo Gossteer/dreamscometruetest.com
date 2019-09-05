@@ -86,6 +86,7 @@ class RegisterController extends Controller
                 'Floor' => $data['Floor'],
                 'Phone_Customer_Inviter' =>  $data['Number_Customers_Inviter'] ?? null,
                 'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->count(),
+                'users_id' => $user->id,
             ]);
         } catch (ModelNotFoundException $exception) {
             return back()->withError($exception->getMessage())->withInput();

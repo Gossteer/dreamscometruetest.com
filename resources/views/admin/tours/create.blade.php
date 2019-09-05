@@ -77,10 +77,9 @@
                                     <label class="col-lg-4 col-form-label" for="mdate">Дата проведения<span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" placeholder="2017-06-04" id="mdate" name="Start_Date_Tours">
+                                        <input type="text" onChange="return validate_date(this.value)" class="form-control" placeholder="2017-06-04" id="mdate" name="Start_Date_Tours">
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
                                     <div class="col-lg-8 ml-auto">
                                         <button type="submit" class="btn btn-primary">Создать</button>

@@ -8,7 +8,7 @@ class Customer extends Model
 {
 
     protected $guarded = [
-        'White_Days', 'Black_Days', 'users_id', 'Age_Group', 'Condition', 'Debt', 'LogicalDelete'
+        'White_Days', 'Black_Days',  'Age_Group', 'Condition', 'Debt', 'LogicalDelete'
     ];
 
     public function source()
@@ -18,7 +18,7 @@ class Customer extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User', 'users_id');
+        return $this->belongsTo('App\User', 'users_id');
     }
 
     public function passenger()

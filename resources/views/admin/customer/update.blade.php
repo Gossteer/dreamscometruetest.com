@@ -2,6 +2,7 @@
 
 @section('content')
 <form method="POST" action="{{ route('customer.update', $customer) }}">
+    <input type="hidden" name="_method" value="put">
     @csrf
     <div class="row">
         <div class="col-sm-6 form-group contact-forms">
@@ -25,20 +26,6 @@
         </div>
 
         <div class="col-sm-6 form-group contact-forms">
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ $customer->user->password }}" required autocomplete="new-password" placeholder="Пароль">
-
-            @error('password')
-            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-            @enderror
-        </div>
-
-        <div class="col-sm-6 form-group contact-forms">
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" value="{{ $customer->user->password_confirmation }}" required autocomplete="new-password" placeholder="Подтвердите пароль">
-        </div>
-
-        <div class="col-sm-6 form-group contact-forms">
             <input id="Surname" type="text" class="form-control" name="Surname" value="{{ $customer->Surname }}" required autocomplete="family-name" placeholder="Фамилия">
         </div>
 
@@ -52,14 +39,6 @@
 
         <div class="col-sm-6 form-group contact-forms">
             <input id="Date_Birth_Customer" type="text" class="form-control" value="{{ $customer->Date_Birth_Customer }}" name="Date_Birth_Customer" required placeholder="Дата рождения">
-        </div>
-
-        <div class="col-sm-6 form-group contact-forms" id="">
-            <select class="form-control" id="Floor" name="Floor" required>
-                <option value="" disabled selected>Пол</option>
-                <option value="0">Мужской</option>
-                <option value="1">Женский</option>
-            </select>
         </div>
 
         <div class="col-sm-6 form-group contact-forms">

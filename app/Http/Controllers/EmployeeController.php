@@ -39,7 +39,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $attribute =['Name' => $request->Name, 'Surname' => $request->Surname,
-            'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Date_Birth_Customer)),
+            'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
             'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,];
         Employee::create($attribute);
 
@@ -77,7 +77,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        Employee::findOrFail($employee->id)->update($request->all());
+        Employee::findOrFail($employee->id)->update(['Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),$request->all()]);
 
         return redirect()->route('employees.index');
     }
@@ -90,6 +90,8 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+
+        return redirect()->route('employees.index');
     }
 }

@@ -33,15 +33,15 @@ Route::get('/packages', function () {
 
 Route::get('/admin', function () {
     return view('layouts.admin');
-})->name('/admin');
+})->name('/admin')->middleware('auth');
 
-Route::resource('admin/tours', 'TourController');
+Route::resource('admin/tours', 'TourController')->middleware('auth');;
 
-Route::resource('admin/employees', 'EmployeeController');
+Route::resource('admin/employees', 'EmployeeController')->middleware('auth');;
 
-Route::resource('admin/job', 'JobController');
+Route::resource('admin/job', 'JobController')->middleware('auth');;
 
-Route::resource('admin/customer', 'CustomerController');
+Route::resource('admin/customer', 'CustomerController')->middleware('auth');;
 
 Auth::routes();
 

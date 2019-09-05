@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function customer()
     {
-        return $this->belongsTo('App\Customer', 'users_id');
+        return $this->hasOne('App\Customer', 'users_id');
     }
 
     public function employee()

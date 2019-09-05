@@ -55,9 +55,11 @@ class CustomerController extends Controller
             'Notifications' => $request['Notifications'],
         ]);
 
+
         // $Phone_Customer_Inviter = ();
         try {
             Customer::create([
+                'users_id' => $user->id,
                 'Surname' => $request['Surname'],
                 'Name' => $request['Name'],
                 'Middle_Name' => $request['Middle_Name'],
@@ -66,11 +68,12 @@ class CustomerController extends Controller
                 'Floor' => $request['Floor'],
                 'Phone_Customer_Inviter' =>  $request['Number_Customers_Inviter'] ?? null,
                 'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
-                'users_id' => $user->id,
+
             ]);
         } catch (ModelNotFoundException $exception) {
-            return redirect()->route('customer.index');
+
         }
+        return redirect()->route('customer.index');
     }
 
     /**
@@ -104,7 +107,13 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        Customer::findOrFail($customer->id)->update(['Name' => $request->Name, 'Surname' => $request->Surname,
+            'Middle_Name' => $request->Middle_Name, 'Phone_Number_Customer' => $request->Phone_Number_Customer,
+        'Date_Birth_Customer' =>  date('Y-m-d', strtotime($request->Date_Birth_Customer))]);
+
+        User::findOrFail($customer->users_id)->update(['login' => $request->login, 'email'=> $request->email]);
+
+        return redirect()->route('customer.index');
     }
 
     /**
@@ -115,6 +124,8 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+
+        return redirect()->route('customer.index');
     }
 }

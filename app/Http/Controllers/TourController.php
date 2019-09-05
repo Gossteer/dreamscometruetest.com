@@ -94,6 +94,8 @@ class TourController extends Controller
      */
     public function destroy(tour $tour)
     {
-        //
+       $tour->delete();
+
+        return redirect()->route('tours.index');
     }
 }

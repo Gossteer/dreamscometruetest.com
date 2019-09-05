@@ -29,7 +29,7 @@ class CreateEmployeesTable extends Migration
             $table->mediumInteger('Driver_License_Id')->nullable();
             $table->bigInteger('jobs_id')->unsigned()->nullable();
             $table->foreign('jobs_id')->references('id')
-                ->on('jobs')->onDelete('SET NULL');
+                ->on('jobs');
             $table->bigInteger('Work_Schedule_id')->unsigned()->nullable();
             $table->foreign('Work_Schedule_id')->references('id')
                 ->on('Work_Schedule')->onDelete('SET NULL');

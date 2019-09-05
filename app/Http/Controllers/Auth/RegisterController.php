@@ -78,6 +78,7 @@ class RegisterController extends Controller
        // $Phone_Customer_Inviter = ();
         try {
             Customer::create([
+                'users_id' => $user->id,
                 'Surname' => $data['Surname'],
                 'Name' => $data['Name'],
                 'Middle_Name' => $data['Middle_Name'],
@@ -86,7 +87,7 @@ class RegisterController extends Controller
                 'Floor' => $data['Floor'],
                 'Phone_Customer_Inviter' =>  $data['Number_Customers_Inviter'] ?? null,
                 'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->count(),
-                'users_id' => $user->id,
+
             ]);
         } catch (ModelNotFoundException $exception) {
             return back()->withError($exception->getMessage())->withInput();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use App\Job;
 use Illuminate\Http\Request;
 
@@ -87,6 +88,9 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        //
+        Employee::where('jobs_id',$job->id)->update(['jobs_id' => null]);
+        $job->delete();
+
+        return redirect()->route('job.index');
     }
 }

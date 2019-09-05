@@ -30,8 +30,14 @@
                                 <td><span style="color: #0b0b0b">{{ $customer->Black_Days }} ;</span> <span style="color: #00FFFF">{{ $customer->White_Days }}</span>
                                 </td>
                                 <td>
-                                <span><a href="{{ route('customer.edit', $customer) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i>
-                                    </a><a href="#" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></a>
+                                <span>
+
+                                     <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('customer.destroy',$customer)}}" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        @csrf
+                                         <a href="{{ route('customer.edit', $customer) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i></a>
+                                        <button id="buttonfordeleted" type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></button>
+                                    </form>
                                 </span>
                                 </td>
 

@@ -1,4 +1,4 @@
-@extends('layouts.site')
+    @extends('layouts.site')
 
 @section('content')
 
@@ -15,7 +15,8 @@
 	<div class="container py-lg-4 py-sm-3">
 		<h2 class="heading text-capitalize text-center"> Ознакомьтесь с нашими предложениями </h2>
 		<p class="text mt-2 mb-5 text-center">Инфо... необязательно</p>
-		<div class="row">
+
+            <div class="row">
 			@foreach($tours as $tour)
 			<div class="col-lg-3 col-sm-6 mb-5" href="">
 				<div class="image-tour position-relative">
@@ -29,6 +30,7 @@
 					<ul class="listing mt-3">
 						<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
 					</ul>
+                    <a class="btn mb-1 btn-success" href="{{route('passengers.create',['tours_id' => $tour->id])}}">Записаться на тур</a>
 				</div>
 			</div>
 				@endforeach

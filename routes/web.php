@@ -43,6 +43,8 @@ Route::resource('admin/job', 'JobController')->middleware('auth');;
 
 Route::resource('admin/customer', 'CustomerController')->middleware('auth');;
 
+Route::resource('admin/passengers', 'PassengerController');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

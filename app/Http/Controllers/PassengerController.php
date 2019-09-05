@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\Passenger;
+use App\User;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PassengerController extends Controller
@@ -22,9 +26,24 @@ class PassengerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $aa = Customer::find(Auth::user()->id);
+        $Preferential_Terms = '';
+        $dtr = $aa->Date_Birth_Customer;
+        $diff = Carbon::parse($dtr)->diff(Carbon::parse(Carbon::today()->toDateString()));
+        if($diff->y < 18)
+            $Preferential_Terms = 1;
+        else
+            $Preferential_Terms = 0;
+        $user = Auth::user()->id;
+        $attribute = [
+            'tours_id' => $request->tours_id,
+            'customers_id' => $user,
+            'Preferential_Terms' => $Preferential_Terms,
+        ];
+        Passenger::create($attribute);
+        return redirect()->route('/packages');
     }
 
     /**

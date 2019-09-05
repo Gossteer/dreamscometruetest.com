@@ -41,6 +41,8 @@ Route::resource('admin/employees', 'EmployeeController');
 
 Route::resource('admin/job', 'JobController');
 
+Route::resource('admin/customer', 'CustomerController');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

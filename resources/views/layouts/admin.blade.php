@@ -176,7 +176,7 @@
                         <i class="icon-note menu-icon"></i><span class="nav-text">Клиенты</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="#">Клиенты</a></li>
+                        <li><a href="{{ route('customer.index') }}">Клиенты</a></li>
                     </ul>
                 </li>
                 <li class="nav-label">Экскурсионный отдел</li>

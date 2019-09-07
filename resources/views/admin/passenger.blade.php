@@ -1,0 +1,159 @@
+@extends('layouts.admin')
+
+@section('content')
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"> {{ $Name_tour }}</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped verticle-middle">
+                        <thead>
+                        <tr>
+                            <th scope="col">ФИО</th>
+                            <th scope="col">Льготник</th>
+                            <th scope="col">Дата записи</th>
+                            <th scope="col">Действие</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($passengers as $passenger)
+                        <tr>
+
+                            <td style="{{ ( ($passenger->Presence == 1) ?
+                                       'color: green !important;' :
+                                        (($passenger->Presence == -1) ?
+                                       'color: red !important;' : 'lol')) }}"> {{ $passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name }}</td>
+                            <td>
+                                {{ ($passenger->Preferential_Terms == 1) ? 'Да' : 'Нет' }}
+                            </td>
+                            <td> {{ $passenger->tour->created_at }}</td>
+                            <td>
+                                <span>
+                                    <script>
+					function alert_precence_true ()
+                    {
+                        dialog.alert({
+                            title: "Уведомление",
+                            message: "Вы уже отметили пользователя, как присутствуещего!",
+                        });
+
+                        return false
+                    }
+
+
+                    function alert_occupaid_true_forfalse ()
+                    {
+                        var $lol
+                        dialog.confirm({
+                            title: "Предупреждение",
+                            message: "Вы действительно хотите изменить состояние клиента на 'Присутствовал'?",
+                            cancel: "Нет",
+                            button: "Да",
+                            required: true,
+                            callback: function(value){
+                                if (value = 1)
+                                    $("#Precence_True").submit()
+                                else
+                                    return false
+                            }
+                        });
+                    }
+
+
+                    function alert_occupaid_false_fortrue ()
+                    {
+                        var $lol
+                        dialog.confirm({
+                            title: "Предупреждение",
+                            message: "Вы действительно хотите изменить состояние клиента на 'Отсутствовал'?",
+                            cancel: "Нет",
+                            button: "Да",
+                            required: true,
+                            callback: function(value){
+                                if (value = 1)
+                                    $("#Precence_False").submit()
+                                else
+                                    return false
+                            }
+                        });
+                    }
+
+                    function alert_occupaid_false ()
+                    {
+                        dialog.alert({
+                            title: "Уведомление",
+                            message: "Вы уже отметили пользователя, как отсутсвующего!",
+                        });
+
+                        return false
+                    }
+				</script>
+
+                                    <form id="Precence_True" action="{{ route('passengers.update', $passenger) }}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="put">
+                                        <input id="" type="hidden" name="Presence" value="1">
+                                         <a  style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;"
+                                                 onclick="{{ (
+                                        ($passenger->Presence == 1) ?
+                                       'alert_precence_true ()' :
+                                        (($passenger->Presence == -1) ?
+                                       'alert_occupaid_true_forfalse ()' : 'lol'))
+                                           }}"
+                                            data-toggle="tooltip" data-placement="top" title="Присутствовал"><i class="fa fa-pencil color-muted m-r-5"></i>
+                                         </a>
+
+                                    </form>
+
+                                    <form id="Precence_False" action="{{ route('passengers.update', $passenger) }}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <input id="" type="hidden" name="Presence" value="-1">
+                                        <input type="hidden" name="_method" value="put">
+                                         <a style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;"
+                                                 onclick="{{ (
+                                        ($passenger->Presence == -1) ?
+                                       'alert_occupaid_false ()' :
+                                        (($passenger->Presence == 1) ?
+                                       'alert_occupaid_false_fortrue ()' : 'lol'))
+                                           }}"
+                                                 data-toggle="tooltip" data-placement="top" title="Отсутствовал"><i class="fa fa-pencil color-muted m-r-5"></i>
+                                    </a>
+
+                                    </form>
+
+
+
+                                    <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('passengers.destroy',$passenger)}}" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        @csrf
+
+
+                                        <button type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></button>
+                                    </form>
+
+                                </span>
+                            </td>
+
+                        </tr>
+                            @endforeach
+                        </tbody>
+
+                    </table>
+                    @if($passengers->total() > $passengers->count())
+                        <div class="bootstrap-pagination">
+                            <nav>
+                                <ul class="pagination">
+                                    {{ $passengers->links() }}
+                                </ul>
+                            </nav>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@endsection

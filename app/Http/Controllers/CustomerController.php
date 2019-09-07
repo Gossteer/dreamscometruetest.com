@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\User;
+use Hash;
 use Illuminate\Http\Request;
+use DB;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class CustomerController extends Controller
 {
@@ -15,7 +19,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.customer', ['customers' => Customer::paginate(12)]);
     }
 
     /**
@@ -25,7 +29,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.customer.create');
     }
 
 
@@ -44,7 +48,33 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::create([
+            'login' => $request['login'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'Processing_Personal_Data' => $request['Processing_Personal_Data'],
+            'Notifications' => $request['Notifications'],
+        ]);
 
+
+        // $Phone_Customer_Inviter = ();
+        try {
+            Customer::create([
+                'users_id' => $user->id,
+                'Surname' => $request['Surname'],
+                'Name' => $request['Name'],
+                'Middle_Name' => $request['Middle_Name'],
+                'Date_Birth_Customer' => date('Y-m-d', strtotime( $request['Date_Birth_Customer'])),
+                'Phone_Number_Customer' => $request['Phone_Number_Customer'],
+                'Floor' => $request['Floor'],
+                'Phone_Customer_Inviter' =>  $request['Number_Customers_Inviter'] ?? null,
+                'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
+                'Age_Group' => (Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60) ? 1 : 0,
+            ]);
+        } catch (ModelNotFoundException $exception) {
+
+        }
+        return redirect()->route('customer.index');
     }
 
     /**
@@ -66,7 +96,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return view('admin.customer.update', ['customer' => $customer ]);
     }
 
     /**
@@ -78,7 +108,13 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        Customer::findOrFail($customer->id)->update(['Name' => $request->Name, 'Surname' => $request->Surname,
+            'Middle_Name' => $request->Middle_Name, 'Phone_Number_Customer' => $request->Phone_Number_Customer,
+        'Date_Birth_Customer' =>  date('Y-m-d', strtotime($request->Date_Birth_Customer))]);
+
+        User::findOrFail($customer->users_id)->update(['login' => $request->login, 'email'=> $request->email]);
+
+        return redirect()->route('customer.index');
     }
 
     /**
@@ -89,6 +125,8 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+
+        return redirect()->route('customer.index');
     }
 }

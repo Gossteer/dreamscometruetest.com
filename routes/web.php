@@ -11,8 +11,11 @@
 |
 */
 
+use App\Tour;
+use App\Customer;
+
 Route::get('/', function () {
-    return view('site.index');
+    return view('site.index', ['tours' => Tour::orderByDesc('Price')->paginate(4)]);
 })->name('/');
 
 Route::get('/about', function () {
@@ -26,15 +29,28 @@ Route::get('/contact', function () {
 // Что делать с экскурсиями?
 
 Route::get('/packages', function () {
-    return view('site.packages');
+    return view('site.packages', ['tours' => Tour::paginate(12),
+        'Age_Group' => Customer::find(Auth::user()->id)->Age_Group,
+        'Condition' => Customer::find(Auth::user()->id)->Condition,
+        'customer_activ' => Customer::find(Auth::user()->id),]);
 })->name('/packages');
 
 Route::get('/admin', function () {
     return view('layouts.admin');
-})->name('/admin');
+})->name('/admin')->middleware('auth');
+
+Route::resource('admin/tours', 'TourController')->middleware('auth');
+
+Route::resource('admin/employees', 'EmployeeController')->middleware('auth');
+
+Route::resource('admin/job', 'JobController')->middleware('auth');
+
+Route::resource('admin/customer', 'CustomerController')->middleware('auth');
+
+Route::resource('admin/tours/passengers', 'PassengerController')->middleware('auth');
 
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/lol','CustomerController');
+//Route::resource('/lol','CustomerController');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use App\Job;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.job', ['jobs' => Job::paginate(12)]);
     }
 
     /**
@@ -24,7 +25,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.job.create', [ 'Job' => []]);
     }
 
     /**
@@ -35,7 +36,12 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Job::create([
+            'Job_Title' => $request->Job_Title,
+            'Salary' => $request->Salary,
+        ]);
+
+        return redirect()->route('job.index');
     }
 
     /**
@@ -57,7 +63,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        return view('admin.job.update', [ 'job' => $job]);
     }
 
     /**
@@ -69,7 +75,9 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
-        //
+        Job::findOrFail($job->id)->update($request->all());
+
+        return redirect()->route('job.index');
     }
 
     /**
@@ -80,6 +88,9 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        //
+        Employee::where('jobs_id',$job->id)->update(['jobs_id' => null]);
+        $job->delete();
+
+        return redirect()->route('job.index');
     }
 }

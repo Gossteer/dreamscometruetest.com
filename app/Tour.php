@@ -6,6 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class tour extends Model
 {
+
+    protected $fillable = [
+        'Name_Tours',
+        'Description',
+        'type_tours_id',
+        'Price',
+        'Privilegens_Price',
+        'Expenses',
+        'Amount_Place',
+        'Start_Date_Tours',
+        'Occupied_Place',
+    ];
+
+
     public function employee()
     {
         return $this->belongsToMany('App\Employee');

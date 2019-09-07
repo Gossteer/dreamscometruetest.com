@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\Passenger;
+use App\tour;
+use App\User;
+use DB;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PassengerController extends Controller
@@ -12,9 +18,9 @@ class PassengerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id_tour)
     {
-        //
+        return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $id_tour), 'id_tour' => $id_tour]);
     }
 
     /**
@@ -22,9 +28,28 @@ class PassengerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $aa = Customer::find(Auth::user()->id);
+        $Preferential_Terms = '';
+        $dtr = $aa->Date_Birth_Customer;
+        $diff = Carbon::parse($dtr)->diff(Carbon::parse(Carbon::today()->toDateString()));
+        if($diff->y < 14 or $diff->y > 60)
+            $Preferential_Terms = 1;
+        else
+            $Preferential_Terms = 0;
+        $user = Auth::user()->id;
+        Tour::findOrFail($request->tours_id)->update(['Occupied_Place' => Tour::find($request->tours_id)->Occupied_Place + 1]);
+        //DB::table('tours')
+         //   ->where('id', $request->tours_id)
+           // ->update(['Amount_Place' => Tour::find($request->tours_id)->Amount_Place + 1]);
+        $attribute = [
+            'tours_id' => $request->tours_id,
+            'customers_id' => $user,
+            'Preferential_Terms' => $Preferential_Terms,
+        ];
+        Passenger::create($attribute);
+        return redirect()->route('/packages');
     }
 
     /**
@@ -69,7 +94,38 @@ class PassengerController extends Controller
      */
     public function update(Request $request, Passenger $passenger)
     {
-        //
+        if ($request->Presence == 1)
+        {
+            Customer::findOrFail($passenger->customers_id)->update([
+                'White_Days' => Customer::find($passenger->customers_id)->White_Days + 1,
+            ]);
+        }
+        else
+            Customer::findOrFail($passenger->customers_id)->update([
+                'Black_Days' => Customer::find($passenger->customers_id)->Black_Days + 1]);
+
+
+        if (Customer::find($passenger->customers_id)->White_Days >=
+            ((Customer::find($passenger->customers_id)->Black_Days == 0) ?
+                (Customer::find($passenger->customers_id)->Black_Days + 2) :
+                (Customer::find($passenger->customers_id)->Black_Days * 2)) and
+            (Passenger::where('customers_id', $passenger->customers_id)->count() >= 2))
+            Customer::findOrFail($passenger->customers_id)->update([
+                'Condition' => 1]);
+        elseif (Customer::find($passenger->customers_id)->Black_Days >=
+            ((Customer::find($passenger->customers_id)->White_Days == 0) ?
+                (Customer::find($passenger->customers_id)->White_Days + 2) :
+                (Customer::find($passenger->customers_id)->White_Days * 2)) and
+            ((Passenger::where('customers_id', $passenger->customers_id)->count() - 2) <= Customer::find($passenger->customers_id)->White_Days))
+            Customer::findOrFail($passenger->customers_id)->update([
+                'Condition' => -2]);
+
+
+        $passenger->update([
+'Presence' => $request->Presence,
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +136,10 @@ class PassengerController extends Controller
      */
     public function destroy(Passenger $passenger)
     {
-        //
+        Tour::findOrFail($passenger->tours_id)->update(['Occupied_Place' => Tour::find($passenger->tours_id)->Occupied_Place - 1]);
+
+        $passenger->delete();
+
+        return redirect()->back();
     }
 }

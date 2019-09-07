@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Passenger;
 use App\tour;
+use App\Type_Tour;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class TourController extends Controller
 {
@@ -14,7 +17,7 @@ class TourController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.tours', ['tours' => Tour::paginate(12), ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class TourController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tours.create', ['type_tours' => Type_Tour::all(), 'Tour' => []]);
     }
 
     /**
@@ -35,7 +38,18 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Tour::create([
+          'Name_Tours'=> $request->Name_Tours,
+           'Description'=> $request->Description,
+           'type_tours_id' => $request->type_tours_id,
+            'Price'=> $request->Price,
+            'Privilegens_Price'=> $request->Privilegens_Price,
+            'Expenses'=> $request->Expenses,
+            'Amount_Place'=> $request->Amount_Place,
+            'Start_Date_Tours'=> $request->Start_Date_Tours,
+        ]);
+
+        return redirect()->route('tours.index');
     }
 
     /**
@@ -46,7 +60,7 @@ class TourController extends Controller
      */
     public function show(tour $tour)
     {
-        //
+        return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $tour->id)->paginate(12), 'Name_tour' => $tour->Name_Tours]);
     }
 
     /**
@@ -57,7 +71,7 @@ class TourController extends Controller
      */
     public function edit(tour $tour)
     {
-        //
+        return view('admin.tours.update', ['type_tours' => Type_Tour::all(), 'tour' => $tour,]);
     }
 
     /**
@@ -69,7 +83,17 @@ class TourController extends Controller
      */
     public function update(Request $request, tour $tour)
     {
-        //
+        $attributes =['Name_Tours'=> $request->Name_Tours,
+            'Description'=> $request->Description,
+            'type_tours_id' => $request->type_tours_id,
+            'Price'=> $request->Price,
+            'Privilegens_Price'=> $request->Privilegens_Price,
+            'Expenses'=> $request->Expenses,
+            'Amount_Place'=> $request->Amount_Place,
+            'Start_Date_Tours'=> $request->Start_Date_Tours];
+        $tour->update($attributes);
+
+        return redirect()->route('tours.index');
     }
 
     /**
@@ -80,6 +104,8 @@ class TourController extends Controller
      */
     public function destroy(tour $tour)
     {
-        //
+       $tour->delete();
+
+        return redirect()->route('tours.index');
     }
 }

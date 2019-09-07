@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Redirect;
 use DB;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -78,6 +79,7 @@ class RegisterController extends Controller
        // $Phone_Customer_Inviter = ();
         try {
             Customer::create([
+                'users_id' => $user->id,
                 'Surname' => $data['Surname'],
                 'Name' => $data['Name'],
                 'Middle_Name' => $data['Middle_Name'],
@@ -86,6 +88,8 @@ class RegisterController extends Controller
                 'Floor' => $data['Floor'],
                 'Phone_Customer_Inviter' =>  $data['Number_Customers_Inviter'] ?? null,
                 'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->count(),
+                'Age_Group' => (Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60) ? 1 : 0,
+
             ]);
         } catch (ModelNotFoundException $exception) {
             return back()->withError($exception->getMessage())->withInput();

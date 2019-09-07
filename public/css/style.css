@@ -12,6 +12,16 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
+#buttonfordeleted{
+	padding: 0 !important;
+	border: none !important;
+	font: inherit !important;
+	color: inherit !important;
+	background-color: transparent !important;
+	/* отображаем курсор в виде руки при наведении; некоторые
+      считают, что необходимо оставлять стрелочный вид для кнопок */
+	cursor: pointer;
+}
 
 select:required:invalid {
 	color: gray;

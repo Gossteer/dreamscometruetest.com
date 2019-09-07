@@ -137,13 +137,12 @@
                                                     if( $.trim(value) === "" ){
                                                         return false;
                                                     }
+                                                    else
+                                                        dialog.alert({
+                                                            title: "Уведомление",
+                                                            message: "Спасибо за обращение. В ближайшее время с вами свяжется наш менеджер."
+                                                        });
                                                 },
-                                                callback: function(value){
-                                                    dialog.alert({
-                                                        title: "Уведомление",
-                                                        message: "Спасибо за обращение. В ближайшее время с вами свяжется наш менеджер."
-                                                    });
-                                                }
                                             });
                                             //$("#amswerForPromt").mask("+7 (999) 99-99-999");
                                         }

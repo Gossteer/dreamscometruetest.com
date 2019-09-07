@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Passenger extends Model
 {
 
-    protected $fillable = [
-        'Amount_Children', 'Presence',
+    protected $fillable = [ 'tours_id', 'customers_id', 'Preferential_Terms',
+    ];
+
+    protected $hidden = [
+        'Presence',
+        'Amount_Children',
     ];
 
     public function customer()

@@ -145,20 +145,22 @@
 		<div class="container py-lg-4 py-sm-3">
 			<h3 class="heading text-capitalize text-center mt-2 mb-5">Наши предложения</h3>
 			<div class="row">
-				<div class="col-lg-3 col-sm-6 " href="">
-					<div class="image-tour position-relative">
-						<img src="images/p1.jpg" alt="" class="img-fluid" />
-						<p><span class="fa fa-tags"></span> <span>Цена₽</span></p>
+				@foreach($tours as $tour)
+					<div class="col-lg-3 col-sm-6 mb-5" href="">
+						<div class="image-tour position-relative">
+							<img src="images/p1.jpg" alt="" class="img-fluid" />
+							<p><span class="fa fa-tags"></span> <span>{{ $tour->Price }}₽</span></p>
+						</div>
+						<div class="package-info">
+							<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
+							<h5 class="my-2">{{ $tour->Name_Tours }}</h5>
+							<p class="">{{str_limit($tour->Description,22,'...')}}</p>
+							<ul class="listing mt-3">
+								<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
+							</ul>
+						</div>
 					</div>
-					<div class="package-info">
-						<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>Место назначение</h6>
-						<h5 class="my-2">Название</h5>
-						<p class="">Краткое описания (продолжение на ...)</p>
-						<ul class="listing mt-3">
-							<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> 23.10.19</span></li>
-						</ul>
-					</div>
-				</div>
+				@endforeach
 			</div>
 			<div class="view-package text-center mt-4">
 				<a href="{{ route('/packages') }}" style="margin-right: 15px">Посмотреть все</a>

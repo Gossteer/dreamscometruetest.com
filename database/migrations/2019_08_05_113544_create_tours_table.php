@@ -16,7 +16,7 @@ class CreateToursTable extends Migration
         Schema::create('tours', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->bigInteger('albums_id')->unsigned();
+            $table->bigInteger('albums_id')->unsigned()->nullable();
             $table->foreign('albums_id')->references('id')
                 ->on('albums')->onDelete('SET NULL');
             $table->bigInteger('type_tours_id')->unsigned();

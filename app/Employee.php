@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
 
-    protected $fillable = ['Name', 'Surname', 'Middle_Name', 'Byrthday', 'Phone_Number', 'jobs_id'];
+    protected $fillable = ['Name', 'Surname', 'Middle_Name', 'Byrthday', 'Phone_Number', 'jobs_id', 'users_id',];
+
+    protected $hidden = [
+
+    ];
 
     public function user()
     {
@@ -29,8 +33,8 @@ class Employee extends Model
         return $this->belongsTo('App\Job', 'jobs_id');
     }
 
-    public function tour()
+    public function tour_employees()
     {
-        return $this->belongsToMany('App\Tour');
+        return $this->hasMany('App\Tour_employees', 'employee_id');
     }
 }

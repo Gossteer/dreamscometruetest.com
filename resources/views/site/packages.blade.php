@@ -58,8 +58,10 @@
 					<ul class="listing mt-3">
 						<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
 					</ul>
+					@if (Route::has('register'))
                     <a class="btn mb-1 btn-success" onclick="{{ (\App\Passenger::where('tours_id', '=', $tour->id, 'and', 'customers_id', '=', $customer_activ)->exists()) ? 'return alert_occupaid ()' :
                     ((($tour->Amount_Place - $tour->Occupied_Place) == 0) ? 'return alert_occupaid_null_plase ()' : 'lol') }}" style="background-color: #047ffc; margin-top: 15px;" href="{{route('passengers.create',['tours_id' => $tour->id])}}">Записаться на тур</a>
+				@endif
 				</div>
 			</div>
 				@endforeach

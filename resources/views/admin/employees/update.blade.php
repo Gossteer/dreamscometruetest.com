@@ -6,6 +6,24 @@
             {{csrf_field()}}
             <input type="hidden" name="_method" value="put">
 <br>
+            <label for="" >Логин</label>
+            <input id="login" type="text" class="form-control @error('name') is-invalid @enderror"  name="login" value="{{ $user->login }}" required autocomplete="login" autofocus placeholder="Логин">
+
+            @error('name')
+            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+            @enderror
+
+            <label for="" >Почта</label>
+            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email  }}" required autocomplete="email" placeholder="Email">
+
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+            @enderror
+
 <label for="" >Фамилия</label>
     <input  type="text" class="form-control" name="Surname" value="{{ $employees->Surname }}" required autocomplete="family-name" placeholder="Фамилия">
 <label for="">Имя</label>
@@ -24,13 +42,18 @@
     @else
         <option value="" selected> Неназначен</option>
     @endif
-
 @foreach($jobs as $job)
         @if($job->id != $employees->jobs_id)
             <option value="{{ $job->id }}"> {{ $job->Job_Title . ' зп: ' .  $job->Salary}}</option>
         @endif
 @endforeach
 </select>
+
+            <label for="">Права</label>
+            <select class="custom-select mr-sm-2" id="Type_User" name="Type_User" required>
+                <option value="0">Без прав</option>
+                <option value="1">С правами</option>
+            </select>
 
 <br>
 <br>
@@ -43,7 +66,7 @@
             </script>
 
 
-<input class="btn mb-1 btn-rounded btn-success" type="submit" value="Добавить">
+<input class="btn mb-1 btn-rounded btn-success" type="submit" value="Сохранить">
         </form>
     </div>
 

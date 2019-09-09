@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use App\Job;
+use App\User;
+use Hash;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -38,9 +40,20 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::create([
+            'login' => $request['login'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'Processing_Personal_Data' => $request['Processing_Personal_Data'],
+            'Notifications' => $request['Notifications'],
+            'Type_User' => $request['Type_User'],
+        ]);
+
         $attribute =['Name' => $request->Name, 'Surname' => $request->Surname,
             'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
-            'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,];
+            'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,
+            'users_id' => $user->id];
+
         Employee::create($attribute);
 
         return redirect()->route('employees.index');
@@ -65,7 +78,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        return view('admin.employees.update', ['employees' => $employee, 'jobs' => Job::all() ]);
+        return view('admin.employees.update', ['employees' => $employee, 'jobs' => Job::all(), 'user' => User::find($employee->users_id) ]);
     }
 
     /**
@@ -77,6 +90,8 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
+        User::findOrFail($employee->users_id)->update($request->all());
+
         Employee::findOrFail($employee->id)->update(['Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),$request->all()]);
 
         return redirect()->route('employees.index');

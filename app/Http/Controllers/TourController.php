@@ -61,6 +61,7 @@ class TourController extends Controller
     public function show(tour $tour)
     {
         return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $tour->id)->paginate(12), 'Name_tour' => $tour->Name_Tours]);
+
     }
 
     /**

@@ -5,7 +5,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Экскурсии <a href="{{ route('customer.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Создать</a></h4>
+                <h4 class="card-title">Клиенты <a href="{{ route('customer.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Создать</a></h4>
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped verticle-middle">

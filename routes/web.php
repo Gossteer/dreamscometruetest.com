@@ -30,10 +30,10 @@ Route::get('/contact', function () {
 
 Route::get('/packages', function () {
     return view('site.packages', ['tours' => Tour::paginate(12),
-        'Age_Group' => Customer::find(Auth::user()->id)->Age_Group,
+        'Age_Group' => Customer::find((Auth::user()->id))->Age_Group,
         'Condition' => Customer::find(Auth::user()->id)->Condition,
         'customer_activ' => Customer::find(Auth::user()->id),]);
-})->name('/packages');
+})->name('/packages')->middleware('auth');
 
 Route::get('/admin', function () {
     return view('layouts.admin');
@@ -47,7 +47,15 @@ Route::resource('admin/job', 'JobController')->middleware('auth');
 
 Route::resource('admin/customer', 'CustomerController')->middleware('auth');
 
+Route::resource('admin/tours/partners', 'PartnerController')->middleware('auth');
+
 Route::resource('admin/tours/passengers', 'PassengerController')->middleware('auth');
+
+Route::get('admin/tours/{tour}/jobs', 'TourEmployeesController@index')->middleware('auth')->name('jobsindex');
+
+Route::delete('admin/tours/{tour}/jobs/{job_for_tour}', 'TourEmployeesController@destroy')->middleware('auth')->name('jobsdestroy');
+
+Route::post('admin/tours/{tour}/jobs', 'TourEmployeesController@store')->middleware('auth')->name('jobsstore');
 
 Auth::routes();
 

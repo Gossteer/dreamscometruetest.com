@@ -189,7 +189,7 @@
                         <i class="icon-speedometer menu-icon"></i><span class="nav-text">Партнёры</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="#">Партнёры</a></li>
+                        <li><a href="{{ route('partners.index') }}">Партнёры</a></li>
                         <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                     </ul>
                 </li>

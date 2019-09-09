@@ -17,12 +17,13 @@ class tour extends Model
         'Amount_Place',
         'Start_Date_Tours',
         'Occupied_Place',
+
     ];
 
 
-    public function employee()
+    public function tour_employees()
     {
-        return $this->belongsToMany('App\Employee');
+        return $this->hasMany('App\Tour_employees', 'tour_id');
     }
 
     public function type_tour()

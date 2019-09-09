@@ -1,11 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-    <a class="btn mb-1 btn-success" href="{{route('employees.create')}}">Добавить работника  <span class="btn-icon-right"><i class="fa fa-check"></i></span></a>
-
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <h4 class="card-title">Клиенты <a href="{{ route('employees.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Добавить работника</a></h4>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped verticle-middle">
                             <thead>

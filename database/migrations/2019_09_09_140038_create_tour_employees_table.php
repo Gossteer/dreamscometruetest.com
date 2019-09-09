@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTourEmployeeTable extends Migration
+class CreateTourEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateTourEmployeeTable extends Migration
      */
     public function up()
     {
-        Schema::create('tour_employee', function (Blueprint $table) {
+        Schema::create('tour_employees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->bigInteger('tours_id')->unsigned();
-            $table->foreign('tours_id')->references('id')
+            $table->bigInteger('tour_id')->unsigned();
+            $table->foreign('tour_id')->references('id')
                 ->on('tours');
-            $table->bigInteger('employees_id')->unsigned();
-            $table->foreign('employees_id')->references('id')
+            $table->bigInteger('employee_id')->unsigned();
+            $table->foreign('employee_id')->references('id')
                 ->on('employees');
             $table->boolean('LogicalDelete')->default(0);
         });
@@ -33,6 +33,6 @@ class CreateTourEmployeeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workers');
+        Schema::dropIfExists('tour_employees');
     }
 }

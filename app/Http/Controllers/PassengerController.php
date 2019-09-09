@@ -94,15 +94,37 @@ class PassengerController extends Controller
      */
     public function update(Request $request, Passenger $passenger)
     {
-        if ($request->Presence == 1)
-        {
-            Customer::findOrFail($passenger->customers_id)->update([
-                'White_Days' => Customer::find($passenger->customers_id)->White_Days + 1,
-            ]);
+        switch ($passenger->Presence) {
+            case -1:
+                if ($request->Presence == 1){
+                    Customer::findOrFail($passenger->customers_id)->update([
+                        'White_Days' => Customer::find($passenger->customers_id)->White_Days + 1,
+                        'Black_Days' => Customer::find($passenger->customers_id)->Black_Days - 1,
+                    ]);
+                }
+                break;
+            case 1:
+                if ($request->Presence == -1){
+                    Customer::findOrFail($passenger->customers_id)->update([
+                        'White_Days' => Customer::find($passenger->customers_id)->White_Days - 1,
+                        'Black_Days' => Customer::find($passenger->customers_id)->Black_Days + 1
+                    ]);
+                }
+                break;
+            case 0:
+                if ($request->Presence == 1)
+                {
+                    Customer::findOrFail($passenger->customers_id)->update([
+                        'White_Days' => Customer::find($passenger->customers_id)->White_Days + 1,
+                    ]);
+                }
+                else
+                    Customer::findOrFail($passenger->customers_id)->update([
+                        'Black_Days' => Customer::find($passenger->customers_id)->Black_Days + 1]);
+                break;
         }
-        else
-            Customer::findOrFail($passenger->customers_id)->update([
-                'Black_Days' => Customer::find($passenger->customers_id)->Black_Days + 1]);
+
+
 
 
         if (Customer::find($passenger->customers_id)->White_Days >=
@@ -137,6 +159,18 @@ class PassengerController extends Controller
     public function destroy(Passenger $passenger)
     {
         Tour::findOrFail($passenger->tours_id)->update(['Occupied_Place' => Tour::find($passenger->tours_id)->Occupied_Place - 1]);
+
+        switch ($passenger->Presence){
+            case 1:
+                Customer::findOrFail($passenger->customers_id)->update([
+                    'White_Days' => Customer::find($passenger->customers_id)->White_Days - 1,
+                ]);
+                break;
+            case -1:
+                Customer::findOrFail($passenger->customers_id)->update([
+                    'Black_Days' => Customer::find($passenger->customers_id)->Black_Days - 1]);
+                break;
+        }
 
         $passenger->delete();
 

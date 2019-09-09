@@ -45,7 +45,6 @@
 
                     function alert_occupaid_true_forfalse ()
                     {
-                        var $lol
                         dialog.confirm({
                             title: "Предупреждение",
                             message: "Вы действительно хотите изменить состояние клиента на 'Присутствовал'?",
@@ -61,10 +60,8 @@
                         });
                     }
 
-
                     function alert_occupaid_false_fortrue ()
                     {
-                        var $lol
                         dialog.confirm({
                             title: "Предупреждение",
                             message: "Вы действительно хотите изменить состояние клиента на 'Отсутствовал'?",
@@ -78,6 +75,12 @@
                                     return false
                             }
                         });
+                    }
+
+                    function Precence_True_submit ($lol)
+                    {
+                        $lol.submit()
+                        //$("#Precence_True").submit()
                     }
 
                     function alert_occupaid_false ()
@@ -100,9 +103,9 @@
                                         ($passenger->Presence == 1) ?
                                        'alert_precence_true ()' :
                                         (($passenger->Presence == -1) ?
-                                       'alert_occupaid_true_forfalse ()' : 'lol'))
+                                       'alert_occupaid_true_forfalse ()' : 'Precence_True_submit (Precence_True)'))
                                            }}"
-                                            data-toggle="tooltip" data-placement="top" title="Присутствовал"><i class="fa fa-pencil color-muted m-r-5"></i>
+                                            data-toggle="tooltip" data-placement="top" title="Присутствовал"><i class="fa fa-check color-muted m-r-5"></i>
                                          </a>
 
                                     </form>
@@ -116,11 +119,10 @@
                                         ($passenger->Presence == -1) ?
                                        'alert_occupaid_false ()' :
                                         (($passenger->Presence == 1) ?
-                                       'alert_occupaid_false_fortrue ()' : 'lol'))
+                                       'alert_occupaid_false_fortrue ()' : 'Precence_True_submit (Precence_False)'))
                                            }}"
-                                                 data-toggle="tooltip" data-placement="top" title="Отсутствовал"><i class="fa fa-pencil color-muted m-r-5"></i>
+                                                 data-toggle="tooltip" data-placement="top" title="Отсутствовал"><i class="fa fa-upload color-muted m-r-5"></i>
                                     </a>
-
                                     </form>
 
 

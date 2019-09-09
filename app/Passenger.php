@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Passenger extends Model
 {
 
-    protected $fillable = [ 'tours_id', 'customers_id', 'Preferential_Terms',
+    protected $fillable = [ 'tours_id', 'customers_id', 'Preferential_Terms', 'Presence',
     ];
 
     protected $hidden = [
-        'Presence',
+
         'Amount_Children',
     ];
 

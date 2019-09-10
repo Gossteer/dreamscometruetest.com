@@ -116,6 +116,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								Админка
 							</a>
 
+							<a  class="dropdown-item" href="{{ route('AccountCustomer') }}">
+								Аккаунт
+							</a>
+
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 								@csrf
 							</form>

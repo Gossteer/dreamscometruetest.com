@@ -30,7 +30,7 @@ class PassengerController extends Controller
      */
     public function create(Request $request)
     {
-        $aa = Customer::find(Auth::user()->id);
+        $aa = Customer::where('users_id', Auth::user()->id)->first();
         $Preferential_Terms = '';
         $dtr = $aa->Date_Birth_Customer;
         $diff = Carbon::parse($dtr)->diff(Carbon::parse(Carbon::today()->toDateString()));
@@ -38,14 +38,14 @@ class PassengerController extends Controller
             $Preferential_Terms = 1;
         else
             $Preferential_Terms = 0;
-        $user = Auth::user()->id;
+
         Tour::findOrFail($request->tours_id)->update(['Occupied_Place' => Tour::find($request->tours_id)->Occupied_Place + 1]);
         //DB::table('tours')
          //   ->where('id', $request->tours_id)
            // ->update(['Amount_Place' => Tour::find($request->tours_id)->Amount_Place + 1]);
         $attribute = [
             'tours_id' => $request->tours_id,
-            'customers_id' => $user,
+            'customers_id' => $aa->id,
             'Preferential_Terms' => $Preferential_Terms,
         ];
         Passenger::create($attribute);

@@ -36,12 +36,17 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        if(Partner::where('Name_Partners', '=', $request->Name_Partners, 'and', 'LogicalDelete', '=', 1)->exists())
-            Partner::findOrFail(Partner::where('Name_Partners', '=', $request->Name_Partners, 'and', 'LogicalDelete', '=', 1)->first()->id)->update([
+        if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists())
+            Partner::findOrFail(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->first()->id)->update([
                 'type_activities_id' => $request->type_activities_id,
                     'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, 'LogicalDelete' => 0,
             ]);
-        else
+        elseif(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 0', [$request->Name_Partners])->exists())
+            Partner::findOrFail(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 0', [$request->Name_Partners])->first()->id)->update([
+                'type_activities_id' => $request->type_activities_id,
+                'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, 'LogicalDelete' => 0,
+            ]);
+            else
             Partner::create(['type_activities_id' => $request->type_activities_id,
                 'Name_Partners' => $request->Name_Partners, 'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, ]);
 

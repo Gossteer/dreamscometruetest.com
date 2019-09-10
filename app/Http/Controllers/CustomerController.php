@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Passenger;
 use App\User;
+use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use DB;
@@ -20,6 +22,12 @@ class CustomerController extends Controller
     public function index()
     {
         return view('admin.customer', ['customers' => Customer::paginate(12)]);
+    }
+
+
+    public function account()
+    {
+        return view('site.account', ['passengers' => Passenger::where('customers_id', Customer::where('users_id', Auth::user()->id)->first()->id)]);
     }
 
     /**

@@ -12,7 +12,7 @@ class Customer extends Model
     ];
 
     protected $hidden = [
-      'Age_Group', 'White_Days', 'Black_Days', 'Condition'
+      'White_Days', 'Black_Days', 'Condition','Age_Group'
     ];
 
     public function source()

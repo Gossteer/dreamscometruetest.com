@@ -28,12 +28,7 @@ Route::get('/contact', function () {
 
 // Что делать с экскурсиями?
 
-Route::get('/packages', function () {
-    return view('site.packages', ['tours' => Tour::paginate(12),
-        'Age_Group' => Customer::find((Auth::user()->id))->Age_Group,
-        'Condition' => Customer::find(Auth::user()->id)->Condition,
-        'customer_activ' => Customer::find(Auth::user()->id),]);
-})->name('/packages')->middleware('auth');
+Route::get('/packages', 'SiteController@packages')->middleware('auth')->name('/packages');
 
 Route::get('/admin', function () {
     return view('layouts.admin');
@@ -46,6 +41,7 @@ Route::resource('admin/employees', 'EmployeeController')->middleware('auth');
 Route::resource('admin/job', 'JobController')->middleware('auth');
 
 Route::resource('admin/customer', 'CustomerController')->middleware('auth');
+Route::get('/account', 'CustomerController@account')->middleware('auth')->name('AccountCustomer');
 
 Route::resource('admin/partners', 'PartnerController')->middleware('auth');
 

@@ -155,7 +155,7 @@
 							<a href=""><img src="images/japan.jpg" alt="" class="img-fluid"></a>
 						</div>
 						<div class="col-sm-7 right-cont">
-							<a href=""><h4 class="mb-2 let mt-sm-0 mt-2 tm-clr">Санкт Петербург</h4></a>
+							<h4 class="mb-2 let mt-sm-0 mt-2 tm-clr">Санкт Петербург</h4>
 							<ul class="d-flex">
 								<li><span class="fa fa-star"></span></li>
 								<li><span class="fa fa-star"></span></li>
@@ -174,10 +174,10 @@
 				<div class="grids-tem-one">
 					<div class="row">
 						<div class="col-sm-5 grids-img-left">
-							<a href=""><img src="images/singapore.jpg" alt="" class="img-fluid"></a>
+							<img src="images/singapore.jpg" alt="" class="img-fluid">
 						</div>
 						<div class="col-sm-7 right-cont">
-							<a href=""><h4 class="mb-2 let mt-sm-0 mt-2 tm-clr">Республика Беларусь</h4></a>
+							<h4 class="mb-2 let mt-sm-0 mt-2 tm-clr">Республика Беларусь</h4>
 							<ul class="d-flex">
 								<li><span class="fa fa-star"></span></li>
 								<li><span class="fa fa-star"></span></li>
@@ -218,7 +218,7 @@
 				<div class="grids-tem-one">
 					<div class="row">
 						<div class="col-sm-5 grids-img-left">
-							<a href=""><img src="images/china.jpg" alt="" class="img-fluid"></a>
+							<img src="images/china.jpg" alt="" class="img-fluid">
 						</div>
 						<div class="col-sm-7 right-cont">
 							<a href=""><h4 class="mb-2 mt-sm-0 mt-2 let tm-clr">Псков</h4></a>

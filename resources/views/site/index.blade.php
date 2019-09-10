@@ -131,7 +131,7 @@
 						до его исполнения вы испытывали лишь радость, нами был создан проект - 'Реальные мечты', а так же вы можете ознакомиться с более подробной информацией
 					о нашей организации.</p>
 					<div class="text-left mt-4">
-						<a href="booking.html">Реальные мечты</a>
+						<a href="">Реальные мечты</a>
 						<a href="{{route('/about')}}" style="margin-left: 10px">О нас</a>
 					</div>
 				</div>
@@ -148,7 +148,7 @@
 				@foreach($tours as $tour)
 					<div class="col-lg-3 col-sm-6 mb-5" href="">
 						<div class="image-tour position-relative">
-							<a href="{{ route('packages') }}"><img  src="images/p1.jpg" alt="" class="img-fluid" /></a>
+							<a href="{{ route('/packages') }}"><img  src="images/p1.jpg" alt="" class="img-fluid" /></a>
 							<p><span class="fa fa-tags"></span> <span>{{ $tour->Price }}₽</span></p>
 						</div>
 						<div class="package-info">

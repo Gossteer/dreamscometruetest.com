@@ -5,40 +5,37 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Экскурсии <a href="{{ route('tours.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Создать</a></h4>
+                <h4 class="card-title">Партнёры <a href="{{ route('partners.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Создать</a></h4>
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped verticle-middle">
                         <thead>
                         <tr>
                             <th scope="col">Название</th>
-                            <th scope="col">Свободных мест</th>
-                            <th scope="col">Дата</th>
-                            <th scope="col">Цена</th>
-                            <th scope="col">Сотрудники</th>
+                            <th scope="col">Тип занятости</th>
+                            <th scope="col">Адрес</th>
+                            <th scope="col">Номер телефона</th>
                             <th scope="col">Действие</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($tours as $tour)
+                        @foreach($partners as $partner)
                         <tr>
 
-                                <td> <a href="{{ route('tours.show', $tour) }}">{{ $tour->Name_Tours }}</a></td>
+                                <td> {{ $partner->Name_Partners }}</td>
                             <td>
-                                {{ ($tour->Amount_Place - $tour->Occupied_Place) }}
+                                {{ $partner->type_activity->Name_Type_Activity }}
                             </td>
-                            <td> {{ $tour->Start_Date_Tours }}</td>
-                            <td><span class="label gradient-1 btn-rounded">{{ $tour->Price }} ₽</span>
+                            <td> {{ $partner->Address }}</td>
+                            <td><span class="label gradient-1 btn-rounded">{{ $partner->Phone_Number }}</span>
                             </td>
-                            <td>
-                                <a class="label gradient-1 btn-rounded" href="{{ route('jobsindex', [$tour]) }}">Посмотреть</a>
-                            </td>
+
                             <td>
                                 <span>
-                                    <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('tours.destroy',$tour)}}" method="post">
+                                    <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('partners.destroy',$partner)}}" method="post">
                                         <input type="hidden" name="_method" value="DELETE">
                                         @csrf
-                                        <a href="{{ route('tours.edit', $tour) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i>
+                                        <a href="{{ route('partners.edit', $partner) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i>
                                     </a>
                                         <button type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></button>
                                     </form>
@@ -51,11 +48,11 @@
                         </tbody>
 
                     </table>
-                    @if($tours->total() > $tours->count())
+                    @if($partners->total() > $partners->count())
                         <div class="bootstrap-pagination">
                             <nav>
                                 <ul class="pagination">
-                                    {{ $tours->links() }}
+                                    {{ $partners->links() }}
                                 </ul>
                             </nav>
                         </div>

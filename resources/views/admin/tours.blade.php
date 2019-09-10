@@ -16,6 +16,7 @@
                             <th scope="col">Дата</th>
                             <th scope="col">Цена</th>
                             <th scope="col">Сотрудники</th>
+                            <th scope="col">Партнёры</th>
                             <th scope="col">Действие</th>
                         </tr>
                         </thead>
@@ -32,6 +33,9 @@
                             </td>
                             <td>
                                 <a class="label gradient-1 btn-rounded" href="{{ route('jobsindex', [$tour]) }}">Посмотреть</a>
+                            </td>
+                            <td>
+                                <a class="label gradient-1 btn-rounded" href="{{ route('contractsindex', [$tour]) }}">Посмотреть</a>
                             </td>
                             <td>
                                 <span>

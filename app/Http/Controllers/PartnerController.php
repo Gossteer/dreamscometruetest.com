@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Partner;
+use App\Type_Activity;
 use Illuminate\Http\Request;
 
 class PartnerController extends Controller
@@ -14,7 +15,7 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.partner', ['partners' => Partner::where('LogicalDelete',0)->paginate(12)]);
     }
 
     /**
@@ -24,7 +25,7 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.partner.create', ['type_activities' => Type_Activity::all()]);
     }
 
     /**
@@ -35,7 +36,16 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Partner::where('Name_Partners', '=', $request->Name_Partners, 'and', 'LogicalDelete', '=', 1)->exists())
+            Partner::findOrFail(Partner::where('Name_Partners', '=', $request->Name_Partners, 'and', 'LogicalDelete', '=', 1)->first()->id)->update([
+                'type_activities_id' => $request->type_activities_id,
+                    'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, 'LogicalDelete' => 0,
+            ]);
+        else
+            Partner::create(['type_activities_id' => $request->type_activities_id,
+                'Name_Partners' => $request->Name_Partners, 'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, ]);
+
+        return redirect()->route('partners.index');
     }
 
     /**
@@ -57,7 +67,7 @@ class PartnerController extends Controller
      */
     public function edit(Partner $partner)
     {
-        //
+        return view('admin.partner.update', ['partner' => $partner, 'type_activities' => Type_Activity::all()]);
     }
 
     /**
@@ -69,7 +79,10 @@ class PartnerController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
-        //
+        $partner->update(['type_activities_id' => $request->type_activities_id,
+            'Name_Partners' => $request->Name_Partners, 'Phone_Number' => $request->Phone_Number, 'Address' => ($request->Address === null) ? 'Нет' : $request->Address,]);
+
+        return redirect()->route('partners.index');
     }
 
     /**
@@ -80,6 +93,8 @@ class PartnerController extends Controller
      */
     public function destroy(Partner $partner)
     {
-        //
+        $partner->update(['LogicalDelete' => 1]);
+
+        return redirect()->route('partners.index');
     }
 }

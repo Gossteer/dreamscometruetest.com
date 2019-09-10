@@ -8,7 +8,7 @@ class Partner extends Model
 {
 
     protected $fillable = [
-        'type_activities',
+        'type_activities_id',
         'Name_Partners',
         'Phone_Number',
         'Address',
@@ -16,6 +16,8 @@ class Partner extends Model
         'Site',
         'Conract_Partners',
         'INN',
+        'LogicalDelete',
+        'id',
     ];
 
     public function contract()

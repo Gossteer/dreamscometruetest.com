@@ -48,7 +48,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create([
+        $user = User::firstOrCreate([
             'login' => $request['login'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
@@ -59,7 +59,7 @@ class CustomerController extends Controller
 
         // $Phone_Customer_Inviter = ();
         try {
-            Customer::create([
+            Customer::firstOrCreate([
                 'users_id' => $user->id,
                 'Surname' => $request['Surname'],
                 'Name' => $request['Name'],

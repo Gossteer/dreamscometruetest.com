@@ -47,7 +47,7 @@ Route::resource('admin/job', 'JobController')->middleware('auth');
 
 Route::resource('admin/customer', 'CustomerController')->middleware('auth');
 
-Route::resource('admin/tours/partners', 'PartnerController')->middleware('auth');
+Route::resource('admin/partners', 'PartnerController')->middleware('auth');
 
 Route::resource('admin/tours/passengers', 'PassengerController')->middleware('auth');
 
@@ -56,6 +56,12 @@ Route::get('admin/tours/{tour}/jobs', 'TourEmployeesController@index')->middlewa
 Route::delete('admin/tours/{tour}/jobs/{job_for_tour}', 'TourEmployeesController@destroy')->middleware('auth')->name('jobsdestroy');
 
 Route::post('admin/tours/{tour}/jobs', 'TourEmployeesController@store')->middleware('auth')->name('jobsstore');
+
+Route::get('admin/tours/{tour}/contracts', 'ContractController@index')->middleware('auth')->name('contractsindex');
+
+Route::delete('admin/tours/{tour}/contracts/{contranct}', 'ContractController@destroy')->middleware('auth')->name('contractsdestroy');
+
+Route::post('admin/tours/{tour}/contracts', 'ContractController@store')->middleware('auth')->name('contractsstore');
 
 Auth::routes();
 

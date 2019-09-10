@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\contranct;
+use App\Contract;
+use App\Partner;
 use Illuminate\Http\Request;
 
-class ContranctController extends Controller
+class ContractController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($tour)
     {
-        //
+        return view('admin.tours_partner', ['partner_for_tour' => Contract::where('tours_id',$tour)->paginate(12),
+            'tour' => $tour,'partners' => Partner::all()]);
     }
 
     /**
@@ -33,9 +35,15 @@ class ContranctController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $tour)
     {
-        //
+        Contract::firstOrCreate([
+            'partners_id' => $request->partners_id,
+            'tours_id' => $tour,
+            'Document_Contract' => "Меня здесь нет!",
+        ]);
+
+        return redirect()->route('contractsindex', $tour);
     }
 
     /**
@@ -44,7 +52,7 @@ class ContranctController extends Controller
      * @param  \App\contranct  $contranct
      * @return \Illuminate\Http\Response
      */
-    public function show(contranct $contranct)
+    public function show(Contract $contract)
     {
         //
     }
@@ -55,7 +63,7 @@ class ContranctController extends Controller
      * @param  \App\contranct  $contranct
      * @return \Illuminate\Http\Response
      */
-    public function edit(contranct $contranct)
+    public function edit(Contract $contract)
     {
         //
     }
@@ -67,7 +75,7 @@ class ContranctController extends Controller
      * @param  \App\contranct  $contranct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, contranct $contranct)
+    public function update(Request $request, Contract $contract)
     {
         //
     }
@@ -78,8 +86,10 @@ class ContranctController extends Controller
      * @param  \App\contranct  $contranct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(contranct $contranct)
+    public function destroy($tour, $contract)
     {
-        //
+        Contract::findOrFail($contract)->delete();
+
+        return redirect()->route('contractsindex', $tour);
     }
 }

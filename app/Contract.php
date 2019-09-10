@@ -4,8 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class contranct extends Model
+class Contract extends Model
 {
+
+    protected $fillable = [
+        'tours_id', 'partners_id', 'Document_Contract'
+    ];
+
     public function tour()
     {
         return $this->belongsTo('App\Tour', 'tours_id');

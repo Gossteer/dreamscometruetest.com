@@ -36,7 +36,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        Job::create([
+        Job::firstOrCreate([
             'Job_Title' => $request->Job_Title,
             'Salary' => $request->Salary,
         ]);

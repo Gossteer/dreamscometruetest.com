@@ -40,7 +40,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create([
+        $user = User::firstOrCreate([
             'login' => $request['login'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
@@ -54,7 +54,7 @@ class EmployeeController extends Controller
             'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,
             'users_id' => $user->id];
 
-        Employee::create($attribute);
+        Employee::firstOrCreate($attribute);
 
         return redirect()->route('employees.index');
     }

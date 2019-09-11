@@ -58,10 +58,14 @@
 					<ul class="listing mt-3">
 						<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
 					</ul>
+					@if($tour->Start_Date_Tours >= now()->subDay())
 					@if (Route::has('register') and $customer_activ != null )
                     <a class="btn mb-1 btn-success" onclick="{{ (\App\Passenger::whereRaw('tours_id = ? and customers_id = ?', [$tour->id, $customer_activ->id])->exists()) ? 'return alert_occupaid ()' :
                     ((($tour->Amount_Place - $tour->Occupied_Place) == 0) ? 'return alert_occupaid_null_plase ()' : 'lol') }}" style="background-color: #047ffc; margin-top: 15px;" href="{{route('passengers.create',['tours_id' => $tour->id])}}">Записаться на тур</a>
 				@endif
+						@else
+						<p class="" style="color: green; padding-top: 10px !important;">Экскурсия прошла</p>
+						@endif
 				</div>
 			</div>
 				@endforeach

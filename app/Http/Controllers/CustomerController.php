@@ -27,7 +27,8 @@ class CustomerController extends Controller
 
     public function account()
     {
-        return view('site.account', ['passengers' => Passenger::where('customers_id', Customer::where('users_id', Auth::user()->id)->first()->id)]);
+        return view('site.account', ['passengers' => Passenger::where('customers_id', Customer::where('users_id', Auth::user()->id)->first()->id)->paginate(12)
+            , 'customer' => Customer::where('users_id', Auth::user()->id)->first(), ]);
     }
 
     /**

@@ -111,15 +111,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                                      document.getElementById('logout-form').submit();" style="display: inline !important;">
 								Выйти
 							</a>
-
+							@if(\App\Employee::where('users_id',(Auth::user()->id))->first() != null and Auth::user()->Type_User == 1)
 							<a  class="dropdown-item" href="{{ route('/admin') }}">
 								Админка
 							</a>
-
+							@endif
+							@if(\App\Customer::where('users_id',(Auth::user()->id))->first() != null)
 							<a  class="dropdown-item" href="{{ route('AccountCustomer') }}">
-								Аккаунт
+								Профиль
 							</a>
-
+							@endif
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 								@csrf
 							</form>

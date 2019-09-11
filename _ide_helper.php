@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.34 on 2019-09-03 05:51:35.
+ * Generated for Laravel 5.8.34 on 2019-09-11 17:17:18.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -3751,6 +3751,110 @@ namespace Illuminate\Support\Facades {
         public static function hasMacro($name)
         {
                         return \Illuminate\Cookie\CookieJar::hasMacro($name);
+        }
+         
+    }
+
+    /**
+     * 
+     *
+     * @see \Illuminate\Encryption\Encrypter
+     */ 
+    class Crypt {
+        
+        /**
+         * Determine if the given key and cipher combination is valid.
+         *
+         * @param string $key
+         * @param string $cipher
+         * @return bool 
+         * @static 
+         */ 
+        public static function supported($key, $cipher)
+        {
+                        return \Illuminate\Encryption\Encrypter::supported($key, $cipher);
+        }
+        
+        /**
+         * Create a new encryption key for the given cipher.
+         *
+         * @param string $cipher
+         * @return string 
+         * @static 
+         */ 
+        public static function generateKey($cipher)
+        {
+                        return \Illuminate\Encryption\Encrypter::generateKey($cipher);
+        }
+        
+        /**
+         * Encrypt the given value.
+         *
+         * @param mixed $value
+         * @param bool $serialize
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\EncryptException
+         * @static 
+         */ 
+        public static function encrypt($value, $serialize = true)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->encrypt($value, $serialize);
+        }
+        
+        /**
+         * Encrypt a string without serialization.
+         *
+         * @param string $value
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\EncryptException
+         * @static 
+         */ 
+        public static function encryptString($value)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->encryptString($value);
+        }
+        
+        /**
+         * Decrypt the given value.
+         *
+         * @param string $payload
+         * @param bool $unserialize
+         * @return mixed 
+         * @throws \Illuminate\Contracts\Encryption\DecryptException
+         * @static 
+         */ 
+        public static function decrypt($payload, $unserialize = true)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->decrypt($payload, $unserialize);
+        }
+        
+        /**
+         * Decrypt the given string without unserialization.
+         *
+         * @param string $payload
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\DecryptException
+         * @static 
+         */ 
+        public static function decryptString($payload)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->decryptString($payload);
+        }
+        
+        /**
+         * Get the encryption key.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getKey()
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->getKey();
         }
          
     }
@@ -15076,6 +15180,244 @@ namespace Barryvdh\Debugbar {
  
 }
 
+namespace Maatwebsite\Excel\Facades { 
+
+    /**
+     * 
+     *
+     */ 
+    class Excel {
+        
+        /**
+         * 
+         *
+         * @param object $export
+         * @param string|null $fileName
+         * @param string $writerType
+         * @param array $headers
+         * @throws \PhpOffice\PhpSpreadsheet\Exception
+         * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+         * @return \Maatwebsite\Excel\BinaryFileResponse 
+         * @static 
+         */ 
+        public static function download($export, $fileName, $writerType = null, $headers = array())
+        {
+                        /** @var \Maatwebsite\Excel\Excel $instance */
+                        return $instance->download($export, $fileName, $writerType, $headers);
+        }
+        
+        /**
+         * 
+         *
+         * @param object $export
+         * @param string $filePath
+         * @param string|null $disk
+         * @param string $writerType
+         * @param mixed $diskOptions
+         * @throws \PhpOffice\PhpSpreadsheet\Exception
+         * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+         * @return bool 
+         * @static 
+         */ 
+        public static function store($export, $filePath, $diskName = null, $writerType = null, $diskOptions = array())
+        {
+                        /** @var \Maatwebsite\Excel\Excel $instance */
+                        return $instance->store($export, $filePath, $diskName, $writerType, $diskOptions);
+        }
+        
+        /**
+         * 
+         *
+         * @param object $export
+         * @param string $filePath
+         * @param string|null $disk
+         * @param string $writerType
+         * @param mixed $diskOptions
+         * @return \Maatwebsite\Excel\PendingDispatch 
+         * @static 
+         */ 
+        public static function queue($export, $filePath, $disk = null, $writerType = null, $diskOptions = array())
+        {
+                        /** @var \Maatwebsite\Excel\Excel $instance */
+                        return $instance->queue($export, $filePath, $disk, $writerType, $diskOptions);
+        }
+        
+        /**
+         * 
+         *
+         * @param object $export
+         * @param string $writerType
+         * @return string 
+         * @static 
+         */ 
+        public static function raw($export, $writerType)
+        {
+                        /** @var \Maatwebsite\Excel\Excel $instance */
+                        return $instance->raw($export, $writerType);
+        }
+        
+        /**
+         * 
+         *
+         * @param object $import
+         * @param string|\Maatwebsite\Excel\UploadedFile $filePath
+         * @param string|null $disk
+         * @param string|null $readerType
+         * @return \Maatwebsite\Excel\Reader|\Maatwebsite\Excel\PendingDispatch 
+         * @static 
+         */ 
+        public static function import($import, $filePath, $disk = null, $readerType = null)
+        {
+                        /** @var \Maatwebsite\Excel\Excel $instance */
+                        return $instance->import($import, $filePath, $disk, $readerType);
+        }
+        
+        /**
+         * 
+         *
+         * @param object $import
+         * @param string|\Maatwebsite\Excel\UploadedFile $filePath
+         * @param string|null $disk
+         * @param string|null $readerType
+         * @return array 
+         * @static 
+         */ 
+        public static function toArray($import, $filePath, $disk = null, $readerType = null)
+        {
+                        /** @var \Maatwebsite\Excel\Excel $instance */
+                        return $instance->toArray($import, $filePath, $disk, $readerType);
+        }
+        
+        /**
+         * 
+         *
+         * @param object $import
+         * @param string|\Maatwebsite\Excel\UploadedFile $filePath
+         * @param string|null $disk
+         * @param string|null $readerType
+         * @return \Maatwebsite\Excel\Collection 
+         * @static 
+         */ 
+        public static function toCollection($import, $filePath, $disk = null, $readerType = null)
+        {
+                        /** @var \Maatwebsite\Excel\Excel $instance */
+                        return $instance->toCollection($import, $filePath, $disk, $readerType);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Maatwebsite\Excel\ShouldQueue $import
+         * @param string|\Maatwebsite\Excel\UploadedFile $filePath
+         * @param string|null $disk
+         * @param string $readerType
+         * @return \Maatwebsite\Excel\PendingDispatch 
+         * @static 
+         */ 
+        public static function queueImport($import, $filePath, $disk = null, $readerType = null)
+        {
+                        /** @var \Maatwebsite\Excel\Excel $instance */
+                        return $instance->queueImport($import, $filePath, $disk, $readerType);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $concern
+         * @param callable $handler
+         * @param string $event
+         * @static 
+         */ 
+        public static function extend($concern, $handler, $event = 'Maatwebsite\Excel\Events\BeforeWriting')
+        {
+                        return \Maatwebsite\Excel\Excel::extend($concern, $handler, $event);
+        }
+        
+        /**
+         * When asserting downloaded, stored, queued or imported, use regular expression
+         * to look for a matching file path.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function matchByRegex()
+        {
+                        /** @var \Maatwebsite\Excel\Fakes\ExcelFake $instance */
+                        $instance->matchByRegex();
+        }
+        
+        /**
+         * When asserting downloaded, stored, queued or imported, use regular string
+         * comparison for matching file path.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function doNotMatchByRegex()
+        {
+                        /** @var \Maatwebsite\Excel\Fakes\ExcelFake $instance */
+                        $instance->doNotMatchByRegex();
+        }
+        
+        /**
+         * 
+         *
+         * @param string $fileName
+         * @param callable|null $callback
+         * @static 
+         */ 
+        public static function assertDownloaded($fileName, $callback = null)
+        {
+                        /** @var \Maatwebsite\Excel\Fakes\ExcelFake $instance */
+                        return $instance->assertDownloaded($fileName, $callback);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $filePath
+         * @param string|callable|null $disk
+         * @param callable|null $callback
+         * @static 
+         */ 
+        public static function assertStored($filePath, $disk = null, $callback = null)
+        {
+                        /** @var \Maatwebsite\Excel\Fakes\ExcelFake $instance */
+                        return $instance->assertStored($filePath, $disk, $callback);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $filePath
+         * @param string|callable|null $disk
+         * @param callable|null $callback
+         * @static 
+         */ 
+        public static function assertQueued($filePath, $disk = null, $callback = null)
+        {
+                        /** @var \Maatwebsite\Excel\Fakes\ExcelFake $instance */
+                        return $instance->assertQueued($filePath, $disk, $callback);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $filePath
+         * @param string|callable|null $disk
+         * @param callable|null $callback
+         * @static 
+         */ 
+        public static function assertImported($filePath, $disk = null, $callback = null)
+        {
+                        /** @var \Maatwebsite\Excel\Fakes\ExcelFake $instance */
+                        return $instance->assertImported($filePath, $disk, $callback);
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -15098,6 +15440,8 @@ namespace  {
     class Config extends \Illuminate\Support\Facades\Config {}
 
     class Cookie extends \Illuminate\Support\Facades\Cookie {}
+
+    class Crypt extends \Illuminate\Support\Facades\Crypt {}
 
     class DB extends \Illuminate\Support\Facades\DB {}
 
@@ -17869,6 +18213,8 @@ namespace  {
     class View extends \Illuminate\Support\Facades\View {}
 
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
+
+    class Excel extends \Maatwebsite\Excel\Facades\Excel {}
  
 }
 

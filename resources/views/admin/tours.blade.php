@@ -5,8 +5,16 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Экскурсии <a href="{{ route('tours.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Создать</a></h4>
-
+                <h4 class="card-title">Экскурсии <a href="{{ route('tours.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 65%;">Создать</a>
+                    <a href="{{ route('prnpriviewvauher') }}" id="prinvauher" class="btn btn-info btn-rounded" style="margin-bottom: 10px;">Ваучер</a>
+                    <a href="{{ route('prnpriviewspisok') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; ">Список</a></h4>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $("#prinvauher").printPage({
+                            message:"Пожалуйста ожидайте!"
+                        });
+                    });
+                </script>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped verticle-middle">
                         <thead>

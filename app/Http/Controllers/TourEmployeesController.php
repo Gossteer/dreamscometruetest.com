@@ -39,7 +39,7 @@ class TourEmployeesController extends Controller
      */
     public function store(Request $request, $tour)
     {
-        Tour_employees::create([
+        Tour_employees::firstOrCreate([
            'tour_id' => $tour,
            'employee_id' => $request->employee_id,
         ]);

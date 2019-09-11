@@ -63,6 +63,28 @@ class PassengerController extends Controller
         //
     }
 
+    public function printpastour($tour)
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $i = 1;
+        foreach (Passenger::where('tours_id', $tour)->get() as $passenger){
+            $section->addText(
+              $i . '. ' .$passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name . ', ' .
+                ($passenger->Preferential_Terms == 1 ? 'льготник' : 'не льготник'). ', ' . $passenger->customer->Phone_Number_Customer,
+                array('name' => 'Tahoma', 'size' => 10)
+            );
+            $i++;
+    }
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        try {
+            $objWriter->save(storage_path('TestWordFile.docx'));
+        } catch (Exception $e) {
+        }
+
+        return response()->download(storage_path('TestWordFile.docx'));
+    }
+
     /**
      * Display the specified resource.
      *

@@ -7,6 +7,8 @@ use App\tour;
 use App\Type_Tour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Maatwebsite\Excel\Concerns\FromView;
+use \Excel;
 
 class TourController extends Controller
 {
@@ -18,6 +20,7 @@ class TourController extends Controller
     public function index()
     {
         return view('admin.tours', ['tours' => Tour::paginate(12), ]);
+
     }
 
     /**
@@ -25,9 +28,20 @@ class TourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         return view('admin.tours.create', ['type_tours' => Type_Tour::all(), 'Tour' => []]);
+    }
+
+    public function prnpriviewvauher()
+{
+    return view('admin.tours.toursvauher', ['tours' => tour::whereRaw('Start_Date_Tours >= ?',[now()->subDay()])->get()]);
+}
+
+    public function prnpriviewspisok()
+    {
+        return Excel::download(new Pamagite, 'prnpriviewspisok.xlsx');
     }
 
     /**
@@ -60,7 +74,7 @@ class TourController extends Controller
      */
     public function show(tour $tour)
     {
-        return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $tour->id)->paginate(12), 'Name_tour' => $tour->Name_Tours]);
+        return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $tour->id)->paginate(12), 'Name_tour' => $tour->Name_Tours, 'tour' => $tour]);
 
     }
 

@@ -5,7 +5,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Работники</h4>
+                <h4 class="card-title">Партнёры</h4>
 
                 <form class="form-valide" action="{{ route('contractsstore', $tour) }}" method="post" enctype="multipart/form-data">
                     @csrf

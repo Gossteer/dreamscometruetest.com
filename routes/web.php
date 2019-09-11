@@ -12,7 +12,40 @@
 */
 
 use App\Tour;
-use App\Customer;
+
+Route::group(['middleware' => ['auth', 'type.user']], function () {
+    Route::resource('admin/tours', 'TourController');
+    Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
+    Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
+
+    Route::get('/admin', function () { return view('layouts.admin');})->name('/admin');
+    Route::resource('admin/employees', 'EmployeeController');
+    Route::resource('admin/job', 'JobController');
+    Route::resource('admin/customer', 'CustomerController');
+    Route::resource('admin/partners', 'PartnerController');
+
+    Route::post('admin/tours/passengers', 'PassengerController@store')->name('passengers.store');
+    Route::get('admin/tours/passengers', 'PassengerController@index')->name('passengers.index');
+    Route::put('admin/tours/passengers/{passenger}', 'PassengerController@update')->name('passengers.update');
+    Route::get('admin/tours/{tour}/passengers/printspisoc', 'PassengerController@printpastour')->name('printpastour');
+    Route::get('admin/tours/passengers/{passenger}/edit', 'PassengerController@edit')->name('passengers.edit');
+
+    Route::get('admin/tours/{tour}/jobs', 'TourEmployeesController@index')->name('jobsindex');
+    Route::delete('admin/tours/{tour}/jobs/{job_for_tour}', 'TourEmployeesController@destroy')->name('jobsdestroy');
+    Route::post('admin/tours/{tour}/jobs', 'TourEmployeesController@store')->name('jobsstore');
+    Route::get('admin/tours/{tour}/contracts', 'ContractController@index')->name('contractsindex');
+    Route::delete('admin/tours/{tour}/contracts/{contranct}', 'ContractController@destroy')->name('contractsdestroy');
+    Route::post('admin/tours/{tour}/contracts', 'ContractController@store')->name('contractsstore');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+Route::delete('admin/tours/passengers/{passenger}', 'PassengerController@destroy')->name('passengers.destroy');
+Route::get('admin/tours/passengers/create', 'PassengerController@create')->name('passengers.create');
+});
+
+Route::get('/packages', 'SiteController@packages')->name('/packages');
+
+Route::get('/ухади', 'SiteController@type_user_false')->name('typeuserfalse');
 
 Route::get('/', function () {
     return view('site.index', ['tours' => Tour::orderByDesc('Price')->paginate(4)]);
@@ -26,38 +59,9 @@ Route::get('/contact', function () {
     return view('site.contact');
 })->name('/contact');
 
-// Что делать с экскурсиями?
-
-Route::get('/packages', 'SiteController@packages')->middleware('auth')->name('/packages');
-
-Route::get('/admin', function () {
-    return view('layouts.admin');
-})->name('/admin')->middleware('auth');
-
-Route::resource('admin/tours', 'TourController')->middleware('auth');
-
-Route::resource('admin/employees', 'EmployeeController')->middleware('auth');
-
-Route::resource('admin/job', 'JobController')->middleware('auth');
-
-Route::resource('admin/customer', 'CustomerController')->middleware('auth');
-Route::get('/account', 'CustomerController@account')->middleware('auth')->name('AccountCustomer');
-
-Route::resource('admin/partners', 'PartnerController')->middleware('auth');
-
-Route::resource('admin/tours/passengers', 'PassengerController')->middleware('auth');
-
-Route::get('admin/tours/{tour}/jobs', 'TourEmployeesController@index')->middleware('auth')->name('jobsindex');
-
-Route::delete('admin/tours/{tour}/jobs/{job_for_tour}', 'TourEmployeesController@destroy')->middleware('auth')->name('jobsdestroy');
-
-Route::post('admin/tours/{tour}/jobs', 'TourEmployeesController@store')->middleware('auth')->name('jobsstore');
-
-Route::get('admin/tours/{tour}/contracts', 'ContractController@index')->middleware('auth')->name('contractsindex');
-
-Route::delete('admin/tours/{tour}/contracts/{contranct}', 'ContractController@destroy')->middleware('auth')->name('contractsdestroy');
-
-Route::post('admin/tours/{tour}/contracts', 'ContractController@store')->middleware('auth')->name('contractsstore');
+Route::group(['middleware' => ['auth','check.user']], function () {
+Route::get('/account', 'CustomerController@account')->name('AccountCustomer');
+});
 
 Auth::routes();
 

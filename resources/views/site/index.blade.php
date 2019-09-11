@@ -14,11 +14,11 @@
 						<div class="overlay">
 							<div class="container">
 								<div class="w3layouts-banner-info">
-									<h3 class="text-wh">Never let your memories be greater than your dreams.</h3>
-									<h4 class="text-wh">tristique senectus et netus et malesuada</h4>
+									<h3 class="text-wh" style="text-transform: inherit !important;">Никогда не позволяй своему прошлому быть ярче, своих мечтаний!</h3>
+									<h4 class="text-wh">(Что-то красивое)</h4>
 									<div class="buttons mt-4">
-										<a href="about.html" class="btn mr-2">About Us</a>
-										<a href="booking.html" class="btn">Book a Tour</a>
+										<a href="{{ route('/about') }}" class="btn mr-2">О нас</a>
+										<a href="{{ route('/contact') }}" class="btn">Написать нам</a>
 									</div>
 								</div>
 							</div>
@@ -30,11 +30,11 @@
 						<div class="overlay">
 							<div class="container">
 								<div class="w3layouts-banner-info">
-									<h3 class="text-wh">It is better to travel than to arrive. Let's Be Adventurers.</h3>
-									<h4 class="text-wh">tristique senectus et netus et malesuada</h4>
+									<h3 class="text-wh">(Слова, которые вас возбудят)</h3>
+									<h4 class="text-wh">(Аррр)</h4>
 									<div class="buttons mt-4">
-										<a href="about.html" class="btn mr-2">About Us</a>
-										<a href="booking.html" class="btn">Book a Tour</a>
+										<a href="{{ route('/about') }}" class="btn mr-2">О нас</a>
+										<a href="{{ route('/contact') }}" class="btn">Написать нам</a>
 									</div>
 								</div>
 							</div>
@@ -46,11 +46,11 @@
 						<div class="overlay">
 							<div class="container">
 								<div class="w3layouts-banner-info">
-									<h3 class="text-wh">Never let your memories be greater than your dreams.</h3>
-									<h4 class="text-wh">tristique senectus et netus et malesuada</h4>
+									<h3 class="text-wh">(Надеюсь у вас хорошее настроение)</h3>
+									<h4 class="text-wh">(Мы очень на это надеимся)</h4>
 									<div class="buttons mt-4">
-										<a href="about.html" class="btn mr-2">About Us</a>
-										<a href="booking.html" class="btn">Book a Tour</a>
+										<a href="{{ route('/about') }}" class="btn mr-2">О нас</a>
+										<a href="{{ route('/contact') }}" class="btn">Написать нам</a>
 									</div>
 								</div>
 							</div>

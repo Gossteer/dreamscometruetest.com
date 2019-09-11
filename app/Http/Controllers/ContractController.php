@@ -37,6 +37,7 @@ class ContractController extends Controller
      */
     public function store(Request $request, $tour)
     {
+        if ($request->partners_id != null)
         Contract::firstOrCreate([
             'partners_id' => $request->partners_id,
             'tours_id' => $tour,

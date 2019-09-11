@@ -5,7 +5,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title"> {{ $Name_tour }}</h4>
+                <h4 class="card-title"> {{ $Name_tour }}      <a href="{{ route('printpastour', [$tour])  }}" data-toggle="tooltip" data-placement="top" id="" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Список</a></h4>
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped verticle-middle">

@@ -12,6 +12,6 @@ class Pamagite implements FromView
 {
     public function view(): View
     {
-        return view('admin.tours.toursspisoc', ['tours' => tour::whereRaw('Start_Date_Tours >= ?',[now()->subDay()])->get()]);
+        return view('admin.tours.toursspisoc', ['tours' => tour::get()]);
     }
 }

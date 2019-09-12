@@ -17,11 +17,14 @@ class TourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.tours', ['tours' => Tour::paginate(12), ]);
+        $serh = $request->search ?? "";
+        return view('admin.tours', ['tours' => Tour::where('Name_Tours', 'LIKE', "%$serh%")->orderByDesc('Start_Date_Tours')->paginate(12), ]);
 
     }
+
+
 
     /**
      * Show the form for creating a new resource.

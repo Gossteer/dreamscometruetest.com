@@ -40,7 +40,7 @@
                                     </script>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="type_activities_id">Тип экскурсии <span class="text-danger">*</span>
+                                    <label class="col-lg-4 col-form-label" for="type_activities_id">Тип занятости <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
                                         <select class="form-control"  name="type_activities_id" required>

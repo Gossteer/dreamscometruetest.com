@@ -5,14 +5,27 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Экскурсии <a href="{{ route('tours.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 65%;">Создать</a>
-                    <a href="{{ route('prnpriviewvauher') }}" id="prinvauher" class="btn btn-info btn-rounded" style="margin-bottom: 10px;">Ваучер</a>
-                    <a href="{{ route('prnpriviewspisok') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; ">Список</a></h4>
+                <h4 class="row card-title">Экскурсии
+                    <a href="{{ route('tours.create') }}" class="col-2 ml-auto btn btn-info btn-rounded" style="margin-bottom: 10px;">Создать</a>
+                    <a href="{{ route('prnpriviewvauher') }}" id="prinvauher" class="col-2 ml-auto  btn btn-info btn-rounded" style="margin-bottom: 10px;">Ваучер</a>
+                    <a href="{{ route('prnpriviewspisok') }}" class="col-2 ml-auto btn btn-info btn-rounded" style="margin-bottom: 10px; ">Список</a>
+                    <form id="sadasd" action="{{route('tours.index')}}" class="col-2 ml-auto" method="get">
+                        <input type="text" name="search" id="search" class=" form-control input-rounded" placeholder="Найти">
+                    </form>
+
+                </h4>
                 <script type="text/javascript">
                     $(document).ready(function(){
                         $("#prinvauher").printPage({
                             message:"Пожалуйста ожидайте!"
                         });
+                    });
+
+                    $("#search").keypress(function (e) {
+                        if (e.which == 13) {
+                            $("#sadasd").submit();
+                            return false;    //<---- Add this line
+                        }
                     });
                 </script>
                 <div class="table-responsive">
@@ -30,9 +43,9 @@
                         </thead>
                         <tbody>
                         @foreach($tours as $tour)
-                        <tr>
+                        <tr style="{{ $tour->Start_Date_Tours < now()->subDay() ? 'color: green' : 'color: black' }}">
 
-                                <td> <a href="{{ route('tours.show', $tour) }}">{{ $tour->Name_Tours }}</a></td>
+                            <td> <a style="{{ $tour->Start_Date_Tours < now()->subDay() ? 'color: green' : 'color: black' }}" href="{{ route('tours.show', $tour) }}">{{ $tour->Name_Tours }}</a></td>
                             <td>
                                 {{ ($tour->Amount_Place - $tour->Occupied_Place) }}
                             </td>

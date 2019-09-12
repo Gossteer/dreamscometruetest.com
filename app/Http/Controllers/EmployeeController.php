@@ -15,9 +15,10 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.employees.employees', ['employees' => Employee::paginate(12)]);
+        $serh = $request->search ?? "";
+        return view('admin.employees.employees', ['employees' => Employee::where('jobs_id', 'LIKE', "%$serh%")->paginate(12), 'jobs' => Job::all()]);
     }
 
     /**

@@ -127,9 +127,12 @@
                         <div class="drop-down dropdown-profile   dropdown-menu">
                             <div class="dropdown-content-body">
                                 <ul>
-                                    <li>
+                                    <!--**********************************
+                                     <li>
                                         <a href="app-profile.html"><i class="icon-user"></i> <span>Профиль</span></a>
                                     </li>
+                                    ***********************************-->
+
                                     <li>
                                         <a href="#"><i class="icon-envelope-open"></i> <span>Входящие</span> <div class="badge gradient-3 badge-pill badge-primary">0</div></a>
                                     </li>
@@ -164,6 +167,15 @@
     <div class="nk-sidebar">
         <div class="nk-nav-scroll">
             <ul class="metismenu" id="menu">
+                <li class="nav-label">Аналитика</li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-graph menu-icon"></i><span class="nav-text">Информация</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('/admin') }}">Собранные данные</a></li>
+                    </ul>
+                </li>
                 <li class="nav-label">Работники/Клиенты</li>
                 <li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -186,7 +198,7 @@
                 <li class="nav-label">Экскурсионный отдел</li>
                 <li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Партнёры</span>
+                        <i class="icon-envelope menu-icon"></i><span class="nav-text">Партнёры</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('partners.index') }}">Партнёры</a></li>
@@ -263,6 +275,10 @@
 <script src="{{ asset('js/plugins/validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('js/plugins/validation/jquery.validate-init.js') }}"></script>
 <script  src="{{ asset('js/js/jquery.printPage.js') }}"></script>
+
+
+
+
 
 </div>
 

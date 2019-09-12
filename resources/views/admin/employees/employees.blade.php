@@ -4,7 +4,23 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Клиенты <a href="{{ route('employees.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Добавить работника</a></h4>
+                    <h4 class="row card-title">Работники
+                        <a href="{{ route('employees.create') }}" class="col btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Добавить работника</a>
+                                    <form id="sadasd" action="{{route('employees.index')}}" class="col" method="get">
+                                        <select class="custom-select mr-sm-2 form-control" name="search" id="inlineFormCustomSelect">
+                                            <option  value="" disabled selected>Фильтрация</option>
+                                            <option  value="">Отменить</option>
+                                            @foreach($jobs as $job)
+                                                <option  value="{{ $job->id }}">{{ $job->Job_Title . ' зп: ' .  $job->Salary}}</option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                        <script>
+                            $('select[name="search"]').change(function () {
+                                $("#sadasd").submit();
+                            });
+                        </script>
+                    </h4>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped verticle-middle">
                             <thead>

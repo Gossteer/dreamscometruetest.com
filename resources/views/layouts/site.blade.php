@@ -194,7 +194,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!-- copyright -->
 <div class="copyright py-2 text-center">
-	<p>© 2019 Grand Tour. All Rights Reserved | Design by <a href="http://w3layouts.com/" target="=_blank"> W3layouts </a></p>
+	<p>© 2019 Мечты Сбываются. Все права защищены </p>
 </div>
 <!-- //copyright -->
 

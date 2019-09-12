@@ -52,7 +52,7 @@
                             button: "Да",
                             required: true,
                             callback: function(value){
-                                if (value = 1)
+                                if (value == 1)
                                     $("#Precence_True").submit()
                                 else
                                     return false
@@ -69,7 +69,7 @@
                             button: "Да",
                             required: true,
                             callback: function(value){
-                                if (value = 1)
+                                if (value == 1)
                                     $("#Precence_False").submit()
                                 else
                                     return false
@@ -79,8 +79,7 @@
 
                     function Precence_True_submit ($lol)
                     {
-                        $lol.submit()
-                        //$("#Precence_True").submit()
+                        $($lol).submit()
                     }
 
                     function alert_occupaid_false ()

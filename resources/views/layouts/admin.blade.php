@@ -170,7 +170,8 @@
                 <li class="nav-label">Аналитика</li>
                 <li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-graph menu-icon"></i><span class="nav-text">Информация</span>
+                        <i class="icon-graph menu-icon"></i>
+                        <span class="nav-text">Информация</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('/admin') }}">Собранные данные</a></li>
@@ -187,7 +188,7 @@
                         <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                     </ul>
                 </li>
-                <li class="mega-menu mega-menu-sm">
+                <li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="icon-note menu-icon"></i><span class="nav-text">Клиенты</span>
                     </a>
@@ -205,7 +206,7 @@
                         <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                     </ul>
                 </li>
-                <li class="mega-menu mega-menu-sm">
+                <li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Экскурсии</span>
                     </a>

@@ -70,7 +70,7 @@
                                     <label class="col-lg-4 col-form-label" for="Amount_Place">Места <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" id="Amount_Place" name="Amount_Place" placeholder="Места">
+                                        <input type="text" class="form-control" id="Amount_Place" name="Amount_Place" required placeholder="Места">
                                     </div>
                                 </div>
                                 <div class="form-group row">

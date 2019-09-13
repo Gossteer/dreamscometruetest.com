@@ -25,7 +25,12 @@
                                     <label class="col-lg-4 col-form-label" for="Job_Title">Название <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control"  name="Job_Title" value="{{ $job->Job_Title }}" placeholder="Название" required>
+                                        <input type="text" class="form-control @error('Job_Title') is-invalid @enderror" value="{{ $job->Job_Title }}"  name="Job_Title" placeholder="Название" required>
+                                        @error('Job_Title')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">

@@ -5,8 +5,8 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="row card-title">Работники
-                        <a href="{{ route('employees.create') }}" class="col btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Добавить работника</a>
-                                    <form id="sadasd" action="{{route('employees.index')}}" class="col" method="get">
+                        <a href="{{ route('employees.create') }}" class="col-2 btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Добавить работника</a>
+                                    <form id="sadasd" action="{{route('employees.index')}}" class="col-2" method="get">
                                         <select class="custom-select mr-sm-2 form-control" name="search" id="inlineFormCustomSelect">
                                             <option  value="" disabled selected>Фильтрация</option>
                                             <option  value="">Отменить</option>

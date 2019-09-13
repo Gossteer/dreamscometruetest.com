@@ -1,9 +1,9 @@
 <br>
 
 <label for="" >Логин</label>
-    <input id="login" type="text" class="form-control @error('name') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="login" autofocus placeholder="Логин">
+    <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="login" autofocus placeholder="Логин">
 
-    @error('name')
+    @error('login')
     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -39,10 +39,19 @@
 <label for="">Отчество</label>
     <input  type="text" class="form-control" name="Middle_Name" value="{{ old('Middle_Name') }}" autocomplete="additional-name" placeholder="Отчество">
 <label for="">Дата рождения</label>
-    <input  type="text" class="form-control" id="Byrthday" value="{{ old('Byrthday') }}" name="Byrthday" required placeholder="Дата рождения">
+    <input  type="text" class="form-control @error('Byrthday') is-invalid @enderror" id="Byrthday" value="{{ old('Byrthday') }}" name="Byrthday" required placeholder="Дата рождения">
+@error('Byrthday')
+<span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+@enderror
 <label for="">Телефон</label>
-<input  type="text" class="form-control" id="Phone_Number" value="{{ old('Phone_Number') }}" name="Phone_Number" required placeholder="Телефон">
-
+<input  type="text" class="form-control @error('Phone_Number') is-invalid @enderror" id="Phone_Number" value="{{ old('Phone_Number') }}" name="Phone_Number" required placeholder="Телефон">
+@error('Phone_Number')
+<span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+@enderror
 <label for="">Должность</label>
 <select class="custom-select mr-sm-2" id="jobs_id" name="jobs_id" required>
 @foreach($jobs as $job)

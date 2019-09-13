@@ -36,6 +36,13 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+
+        \Validator::make($request->all(), [
+            'Job_Title' => ['required','unique:jobs']
+        ],[
+            'Job_Title.unique' => 'Данная должность уже существует',
+        ])->validate();
+
         Job::firstOrCreate([
             'Job_Title' => $request->Job_Title,
             'Salary' => $request->Salary,
@@ -75,6 +82,12 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
+        \Validator::make($request->all(), [
+            'Job_Title' => ['required','unique:jobs,Job_Title,' . $job->id]
+        ],[
+            'Job_Title.unique' => 'Данная должность уже существует',
+        ])->validate();
+
         Job::findOrFail($job->id)->update($request->all());
 
         return redirect()->route('job.index');

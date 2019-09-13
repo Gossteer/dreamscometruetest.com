@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Redirect;
-use DB;
 use Carbon\Carbon;
+
 
 class RegisterController extends Controller
 {
@@ -52,11 +51,24 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $data['data'] = Carbon::today();
         return Validator::make($data, [
-            'login' => ['required', 'string','min:3', 'max:255', 'unique:users'],
+            'Phone_Number_Customer' => ['required', 'string', 'unique:customers'],
+            'login' => ['required', 'string','min:2', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'Phone_Number_Customer' => ['required', 'string', 'unique:customers'],
+            'Date_Birth_Customer' => ['date','before_or_equal:date']
+        ],[
+            'Date_Birth_Customer.before_or_equal' => 'Вы ещё не родились, досвидание!',
+            'Date_Birth_Customer.date' => 'Укажите поажалуйста правильную дату!',
+            'Phone_Number_Customer.unique' => 'Пользователь с данным номером телефона уже существует!',
+            'login.unique' => 'Пользователь с таким ником уже существует!',
+            'login.min' => 'Минимальный размер 2 символа!',
+            'login.max' => 'Максимальный размер 255 символов!',
+            'login.required' => 'Пожалуйста укажите логин!',
+            'email.unique' => 'Пользователь с таким email уже существует!',
+            'password.min' => 'Пароль должен быть не менее 8 символов!',
+            'password.confirmed' => 'Пароль не совпадает!',
         ]);
     }
 
@@ -68,7 +80,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-      $user = User::create([
+
+        $user = User::create([
             'login' => $data['login'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -76,24 +89,21 @@ class RegisterController extends Controller
             'Notifications' => $data['Notifications'],
         ]);
 
-       // $Phone_Customer_Inviter = ();
-        try {
-            Customer::create([
-                'users_id' => $user->id,
-                'Surname' => $data['Surname'],
-                'Name' => $data['Name'],
-                'Middle_Name' => $data['Middle_Name'],
-                'Date_Birth_Customer' => date('Y-m-d', strtotime( $data['Date_Birth_Customer'])),
-                'Phone_Number_Customer' => $data['Phone_Number_Customer'],
-                'Floor' => $data['Floor'],
-                'Phone_Customer_Inviter' =>  $data['Number_Customers_Inviter'] ?? null,
-                'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->count(),
-                'Age_Group' => (Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60) ? 1 : 0,
+        Customer::create([
+            'users_id' => $user->id,
+            'Surname' => $data['Surname'],
+            'Name' => $data['Name'],
+            'Middle_Name' => $data['Middle_Name'],
+            'Date_Birth_Customer' => date('Y-m-d', strtotime( $data['Date_Birth_Customer'])),
+            'Phone_Number_Customer' => $data['Phone_Number_Customer'],
+            'Floor' => $data['Floor'],
+            'Phone_Customer_Inviter' =>  $data['Number_Customers_Inviter'] ?? null,
+            'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->count(),
+            'Age_Group' => (Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60) ? 1 : 0,
 
-            ]);
-        } catch (ModelNotFoundException $exception) {
-            return back()->withError($exception->getMessage())->withInput();
-        }
+        ]);
+
+
 
 //is_int($Phone_Customer_Inviter) ??  0
          return $user;

@@ -57,6 +57,29 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+
+        $attribute = $request->all();
+        $attribute['date'] = Carbon::today();
+
+        \Validator::make($attribute, [
+            'Phone_Number_Customer' => ['required', 'string', 'unique:customers'],
+            'login' => ['required', 'string','min:2', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'Date_Birth_Customer' => ['date','before_or_equal:date']
+        ],[
+            'Date_Birth_Customer.before_or_equal' => 'Вы ещё не родились, досвидание!',
+            'Date_Birth_Customer.date' => 'Укажите поажалуйста правильную дату!',
+            'Phone_Number_Customer.unique' => 'Пользователь с данным номером телефона уже существует!',
+            'login.unique' => 'Пользователь с таким ником уже существует!',
+            'login.min' => 'Минимальный размер 2 символа!',
+            'login.max' => 'Максимальный размер 255 символов!',
+            'login.required' => 'Пожалуйста укажите логин!',
+            'email.unique' => 'Пользователь с таким email уже существует!',
+            'password.min' => 'Пароль должен быть не менее 8 символов!',
+            'password.confirmed' => 'Пароль не совпадает!',
+        ])->validate();
+
         $user = User::firstOrCreate([
             'login' => $request['login'],
             'email' => $request['email'],
@@ -117,6 +140,26 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
+
+        $attribute = $request->all();
+        $attribute['date'] = Carbon::today();
+
+        \Validator::make($attribute, [
+            'Phone_Number_Customer' => ['required', 'string', 'unique:customers,Phone_Number_Customer,' . $customer->id],
+            'login' => ['required', 'string','min:2', 'max:255', 'unique:users,login,' . $customer->users_id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $customer->users_id],
+            'Date_Birth_Customer' => ['date','before_or_equal:date']
+        ],[
+            'Date_Birth_Customer.before_or_equal' => 'Вы ещё не родились, досвидание!',
+            'Date_Birth_Customer.date' => 'Укажите поажалуйста правильную дату!',
+            'Phone_Number_Customer.unique' => 'Пользователь с данным номером телефона уже существует!',
+            'login.unique' => 'Пользователь с таким ником уже существует!',
+            'login.min' => 'Минимальный размер 2 символа!',
+            'login.max' => 'Максимальный размер 255 символов!',
+            'login.required' => 'Пожалуйста укажите логин!',
+            'email.unique' => 'Пользователь с таким email уже существует!',
+        ])->validate();
+
         Customer::findOrFail($customer->id)->update(['Name' => $request->Name, 'Surname' => $request->Surname,
             'Middle_Name' => $request->Middle_Name, 'Phone_Number_Customer' => $request->Phone_Number_Customer,
         'Date_Birth_Customer' =>  date('Y-m-d', strtotime($request->Date_Birth_Customer))]);

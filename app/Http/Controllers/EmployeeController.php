@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Job;
 use App\User;
+use Carbon\Carbon;
 use Hash;
 use Illuminate\Http\Request;
 
@@ -41,6 +42,29 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        //$date = Carbon::new->subYear(18);
+        $attribute = $request->all();
+        $attribute['date'] = Carbon::now()->subYear(18);
+
+        \Validator::make($attribute, [
+            'Phone_Number' => ['required', 'string', 'unique:employees'],
+            'login' => ['required', 'string','min:2', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'Byrthday' => ['before_or_equal:date', 'date']
+        ],[
+            'Byrthday.before_or_equal' => 'Сотрудник не может быть младше 18 лет!',
+            'Byrthday.date' => 'Укажите пожалуйста правильную дату!',
+            'Phone_Number.unique' => 'Пользователь с данным номером телефона уже существует!',
+            'login.unique' => 'Пользователь с таким ником уже существует!',
+            'login.min' => 'Минимальный размер 2 символа!',
+            'login.max' => 'Максимальный размер 255 символов!',
+            'login.required' => 'Пожалуйста укажите логин!',
+            'email.unique' => 'Пользователь с таким email уже существует!',
+            'password.min' => 'Пароль должен быть не менее 8 символов!',
+            'password.confirmed' => 'Пароль не совпадает!',
+        ])->validate();
+
         $user = User::firstOrCreate([
             'login' => $request['login'],
             'email' => $request['email'],
@@ -91,6 +115,25 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
+        $attribute = $request->all();
+        $attribute['date'] = Carbon::now()->subYear(18);
+
+        \Validator::make($attribute, [
+            'Phone_Number' => ['required', 'string', 'unique:employees,Phone_Number,' . $employee->id],
+            'login' => ['required', 'string','min:2', 'max:255', 'unique:users,login,' . $employee->users_id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $employee->users_id],
+            'Byrthday' => ['before_or_equal:date', 'date']
+        ],[
+            'Byrthday.before_or_equal' => 'Сотрудник не может быть младше 18 лет!',
+            'Byrthday.date' => 'Укажите пожалуйста правильную дату!',
+            'Phone_Number.unique' => 'Пользователь с данным номером телефона уже существует!',
+            'login.unique' => 'Пользователь с таким ником уже существует!',
+            'login.min' => 'Минимальный размер 2 символа!',
+            'login.max' => 'Максимальный размер 255 символов!',
+            'login.required' => 'Пожалуйста укажите логин!',
+            'email.unique' => 'Пользователь с таким email уже существует!',
+        ])->validate();
+
         User::findOrFail($employee->users_id)->update($request->all());
 
         Employee::findOrFail($employee->id)->update(['Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),$request->all()]);

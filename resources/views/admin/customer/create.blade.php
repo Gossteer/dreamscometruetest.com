@@ -11,9 +11,8 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-6 form-group contact-forms">
-                                        <input id="login" type="text" class="form-control @error('name') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="login" autofocus placeholder="Логин">
-
-                                        @error('name')
+                                        <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="login" autofocus placeholder="Логин">
+                                        @error('login')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -57,21 +56,41 @@
                                     </div>
 
                                     <div class="col-sm-6 form-group contact-forms">
-                                        <input id="Date_Birth_Customer" type="text" class="form-control" value="{{ old('Date_Birth_Customer') }}" name="Date_Birth_Customer" required placeholder="Дата рождения">
+                                        <input id="Date_Birth_Customer" type="text" class="form-control @error('Date_Birth_Customer') is-invalid @enderror" value="{{ old('Date_Birth_Customer') }}" name="Date_Birth_Customer" required placeholder="Дата рождения">
+                                        @error('Date_Birth_Customer')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
 
                                     <div class="col-sm-6 form-group contact-forms" id="">
                                         <select class="form-control" id="Floor" name="Floor" required>
+                                            <option value="" disabled selected>Пол</option>
                                             <option value="0">Мужской</option>
                                             <option value="1">Женский</option>
                                         </select>
                                     </div>
 
                                     <div class="col-sm-6 form-group contact-forms">
-                                        @if (session('error'))
-                                            <div class="alert alert-danger">{{ session('error') }}</div>
-                                        @endif
-                                        <input type="tel" class="form-control" id="Phone_Number_Customer" placeholder="Номер телефона" name="Phone_Number_Customer" value="{{ old('Phone_Number_Customer') }}" required autocomplete="tel" >
+                                        <input type="tel" class="form-control @error('Phone_Number_Customer') is-invalid @enderror" id="Phone_Number_Customer" placeholder="Номер телефона" name="Phone_Number_Customer" value="{{ old('Phone_Number_Customer') }}" required autocomplete="tel" >
+                                        @error('Phone_Number_Customer')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-sm-6 form-group contact-forms" id="">
+                                        <select class="form-control" id="Name_Category_Source" name="Name_Category_Source" required>
+                                            <option value="" disabled selected>Как вы о нас узнали</option>
+                                            <option value="1">От знакомых</option>
+                                            <option value="2">Другое</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group contact-forms" id="addSelect">
+
                                     </div>
 
                                     <div class="col-md-12 form-group contact-forms" >
@@ -113,17 +132,62 @@
                                                             if( $.trim(value) === "" ){
                                                                 return false;
                                                             }
+                                                            else
+                                                                dialog.alert({
+                                                                    title: "Уведомление",
+                                                                    message: "Спасибо за обращение. В ближайшее время с вами свяжется наш менеджер."
+                                                                });
                                                         },
-                                                        callback: function(value){
-                                                            dialog.alert({
-                                                                title: "Уведомление",
-                                                                message: "Спасибо за обращение. В ближайшее время с вами свяжется наш менеджер."
-                                                            });
-                                                        }
                                                     });
                                                     //$("#amswerForPromt").mask("+7 (999) 99-99-999");
                                                 }
                                             })
+
+                                            $('#Name_Category_Source').prop('selectedIndex',"");
+
+                                            $('select[name="Name_Category_Source"]').change(function (Retailer) {
+                                                if ($("#Name_Category_Source option:selected").text() != "От знакомых") {
+                                                    //$("#Sources").addClass('animateSelect').fadeIn('fast');
+                                                    //$("#SourcesDiv").removeClass('col-md-12').fadeIn('fast');
+                                                    //$("#SourcesDiv").addClass('col-sm-6').fadeIn('fast');
+                                                    if ($("#Name_Category_Source option:selected").text() == "Другое"){
+                                                        if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
+                                                            $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input id="Name_Source" type="text" class="form-control" name="Name_Source" required placeholder="А именно?">');
+                                                        }
+                                                        else {
+                                                            $('#Number_Customers_Inviter').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input id="Name_Source" type="text" class="form-control" required  name="Name_Source"  placeholder="А именно?">');
+                                                            $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input id="Name_Source" type="text" class="form-control" name="Name_Source" required placeholder="А именно?">');
+                                                        }
+                                                    }
+                                                    // else {
+                                                    //     if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
+                                                    //         $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('' +
+                                                    //             '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
+                                                    //             '<option value="" disabled selected>Выберите источник</option>' +
+                                                    //             '</select>');
+                                                    //     }
+                                                    //     else {
+                                                    //         $('#Number_Customers_Inviter').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('' +
+                                                    //             '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
+                                                    //             '<option value="" disabled selected>Выберите источник</option>' +
+                                                    //             '</select>');
+                                                    //         $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('' +
+                                                    //             '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
+                                                    //             '<option value="" disabled selected>Выберите источник</option>' +
+                                                    //             '</select>');
+                                                    //     }
+                                                    // }
+                                                    //$("#Name_Source").prop('disabled', false);
+                                                } else if ($("#Name_Category_Source option:selected").text() == "От знакомых") {
+                                                    if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
+                                                        $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input type="text" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Number_Customers_Inviter" required autocomplete="tel" >');
+                                                    }
+                                                    else {
+                                                        $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input type="text" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Number_Customers_Inviter" required autocomplete="tel" >');
+                                                    }
+                                                    $("#Number_Customers_Inviter").mask("+7 (999) 999-99-99");
+                                                }
+                                            });
                                         });
                                     </script>
 
@@ -143,9 +207,4 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 @endsection

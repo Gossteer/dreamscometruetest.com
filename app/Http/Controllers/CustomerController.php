@@ -80,7 +80,7 @@ class CustomerController extends Controller
             'password.confirmed' => 'Пароль не совпадает!',
         ])->validate();
 
-        $user = User::firstOrCreate([
+        $user = User::Create([
             'login' => $request['login'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
@@ -91,7 +91,7 @@ class CustomerController extends Controller
 
         // $Phone_Customer_Inviter = ();
         try {
-            Customer::firstOrCreate([
+            Customer::Create([
                 'users_id' => $user->id,
                 'Surname' => $request['Surname'],
                 'Name' => $request['Name'],
@@ -160,11 +160,11 @@ class CustomerController extends Controller
             'email.unique' => 'Пользователь с таким email уже существует!',
         ])->validate();
 
-        Customer::findOrFail($customer->id)->update(['Name' => $request->Name, 'Surname' => $request->Surname,
+        Customer::find($customer->id)->update(['Name' => $request->Name, 'Surname' => $request->Surname,
             'Middle_Name' => $request->Middle_Name, 'Phone_Number_Customer' => $request->Phone_Number_Customer,
         'Date_Birth_Customer' =>  date('Y-m-d', strtotime($request->Date_Birth_Customer))]);
 
-        User::findOrFail($customer->users_id)->update(['login' => $request->login, 'email'=> $request->email]);
+        User::find($customer->users_id)->update(['login' => $request->login, 'email'=> $request->email]);
 
         return redirect()->route('customer.index');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Type_Activity;
+use App\Http\Controllers\Response;
 use Illuminate\Http\Request;
 
 class TypeActivityController extends Controller
@@ -35,7 +36,9 @@ class TypeActivityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Type_Activity::create($request->Name_Type_Activity);
+
+        return response()->json(['success'=>'Data is successfully added']);
     }
 
     /**

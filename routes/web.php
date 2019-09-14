@@ -15,9 +15,10 @@ use App\Tour;
 
 Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::resource('admin/tours', 'TourController');
+
     Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
     Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
-
+    Route::resource('admin/typeactivity', 'TypeActivityController');
     Route::get('/admin', 'SiteController@adminindex')->name('/admin');
     Route::resource('admin/employees', 'EmployeeController');
     Route::resource('admin/job', 'JobController');

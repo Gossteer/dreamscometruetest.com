@@ -65,12 +65,12 @@ class EmployeeController extends Controller
             'password.confirmed' => 'Пароль не совпадает!',
         ])->validate();
 
-        $user = User::firstOrCreate([
+        $user = User::Create([
             'login' => $request['login'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'Processing_Personal_Data' => $request['Processing_Personal_Data'],
-            'Notifications' => $request['Notifications'],
+            'Notifications' => $request['Notifications'] ?? 0,
             'Type_User' => $request['Type_User'],
         ]);
 
@@ -79,7 +79,7 @@ class EmployeeController extends Controller
             'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,
             'users_id' => $user->id];
 
-        Employee::firstOrCreate($attribute);
+        Employee::Create($attribute);
 
         return redirect()->route('employees.index');
     }
@@ -134,9 +134,19 @@ class EmployeeController extends Controller
             'email.unique' => 'Пользователь с таким email уже существует!',
         ])->validate();
 
-        User::findOrFail($employee->users_id)->update($request->all());
+        User::find($employee->users_id)->update([
+            'login' => $request['login'],
+            'email' => $request['email'],
+            'Processing_Personal_Data' => 1,
+            'Notifications' => 1,
+            'Type_User' => $request['Type_User'],
+        ]);
 
-        Employee::findOrFail($employee->id)->update(['Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),$request->all()]);
+        Employee::find($employee->id)->update([
+            'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
+            'Name' => $request->Name, 'Surname' => $request->Surname,
+            'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,
+        ]);
 
         return redirect()->route('employees.index');
     }

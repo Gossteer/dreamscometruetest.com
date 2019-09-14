@@ -36,7 +36,12 @@
                                     <label class="col-lg-4 col-form-label" for="Salary">Зарплата <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" onkeyup="return proverka(this);" onchange="return proverka(this);" name="Salary" placeholder="Зарплата">
+                                        <input type="text" class="form-control @error('Salary') is-invalid @enderror" onkeyup="return proverka(this);" onchange="return proverka(this);" name="Salary" placeholder="Зарплата">
+                                        @error('Salary')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
 
                                     <script type="text/javascript">

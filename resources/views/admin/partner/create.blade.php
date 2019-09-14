@@ -55,6 +55,47 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <!--
+                                <div class="form-group row">
+                                <div class="input-group row ">
+                                    <label class="col-lg-4 col-form-label" style="margin-left: 1.3%" for="type_activities_create">Тип занятости <span class="text-danger">*</span>
+                                    </label>
+                                    <form>
+                                        @csrf
+                                    <input type="text" style="margin-left: 5%" name="Name_Type_Activity" id="Name_Type_Activity" class="form-control col-lg-4">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-dark" id="type_activities_create" name="type_activities_create" type="button">Создать</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                </div>
+                                -->
+
+                                <script>
+
+                                        $("#type_activities_create").click(function(e){
+                                            e.preventDefault();
+                                            var Name_Type_Activity = $("input[name=Name_Type_Activity]").val();
+                                            $.ajax({
+                                                headers: {
+
+                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+                                                },
+                                                url: '/admin/typeactivity',
+                                                type:'POST',
+                                                dataType: 'json',
+                                                data:
+                                                    {
+                                                        Name_Type_Activity:Name_Type_Activity,
+                                                    },
+                                                success:function(data){
+                                                    alert(data.success);
+                                                }});
+                                        });
+                                </script>
+
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Address">Адрес
                                     </label>

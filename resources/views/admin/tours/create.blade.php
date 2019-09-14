@@ -49,28 +49,48 @@
                                     <label class="col-lg-4 col-form-label" for="Price">Цена <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" id="Price" name="Price" placeholder="Цена">
+                                        <input type="text" class="form-control @error('Amount_Place') is-invalid @enderror" id="Price" name="Price" placeholder="Цена">
+                                        @error('Amount_Place')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Privilegens_Price">Льготная цена
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" id="Privilegens_Price" name="Privilegens_Price" placeholder="Льготная цена">
+                                        <input type="text" class="form-control @error('Amount_Place') is-invalid @enderror" id="Privilegens_Price" name="Privilegens_Price" placeholder="Льготная цена">
+                                        @error('Privilegens_Price')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Expenses">Затраты <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" id="Expenses" name="Expenses" placeholder="Затраты">
+                                        <input type="text" class="form-control @error('Expenses') is-invalid @enderror" id="Expenses" name="Expenses" placeholder="Затраты">
+                                        @error('Expenses')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Amount_Place">Места <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" id="Amount_Place" name="Amount_Place" required placeholder="Места">
+                                        <input type="text" class="form-control @error('Amount_Place') is-invalid @enderror" id="Amount_Place" name="Amount_Place" required placeholder="Места">
+                                        @error('Amount_Place')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">

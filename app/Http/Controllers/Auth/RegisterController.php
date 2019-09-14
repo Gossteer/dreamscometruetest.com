@@ -51,7 +51,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $data['data'] = Carbon::today();
+        $data['date'] = Carbon::today();
         return Validator::make($data, [
             'Phone_Number_Customer' => ['required', 'string', 'unique:customers'],
             'login' => ['required', 'string','min:2', 'max:255', 'unique:users'],
@@ -86,7 +86,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'Processing_Personal_Data' => $data['Processing_Personal_Data'],
-            'Notifications' => $data['Notifications'],
+            'Notifications' => $data['Notifications'] ?? 0,
         ]);
 
         Customer::create([

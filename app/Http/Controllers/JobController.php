@@ -38,9 +38,11 @@ class JobController extends Controller
     {
 
         \Validator::make($request->all(), [
-            'Job_Title' => ['required','unique:jobs']
+            'Job_Title' => ['required','unique:jobs'],
+            'Salary' => ['required','integer'],
         ],[
             'Job_Title.unique' => 'Данная должность уже существует',
+            'Salary.integer' => 'Вы указали неверное значение!'
         ])->validate();
 
         Job::firstOrCreate([
@@ -83,9 +85,11 @@ class JobController extends Controller
     public function update(Request $request, Job $job)
     {
         \Validator::make($request->all(), [
-            'Job_Title' => ['required','unique:jobs,Job_Title,' . $job->id]
+            'Job_Title' => ['required','unique:jobs,Job_Title,' . $job->id],
+            'Salary' => ['required','integer'],
         ],[
             'Job_Title.unique' => 'Данная должность уже существует',
+            'Salary.integer' => 'Вы указали неверное значение!'
         ])->validate();
 
         Job::findOrFail($job->id)->update($request->all());

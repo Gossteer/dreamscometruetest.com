@@ -55,6 +55,22 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
+        \Validator::make($request->all(), [
+            'Amount_Place' => ['required', 'size:8388607', 'integer'],
+            'Privilegens_Price' => ['required', 'size:8388607', 'integer'],
+            'Price' => ['required', 'size:8388607', 'integer'],
+            'Expenses' => ['required', 'size:8388607', 'integer']
+        ],[
+            'Amount_Place.integer' => 'Введите пожалуйста число!',
+            'Privilegens_Price.integer' => 'Введите пожалуйста число!',
+            'Price.integer' => 'Введите пожалуйста число!',
+            'Expenses.integer' => 'Введите пожалуйста число!',
+            'Amount_Place.size' => 'Размер превысил все допустимые пределы!',
+            'Privilegens_Price.size' => 'Размер превысил все допустимые пределы!',
+            'Price.size' => 'Размер превысил все допустимые пределы!',
+            'Expenses.size' => 'Размер превысил все допустимые пределы!',
+        ])->validate();
+
         Tour::create([
           'Name_Tours'=> $request->Name_Tours,
            'Description'=> $request->Description,
@@ -101,6 +117,23 @@ class TourController extends Controller
      */
     public function update(Request $request, tour $tour)
     {
+
+        \Validator::make($request->all(), [
+            'Amount_Place' => ['required', 'size:8388607' , 'integer'],
+            'Privilegens_Price' => ['required', 'size:8388607', 'integer'],
+            'Price' => ['required', 'size:8388607', 'integer'],
+            'Expenses' => ['required', 'size:8388607', 'integer']
+        ],[
+            'Amount_Place.integer' => 'Введите пожалуйста число!',
+            'Privilegens_Price.integer'=> 'Введите пожалуйста число!',
+            'Price.integer' => 'Введите пожалуйста число!',
+            'Expenses.integer' => 'Введите пожалуйста число!',
+            'Amount_Place.size' => 'Размер превысил все допустимые пределы!',
+            'Privilegens_Price.size'=> 'Размер превысил все допустимые пределы!',
+            'Price.size' => 'Размер превысил все допустимые пределы!',
+            'Expenses.size' => 'Размер превысил все допустимые пределы!',
+        ])->validate();
+
         $attributes =['Name_Tours'=> $request->Name_Tours,
             'Description'=> $request->Description,
             'type_tours_id' => $request->type_tours_id,

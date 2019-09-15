@@ -85,7 +85,7 @@ class CustomerController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'Processing_Personal_Data' => $request['Processing_Personal_Data'],
-            'Notifications' => $request['Notifications'],
+            'Notifications' => $request['Notifications'] ?? 0,
         ]);
 
 

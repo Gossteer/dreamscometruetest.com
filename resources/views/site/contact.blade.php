@@ -53,22 +53,56 @@
 			<div class="contact-grids mt-5">
 				<div class="row">
 					<div class="col-lg-6 col-md-6 contact-left-form">
-						<form action="#" method="post">
+						<form id="contactform" method="POST">
+							{{ csrf_field() }}
+							<div id="sendmessage">
+								Ваше сообщение отправлено!
+							</div>
+							<div id="senderror">
+								При отправке сообщения произошла ошибка. Продублируйте его, пожалуйста, на почту администратора <span>{{ env('MAIL_ADMIN_EMAIL') }}</span>
+							</div>
 							<div class=" form-group contact-forms">
-							  <input type="text" class="form-control" placeholder="Имя" required autocomplete="name" required="">
+							  <input type="text" class="form-control" name="name" placeholder="Имя" required autocomplete="name" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="email" class="form-control" required placeholder="Email" required="">
+							  <input type="email" name="email" class="form-control" required placeholder="Email" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="text" class="form-control" placeholder="Телефон" autocomplete="tel" required="">
+							  <input type="tel" class="form-control" name="phone_number" placeholder="Телефон" autocomplete="tel" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <textarea class="form-control" placeholder="Сообщение" required=""></textarea>
+							  <textarea class="form-control" name="message" placeholder="Сообщение" required=""></textarea>
 							</div>
-							<button class="btn btn-block sent-butnn">Отправить</button>
+							<button class="btn btn-block sent-butnn" type="submit">Отправить</button>
 						</form>
 					</div>
+
+					<script>
+						$(document).ready(function () {
+							$('#contactform').on('submit', function (e) {
+								e.preventDefault();
+								$.ajax({
+									type: 'POST',
+									url: '/contact',
+									data: $('#contactform').serialize(),
+									success: function (data) {
+										if (data.result) {
+											$('#senderror').hide();
+											$('#sendmessage').show();
+										} else {
+											$('#senderror').show();
+											$('#sendmessage').hide();
+										}
+									},
+									error: function () {
+										$('#senderror').show();
+										$('#sendmessage').hide();
+									}
+								});
+							});
+						});
+					</script>
+
 					<div class="col-lg-6 col-md-6 contact-right pl-lg-5">
 						<h4>У вас есть вопросы? Хотите заказать индивидульный тур? Напишите нам.</h4>
 						<p class="mt-md-4 mt-2">Всегда рады видеть ваши сообщения и ваш интерес. Постараемся предоставить

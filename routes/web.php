@@ -56,9 +56,8 @@ Route::get('/about', function () {
     return view('site.about');
 })->name('/about');
 
-Route::get('/contact', function () {
-    return view('site.contact');
-})->name('/contact');
+Route::post('/contact', 'ContactController@send')->name('/contactsend');
+Route::get('/contact', 'ContactController@index')->name('/contact');
 
 Route::group(['middleware' => ['auth','check.user']], function () {
 Route::get('/account', 'CustomerController@account')->name('AccountCustomer');

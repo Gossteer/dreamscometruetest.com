@@ -45,7 +45,7 @@
                     <h5 class="text-muted">Соотношение полов</h5>
                     <div class="mt-4">
                         <h4>{{ \App\Customer::where('Floor', 0)->count() }}</h4>
-                        <h6>Мужчин <span class="pull-right">{{ \App\Customer::where('Floor', 0)->count() / \App\Customer::all()->count() * 100 }}%</span></h6>
+                        <h6>Мужчин <span class="pull-right">{{ round(\App\Customer::where('Floor', 0)->count() / \App\Customer::all()->count() * 100, 2) }}%</span></h6>
                         <div class="progress mb-3" style="height: 7px">
                             <div class="progress-bar bg-primary" style="width: {{ \App\Customer::where('Floor', 0)->count() / \App\Customer::all()->count() * 100 }}%;" role="progressbar"><span class="sr-only">30% Order</span>
                             </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="mt-4">
                         <h4>{{ \App\Customer::where('Floor', 1)->count() }}</h4>
-                        <h6 class="m-t-10 text-muted">Женщины <span class="pull-right">{{ \App\Customer::where('Floor', 1)->count() / \App\Customer::all()->count() * 100 }}%</span></h6>
+                        <h6 class="m-t-10 text-muted">Женщины <span class="pull-right">{{ round(\App\Customer::where('Floor', 1)->count() / \App\Customer::all()->count() * 100, 2) }}%</span></h6>
                         <div class="progress mb-3" style="height: 7px">
                             <div class="progress-bar bg-success" style="width: {{ \App\Customer::where('Floor', 1)->count() / \App\Customer::all()->count() * 100 }}%;" role="progressbar"><span class="sr-only">50% Order</span>
                             </div>

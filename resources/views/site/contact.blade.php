@@ -52,32 +52,39 @@
 			
 			<div class="contact-grids mt-5">
 				<div class="row">
-					<div class="col-lg-6 col-md-6 contact-left-form">
+					<div class="col-lg-6 col-md-6 contact-left-form" style="padding-top: 1em;">
+						<div id="sendmessage" class="" role="alert" >
+						</div>
 						<form id="contactform" method="POST">
 							{{ csrf_field() }}
-							<div id="sendmessage">
-								Ваше сообщение отправлено!
-							</div>
-							<div id="senderror">
-								При отправке сообщения произошла ошибка. Продублируйте его, пожалуйста, на почту администратора <span>{{ env('MAIL_ADMIN_EMAIL') }}</span>
-							</div>
-							<div class=" form-group contact-forms">
-							  <input type="text" class="form-control" name="name" placeholder="Имя" required autocomplete="name" required="">
+							<div class=" form-group contact-forms" style="margin-top: 2em;">
+							  <input type="text" class="form-control" id="name" name="name" placeholder="Имя" required autocomplete="name" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="email" name="email" class="form-control" required placeholder="Email" required="">
+							  <input type="email" id="email" name="email" class="form-control" required placeholder="Email" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="tel" class="form-control" name="phone_number" placeholder="Телефон" autocomplete="tel" required="">
+							  <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Телефон" autocomplete="tel" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <textarea class="form-control" name="message" placeholder="Сообщение" required=""></textarea>
+							  <textarea class="form-control" id="message" name="message" placeholder="Сообщение" required=""></textarea>
 							</div>
+							<script>
+								$(function() {
+									$("#phone_number").mask("+7 (999) 999-99-99");
+								});
+							</script>
 							<button class="btn btn-block sent-butnn" type="submit">Отправить</button>
 						</form>
 					</div>
 
 					<script>
+						function sayHi() {
+							$('#sendmessage').removeClass("alert alert-success");
+							$('#sendmessage').removeClass("alert alert-success");
+							$('#sendmessage').text("");
+						}
+
 						$(document).ready(function () {
 							$('#contactform').on('submit', function (e) {
 								e.preventDefault();
@@ -86,17 +93,20 @@
 									url: '/contact',
 									data: $('#contactform').serialize(),
 									success: function (data) {
-										if (data.result) {
-											$('#senderror').hide();
-											$('#sendmessage').show();
+										if (data['complite'] == 1) {
+											$('#sendmessage').addClass("alert alert-success");
+											$('#sendmessage').text("Ваше сообщение отправлено!");
+											$('#name').val("");
+											$('#email').val("");
+											$('#phone_number').val("");
+											$('#message').val("");
+											setTimeout(sayHi, 3200);
+
 										} else {
-											$('#senderror').show();
-											$('#sendmessage').hide();
+											$('#sendmessage').addClass("alert alert-danger");
+											$('#sendmessage').text("При отправке сообщения произошла ошибка. Продублируйте его, пожалуйста, на почту администратора" . env('MAIL_ADMIN_EMAIL'));
+											setTimeout(sayHi, 3200);
 										}
-									},
-									error: function () {
-										$('#senderror').show();
-										$('#sendmessage').hide();
 									}
 								});
 							});

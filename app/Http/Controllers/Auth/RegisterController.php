@@ -103,6 +103,11 @@ class RegisterController extends Controller
 
         ]);
 
+       // if(\Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->exists())
+           // Customer::where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->update([
+            //    'Number_Customers_Listed' => 1 + Customer::where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->get()->Number_Customers_Listed
+            //]);
+
 
 
 //is_int($Phone_Customer_Inviter) ??  0

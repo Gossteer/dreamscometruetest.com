@@ -11,7 +11,23 @@ class ContactController extends Controller
 
     public function send(Request $request)
     {
-        dd($request->all());
+$sender['email'] = $request->email;
+        $sender['name'] = $request->name;
+
+      \Mail::send('vendor.mail.contact',[
+            'name' => $request->name,
+            'email' => $request->email,
+            'messagee' =>  $request->message,
+            'phone_number' => $request->phone_number,
+        ],function ($message) use ($sender) {
+            $message->from($sender['email'], $sender['name']);
+
+            $message->to('GossteerPlus@gmail.com', 'Вам сообщеение')->subject('Вам письмо!');
+        });
+
+        return response()->json([
+            'complite' => count(\Mail::failures())>0 ? 0 : 1,
+        ]);
     }
     /**
      * Display a listing of the resource.

@@ -40,6 +40,7 @@
                                     </label>
                                     <div class="col-lg-6">
                                         <select class="form-control"  name="type_tours_id">
+                                            <option value="{{ $tour->type_tours_id }}">{{ $tour->type_tour->Name_Type_Tours }}</option>
                                             @foreach($type_tours as $type)
                                                 @if($type->id != $tour->type_tours_id)
                                                 <option value="{{ $type->id }}">{{ $type->Name_Type_Tours }}</option>

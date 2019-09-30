@@ -27,16 +27,20 @@ class SiteController extends Controller
     public function adminindex()
     {
         $sum = 0;
+        $expenses = 0;
         foreach (tour::whereRaw('Start_Date_Tours < ?',[now()->subDay()])->get() as $tour)
         {
             foreach (Passenger::whereRaw('tours_id = ? and Presence = 1', [$tour->id])->get() as $passenger)
             {
-                if($passenger->Preferential_Terms == 1)
+                if ($tour->Privilegens_Price == 0)
+                    $sum += $tour->Price;
+                else if($passenger->Preferential_Terms == 1)
                     $sum += $tour->Privilegens_Price;
                 else
                     $sum += $tour->Price;
             }
+           $expenses = $tour->Expenses;
         }
-        return view('admin.index', ['sum' => $sum]);
+        return view('admin.index', ['sum' => ($sum - $expenses)]);
     }
 }

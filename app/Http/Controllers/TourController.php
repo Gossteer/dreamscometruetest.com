@@ -56,19 +56,18 @@ class TourController extends Controller
     public function store(Request $request)
     {
         \Validator::make($request->all(), [
-            'Amount_Place' => ['required', 'size:8388607', 'integer'],
-            'Privilegens_Price' => ['required', 'size:8388607', 'integer'],
-            'Price' => ['required', 'size:8388607', 'integer'],
-            'Expenses' => ['required', 'size:8388607', 'integer']
+            'Amount_Place' => ['required', 'digits_between:0,8388607', 'integer'],
+            'Privilegens_Price' => ['required', 'digits_between:0,8388607', 'integer'],
+            'Price' => ['required', 'digits_between:0,8388607', 'integer'],
+            'Expenses' => ['required', 'integer']
         ],[
             'Amount_Place.integer' => 'Введите пожалуйста число!',
             'Privilegens_Price.integer' => 'Введите пожалуйста число!',
             'Price.integer' => 'Введите пожалуйста число!',
             'Expenses.integer' => 'Введите пожалуйста число!',
-            'Amount_Place.size' => 'Размер превысил все допустимые пределы!',
-            'Privilegens_Price.size' => 'Размер превысил все допустимые пределы!',
-            'Price.size' => 'Размер превысил все допустимые пределы!',
-            'Expenses.size' => 'Размер превысил все допустимые пределы!',
+            'Amount_Place.digits_between' => 'Размер превысил все допустимые пределы!',
+            'Privilegens_Price.digits_between' => 'Размер превысил все допустимые пределы!',
+            'Price.digits_between' => 'Размер превысил все допустимые пределы!',
         ])->validate();
 
         Tour::create([
@@ -119,20 +118,20 @@ class TourController extends Controller
     {
 
         \Validator::make($request->all(), [
-            'Amount_Place' => ['required', 'size:8388607' , 'integer'],
-            'Privilegens_Price' => ['required', 'size:8388607', 'integer'],
-            'Price' => ['required', 'size:8388607', 'integer'],
-            'Expenses' => ['required', 'size:8388607', 'integer']
+            'Amount_Place' => ['required', 'digits_between:0,8388607', 'integer'],
+            'Privilegens_Price' => ['required', 'digits_between:0,8388607', 'integer'],
+            'Price' => ['required', 'digits_between:0,8388607', 'integer'],
+            'Expenses' => ['required', 'integer']
         ],[
             'Amount_Place.integer' => 'Введите пожалуйста число!',
-            'Privilegens_Price.integer'=> 'Введите пожалуйста число!',
+            'Privilegens_Price.integer' => 'Введите пожалуйста число!',
             'Price.integer' => 'Введите пожалуйста число!',
             'Expenses.integer' => 'Введите пожалуйста число!',
-            'Amount_Place.size' => 'Размер превысил все допустимые пределы!',
-            'Privilegens_Price.size'=> 'Размер превысил все допустимые пределы!',
-            'Price.size' => 'Размер превысил все допустимые пределы!',
-            'Expenses.size' => 'Размер превысил все допустимые пределы!',
+            'Amount_Place.digits_between' => 'Размер превысил все допустимые пределы!',
+            'Privilegens_Price.digits_between' => 'Размер превысил все допустимые пределы!',
+            'Price.digits_between' => 'Размер превысил все допустимые пределы!',
         ])->validate();
+
 
         $attributes =['Name_Tours'=> $request->Name_Tours,
             'Description'=> $request->Description,

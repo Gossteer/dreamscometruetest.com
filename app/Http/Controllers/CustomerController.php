@@ -90,7 +90,7 @@ class CustomerController extends Controller
 
 
         // $Phone_Customer_Inviter = ();
-        try {
+
             Customer::Create([
                 'users_id' => $user->id,
                 'Surname' => $request['Surname'],
@@ -103,9 +103,12 @@ class CustomerController extends Controller
                 'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
                 'Age_Group' => (Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60) ? 1 : 0,
             ]);
-        } catch (ModelNotFoundException $exception) {
 
-        }
+        if(Customer::where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->exists())
+        Customer::where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->update([
+           'Number_Customers_Listed' => 1 + Customer::where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->get()->Number_Customers_Listed
+        ]);
+
         return redirect()->route('customer.index');
     }
 

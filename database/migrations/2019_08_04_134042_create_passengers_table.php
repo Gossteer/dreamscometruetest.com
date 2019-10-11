@@ -17,23 +17,28 @@ class CreatePassengersTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('tours_id')->unsigned();
-            $table->foreign('tours_id')->references('id')
-                ->on('tours')->onDelete('CASCADE');
             $table->bigInteger('customers_id')->unsigned();
-            $table->foreign('customers_id')->references('id')
-                ->on('customers')->onDelete('CASCADE');
+            $table->bigInteger('contracts_for_passengers_id')->unsigned()->nullable();
+            $table->bigInteger('stock_id')->unsigned()->nullable();
             $table->boolean('Preferential_Terms')->default(0);
             $table->boolean('Accompanying')->default(0);
             $table->tinyInteger('Amount_Children')->default(0);
             $table->tinyInteger('Presence')->default(0);
             $table->smallInteger('Occupied_Place_Bus')->nullable();
-            $table->string('Document')->nullable();
-            $table->bigInteger('stock_id')->unsigned()->nullable();
-            $table->foreign('stock_id')->references('id')
-                ->on('stocks')->onDelete('SET NULL');
             $table->boolean('Paid')->default(0);
             $table->tinyInteger('Stars')->nullable();
+            $table->mediumInteger('Count_Tokens')->default(0);
             $table->boolean('LogicalDelete')->default(0);
+
+
+            $table->foreign('tours_id')->references('id')
+                ->on('tours')->onDelete('CASCADE');
+            $table->foreign('customers_id')->references('id')
+                ->on('customers')->onDelete('CASCADE');
+            $table->foreign('contracts_for_passengers_id')
+                ->references('id')->on('contracts_for_passengers');
+            $table->foreign('stock_id')->references('id')
+                ->on('stocks')->onDelete('SET NULL');
         });
     }
 

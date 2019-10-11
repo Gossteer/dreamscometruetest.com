@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Posts;
+use App\Contracts_for_passenger;
 use Faker\Generator as Faker;
 
-$factory->define(Posts::class, function (Faker $faker) {
+$factory->define(Contracts_for_passenger::class, function (Faker $faker) {
     return [
         //
     ];

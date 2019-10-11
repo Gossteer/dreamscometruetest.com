@@ -21,6 +21,7 @@ class CreateRolesTable extends Migration
             $table->boolean('Customers')->default(0);
             $table->boolean('Employee')->default(0);
             $table->boolean('Passengers')->default(0);
+            $table->boolean('Passengers_Paid')->default(0);
             $table->boolean('LogicalDelete')->default(0);
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStocksTable extends Migration
+class CreateAdditionalServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateStocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('additional_services', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('Name_Stock');
-            $table->mediumInteger('Stock_Price');
-            $table->date('Start_Date_Tours');
-            $table->date('End_Date_Tours')->nullable();
+            $table->bigInteger('tours_id')->unsigned();
+            $table->string('Name', 191);
+            $table->integer('Price');
             $table->text('Description')->default('Подробности по телефону.');
-            $table->boolean('Access')->default(0);
-            $table->boolean('LogicalDelete')->default(0);
             $table->timestamps();
+            $table->boolean('LogicalDelete')->default(0);
+
+            $table->foreign('tours_id')->references('id')
+                ->on('tours');
         });
     }
 
@@ -33,6 +34,6 @@ class CreateStocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('additional_services');
     }
 }

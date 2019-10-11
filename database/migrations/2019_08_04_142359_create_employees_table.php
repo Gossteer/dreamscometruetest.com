@@ -28,18 +28,19 @@ class CreateEmployeesTable extends Migration
             $table->smallInteger('Driving_License_Series')->nullable();
             $table->mediumInteger('Driver_License_Id')->nullable();
             $table->bigInteger('jobs_id')->unsigned()->nullable();
+            $table->bigInteger('Work_Schedule_id')->unsigned()->nullable();
+            $table->bigInteger('driving_license_categories_id')->unsigned()->nullable();
+            $table->bigInteger('users_id')->unsigned()->nullable();
+            $table->boolean('LogicalDelete')->default(0);
+
             $table->foreign('jobs_id')->references('id')
                 ->on('jobs');
-            $table->bigInteger('Work_Schedule_id')->unsigned()->nullable();
             $table->foreign('Work_Schedule_id')->references('id')
                 ->on('Work_Schedule')->onDelete('SET NULL');
-            $table->bigInteger('driving_license_categories_id')->unsigned()->nullable();
             $table->foreign('driving_license_categories_id')->references('id')
                 ->on('driving_license_categories')->onDelete('SET NULL');
-            $table->bigInteger('users_id')->unsigned()->nullable();
             $table->foreign('users_id')->references('id')
                 ->on('users')->onDelete('SET NULL');
-            $table->boolean('LogicalDelete')->default(0);
         });
     }
 

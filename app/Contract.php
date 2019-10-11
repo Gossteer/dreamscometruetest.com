@@ -8,7 +8,7 @@ class Contract extends Model
 {
 
     protected $fillable = [
-        'tours_id', 'partners_id', 'Document_Contract'
+        'Name_Contract_doc', 'tours_id', 'partners_id', 'Document_Contract', 'Salary'
     ];
 
     public function tour()

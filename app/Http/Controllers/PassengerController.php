@@ -69,6 +69,7 @@ class PassengerController extends Controller
         $section = $phpWord->addSection();
         $i = 1;
         foreach (Passenger::where('tours_id', $tour)->get() as $passenger){
+            if($passenger->Presence == 1)
             $section->addText(
               $i . '. ' .$passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name . ', ' .
                 ($passenger->Preferential_Terms == 1 ? 'льготник' : 'не льготник'). ', ' . $passenger->customer->Phone_Number_Customer,

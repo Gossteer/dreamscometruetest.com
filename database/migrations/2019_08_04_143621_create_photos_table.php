@@ -17,11 +17,12 @@ class CreatePhotosTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('albums_id')->unsigned();
-            $table->foreign('albums_id')->references('id')
-                ->on('albums')->onDelete('CASCADE');
             $table->text('Photo_Description');
             $table->string('Picture',191);
             $table->boolean('LogicalDelete')->default(0);
+
+            $table->foreign('albums_id')->references('id')
+                ->on('albums')->onDelete('CASCADE');
         });
     }
 

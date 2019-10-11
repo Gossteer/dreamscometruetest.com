@@ -51,4 +51,9 @@ class tour extends Model
         return $this->hasMany('App\Contract', 'tours_id');
     }
 
+    public function additional_service()
+    {
+        return $this->hasMany('App\Additional_service', 'tours_id');
+    }
+
 }

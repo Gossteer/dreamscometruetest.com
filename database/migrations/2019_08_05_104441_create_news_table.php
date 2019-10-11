@@ -17,11 +17,12 @@ class CreateNewsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('albums_id')->unsigned();
-            $table->foreign('albums_id')->references('id')
-                ->on('albums')->onDelete('CASCADE');
             $table->string('Headline',191);
             $table->text('Text_News');
             $table->boolean('LogicalDelete')->default(0);
+
+            $table->foreign('albums_id')->references('id')
+                ->on('albums')->onDelete('CASCADE');
         });
     }
 

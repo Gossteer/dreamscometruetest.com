@@ -29,4 +29,15 @@ class Passenger extends Model
     {
         return $this->belongsTo('App\Stock','stock_id');
     }
+
+    public function contracts_for_passenger()
+    {
+        return $this->hasMany('App\Contracts_for_passenger','contracts_for_passengers_id');
+    }
+
+    public function purchased_additional_services()
+    {
+        return $this->hasMany('App\Purchased_additional_services','passengers_id');
+    }
+
 }

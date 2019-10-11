@@ -21,22 +21,14 @@ class CreateCustomersTable extends Migration
             $table->string('Middle_Name', 80)->nullable();
             $table->smallInteger('White_Days')->default(0);
             $table->smallInteger('Black_Days')->default(0);
-            $table->smallInteger('Number_Customers_Listed')->default(0);
+            $table->smallInteger('Amount_Customers_Listed')->default(0);
             $table->string('Phone_Number_Customer', 20)->unique();
             $table->string('Phone_Customer_Inviter', 20)->nullable();
             $table->bigInteger('sources_id')->unsigned()->nullable();
-            $table->foreign('sources_id')->references('id')
-                ->on('sources');
             $table->bigInteger('users_id')->unsigned()->nullable();
-            $table->foreign('users_id')->references('id')
-                ->on('users')->onDelete('SET NULL');
             $table->bigInteger('z_g_p_s_id')->unsigned()->nullable();
-            $table->foreign('z_g_p_s_id')->references('id')
-                ->on('z_g_p_s')->onDelete('SET NULL');
             $table->bigInteger('p_r_f_s_id')->unsigned()->nullable();
-            $table->foreign('p_r_f_s_id')->references('id')
-                ->on('p_r_f_s')->onDelete('SET NULL');
-            $table->date('Date_Birth_Customer')->nullable();
+            $table->date('Date_Birth_Customer');
             $table->string('Preferred_Type_Tours', 191)->nullable();
             $table->boolean('floor');
             $table->smallInteger('Age_Group')->nullable();
@@ -44,6 +36,14 @@ class CreateCustomersTable extends Migration
             $table->mediumInteger('Debt')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 
+            $table->foreign('users_id')->references('id')
+                ->on('users')->onDelete('SET NULL');
+            $table->foreign('z_g_p_s_id')->references('id')
+                ->on('z_g_p_s')->onDelete('SET NULL');
+            $table->foreign('sources_id')->references('id')
+                ->on('sources');
+            $table->foreign('p_r_f_s_id')->references('id')
+                ->on('p_r_f_s')->onDelete('SET NULL');
         });
     }
 

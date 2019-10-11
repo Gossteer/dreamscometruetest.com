@@ -17,35 +17,36 @@ class CreateToursTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('albums_id')->unsigned()->nullable();
-            $table->foreign('albums_id')->references('id')
-                ->on('albums')->onDelete('SET NULL');
             $table->bigInteger('type_tours_id')->unsigned();
-            $table->foreign('type_tours_id')->references('id')
-                ->on('type_tours')->onDelete('SET NULL');
             $table->bigInteger('routes_id')->unsigned()->nullable();
-            $table->foreign('routes_id')->references('id')
-                ->on('routes');
             $table->bigInteger('buses_id')->unsigned()->nullable();
-            $table->foreign('buses_id')->references('id')
-                ->on('buses');
-            $table->string('Duration', 191)->default('узнавайте');
+            $table->string('Duration', 191)->default('Подробности по телефону.');
             $table->boolean('Popular')->default(0);
             $table->boolean('ZGP')->default(0);
             $table->boolean('PRF')->default(0);
             $table->string('Name_Tours', 191);
+            $table->text('Description')->default('Подробности по телефону.');;
             $table->date('Start_Date_Tours');
-            $table->text('Description');
-            $table->mediumInteger('Count_Tokens')->default(0);
             $table->date('End_Date_Tours')->nullable();
             $table->mediumInteger('Price');
             $table->string('Notification_OPDA',191)->nullable();
             $table->integer('Profit')->default(0);
             $table->integer('Expenses');
-            $table->mediumInteger('Privilegens_Price');
+            $table->mediumInteger('Privilegens_Price')->nullable();
+            $table->mediumInteger('Children_price')->nullable();
             $table->mediumInteger('Amount_Place');
             $table->mediumInteger('Occupied_Place')->default(0);
             $table->tinyInteger('Confirmation_Tours')->default(0);
             $table->boolean('LogicalDelete')->default(0);
+
+            $table->foreign('buses_id')->references('id')
+                ->on('buses');
+            $table->foreign('routes_id')->references('id')
+                ->on('routes');
+            $table->foreign('type_tours_id')->references('id')
+                ->on('type_tours')->onDelete('SET NULL');
+            $table->foreign('albums_id')->references('id')
+                ->on('albums')->onDelete('SET NULL');
 
         });
     }

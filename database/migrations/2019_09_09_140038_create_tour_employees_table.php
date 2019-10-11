@@ -16,13 +16,15 @@ class CreateTourEmployeesTable extends Migration
         Schema::create('tour_employees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->integer('Salary')->default(0);
             $table->bigInteger('tour_id')->unsigned();
+            $table->bigInteger('employee_id')->unsigned();
+            $table->boolean('LogicalDelete')->default(0);
+
             $table->foreign('tour_id')->references('id')
                 ->on('tours');
-            $table->bigInteger('employee_id')->unsigned();
             $table->foreign('employee_id')->references('id')
                 ->on('employees');
-            $table->boolean('LogicalDelete')->default(0);
         });
     }
 

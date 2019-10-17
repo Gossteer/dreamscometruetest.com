@@ -45,6 +45,7 @@ Route::get('admin/tours/passengers/create', 'PassengerController@create')->name(
 });
 
 Route::get('/packages', 'SiteController@packages')->name('/packages');
+Route::get('/packages/{tour}/{Name_Tours}', 'TourController@tourdescript')->name('tourdescript');
 
 Route::get('/ухади', 'SiteController@type_user_false')->name('typeuserfalse');
 

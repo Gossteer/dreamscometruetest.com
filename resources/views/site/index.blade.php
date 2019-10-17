@@ -154,7 +154,7 @@
 						<div class="package-info">
 							<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
 							<h5 class="my-2">{{ $tour->Name_Tours }}</h5>
-							<p class="">{{str_limit($tour->Description,22,'...')}}</p>
+							<p class="">{{str_limit($tour->Description,20,'...')}}</p>
 							<ul class="listing mt-3">
 								<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
 							</ul>

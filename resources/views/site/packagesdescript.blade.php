@@ -13,11 +13,7 @@
 <!-- tour packages -->
 <section class="packages pt-5">
 	<div class="container py-lg-4 py-sm-3">
-		<h2 class="heading text-capitalize text-center"> Ознакомьтесь с нашими предложениями </h2>
-		<p class="text mt-2 mb-5 text-center">Инфо... необязательно</p>
-
             <div class="row">
-			@foreach($tours as $tour)
 			<div class="col-lg-3 col-sm-6 mb-5" href="">
 				<div class="image-tour position-relative">
 					<img src="images/banner1.jpg" alt="" class="img-fluid" />
@@ -58,7 +54,7 @@
 					<ul class="listing mt-3">
 						<li><span  class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
 					</ul>
-					<a class="btn mb-1 btn-success" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
+					<a class="btn mb-1 btn-success" id="pacagesunit" href="{{route('passengers.create',['tours_id' => $tour->id])}}">Подробнее</a>
 					{{--@if($tour->Start_Date_Tours >= now()->subDay())--}}
 					{{--@if (Route::has('register') and $customer_activ != null )--}}
                     {{--<a class="btn mb-1 btn-success" onclick="{{ (\App\Passenger::whereRaw('tours_id = ? and customers_id = ?', [$tour->id, $customer_activ->id])->exists()) ? 'return alert_occupaid ()' :--}}
@@ -69,15 +65,7 @@
 						{{--@endif--}}
 				</div>
 			</div>
-				@endforeach
-
 		</div>
-
-
-
-				<ul class="pagination pagination-lg justify-content-center">
-					{{ $tours->links() }}
-				</ul>
 		</div>
 	</div>
 

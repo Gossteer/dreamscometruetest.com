@@ -96,6 +96,11 @@ class TourController extends Controller
 
     }
 
+    public function tourdescript($tour,$Name_Tours)
+    {
+        return view('site.packagesdescript',['tour'=> Tour::where('id',$tour)->first()]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

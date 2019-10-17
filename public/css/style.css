@@ -985,7 +985,7 @@ p.text {
     line-height: 1.5em;
 }
 .package-info p {
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.6em;
 }
 .package-info h6 {
@@ -1008,7 +1008,7 @@ p.text {
 ul.listing li {
     letter-spacing: 0px;
     color: #707579;
-    font-size: 15px;
+    font-size: 17px;
 }
 ul.listing li span {
     font-weight: 600;
@@ -1457,7 +1457,13 @@ p.duration {
 }
 /* //places */
 
-
+#pacagesunit {
+	background-color: #047ffc;
+	margin-top: 15px;
+	margin-left: 10%;
+	width: 80%;
+	height: 42px;
+}
 
 /*-- Responsive design --*/
 
@@ -1494,7 +1500,7 @@ p.duration {
 		padding-top: 14em;
 	}
 	.package-info h5 {
-		font-size: 17px;
+		font-size: 20px;
 	}
 	h3.heading, h2.heading {
 		font-size: 40px;
@@ -1548,7 +1554,7 @@ p.duration {
 		font-size: 20px;
 	}
 	.package-info p {
-		font-size: 14px;
+		font-size: 17px;
 	}
 	.contact-right h4 {
 		font-size: 25px;
@@ -1748,10 +1754,28 @@ p.duration {
 		line-height: 30px;
 	}
 }
-@media(max-width:415px) {
-	p {
-		font-size: 14px;
+
+@media(max-width:570px) {
+	package-info p {
+		font-size: 20px;
 	}
+
+	.package-info h6 {
+		font-size: 18px;
+	}
+
+	ul.listing li {
+		font-size: 20px;
+	}
+
+	#pacagesunit {
+		height: 47px;
+		font-size: 20px;
+	}
+}
+
+@media(max-width:415px) {
+
 	.destinations-grids h4 {
 		font-size: 17px;
 		letter-spacing: 2px;
@@ -1819,7 +1843,35 @@ p.duration {
 		line-height: 32px;
 	}
 }
-@media(max-width:320px) {
-	
+
+@media (max-width: 576px) {
+	.package-info p {
+		font-size: 20px;
+	}
+}
+
+@media (max-width: 768px) {
+	.package-info p{
+		font-size: 17.5px;
+	}
+}
+
+@media(max-width:350px) {
+	.package-info p {
+		font-size: 18px;
+	}
+
+	.package-info h6 {
+		font-size: 16px;
+	}
+
+	ul.listing li {
+		font-size: 18px;
+	}
+
+	#pacagesunit {
+		height: 42px;
+		font-size: 18px;
+	}
 }
 /*-- //Responsive design --*/

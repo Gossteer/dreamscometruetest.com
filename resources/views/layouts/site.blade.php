@@ -19,6 +19,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 	<title>{{ config('app.name', 'Laravel') }}</title>
 
+
+
+
+	<!-- Theme main style -->
+	<link rel="stylesheet" href="{{ asset('single/style.css') }}">
 	<!-- Scripts -->
 	<script src="{{ asset('js/bootstrap.js') }}" defer></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

@@ -58,7 +58,7 @@
 					<ul class="listing mt-3">
 						<li><span  class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
 					</ul>
-					<a class="btn mb-1 btn-success" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
+					<a class="btn btn-success" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
 					{{--@if($tour->Start_Date_Tours >= now()->subDay())--}}
 					{{--@if (Route::has('register') and $customer_activ != null )--}}
                     {{--<a class="btn mb-1 btn-success" onclick="{{ (\App\Passenger::whereRaw('tours_id = ? and customers_id = ?', [$tour->id, $customer_activ->id])->exists()) ? 'return alert_occupaid ()' :--}}

@@ -98,7 +98,7 @@ class TourController extends Controller
 
     public function tourdescript($tour,$Name_Tours)
     {
-        return view('site.packagesdescript',['tour'=> Tour::where('id',$tour)->first()]);
+        return view('site.packagesingle',['tour'=> Tour::where('id',$tour)->first(), 'tours' => Tour::orderByDesc('Price')->paginate(4)]);
     }
 
     /**

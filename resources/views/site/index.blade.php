@@ -163,7 +163,7 @@
 				@endforeach
 			</div>
 			<div class="view-package text-center mt-4">
-				<a href="{{ route('/packages') }}" style="margin-right: 15px">Посмотреть все</a>
+				<a id="ViewAll" href="{{ route('/packages') }}" >Посмотреть все</a>
 				<a href="{{ route('/contact') }}">Индивидуальный заказ</a>
 			</div>
 		</div>

@@ -22,6 +22,7 @@ class CreatePassengersTable extends Migration
             $table->bigInteger('stock_id')->unsigned()->nullable();
             $table->boolean('Preferential_Terms')->default(0);
             $table->boolean('Accompanying')->default(0);
+            $table->tinyInteger('Assessment')->default(0);
             $table->tinyInteger('Amount_Children')->default(0);
             $table->tinyInteger('Presence')->default(0);
             $table->smallInteger('Occupied_Place_Bus')->nullable();

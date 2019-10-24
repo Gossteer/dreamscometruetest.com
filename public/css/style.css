@@ -12,6 +12,16 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
+@media (max-width: 476px) {
+	#ViewAll{
+		margin-right: 0px !important;
+	}
+}
+
+#ViewAll{
+	margin-right: 15px;
+}
+
 #buttonfordeleted{
 	padding: 0 !important;
 	border: none !important;

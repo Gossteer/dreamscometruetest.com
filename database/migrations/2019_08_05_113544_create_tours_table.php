@@ -33,6 +33,7 @@ class CreateToursTable extends Migration
             $table->string('Notification_OPDA',191)->nullable();
             $table->integer('Profit')->default(0);
             $table->integer('Expenses');
+            $table->mediumInteger('Price_per_person');
             $table->mediumInteger('Privilegens_Price')->nullable();
             $table->mediumInteger('Children_price')->nullable();
             $table->mediumInteger('Amount_Place');

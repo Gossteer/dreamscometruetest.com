@@ -17,7 +17,7 @@ class CreateAdditionalServicesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('tours_id')->unsigned();
             $table->string('Name', 191);
-            $table->integer('Price');
+            $table->integer('Price')->nullable();
             $table->text('Description')->default('Подробности по телефону.');
             $table->timestamps();
             $table->boolean('LogicalDelete')->default(0);

@@ -37,4 +37,9 @@ class Employee extends Model
     {
         return $this->hasMany('App\Tour_employees', 'employee_id');
     }
+
+    public function passenger()
+    {
+        return $this->hasMany('App\Passengers', 'employee_id');
+    }
 }

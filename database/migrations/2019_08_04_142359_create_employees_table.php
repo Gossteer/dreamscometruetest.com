@@ -22,9 +22,14 @@ class CreateEmployeesTable extends Migration
             $table->date('Byrthday', 191)->nullable();
             $table->smallInteger('Passport_Series')->nullable();
             $table->mediumInteger('Passport_Id')->nullable();
+            $table->string('Description', 191)->default('Лучший в своем деле!');
+            $table->smallInteger('Occupied_Place_Bus')->default(0);
             $table->string('Phone_Number', 191)->unique();
             $table->string('Contract_Employee', 191)->nullable();
             $table->date('Date_Driver_License')->nullable();
+            $table->boolean('Set_Permission')->default(0);
+            $table->integer('Man_brought')->default(0);
+            $table->integer('Joint excursions')->default(0);
             $table->smallInteger('Driving_License_Series')->nullable();
             $table->mediumInteger('Driver_License_Id')->nullable();
             $table->bigInteger('jobs_id')->unsigned()->nullable();

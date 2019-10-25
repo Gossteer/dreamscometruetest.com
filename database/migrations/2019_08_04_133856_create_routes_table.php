@@ -18,8 +18,10 @@ class CreateRoutesTable extends Migration
             $table->timestamps();
             $table->string('Map', 191);
             $table->string('Itinerary', 191);
-            $table->string('Distination_And_Time_Sending_From_Initial_Pop', 191);
-            $table->string('Distination_And_Time_Sending_From_End_Point', 191);
+            $table->string('Distination_From_Initial_Pop', 191);
+            $table->time('Time_Sending_From_Initial_Pop', 191);
+            $table->string('Distination_From_End_Point', 191);
+            $table->time('Time_Sending_From_End_Point', 191);
             $table->string('Name_Car_Dorough_Dorog_Report_Transportation', 191);
             $table->boolean('LogicalDelete')->default(0);
         });

@@ -72,25 +72,20 @@
 				@endforeach
 
 		</div>
-
-
-
 				<ul class="pagination pagination-lg justify-content-center">
 					{{ $tours->links() }}
 				</ul>
 		</div>
-	</div>
-
 </section>
 <!-- tour packages -->
 
 <!-- destinations -->
-<section class="destinations py-5" id="destinations">
+<section class="destinations py-5" id="destinations" style="padding-top: 0 !important;">
 	<div class="container py-xl-5 py-lg-3" style="padding-top: 0 !important;">
 		<h3 class="heading text-capitalize text-center"> Популярные направления </h3>
 		<p class="text mt-2 mb-5 text-center">Инфо... необязательно</p>
 		<div class="row inner-sec-w3layouts-w3pvt-lauinfo">
-			<div class="col-md-3 col-sm-6 col-6 destinations-grids text-center">
+			<div class="col-lg-3 col-sm-6 mb-5 destinations-grids text-center">
 				<h4 class="destination mb-3">Псков</h4>
 				<div class="image-position position-relative">
 					<img src="images/china.jpg" class="img-fluid" alt="">

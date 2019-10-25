@@ -19,6 +19,7 @@ class CreateTourEmployeesTable extends Migration
             $table->integer('Salary')->default(0);
             $table->bigInteger('tour_id')->unsigned();
             $table->bigInteger('employee_id')->unsigned();
+            $table->boolean('Confidentiality')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('tour_id')->references('id')

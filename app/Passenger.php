@@ -40,4 +40,9 @@ class Passenger extends Model
         return $this->hasMany('App\Purchased_additional_services','passengers_id');
     }
 
+    public function passenger()
+    {
+        return $this->belongsTo('App\Employee', 'employee_id');
+    }
+
 }

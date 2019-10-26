@@ -149,7 +149,7 @@
 					<div class="col-lg-3 col-sm-6 mb-5" href="">
 						<div class="image-tour position-relative">
 							<a href="{{ route('/packages') }}"><img  src="images/p1.jpg" alt="" class="img-fluid" /></a>
-							<p><span class="fa fa-tags"></span> <span>{{ $tour->Price }}₽</span></p>
+							<p><span class="fa fa-tags"></span> <span>{{ number_format($tour->Price, 0, ',', ' ') }}₽</span></p>
 						</div>
 						<div class="package-info">
 							<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>

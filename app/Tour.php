@@ -26,6 +26,11 @@ class Tour extends Model
         return $this->hasMany('App\Tour_employees', 'tour_id');
     }
 
+    public function price_per_level()
+    {
+        return $this->hasMany('App\Price_Per_Level', 'tour_id');
+    }
+
     public function type_tour()
     {
         return $this->belongsTo('App\Type_Tour', 'type_tours_id');

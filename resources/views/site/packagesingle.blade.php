@@ -77,13 +77,16 @@
 									</div>
 								</div>
 							</div>
+							<a class="btn btn-success  col-md-12 bypackeg" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Записаться</a>
 						</div>
+
 					</div>
 					<!-- imgs-zoom-area end -->
 					<!-- single-product-info start -->
-					<div class="col-md-7 col-sm-7 col-xs-12" id="singledescriptionpackages">
+					<div class="col-md-7 col-sm-7 col-xs-12" id="">
 						<div class="single-product-info">
-							<h3 class="text-black-1 colorsingledescriptioninfo1" style="font-size: 25px; padding-bottom: 10px;">Название экскурсии </h3>
+							<h3 class="text-black-1 " style="font-size: 25px; padding-bottom: 10px;">Название экскурсии </h3>
+							<h6 class="brand-name-2 ">Типа экскурсии</h6>
 							<div class="pro-rating sin-pro-rating f-right">
 								<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a>
 								<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a>
@@ -93,7 +96,7 @@
 								<span class="text-black-5">( 27 Оценок )</span>
 							</div>
 							<!-- hr -->
-							<hr>
+							<hr class="hrsingle">
 							<!-- single-product-tab -->
 							<div class="single-product-tab">
 								<ul class="reviews-tab mb-20 " style="margin-bottom: 0 !important;">
@@ -156,32 +159,44 @@
 
 								</div>
 							</div>
-							<hr style="margin-top: 12px !important;">
-							<!-- hr -->
-							<hr>
+							<hr style="margin-top: 12px ">
+							<div class="">
+								<p class="colorsingledescriptioninfo3">Место отправления: ДК МИР</p>
+								<p class="colorsingledescriptioninfo3">Примерная продолжительность: 8 часов</p>
+								<p class="colorsingledescriptioninfo3">Дополнительные услуги: </p>
+								<p class="colorsingledescriptioninfo3" style="padding-left: 10px">1. Счастье; </p>
+								<p class="colorsingledescriptioninfo3">Марка автобуса: Мерседес</p>
+								<p class="colorsingledescriptioninfo3" style="text-decoration: underline;">Требования: </p>
+								<p class="colorsingledescriptioninfo3" style="padding-left: 10px">1. Российский паспорт; </p>
+							</div>
+							<hr style="margin-bottom: 15px">
 							<!-- plus-minus-pro-action -->
 							<div class="plus-minus-pro-action">
-								<div class="sin-plus-minus f-left clearfix">
-									<p class="color-title f-left">Qty</p>
-									<div class="cart-plus-minus f-left">
-										<input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
+								<div class=" mt-5 text-center ">
+									<div class="col-lg-4 col-6 counter"style="	padding-bottom: 20px ;" >
+										<div >
+											<div class="icon iconforsinglepachage" >
+												<span class="priceforsinglepachage">{{ number_format($tour->Price, 0, ',', ' ') }}₽</span>
+											</div>
+											<h3 >Цена</h3>
+										</div>
 									</div>
-								</div>
-								<div class="sin-pro-action f-right">
-									<ul class="action-button">
-										<li>
-											<a href="#" title="Wishlist" tabindex="0"><i class="zmdi zmdi-favorite"></i></a>
-										</li>
-										<li>
-											<a href="#" data-toggle="modal" data-target="#productModal" title="Quickview" tabindex="0"><i class="zmdi zmdi-zoom-in"></i></a>
-										</li>
-										<li>
-											<a href="#" title="Compare" tabindex="0"><i class="zmdi zmdi-refresh"></i></a>
-										</li>
-										<li>
-											<a href="#" title="Add to cart" tabindex="0"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-										</li>
-									</ul>
+									<div class="col-lg-4 col-6 counter" style="	padding-bottom: 20px ;">
+										<div >
+											<div class="icon iconforsinglepachage">
+												<span class="priceforsinglepachage">{{ number_format(1000, 0, ',', ' ') }}₽</span>
+											</div>
+											<h3 style="">Пенсионеры</h3>
+										</div>
+									</div>
+									<div class="col-lg-4 col-6 counter" style="	padding-bottom: 20px ;">
+										<div >
+											<div class="icon iconforsinglepachage">
+												<span class="priceforsinglepachage">10&nbsp000₽</span>
+											</div>
+											<h3>Дети</h3>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -194,27 +209,26 @@
 	<!-- tour packages -->
 
 	<!-- destinations -->
-	<section class="packages pt-5" >
+	<section class="packages pt-5" style="padding-top: 10px !important;">
 		<div class="container py-lg-4 py-sm-3">
 				<div class="row">
-					<div class="col-md-12" style="padding-right: 0!important; padding-left: 0 !important;">
+					<div class="col-md-12">
 						<div class="section-title text-left mb-40">
-							<h2 class="uppercase">Рекомендуемые экскурсии</h2>
+							<h2 class="uppercase" style="font-size: 26px">Рекомендуемые экскурсии</h2>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					@foreach($tours as $tour)
-						<div class="col-lg-3 col-sm-6 mb-5" id="recomendtours" href="">
+						<div class="col-lg-3 col-sm-6 mb-5" href="">
 							<div class="image-tour position-relative">
-								<img src="{{asset('images/banner1.jpg')}}" alt="" class="img-fluid" />
+								<a href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}"><img src="{{asset('images/banner1.jpg')}}" alt="" class="img-fluid" /></a>
 								<p><span class="fa fa-tags"></span> <span>
 							{{--@if( $Age_Group != 0  or $Condition == 1)--}}
 										{{--{{ $tour->Privilegens_Price }}--}}
 										{{--@else--}}
-										{{ $tour->Price }}
+										{{ number_format($tour->Price, 0, ',', ' ') }}₽
 										{{--@endif--}}
-							₽
 						</span></p>
 							</div>
 							<script>

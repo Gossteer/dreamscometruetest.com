@@ -35,11 +35,14 @@ class CreateEmployeesTable extends Migration
             $table->bigInteger('jobs_id')->unsigned()->nullable();
             $table->bigInteger('Work_Schedule_id')->unsigned()->nullable();
             $table->bigInteger('driving_license_categories_id')->unsigned()->nullable();
+            $table->bigInteger('level_id')->unsigned()->nullable();
             $table->bigInteger('users_id')->unsigned()->nullable();
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('jobs_id')->references('id')
                 ->on('jobs');
+            $table->foreign('level_id')->references('id')
+                ->on('levels');
             $table->foreign('Work_Schedule_id')->references('id')
                 ->on('Work_Schedule')->onDelete('SET NULL');
             $table->foreign('driving_license_categories_id')->references('id')

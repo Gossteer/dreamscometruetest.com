@@ -12,8 +12,27 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
+.priceforsinglepachage{
+	color: #fff;
+	font-size: 18px;
+	font-weight: 500;
+	font-family: FontAwesome;
+}
+
+.iconforsinglepachage{
+	margin: 0em auto 0.8em !important;
+}
+
+.bypackeg{
+	font-size: 20px !important;
+	margin-left: 2.6% !important;
+	width: 95% !important;
+	margin-top: 25px !important;
+}
+
 .singledescriptioninfo1 {
 	padding-bottom: 15px;
+	font-size: 2.5rem !important;
 }
 
 .singledescriptioninfo2{
@@ -30,8 +49,22 @@ body {
 }
 
 .colorsingledescriptioninfo2{
+	 color: #707579 !important;
+ }
+
+.colorsingledescriptioninfo3{
 	color: #707579 !important;
+	font-size: 15px;
+	font-weight: 500;
+
 }
+
+@media (max-width: 991px) {
+	.hrsingle{
+		margin: 30px 0;
+	}
+}
+
 
 @media (max-width: 476px) {
 	#ViewAll{
@@ -220,7 +253,7 @@ nav {
 
 #logo a {
 	float: left;
-    font-size: .7em;
+    font-size: .63em;
     display: initial;
     margin: 0;
     letter-spacing: 1px;
@@ -1508,7 +1541,7 @@ p.duration {
 	margin-top: 15px;
 	margin-left: 10%;
 	width: 80%;
-	height: 42px;
+	height: 46px;
 }
 
 /*-- Responsive design --*/
@@ -1717,7 +1750,7 @@ p.duration {
 		min-height: 490px;
 	}
 	.timer {
-		font-size: 2.2em;
+		font-size: 2.5em;
 	}
 	h4.tittle {
 		font-size: 2.2em;
@@ -1859,7 +1892,7 @@ p.duration {
 		line-height: 35px;
 	}
 	.timer {
-		font-size: 2em;
+		font-size: 2.5 em;
 	}
 	p.count-text {
 		font-size: 13px;

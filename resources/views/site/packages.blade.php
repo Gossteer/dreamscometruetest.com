@@ -9,6 +9,15 @@
 </section>
 <!-- //banner -->
 
+<script>
+	function abc2(n,nn) {
+		n += "";
+		n = new Array(4 - n.length % 3).join("U") + n;
+		document.getElementById(nn).innerHTML = n.replace(/([0-9U]{3})/g, "$1 ").replace(/U/g, "") + '₽';
+
+	}
+
+</script>
 
 <!-- tour packages -->
 <section class="packages pt-5">
@@ -20,14 +29,14 @@
 			@foreach($tours as $tour)
 			<div class="col-lg-3 col-sm-6 mb-5" href="">
 				<div class="image-tour position-relative">
-					<img src="images/banner1.jpg" alt="" class="img-fluid" />
-					<p><span class="fa fa-tags"></span> <span>
+					<a href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}"><img src="images/banner1.jpg"  alt="" class="img-fluid" /></a>
+					<p><span class="fa fa-tags"></span> <span onload="abc2({{ $tour->Price }},{{$tour->id}})" id="{{$tour->id}}">
 							{{--@if( $Age_Group != 0  or $Condition == 1)--}}
 								{{--{{ $tour->Privilegens_Price }}--}}
 						{{--@else--}}
-								{{ $tour->Price }}
+							{{ number_format($tour->Price, 0, ',', ' ') }}₽
 							{{--@endif--}}
-							₽
+
 						</span></p>
 				</div>
 				<script>

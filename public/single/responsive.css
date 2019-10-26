@@ -351,9 +351,7 @@
   margin-right: 8px;
 }
 /*footer*/
-.footer-top {
-  background: #f6f6f6 none repeat scroll 0 0;
-}
+
 .footer-area .plr-185 {
   padding: 0;
 }
@@ -522,7 +520,7 @@ hr {
  
 /* small mobile :320px. */
 @media (max-width: 767px) {
-.container {width:300px}
+
 
 /*slick-arrow*/
 .slick-arrow-2 .slick-arrow {
@@ -533,7 +531,7 @@ hr {
 }
 /* --------------- */
 h3 {
-  font-size: 14px;
+  font-size: 19px;
   line-height: 20px;
 }
 h4 {
@@ -557,7 +555,7 @@ p {
   margin-bottom: 30px;
 }
 .section-title h2 {
-  font-size: 16px;
+  font-size: 18px !important;
   line-height: 20px;
 }
 .section-title h6 {
@@ -792,9 +790,7 @@ p {
   margin-right: 5px;
 }
 /*footer*/
-.footer-top {
-  background: #f6f6f6 none repeat scroll 0 0;
-}
+
 .footer-area .plr-185 {
   padding: 0;
 }

@@ -18,6 +18,11 @@ class Employee extends Model
         return $this->hasOne('App\User', 'users_id');
     }
 
+    public function level()
+    {
+        return $this->belongsTo('App\Level', 'level_id');
+    }
+
     public function work_schedule()
     {
         return $this->belongsTo('App\Work_Schedule', 'Work_Schedule_id');

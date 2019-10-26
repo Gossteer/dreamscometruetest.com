@@ -80,14 +80,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <body>
 
 <!-- header -->
-<header class="" id="header">
+<header class="" id="header" style="line-height: 24px">
 	<div class="container ">
 		<!-- nav -->
-		<nav class="py-md-4 py-3 d-lg-flex">
+		<nav class="py-md-4 py-3 d-lg-flex" >
 			<div id="logo">
-				<h1 class="mt-md-0 mt-2"> <a href="{{ route('/') }}"><span class="fa fa-map-signs"></span> Мечты сбываются </a></h1>
+				<h1 class="mt-md-0 mt-2" style=""> <a href="{{ route('/') }}"><span class="fa fa-map-signs"></span> Мечты сбываются </a></h1>
 			</div>
-			<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+			<label for="drop" class="toggle" style="line-height: 24px"><span class="fa fa-bars"></span></label>
 			<input type="checkbox" id="drop" />
 			<ul class="menu ml-auto mt-1">
 				<li class=""><a href="{{ route('/') }}">Главная</a></li>

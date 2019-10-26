@@ -17,7 +17,7 @@ Note: This core style file includes all external plugins css file.
 @import url("material-design-iconic-font.css");
 
 /* --------------------------------------------------
-    Plugins 
+    Plugins
 -------------------------------------------------- */
 @import url("plugins/animate.css");
 @import url("plugins/slick.css");

@@ -2571,8 +2571,7 @@ fieldset:disabled a.btn {
 
 .btn-success {
   color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
+
 }
 
 .btn-success:hover {
@@ -8800,7 +8799,7 @@ button.bg-dark:focus {
 }
 
 .text-capitalize {
-  text-transform: capitalize !important;
+  ;
 }
 
 .font-weight-light {

@@ -17,8 +17,9 @@ class CreateStocksTable extends Migration
             $table->bigIncrements('id');
             $table->string('Name_Stock');
             $table->mediumInteger('Stock_Price');
-            $table->date('Start_Date_Tours');
-            $table->date('End_Date_Tours')->nullable();
+            $table->date('Start_Date_Stock');
+            $table->boolean('Percent')->default(0);
+            $table->date('End_Date_Stock')->nullable();
             $table->integer('Amount')->nullable();
             $table->text('Description')->default('Подробности по телефону.');
             $table->boolean('Access')->default(0);

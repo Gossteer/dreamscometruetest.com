@@ -20,6 +20,7 @@ class CreateToursTable extends Migration
             $table->bigInteger('type_tours_id')->unsigned();
             $table->bigInteger('routes_id')->unsigned()->nullable();
             $table->bigInteger('buses_id')->unsigned()->nullable();
+            $table->boolean('Seating');
             $table->string('Duration', 191)->default('Подробности по телефону.');
             $table->boolean('Popular')->default(0);
             $table->tinyInteger('Assessment')->default(0);

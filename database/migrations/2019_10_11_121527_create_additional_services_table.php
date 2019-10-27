@@ -24,7 +24,7 @@ class CreateAdditionalServicesTable extends Migration
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('tours_id')->references('id')
-                ->on('tours');
+                ->on('tours')->onDelete('SET NULL');
         });
     }
 

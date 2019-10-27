@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLevelsTable extends Migration
+class CreatePassportDatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('levels', function (Blueprint $table) {
+        Schema::create('passport_dates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->mediumInteger('Name');
+            $table->smallInteger('Passport_Series');
+            $table->mediumInteger('Passport_Id');
+            $table->string('Address')->nullable();
+            $table->boolean('Confirmation')->default(0);
             $table->boolean('LogicalDelete')->default(0);
             $table->timestamps();
         });
@@ -28,6 +31,6 @@ class CreateLevelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('passport__dates');
     }
 }

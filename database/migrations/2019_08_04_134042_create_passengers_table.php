@@ -23,13 +23,15 @@ class CreatePassengersTable extends Migration
             $table->bigInteger('employee_id')->unsigned()->nullable();
             $table->boolean('Preferential_Terms')->default(0);
             $table->boolean('Accompanying')->default(0);
-            $table->mediumInteger('Free_kids')->default(0);
-            $table->tinyInteger('Assessment')->default(0);
+            $table->mediumInteger('Free_Children')->default(0);
             $table->tinyInteger('Amount_Children')->default(0);
+            $table->tinyInteger('Assessment')->default(0);
             $table->tinyInteger('Presence')->default(0);
             $table->smallInteger('Occupied_Place_Bus')->nullable();
             $table->boolean('Paid')->default(0);
             $table->tinyInteger('Stars')->nullable();
+            $table->integer('Final_Price')->default(0);
+            $table->boolean('Payment_method');
             $table->string('Comment', 191)->default('Отсутствует');
             $table->boolean('LogicalDelete')->default(0);
 
@@ -37,11 +39,11 @@ class CreatePassengersTable extends Migration
             $table->foreign('tours_id')->references('id')
                 ->on('tours')->onDelete('CASCADE');
             $table->foreign('employee_id')->references('id')
-                ->on('employees')->onDelete('CASCADE');
+                ->on('employees')->onDelete('SET NULL');
             $table->foreign('customers_id')->references('id')
                 ->on('customers')->onDelete('CASCADE');
             $table->foreign('contracts_for_passengers_id')
-                ->references('id')->on('contracts_for_passengers');
+                ->references('id')->on('contracts_for_passengers')->onDelete('SET NULL');;
             $table->foreign('stock_id')->references('id')
                 ->on('stocks')->onDelete('SET NULL');
         });

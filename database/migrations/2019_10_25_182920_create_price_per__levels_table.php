@@ -13,7 +13,7 @@ class CreatePricePerLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('price__per__levels', function (Blueprint $table) {
+        Schema::create('price_per_levels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('tour_id')->unsigned();
             $table->bigInteger('level_id')->unsigned();

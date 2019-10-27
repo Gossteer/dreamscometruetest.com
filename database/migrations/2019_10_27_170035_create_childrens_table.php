@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePurchasedAdditionalServicesTable extends Migration
+class CreateChildrensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,20 @@ class CreatePurchasedAdditionalServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchased_additional_services', function (Blueprint $table) {
+        Schema::create('childrens', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('passengers_id')->unsigned();
-            $table->bigInteger('additional_service_id');
-            $table->timestamps();
+            $table->string('Name', 80);
+            $table->string('Surname', 80);
+            $table->string('Middle_Name', 80)->nullable();
+            $table->smallInteger('Occupied_Place_Bus');
+            $table->boolean('Fry')->default(0);
+            $table->date('Date_Birth_Day');
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('passengers_id')->references('id')
                 ->on('passengers')->onDelete('CASCADE');
-            $table->foreign('additional_service_id')->references('id')
-                ->on('additional_services')->onDelete('CASCADE');;
+            $table->timestamps();
         });
     }
 
@@ -34,6 +37,6 @@ class CreatePurchasedAdditionalServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchased_additional_services');
+        Schema::dropIfExists('childrens');
     }
 }

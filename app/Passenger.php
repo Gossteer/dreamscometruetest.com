@@ -35,6 +35,16 @@ class Passenger extends Model
         return $this->hasMany('App\Contracts_for_passenger','contracts_for_passengers_id');
     }
 
+    public function childrens()
+    {
+        return $this->hasMany('App\Children','childrens_id');
+    }
+
+    public function used_ticket()
+    {
+        return $this->hasMany('App\Used_ticket','passengers_id');
+    }
+
     public function purchased_additional_services()
     {
         return $this->hasMany('App\Purchased_additional_services','passengers_id');

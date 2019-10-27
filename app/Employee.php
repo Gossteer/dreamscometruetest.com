@@ -28,9 +28,14 @@ class Employee extends Model
         return $this->belongsTo('App\Work_Schedule', 'Work_Schedule_id');
     }
 
-    public function driving_license_category()
+    public function drivers_license()
     {
-        return $this->belongsTo('App\Driving_License_Category', 'driving_license_categories_id');
+        return $this->belongsTo('App\Drivers_Lisense', 'Drivers_lisense_id');
+    }
+
+    public function passport_date()
+    {
+        return $this->belongsTo('App\Passport_Date', 'Passport_date_id');
     }
 
     public function job()

@@ -25,7 +25,12 @@
                                     <label class="col-lg-4 col-form-label" for="Name_Partners">Наименование <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control"  name="Name_Partners" value="{{ $partner->Name_Partners }}" placeholder="Наименование" required>
+                                        <input type="text" class="form-control @error('Name_Partners') is-invalid @enderror"  name="Name_Partners" value="{{ $partner->Name_Partners }}" placeholder="Наименование" required>
+                                        @error('Name_Partners')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">

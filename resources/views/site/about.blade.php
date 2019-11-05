@@ -249,7 +249,7 @@
 				<p class="mt-3">Все мы люди и нам свойственно переживать, к примеру за свой выбор. Для того, чтобы от зародившегося желания и
 					до его исполнения вы испытывали лишь радость, нами был создан проект - 'Реальные мечты'.</p>
 				<div class="text-left mt-4">
-					<a href="booking.html">посмотреть</a>
+					<a href="https://www.youtube.com/channel/UCY11BYQOWqkQKje3-bqFKmg?view_as=subscriber">посмотреть</a>
 				</div>
 			</div>
 		</div>

@@ -131,8 +131,8 @@
 						до его исполнения вы испытывали лишь радость, нами был создан проект - 'Реальные мечты', а так же вы можете ознакомиться с более подробной информацией
 					о нашей организации.</p>
 					<div class="text-left mt-4">
-						<a href="">Реальные мечты</a>
-						<a href="{{route('/about')}}" style="margin-left: 10px">О нас</a>
+						<a href="https://www.youtube.com/channel/UCY11BYQOWqkQKje3-bqFKmg?view_as=subscriber">Реальные мечты</a>
+						<a href="{{route('/about')}}" class="buttonabout" style="margin-left: 10px;">О нас</a>
 					</div>
 				</div>
 			</div>

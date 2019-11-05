@@ -1052,9 +1052,10 @@ p.text {
     padding: 13px 30px;
     color: #fff;
     letter-spacing: 1px;
-    font-size: 15px;
+    font-size: 18px;
     margin-top: 10px;
     display: inline-block;
+	border-radius: 0.25rem;
 }
 .package-info h5 {
     text-transform: capitalize;
@@ -1453,7 +1454,7 @@ a.move-top span{
 	color: #777;
 }
 button.sent-butnn, a.sent-butnn {
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     text-transform: capitalize;
     display: inline-block;
@@ -1463,6 +1464,8 @@ button.sent-butnn, a.sent-butnn {
 	background: #047ffc;
     border-radius: 0px;
     padding: 10px 20px;
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 a.sent-butnn {

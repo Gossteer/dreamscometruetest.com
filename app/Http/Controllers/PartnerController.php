@@ -36,17 +36,24 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists())
-            Partner::findOrFail(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->first()->id)->update([
+        if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists()){
+            Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->update([
                 'type_activities_id' => $request->type_activities_id,
-                    'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, 'LogicalDelete' => 0,
+                'Phone_Number' => $request->Phone_Number,
+                'Address' => $request->Address,
+                'LogicalDelete' => 0,
             ]);
-        elseif(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 0', [$request->Name_Partners])->exists())
-            Partner::findOrFail(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 0', [$request->Name_Partners])->first()->id)->update([
-                'type_activities_id' => $request->type_activities_id,
-                'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, 'LogicalDelete' => 0,
-            ]);
-            else
+            return redirect()->route('partners.index');
+        }
+
+        else
+            \Validator::make($request->all(), [
+                'Name_Partners' => ['required', 'unique:partners', 'string'],
+            ],[
+                'Name_Partners.unique' => 'Данный партнёр уже существует!',
+                'Name_Partners.required' => 'Обязательно к заполнению!',
+            ])->validate();
+
             Partner::create(['type_activities_id' => $request->type_activities_id,
                 'Name_Partners' => $request->Name_Partners, 'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, ]);
 
@@ -84,6 +91,24 @@ class PartnerController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
+        if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists()){
+            Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->update([
+                'type_activities_id' => $request->type_activities_id,
+                'Phone_Number' => $request->Phone_Number,
+                'Address' => $request->Address,
+                'LogicalDelete' => 0,
+            ]);
+            return redirect()->route('partners.index');
+        }
+
+        else
+            \Validator::make($request->all(), [
+                'Name_Partners' => ['required', 'unique:partners', 'string'],
+            ],[
+                'Name_Partners.unique' => 'Данный партнёр уже существует!',
+                'Name_Partners.required' => 'Обязательно к заполнению!',
+            ])->validate();
+
         $partner->update(['type_activities_id' => $request->type_activities_id,
             'Name_Partners' => $request->Name_Partners, 'Phone_Number' => $request->Phone_Number, 'Address' => ($request->Address === null) ? 'Нет' : $request->Address,]);
 

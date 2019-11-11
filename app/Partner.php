@@ -9,20 +9,31 @@ class Partner extends Model
 
     protected $fillable = [
         'type_activities_id',
-        'Name_Partners',
-        'Phone_Number',
+        'partners_id',
         'Address',
-        'Email',
-        'Site',
+        'Name_Partners',
         'Conract_Partners',
         'INN',
-        'LogicalDelete',
-        'id',
     ];
 
     public function contract()
     {
         return $this->hasMany('App\Contract', 'partners_id');
+    }
+
+    public function address()
+    {
+        return $this->hasMany('App\Address', 'partners_id');
+    }
+
+    public function email()
+    {
+        return $this->hasMany('App\Email', 'partners_id');
+    }
+
+    public function phone_nomber()
+    {
+        return $this->hasMany('App\Phone_nomber', 'partners_id');
     }
 
     public function type_activity()

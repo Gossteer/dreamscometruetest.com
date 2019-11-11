@@ -19,6 +19,7 @@
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="{{ asset('js/jquery.dialog.min.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <!-- Fonts -->
     <!-- Fonts -->

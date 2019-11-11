@@ -12,6 +12,8 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
+
+
 .priceforsinglepachage{
 	color: #fff;
 	font-size: 18px;
@@ -1454,7 +1456,7 @@ a.move-top span{
 	color: #777;
 }
 button.sent-butnn, a.sent-butnn {
-    font-size: 18px;
+    font-size: 17px;
     text-decoration: none;
     text-transform: capitalize;
     display: inline-block;

@@ -168,7 +168,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="col-lg-4 col-sm-6 footer-grid_section mt-sm-0 mt-4">
 				<div class="footer-title">
-					<h3>Насчёт нас</h3>
+					<h3>О нас</h3>
 				</div>
 				<div class="footer-text">
 					<p>Комфортабельный транспорт, вариативность по тематике, количеству человек, приятные цены, бонусы.

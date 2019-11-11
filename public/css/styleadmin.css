@@ -24,6 +24,9 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 @import url(animate/animate.min.css);
 @import url(metismenu/css/metisMenu.min.css);
 @import url(bootstrap-select/dist/css/bootstrap-select.min.css);
+
+
+
 .gradient-1, .dropdown-mega-menu .ext-link.link-1 a, .morris-hover, .datamaps-hoverover {
   background-image: linear-gradient(230deg, #759bff, #843cf6); }
 
@@ -1640,7 +1643,7 @@ textarea.form-control {
   display: none;
   width: 100%;
   margin-top: 0.25rem;
-  font-size: 80%;
+  font-size: 90%;
   color: #ff5e5e; }
 
 .invalid-tooltip {
@@ -2771,7 +2774,7 @@ input[type="button"].btn-block {
   .custom-file-input:disabled ~ .custom-file-label {
     background-color: #e9ecef; }
   .custom-file-input:lang(en) ~ .custom-file-label::after {
-    content: "Browse"; }
+    content: "Выбрать"; }
 
 .custom-file-label {
   position: absolute;
@@ -9873,10 +9876,7 @@ Input Style
 .form-group {
   margin-bottom: 20px; }
 
-.form-control {
-  border-radius: 0;
-  box-shadow: none;
-  height: 45px; }
+
   .form-control:hover {
     box-shadow: none; }
   .form-control.active, .form-control:focus {
@@ -14699,5 +14699,8 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     background-color: #1b2b42; }
     [data-theme-version="dark"] .footer .copyright p {
       color: #fff; }
+
+
+
 
 /*# sourceMappingURL=style.css.map */

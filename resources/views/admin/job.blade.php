@@ -25,7 +25,7 @@
 
                                 <td> {{ $job->Job_Title }}</td>
                                 <td>
-                                    {{ $job->Salary }} ₽
+                                    {{ number_format ($job->Salary, 0, ',', ' ') }}₽
                                 </td>
                                 <td>
                                 <span>

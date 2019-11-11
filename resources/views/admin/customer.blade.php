@@ -26,7 +26,7 @@
                                 <td>
                                     {{ $customer->Phone_Number_Customer  }}
                                 </td>
-                                <td> {{ $customer->Date_Birth_Customer }}</td>
+                                <td> {{  date('d-m-Y', strtotime($customer->Date_Birth_Customer)) }}</td>
                                 <td><span style="color: #0b0b0b">{{ $customer->Black_Days }} ;</span> <span style="color: #00FFFF">{{ $customer->White_Days }}</span>
                                 </td>
                                 <td>

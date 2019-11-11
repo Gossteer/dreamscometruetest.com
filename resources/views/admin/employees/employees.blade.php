@@ -38,7 +38,7 @@
 
                                     <td> {{ $employee->Name . ' ' . $employee->Surname . ' ' . $employee->Middle_Name}}</td>
                                     <td>
-                                        {{ $employee->Byrthday }}
+                                        {{  date('d-m-Y', strtotime($employee->Byrthday)) }}
                                     </td>
                                     <td> {{ $employee->Phone_Number }}</td>
 

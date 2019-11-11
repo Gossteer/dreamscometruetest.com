@@ -18,10 +18,6 @@ class CreatePartnersTable extends Migration
             $table->timestamps();
             $table->bigInteger('type_activities_id')->unsigned();
             $table->string('Name_Partners', 191)->unique();
-            $table->string('Phone_Number',20);
-            $table->string('Address', 191)->default('Нет');
-            $table->string('Email', 191)->default('Нет');
-            $table->string('Site', 191)->default('Нет');
             $table->string('Conract_Partners', 191)->nullable();
             $table->string('INN', 191)->unique()->nullable();
             $table->boolean('LogicalDelete')->default(0);

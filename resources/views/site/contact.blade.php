@@ -74,7 +74,7 @@
 									$("#phone_number").mask("+7 (999) 999-99-99");
 								});
 							</script>
-							<button class="btn btn-block sent-butnn" type="submit">Отправить</button>
+							<button class="btn btn-block sent-butnn" style="margin-right: 0; margin-left: 0; " type="submit">Отправить</button>
 						</form>
 					</div>
 

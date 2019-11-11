@@ -1,16 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <link href="{{ asset('js/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
-    <!-- Page plugins css -->
-    <link href="{{ asset('js/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet') }}">
-    <!-- Color picker plugins css -->
-    <link href="{{ asset('js/plugins/jquery-asColorPicker-master/css/asColorPicker.css') }}" rel="stylesheet">
-    <!-- Date picker plugins css -->
-    <link href="{{ asset('js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet">
-    <!-- Daterange picker plugins css -->
-    <link href="{{ asset('js/plugins/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('js/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+
 
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -32,6 +23,171 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <script>
+
+                                </script>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="INN">ИНН</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control @error('INN') is-invalid @enderror" onKeyPress="cislo()" maxlength="191"  name="INN" placeholder="ИНН">
+                                        @error('Name_Partners')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Conract_Partners">Договор</label>
+                                    <div class="col-lg-6">
+                                            <div class="custom-file">
+                                                <input type="file" name="Conract_Partners" accept=".txt,.pdf,.docx,.docm,.doc,.xls,.xml,.xlsx,.xlsm" onchange="
+                                        switch (this.value.match(/\.([^\.]+)$/)[1]) {
+                                            case 'txt':
+                                            case 'pdf':
+                                            case 'docx':
+                                            case 'docm':
+                                            case 'doc':
+                                            case 'xls':
+                                            case 'xml':
+                                            case 'xlsx':
+                                            case 'xlsm':
+                                            document.getElementById('Fille_Conract_Partners').textContent= this.files.item(0).name;
+                                                break;
+                                            default:
+                                                alert('Файл не подходит!');
+                                                this.value = 'Некорректный файл';
+                                                break;
+                                        }
+                                            " class="custom-file-input">
+                                                <label id="Fille_Conract_Partners" class="custom-file-label">Файл не выбран</label>
+                                            </div>
+                                        @error('Name_Partners')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div id="address_place" >
+                                    <template class=""   id="address-template"  v-for="(n, index) in address_place" >
+                                <div class="form-group row" :key='n' >
+                                    <label class="col-lg-4 col-form-label" for="Address">Адрес @{{ index + 1 }}</label>
+                                    <div name='bounce' class="col-lg-6">
+                                            <div >
+                                                <div class="row justify-content-end">
+                                                    <a @click="remove(n)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
+                                                </div>
+                                                <input type="text" class="form-control @error('Address') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191"   :id="n"  name="Address" placeholder="Адрес" required>
+                                                @error('Address')
+                                                <span class="invalid-feedback" role="alert">
+                                                 <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                    </div>
+                                </div>
+                                    </template>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" ></label>
+                                        <div   name='bounce' class="col-lg-6">
+                                            <a @click="add"  class="btn btn-primary col-lg-12"  style="color: #fff;">Добавить адрес</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="phone_number">
+                                <template id="phone-template"  v-for="(nn, index) in phone_numbers" >
+                                <div class="form-group row" :key='nn'>
+                                    <label class="col-lg-4 col-form-label" for="Phone_Number">Телефон @{{  index + 1 }}</label>
+                                    <div   name='bounce' class="col-lg-6">
+                                                <div class="row justify-content-end">
+                                                    <a @click="remove(nn)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
+                                                </div>
+                                                <input type="text" id="Phone_Number" onclick="lolo()" class="form-control @error('Phone_Number') is-invalid @enderror" style="margin-bottom: 10px" :id="n"  maxlength="191"  name="Phone_Number" placeholder="Телефонный номер" required>
+                                                @error('Phone_Number')
+                                                <span class="invalid-feedback" role="alert">
+                                                 <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                                <input type="text" class="form-control @error('Representative') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n"  name="Representative" placeholder="Представитель" required>
+                                                @error('Representative')
+                                                <span class="invalid-feedback" role="alert">
+                                                 <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                    </div>
+                                </div>
+                                </template>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" ></label>
+                                        <div   name='bounce' class="col-lg-6">
+                                            <a @click="add"  class="btn btn-primary col-lg-12"  style="color: #fff;">Добавить телефон</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="email">
+                                <template id="address-template"  v-for="(nn, index) in emails" >
+                                <div class="form-group row" :key='nn'>
+                                    <label class="col-lg-4 col-form-label" for="Email">Почта @{{ index + 1 }}</label>
+                                    <div name='bounce' class="col-lg-6">
+                                                <div class="row justify-content-end">
+                                                    <a @click="remove(nn)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
+                                                </div>
+                                                <input type="text" class="form-control @error('Email') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191"  :id="n" name="Email" placeholder="Email" required>
+                                                @error('Email')
+                                                <span class="invalid-feedback" role="alert">
+                                                 <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                                <input type="text" class="form-control @error('Representative_Email') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n" name="Representative_Email" placeholder="Представитель" required>
+                                                @error('Representative_Email')
+                                                <span class="invalid-feedback" role="alert">
+                                                 <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                    </div>
+                                </div>
+                                </template>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" ></label>
+                                    <div   name='bounce' class="col-lg-6">
+                                        <a @click="add"  class="btn btn-primary col-lg-12"  style="color: #fff;">Добавить Email</a>
+                                    </div>
+                                </div>
+                                </div>
+                                <div id="site">
+                                <template class="" v-for="(n, index) in sites" >
+                                <div class="form-group row" :key='n'>
+                                    <label class="col-lg-4 col-form-label" for="Site">Сайт @{{ index + 1 }}</label>
+                                    <div id="site"  name='bounce' class="col-lg-6">
+                                                <div class="row justify-content-end">
+                                                    <a @click="remove(n)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
+                                                </div>
+                                                <input type="text" class="form-control @error('Site') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n"  name="Site" placeholder="Сайт" required>
+                                                @error('Site')
+                                                <span class="invalid-feedback" role="alert">
+                                                 <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                    </div>
+                                </div>
+                                </template>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" ></label>
+                                    <div   name='bounce' class="col-lg-6">
+                                        <a @click="add"  class="btn btn-primary col-lg-12"  style="color: #fff;">Добавить Сайт</a>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Address">Адрес
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control"  name="Address" placeholder="Адрес">
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Phone_Number">Номер телефона <span class="text-danger">*</span>
                                     </label>
@@ -39,9 +195,7 @@
                                         <input type="tel" class="form-control" id="Phone_Number"  name="Phone_Number" required placeholder="Номер телефона">
                                     </div>
                                     <script>
-                                        $(function() {
-                                            $("#Phone_Number").mask("+7 (999) 999-99-99");
-                                        });
+
                                     </script>
                                 </div>
                                 <div class="form-group row">
@@ -50,19 +204,17 @@
                                     <div class="col-lg-6">
                                         <select class="form-control"  name="type_activities_id" required>
                                             @foreach($type_activities as $type_activitie)
-                                                <option value="{{ $type_activitie->id }}">{{ $type_activitie->Name_Type_Activity }}</option>
+                                <option value="{{ $type_activitie->id }}">{{ $type_activitie->Name_Type_Activity }}</option>
                                             @endforeach
-                                        </select>
-                                    </div>
+                                    </select>
                                 </div>
-
-                                <!--
-                                <div class="form-group row">
-                                <div class="input-group row ">
-                                    <label class="col-lg-4 col-form-label" style="margin-left: 1.3%" for="type_activities_create">Тип занятости <span class="text-danger">*</span>
-                                    </label>
-                                    <form>
-                                        @csrf
+                            </div>
+                            <div class="form-group row">
+                            <div class="input-group row ">
+                                <label class="col-lg-4 col-form-label" style="margin-left: 1.3%" for="type_activities_create">Тип занятости <span class="text-danger">*</span>
+                                </label>
+                                <form>
+@csrf
                                     <input type="text" style="margin-left: 5%" name="Name_Type_Activity" id="Name_Type_Activity" class="form-control col-lg-4">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-dark" id="type_activities_create" name="type_activities_create" type="button">Создать</button>
@@ -73,36 +225,104 @@
                                 -->
 
                                 <script>
+function lolo() {
+    $("#Phone_Number").mask("+7 (999) 999-99-99");
+};
 
-                                        $("#type_activities_create").click(function(e){
-                                            e.preventDefault();
-                                            var Name_Type_Activity = $("input[name=Name_Type_Activity]").val();
-                                            $.ajax({
-                                                headers: {
+                                        var o=0;
+                                        new Vue({
+                                            el: '#address_place',
+                                            data: {
+                                                count: 0,
+                                                address_place: []
+                                            },
+                                            methods: {
+                                                add() {
+                                                    this.address_place.push(o++)
+                                                },
+                                                remove(n) {
+                                                    let index = this.address_place.indexOf(n);
+                                                    this.address_place.splice(index, 1);
+                                                }
+                                            }
+                                        });
 
-                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        new Vue({
+                                            el: '#phone_number',
+                                            data: {
+                                                phone_numbers: []
+                                            },
+                                            methods: {
+                                                add() {
+                                                    this.phone_numbers.push(o++)
 
                                                 },
-                                                url: '/admin/typeactivity',
-                                                type:'POST',
-                                                dataType: 'json',
-                                                data:
-                                                    {
-                                                        Name_Type_Activity:Name_Type_Activity,
-                                                    },
-                                                success:function(data){
-                                                    alert(data.success);
-                                                }});
+                                                remove(nn) {
+                                                    let index = this.phone_numbers.indexOf(nn);
+                                                    this.phone_numbers.splice(index, 1);
+                                                },
+                                                asdada(){
+
+                                                }
+                                            }
                                         });
+
+                                        new Vue({
+                                            el: '#email',
+                                            data: {
+                                                emails: []
+                                            },
+                                            methods: {
+                                                add() {
+                                                    this.emails.push(o++)
+                                                },
+                                                remove(nn) {
+                                                    let index = this.emails.indexOf(nn);
+                                                    this.emails.splice(index, 1);
+                                                }
+                                            }
+                                        });
+
+                                        new Vue({
+                                            el: '#site',
+                                            data: {
+                                                sites: []
+                                            },
+                                            methods: {
+                                                add() {
+                                                    this.sites.push(o++)
+                                                },
+                                                remove(nn) {
+                                                    let index = this.sites.indexOf(nn);
+                                                    this.sites.splice(index, 1);
+                                                }
+                                            }
+                                        });
+
+                                        function cislo(){
+                                            if (event.keyCode < 48 || event.keyCode > 57)
+                                                event.returnValue= false;
+                                        }
+
+                                        var file = document.getElementById('Conract_Partners');
+
+                                        file.onchange = function(e) {
+                                            var ext = this.value.match(/\.([^\.]+)$/)[1];
+                                            switch (ext) {
+                                                case 'jpg':
+                                                case 'bmp':
+                                                case 'png':
+                                                case 'tif':
+                                                    alert('Allowed');
+                                                    break;
+                                                default:
+                                                    alert('Not allowed');
+                                                    this.value = '';
+                                            }
+                                        };
                                 </script>
 
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="Address">Адрес
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control"  name="Address" placeholder="Адрес">
-                                    </div>
-                                </div>
+
 
                                 <div class="form-group row">
                                     <div class="col-lg-8 ml-auto">

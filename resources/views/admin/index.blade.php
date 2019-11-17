@@ -42,6 +42,7 @@
         <div class="col-lg-3 col-md-6">
             <div class="card card-widget">
                 <div class="card-body">
+                    @if( count(\App\Customer::all()) != 0)
                     <h5 class="text-muted">Соотношение полов</h5>
                     <div class="mt-4">
                         <h4>{{ \App\Customer::where('Floor', 0)->count() }}</h4>
@@ -59,6 +60,9 @@
                             </div>
                         </div>
                     </div>
+                        @else
+                        <h5 class="text-muted">Нет ни одного клиента</h5>
+                        @endif
                 </div>
             </div>
         </div>

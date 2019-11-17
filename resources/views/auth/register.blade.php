@@ -199,8 +199,8 @@
                             </script>
 
 
-                            <div class="col-md-12 booking-button">
-                                    <button type="submit" class="btn btn-block sent-butnn" id="Registr">
+                            <div class="col-md-12 booking-button"  style="padding-left: 0px !important; margin-left: 0px !important; padding-right: 0px;">
+                                    <button type="submit" class="btn btn-block sent-butnn" style="padding-left: 0px !important; margin-left: 0px; margin-right: 0px; padding-right: 0px;" id="Registr">
                                         Зарегистрироваться
                                     </button>
                             </div>

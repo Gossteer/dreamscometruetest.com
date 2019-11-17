@@ -100,7 +100,7 @@ class CustomerController extends Controller
                 'Phone_Number_Customer' => $request['Phone_Number_Customer'],
                 'Floor' => $request['Floor'],
                 'Phone_Customer_Inviter' =>  $request['Number_Customers_Inviter'] ?? null,
-                'Number_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
+                'Amount_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
                 'Age_Group' => (Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60) ? 1 : 0,
             ]);
 

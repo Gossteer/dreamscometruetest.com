@@ -23,9 +23,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <script>
 
-                                </script>
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="INN">ИНН</label>
                                     <div class="col-lg-6">
@@ -37,6 +35,104 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="INN">Тип деятельности</label>
+                                    <div class="col-lg-6 input-group">
+                                        <select class="custom-select" id="select_type_activitie" name="select_type_activitie">
+                                            <option selected="selected" value="0">Выбрать</option>
+                                            @foreach($type_activities as $type_activitie)
+                                            <option value="{{$type_activitie->id}}" id="{{$type_activitie->id}}">{{$type_activitie->Name_Type_Activity}}</option>
+                                                @endforeach
+                                        </select>
+                                        <div class="input-group-append">
+                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" id="deletedbutton" style="" name="deletedbutton"  >Удалить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    $(function() {
+                                        $('#select_type_activitie').change(function(select_type_activitie) {
+                                            // если значение не равно пустой строке
+                                            if($('#select_type_activitie').val() == "0") {
+                                                $('#deletedbutton').classList.add("diableddeletedbutton");
+                                            } else {
+                                                $('#deletedbutton').classList.remove("diableddeletedbutton");
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="addArticleLabel">Добавление типа занятости</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="title">Название типа занятости</label>
+                                                    <input type="text" class="form-control" id="Name_Type_Activity" placeholder="Название" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                                <button type="button" id="save" class="btn btn-primary">Сохранить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+
+                                    $(function() {
+
+                                        $('#save').on('click',function(){
+                                            var Name_Type_Activity = $('#Name_Type_Activity').val();
+
+                                            $.ajax({
+                                                url: '{{ route('typeactivity.store', ) }}',
+                                                type: "POST",
+                                                data: {Name_Type_Activity:Name_Type_Activity},
+                                                headers: {
+                                                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                                },
+
+                                                success: function (data) {
+                                                    $('#addArticle').modal('hide');
+                                                    $('#articles-wrap').removeClass('hidden').addClass('show');
+                                                    $('.alert').removeClass('show').addClass('hidden');
+                                                    var str = '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
+                                                    $('#select_type_activitie:last').append(str);
+                                                },
+                                                error: function (msg) {
+                                                    alert('Ошибка');
+                                                }
+                                            });
+                                        });
+                                        $('#deletedbutton').on('click',function(){
+                                            var typeactivity = $('#select_type_activitie').val();
+
+                                            $.ajax({
+                                                url: "admin/typeactivity/"+typeactivity,
+                                                type: "POST",
+                                                data: {typeactivity:typeactivity},
+                                                headers: {
+                                                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                                },
+                                                success:function ()
+                                                {
+                                                    alert('Готово');
+                                                },
+                                                error: function (msg) {
+                                                    alert('Ошибка');
+                                                }
+                                            });
+                                        });
+                                    })
+                                </script>
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Conract_Partners">Договор</label>
                                     <div class="col-lg-6">
@@ -78,7 +174,7 @@
                                                 <div class="row justify-content-end">
                                                     <a @click="remove(n)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
                                                 </div>
-                                                <input type="text" class="form-control @error('Address') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191"   :id="n"  name="Address" placeholder="Адрес" required>
+                                                <input type="text" class="form-control @error('Address') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191"   :id="n"  name="Address[]" placeholder="Адрес" required>
                                                 @error('Address')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>
@@ -181,23 +277,6 @@
                                 </div>
                                 </div>
                                 <!--
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="Address">Адрес
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control"  name="Address" placeholder="Адрес">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="Phone_Number">Номер телефона <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <input type="tel" class="form-control" id="Phone_Number"  name="Phone_Number" required placeholder="Номер телефона">
-                                    </div>
-                                    <script>
-
-                                    </script>
-                                </div>
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="type_activities_id">Тип занятости <span class="text-danger">*</span>
                                     </label>

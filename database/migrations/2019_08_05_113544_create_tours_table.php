@@ -27,7 +27,7 @@ class CreateToursTable extends Migration
             $table->boolean('ZGP')->default(0);
             $table->boolean('PRF')->default(0);
             $table->string('Name_Tours', 191);
-            $table->text('Description')->default('Подробности по телефону.');;
+            $table->text('Description')->nullable();
             $table->date('Start_Date_Tours');
             $table->date('End_Date_Tours')->nullable();
             $table->mediumInteger('Price');

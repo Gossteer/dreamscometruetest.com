@@ -36,9 +36,13 @@ class TypeActivityController extends Controller
      */
     public function store(Request $request)
     {
-        Type_Activity::create($request->Name_Type_Activity);
+       $res = Type_Activity::create([
+         'Name_Type_Activity' => $request->Name_Type_Activity,
+       ]);
 
-        return response()->json(['success'=>'Data is successfully added']);
+       $data = ['id' => $res->id, 'Name_Type_Activity' => $request->Name_Type_Activity];
+
+        return $data;
     }
 
     /**
@@ -81,8 +85,12 @@ class TypeActivityController extends Controller
      * @param  \App\Type_Activity  $type_Activity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Type_Activity $type_Activity)
+    public function destroy($typeactivity)
     {
-        //
+        Type_Activity::find($typeactivity)->delete();
+
+        return response()->json([
+            'success' => 'Record has been deleted successfully!'
+        ]);
     }
 }

@@ -100,6 +100,36 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 *::after {
   box-sizing: border-box; }
 
+
+
+.selectedbutton{
+  padding: 6px 12px !important;
+  font-size: 0.875rem !important;
+  color: #495057 !important;
+}
+
+.diableddeletedbutton{
+  pointer-events: none;
+  cursor: default;
+  color: #76838f !important;
+}
+
+@media (max-width: 425px) {
+  .selectedbutton{
+    padding: 6px 12px !important;
+    font-size: 0.83rem !important;
+  }
+}
+@media (max-width: 320px) {
+  .selectedbutton{
+    padding: 4px 8px !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+
+
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -879,7 +909,7 @@ pre {
   .offset-md-3 {
     margin-left: 25%; }
   .offset-md-4 {
-    margin-left: 33.33333%; }
+    margin-left: 31.1%; }
   .offset-md-5 {
     margin-left: 41.66667%; }
   .offset-md-6 {

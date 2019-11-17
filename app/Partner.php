@@ -10,7 +10,6 @@ class Partner extends Model
     protected $fillable = [
         'type_activities_id',
         'partners_id',
-        'Address',
         'Name_Partners',
         'Conract_Partners',
         'INN',

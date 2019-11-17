@@ -64,8 +64,26 @@ Route::group(['middleware' => ['auth','check.user']], function () {
 Route::get('/account', 'CustomerController@account')->name('AccountCustomer');
 });
 
-Auth::routes();
+Route::group(['middleware' => ['web','logining.user']], function() {
 
+// Login Routes...
+    Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
+    Route::post('login', ['as' => 'login.post', 'uses' => 'Auth\LoginController@login']);
+
+
+// Registration Routes...
+    Route::get('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
+    Route::post('register', ['as' => 'register.post', 'uses' => 'Auth\RegisterController@register']);
+
+// Password Reset Routes...
+    Route::get('password/reset', ['as' => 'password.request', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
+    Route::post('password/email', ['as' => 'password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
+    Route::get('password/reset/{token}', ['as' => 'password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
+    Route::post('password/reset', ['as' => 'password.update', 'uses' => 'Auth\ResetPasswordController@reset']);
+});
+Route::group(['middleware' => ['web']], function() {
+Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
+    });
 //Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::resource('/lol','CustomerController');

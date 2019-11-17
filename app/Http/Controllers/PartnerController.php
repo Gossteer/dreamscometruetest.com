@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
+use App\Customer;
+use App\Email;
 use App\Partner;
+use App\Phone_nomber;
 use App\Type_Activity;
+use App\Website;
 use Illuminate\Http\Request;
 
 class PartnerController extends Controller
@@ -38,9 +43,9 @@ class PartnerController extends Controller
     {
         if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists()){
             Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->update([
-                'type_activities_id' => $request->type_activities_id,
-                'Phone_Number' => $request->Phone_Number,
-                'Address' => $request->Address,
+                'type_activities_id' =>1,
+                'Name_Partners' => $request->Name_Partners,
+                'INN' => $request->Address,
                 'LogicalDelete' => 0,
             ]);
             return redirect()->route('partners.index');
@@ -54,8 +59,29 @@ class PartnerController extends Controller
                 'Name_Partners.required' => 'Обязательно к заполнению!',
             ])->validate();
 
-            Partner::create(['type_activities_id' => $request->type_activities_id,
-                'Name_Partners' => $request->Name_Partners, 'Phone_Number' => $request->Phone_Number, 'Address' => $request->Address, ]);
+        $partner = Partner::create([
+            'type_activities_id' => 1,
+            'Name_Partners' => $request->Name_Partners,
+            'INN' => $request->INN ]);
+
+            for ($i = 0; $i != count($request->Address); $i++){
+                Address::create([
+                    'partners_id' => $partner->id,
+                    'Address' => $request->Address[$i],
+                ]);
+            }
+
+            //Customer::
+//            Website::created([
+//
+//            ]);
+//            Phone_nomber::created([
+//
+//            ]);
+//
+//            Email::created([
+//
+//            ]);
 
         return redirect()->route('partners.index');
     }

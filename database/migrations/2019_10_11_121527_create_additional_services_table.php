@@ -19,7 +19,7 @@ class CreateAdditionalServicesTable extends Migration
             $table->string('Name', 191);
             $table->integer('Count')->default(1);
             $table->integer('Price')->nullable();
-            $table->text('Description')->default('Подробности по телефону.');
+            $table->text('Description')->nullable();
             $table->timestamps();
             $table->boolean('LogicalDelete')->default(0);
 

@@ -26,7 +26,18 @@
                             <td>
                                 {{ $partner->type_activity->Name_Type_Activity }}
                             </td>
-                            <td> {{ $partner->Address }}</td>
+
+                            <td {{ $index = 0 }}>
+                                @foreach($partner->address as $addresses)
+                                    <p>
+                                        @if (count($partner->address) > 1)
+                                      {{ ++$index }}.
+                                        @endif
+                                        {{ $addresses->Address }}@if (count($partner->address) > 1); @endif
+                                    </p>
+                                @endforeach
+                            </td>
+
                             <td><span class="label gradient-1 btn-rounded">{{ $partner->Phone_Number }}</span>
                             </td>
 

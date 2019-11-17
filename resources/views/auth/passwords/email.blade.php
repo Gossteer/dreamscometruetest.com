@@ -38,12 +38,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                        <div class="form-group row justify-content-center mb-0">
+                                <button type="submit" style="font-size: 16px; margin: 0 15px" class="col-md-5  btn btn-primary">
                                     Восстановить
                                 </button>
-                            </div>
                         </div>
                     </form>
                 </div>

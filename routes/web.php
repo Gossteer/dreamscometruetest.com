@@ -18,7 +18,7 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
 
     Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
     Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
-    Route::resource('admin/typeactivity', 'TypeActivityController');
+    Route::resource('admin/partners/typeactivity', 'TypeActivityController');
     Route::get('/admin', 'SiteController@adminindex')->name('/admin');
     Route::resource('admin/employees', 'EmployeeController');
     Route::resource('admin/job', 'JobController');

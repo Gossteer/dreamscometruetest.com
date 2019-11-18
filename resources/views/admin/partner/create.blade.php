@@ -56,10 +56,11 @@
                                     $(function() {
                                         $('#select_type_activitie').change(function(select_type_activitie) {
                                             // если значение не равно пустой строке
+                                            var deletedbutton = document.querySelector("#deletedbutton")
                                             if($('#select_type_activitie').val() == "0") {
-                                                $('#deletedbutton').classList.add("diableddeletedbutton");
+                                                deletedbutton.classList.add("diableddeletedbutton");
                                             } else {
-                                                $('#deletedbutton').classList.remove("diableddeletedbutton");
+                                                deletedbutton.classList.remove("diableddeletedbutton");
                                             }
                                         });
                                     });
@@ -73,8 +74,13 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="title">Название типа занятости</label>
-                                                    <input type="text" class="form-control" id="Name_Type_Activity" placeholder="Название" required>
+                                                    <label for="title">Название типа занятости <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control @error('Name_Type_Activity') is-invalid @enderror" id="Name_Type_Activity" placeholder="Название">
+                                                    @error('Name_Type_Activity')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -93,7 +99,7 @@
                                             var Name_Type_Activity = $('#Name_Type_Activity').val();
 
                                             $.ajax({
-                                                url: '{{ route('typeactivity.store', ) }}',
+                                                url: '{{ route('typeactivity.store') }}',
                                                 type: "POST",
                                                 data: {Name_Type_Activity:Name_Type_Activity},
                                                 headers: {
@@ -101,14 +107,17 @@
                                                 },
 
                                                 success: function (data) {
+                                                    $('#Name_Type_Activity').val(' ');
                                                     $('#addArticle').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
                                                     var str = '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
                                                     $('#select_type_activitie:last').append(str);
+
                                                 },
                                                 error: function (msg) {
                                                     alert('Ошибка');
+
                                                 }
                                             });
                                         });
@@ -116,18 +125,26 @@
                                             var typeactivity = $('#select_type_activitie').val();
 
                                             $.ajax({
-                                                url: "admin/typeactivity/"+typeactivity,
-                                                type: "POST",
+                                                url: "typeactivity/"+typeactivity,
+                                                type: "delete",
                                                 data: {typeactivity:typeactivity},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
-                                                success:function ()
+                                                success:function (datas)
                                                 {
+                                                    var str;
+
+                                                    datas.forEach(function(data){
+                                                        str += '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
+                                                    });
+                                                    $('#select_type_activitie option').remove();
+                                                    $('#select_type_activitie:last').append(str);
                                                     alert('Готово');
+
                                                 },
                                                 error: function (msg) {
-                                                    alert('Ошибка');
+                                                    alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
                                                 }
                                             });
                                         });

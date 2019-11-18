@@ -13,6 +13,7 @@ class Partner extends Model
         'Name_Partners',
         'Conract_Partners',
         'INN',
+        'LogicalDelete',
     ];
 
     public function contract()

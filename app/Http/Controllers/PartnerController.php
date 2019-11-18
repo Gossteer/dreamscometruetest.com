@@ -43,7 +43,7 @@ class PartnerController extends Controller
     {
         if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists()){
             Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->update([
-                'type_activities_id' =>1,
+                'type_activities_id' =>$request->select_type_activitie,
                 'Name_Partners' => $request->Name_Partners,
                 'INN' => $request->Address,
                 'LogicalDelete' => 0,
@@ -60,7 +60,7 @@ class PartnerController extends Controller
             ])->validate();
 
         $partner = Partner::create([
-            'type_activities_id' => 1,
+            'type_activities_id' => $request->select_type_activitie,
             'Name_Partners' => $request->Name_Partners,
             'INN' => $request->INN ]);
 

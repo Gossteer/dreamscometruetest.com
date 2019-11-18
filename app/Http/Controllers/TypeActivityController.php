@@ -36,6 +36,13 @@ class TypeActivityController extends Controller
      */
     public function store(Request $request)
     {
+        \Validator::make($request->all(), [
+            'Name_Type_Activity' => ['required', 'unique:type_activities'],
+        ],[
+            'Name_Type_Activity.unique' => 'Уже существует!',
+            'Name_Type_Activity.required' => 'Обязательно к заполнению!',
+        ])->validate();
+
        $res = Type_Activity::create([
          'Name_Type_Activity' => $request->Name_Type_Activity,
        ]);
@@ -89,8 +96,7 @@ class TypeActivityController extends Controller
     {
         Type_Activity::find($typeactivity)->delete();
 
-        return response()->json([
-            'success' => 'Record has been deleted successfully!'
-        ]);
+        $datas = Type_Activity::all();
+        return $datas;
     }
 }

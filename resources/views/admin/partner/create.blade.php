@@ -39,7 +39,6 @@
                                     <label class="col-lg-4 col-form-label" for="INN">Тип деятельности</label>
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select" id="select_type_activitie" name="select_type_activitie">
-                                            <option selected="selected" value="0">Выбрать</option>
                                             @foreach($type_activities as $type_activitie)
                                             <option value="{{$type_activitie->id}}" id="{{$type_activitie->id}}">{{$type_activitie->Name_Type_Activity}}</option>
                                                 @endforeach
@@ -217,13 +216,13 @@
                                                 <div class="row justify-content-end">
                                                     <a @click="remove(nn)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
                                                 </div>
-                                                <input type="text" id="Phone_Number" onclick="lolo()" class="form-control @error('Phone_Number') is-invalid @enderror" style="margin-bottom: 10px" :id="n"  maxlength="191"  name="Phone_Number" placeholder="Телефонный номер" required>
+                                                <input type="text" onclick="lolo()" class="form-control @error('Phone_Number') is-invalid @enderror" style="margin-bottom: 10px" :id="n"  maxlength="191"  name="Phone_Number[]" placeholder="Телефонный номер" required>
                                                 @error('Phone_Number')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>
                                                 </span>
                                                 @enderror
-                                                <input type="text" class="form-control @error('Representative') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n"  name="Representative" placeholder="Представитель" required>
+                                                <input type="text" class="form-control @error('Representative') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n"  name="Representative[]" placeholder="Представитель" >
                                                 @error('Representative')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>
@@ -247,13 +246,13 @@
                                                 <div class="row justify-content-end">
                                                     <a @click="remove(nn)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
                                                 </div>
-                                                <input type="text" class="form-control @error('Email') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191"  :id="n" name="Email" placeholder="Email" required>
+                                                <input type="email" class="form-control @error('Email') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191"  :id="n" name="Email[]" placeholder="Email" required>
                                                 @error('Email')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>
                                                 </span>
                                                 @enderror
-                                                <input type="text" class="form-control @error('Representative_Email') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n" name="Representative_Email" placeholder="Представитель" required>
+                                                <input type="text" class="form-control @error('Representative_Email') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n" name="Representative_Email[]" placeholder="Представитель">
                                                 @error('Representative_Email')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>
@@ -277,7 +276,7 @@
                                                 <div class="row justify-content-end">
                                                     <a @click="remove(n)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
                                                 </div>
-                                                <input type="text" class="form-control @error('Site') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n"  name="Site" placeholder="Сайт" required>
+                                                <input type="text" class="form-control @error('Site') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191" :id="n"  name="Site[]" placeholder="Сайт" required>
                                                 @error('Site')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>

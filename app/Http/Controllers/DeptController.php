@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Address;
+use App\Dept;
 use Illuminate\Http\Request;
 
-class AddressController extends Controller
+class DeptController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AddressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Address  $address
+     * @param  \App\Dept  $dept
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address)
+    public function show(Dept $dept)
     {
         //
     }
@@ -52,10 +52,10 @@ class AddressController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Address  $address
+     * @param  \App\Dept  $dept
      * @return \Illuminate\Http\Response
      */
-    public function edit(Address $address)
+    public function edit(Dept $dept)
     {
         //
     }
@@ -64,10 +64,10 @@ class AddressController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Address  $address
+     * @param  \App\Dept  $dept
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Address $address)
+    public function update(Request $request, Dept $dept)
     {
         //
     }
@@ -75,13 +75,11 @@ class AddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Address  $address
+     * @param  \App\Dept  $dept
      * @return \Illuminate\Http\Response
      */
-    public function destroy($addres, $partner)
+    public function destroy(Dept $dept)
     {
-       Address::findOrFail($addres)->delete();
-
-        return redirect()->back();
+        //
     }
 }

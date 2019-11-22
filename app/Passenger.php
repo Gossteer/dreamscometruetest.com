@@ -15,6 +15,11 @@ class Passenger extends Model
         'Amount_Children',
     ];
 
+    public function dept()
+    {
+        return $this->hasOne('App\Dept', 'passengers_id');
+    }
+
     public function customer()
     {
         return $this->belongsTo('App\Customer', 'customers_id');

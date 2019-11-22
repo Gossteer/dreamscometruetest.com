@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Website extends Model
 {
-    protected $fillable = ['Site'];
+    protected $fillable = ['Site', 'partners_id'];
 
     public function partner()
     {

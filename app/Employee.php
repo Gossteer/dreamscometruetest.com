@@ -13,6 +13,11 @@ class Employee extends Model
 
     ];
 
+    public function dept()
+    {
+        return $this->hasMany('App\Dept', 'employee_id');
+    }
+
     public function user()
     {
         return $this->hasOne('App\User', 'users_id');

@@ -45,13 +45,12 @@ class PartnerController extends Controller
             Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->update([
                 'type_activities_id' =>$request->select_type_activitie,
                 'Name_Partners' => $request->Name_Partners,
-                'INN' => $request->Address,
+                'INN' => $request->INN,
                 'LogicalDelete' => 0,
             ]);
-            return redirect()->route('partners.index');
         }
-
         else
+        {
             \Validator::make($request->all(), [
                 'Name_Partners' => ['required', 'unique:partners', 'string'],
             ],[
@@ -59,29 +58,51 @@ class PartnerController extends Controller
                 'Name_Partners.required' => 'Обязательно к заполнению!',
             ])->validate();
 
-        $partner = Partner::create([
-            'type_activities_id' => $request->select_type_activitie,
-            'Name_Partners' => $request->Name_Partners,
-            'INN' => $request->INN ]);
+            Partner::firstOrCreate([
+                'type_activities_id' => $request->select_type_activitie,
+                'Name_Partners' => $request->Name_Partners,
+                'INN' => $request->INN ]);
 
+        }
+
+        if($request->Address != null)
+        {
             for ($i = 0; $i != count($request->Address); $i++){
-                Address::create([
-                    'partners_id' => $partner->id,
+                Address::firstOrCreate([
+                    'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
                     'Address' => $request->Address[$i],
                 ]);
             }
-
-            //Customer::
-//            Website::created([
-//
-//            ]);
-//            Phone_nomber::created([
-//
-//            ]);
-//
-//            Email::created([
-//
-//            ]);
+        }
+        if($request->Phone_Number != null)
+        {
+            for ($i = 0; $i != count($request->Phone_Number); $i++){
+                Phone_nomber::firstOrCreate([
+                    'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
+                    'Representative' => $request->Representative[$i],
+                    'Phone_Number' => $request->Phone_Number[$i],
+                ]);
+            }
+        }
+        if($request->Email != null)
+        {
+            for ($i = 0; $i != count($request->Email); $i++){
+                Email::firstOrCreate([
+                    'Representative_Email' => $request->Representative_Email[$i],
+                    'Email' => $request->Email[$i],
+                    'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
+                ]);
+            }
+        }
+        if($request->Site != null)
+        {
+            for ($i = 0; $i != count($request->Site); $i++){
+                Website::firstOrCreate([
+                    'Site' => $request->Site[$i],
+                    'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
+                ]);
+            }
+        }
 
         return redirect()->route('partners.index');
     }
@@ -105,7 +126,8 @@ class PartnerController extends Controller
      */
     public function edit(Partner $partner)
     {
-        return view('admin.partner.update', ['partner' => $partner, 'type_activities' => Type_Activity::all()]);
+        return view('admin.partner.update', ['partner' => $partner, 'type_activities' => Type_Activity::all(),
+            'address' => Address::where('partners_id', $partner->id)->get(), 'phone_nomber' => Phone_nomber::all(), 'email' => Email::all(), 'website' => Website::all()]);
     }
 
     /**

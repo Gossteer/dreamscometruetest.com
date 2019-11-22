@@ -11,8 +11,9 @@
 <div class="container py-lg-5 py-sm-4">
     <div class="row justify-content-center">
         <div class="col-md-9">
-            <div class="col-lg-12 contact-left-form">
-                <div class="card-header">Вход</div>
+
+            <div class="col-lg-12 contact-left-form" style="padding: 0em;">
+                <div class="card-header" style="background-color: rgba(0, 0, 0, 0.08);     border-bottom: 1px solid rgba(0, 0, 0, 0);">Вход</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -60,7 +61,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" style="font-size: 16px" class="btn btn-primary">
+                                <button type="submit" style="font-size: 15px" class="btn btn-primary">
                                     Войти
                                 </button>
 

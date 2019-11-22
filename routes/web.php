@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::post('admin/tours/{tour}/jobs', 'TourEmployeesController@store')->name('jobsstore');
     Route::get('admin/tours/{tour}/contracts', 'ContractController@index')->name('contractsindex');
     Route::delete('admin/tours/{tour}/contracts/{contranct}', 'ContractController@destroy')->name('contractsdestroy');
+    Route::delete('admin/partners/{partner}/edit/{addres}', 'AddressController@destroy')->name('addresssdestroy');
     Route::post('admin/tours/{tour}/contracts', 'ContractController@store')->name('contractsstore');
 });
 

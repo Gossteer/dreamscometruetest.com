@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Phone_nomber extends Model
 {
-    protected $fillable = ['Representative','Phone_Number'];
+    protected $table = 'phone_nombers';
+    protected $fillable = ['Representative','Phone_Number', 'partners_id'];
 
     public function partner()
     {

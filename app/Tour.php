@@ -21,6 +21,11 @@ class Tour extends Model
     ];
 
 
+    public function dept()
+    {
+        return $this->hasMany('App\Dept', 'tours_id');
+    }
+
     public function tour_employees()
     {
         return $this->hasMany('App\Tour_employees', 'tour_id');

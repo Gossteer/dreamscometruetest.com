@@ -15,6 +15,8 @@
                             <th scope="col">Тип занятости</th>
                             <th scope="col">Адрес</th>
                             <th scope="col">Номер телефона</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Сайт</th>
                             <th scope="col">Действие</th>
                         </tr>
                         </thead>
@@ -29,7 +31,7 @@
 
                             <td {{ $index = 0 }}>
                                 @foreach($partner->address as $addresses)
-                                    <p>
+                                    <p style="margin-bottom: 0;">
                                         @if (count($partner->address) > 1)
                                       {{ ++$index }}.
                                         @endif
@@ -38,7 +40,40 @@
                                 @endforeach
                             </td>
 
-                            <td><span class="label gradient-1 btn-rounded">{{ $partner->Phone_Number }}</span>
+                            <td {{ $index = 0 }}>
+                                @foreach($partner->phone_nomber as $phone_nombers)
+                                    <p style="margin-bottom: 0;">
+
+                                        @if (count($partner->phone_nomber) > 1)
+                                            {{ ++$index }}.
+                                        @endif
+                                           {{ $phone_nombers->Phone_Number }} - {{ $phone_nombers->Representative }} @if (count($partner->phone_nomber) > 1); @endif
+                                    </p>
+                                @endforeach
+
+                            </td>
+
+                            <td {{ $index = 0 }}>
+                                @foreach($partner->email as $emails)
+                                    <p style="margin-bottom: 0;">
+
+                                        @if (count($partner->email) > 1)
+                                                 {{ ++$index }}.
+                                             @endif
+                                            {{  $emails->Email }} - {{  $emails->Representative_Email }}@if (count($partner->email) > 1); @endif
+                                    </p>
+                                @endforeach
+                            </td>
+
+                            <td {{ $index = 0 }}>
+                                @foreach($partner->website as $websites)
+                                    <p style="margin-bottom: 0;">
+                                        @if (count($partner->website) > 1)
+                                            {{ ++$index }}.
+                                        @endif
+                                        {{ $websites->Site }}@if (count($partner->website) > 1); @endif
+                                    </p>
+                                @endforeach
                             </td>
 
                             <td>

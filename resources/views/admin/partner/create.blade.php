@@ -115,7 +115,7 @@
 
                                                 },
                                                 error: function (msg) {
-                                                    alert('Ошибка');
+                                                    alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
 
                                                 }
                                             });
@@ -216,7 +216,7 @@
                                                 <div class="row justify-content-end">
                                                     <a @click="remove(nn)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
                                                 </div>
-                                                <input type="text" onclick="lolo()" class="form-control @error('Phone_Number') is-invalid @enderror" style="margin-bottom: 10px" :id="n"  maxlength="191"  name="Phone_Number[]" placeholder="Телефонный номер" required>
+                                                <input type="text" class="form-control @error('Phone_Number') is-invalid @enderror" style="margin-bottom: 10px" :id="n"  maxlength="191"  name="Phone_Number[]" id="Phone_Number" placeholder="Телефонный номер" required>
                                                 @error('Phone_Number')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>
@@ -230,6 +230,11 @@
                                                 @enderror
                                     </div>
                                 </div>
+                                    <script>
+                                        $(function() {
+                                            $("#Phone_Number").mask("+7 (999) 999-99-99");
+                                        });
+                                    </script>
                                 </template>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" ></label>
@@ -320,9 +325,6 @@
                                 -->
 
                                 <script>
-function lolo() {
-    $("#Phone_Number").mask("+7 (999) 999-99-99");
-};
 
                                         var o=0;
                                         new Vue({

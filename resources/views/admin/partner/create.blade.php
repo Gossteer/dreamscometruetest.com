@@ -35,14 +35,21 @@
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="INN">Тип деятельности</label>
+                                    <label class="col-lg-4 col-form-label" for="select_type_activitie">Тип деятельности</label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select" id="select_type_activitie" name="select_type_activitie">
+                                        <select class="custom-select @error('select_type_activitie') is-invalid @enderror" id="select_type_activitie" name="select_type_activitie" required>
+                                            <option value="" disabled selected hidden>Тип занятости</option>
                                             @foreach($type_activities as $type_activitie)
                                             <option value="{{$type_activitie->id}}" id="{{$type_activitie->id}}">{{$type_activitie->Name_Type_Activity}}</option>
                                                 @endforeach
                                         </select>
+                                        @error('select_type_activitie')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                         <div class="input-group-append">
                                             <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
                                         </div>
@@ -51,6 +58,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <script>
                                     $(function() {
                                         $('#select_type_activitie').change(function(select_type_activitie) {
@@ -149,6 +157,7 @@
                                         });
                                     })
                                 </script>
+
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Conract_Partners">Договор</label>
                                     <div class="col-lg-6">

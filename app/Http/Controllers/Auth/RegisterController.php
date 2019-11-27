@@ -54,21 +54,34 @@ class RegisterController extends Controller
         $data['date'] = Carbon::today();
         return Validator::make($data, [
             'Phone_Number_Customer' => ['required', 'string', 'unique:customers'],
-            'login' => ['required', 'string','min:2', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'Date_Birth_Customer' => ['date','before_or_equal:date']
+            'login' => ['required', 'string','min:2', 'max:20', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
+            'password' => ['required', 'string', 'min:8','max:16', 'confirmed'],
+            'Surname' => ['required','string', 'min:2','max:50'],
+            'Name' => ['required','string', 'min:2','max:50'],
+            'Middle_Name' => ['string', 'min:2','max:50'],
+            'Floor' => ['required'],
+            'Name_Category_Source' => ['required'],
+            'Date_Birth_Customer' => ['required','date','before_or_equal:date']
         ],[
-            'Date_Birth_Customer.before_or_equal' => 'Вы ещё не родились, досвидание!',
+            'Date_Birth_Customer.before_or_equal' => 'Вы ещё не родились, просим дождаться этого момента!',
             'Date_Birth_Customer.date' => 'Укажите поажалуйста правильную дату!',
             'Phone_Number_Customer.unique' => 'Пользователь с данным номером телефона уже существует!',
             'login.unique' => 'Пользователь с таким ником уже существует!',
             'login.min' => 'Минимальный размер 2 символа!',
-            'login.max' => 'Максимальный размер 255 символов!',
-            'login.required' => 'Пожалуйста укажите логин!',
+            'login.max' => 'Максимальный размер 20 символов!',
             'email.unique' => 'Пользователь с таким email уже существует!',
             'password.min' => 'Пароль должен быть не менее 8 символов!',
-            'password.confirmed' => 'Пароль не совпадает!',
+            'password.max' => 'Пароль не должен быть больше 16 символов',
+            'Surname.min' => 'Фамилия должена иметь не менее 2 символов!',
+            'Surname.max' => 'Фамилия должена быть не больше 50 символов',
+            'Name.min' => 'Имя должено иметь не менее 2 символов!',
+            'Name.max' => 'Имя должено быть больше не 50 символов',
+            'Middle_Name.min' => 'Отчество должено иметь не менее 2 символов!',
+            'Middle_Name.max' => 'Отчество должено быть не больше 50 символов',
+            'password.confirmed' => 'Пароль не совпадает',
+            'email.email' => 'Укажите пожалуйста правильную почту!',
+            'required' => 'Это поле обязательно к заполнению!'
         ]);
     }
 

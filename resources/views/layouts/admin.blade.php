@@ -261,7 +261,7 @@
 
 
 {{--<script src="https://momentjs.com/downloads/moment.js"></script>--}}
-<script src="{{ asset('js/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+{{--<script src="{{ asset('js/js/bootstrap-material-datetimepicker.js') }}"></script>--}}
 <!-- Clock Plugin JavaScript -->
 <script src="{{ asset('js/plugins/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
 <!-- Color Picker Plugin JavaScript -->
@@ -274,7 +274,7 @@
 <script src="{{ asset('js/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <script src="{{ asset('js/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
-<script src="{{ asset('js/js/plugins-init/form-pickers-init.js') }}"></script>
+{{--<script src="{{ asset('js/js/plugins-init/form-pickers-init.js') }}"></script>--}}
 
 <script src="{{ asset('js/plugins/validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('js/plugins/validation/jquery.validate-init.js') }}"></script>

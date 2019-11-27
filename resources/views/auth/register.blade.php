@@ -18,7 +18,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-sm-6 form-group contact-forms">
-                                <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="login" autofocus placeholder="Логин">
+                                <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" minlength="2" maxlength="20" required autocomplete="login" autofocus placeholder="Логин">
                                 @error('login')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -27,7 +27,7 @@
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required maxlength="191" autocomplete="email" placeholder="Email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Пароль">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" minlength="8" maxlength="16" required autocomplete="new-password" placeholder="Пароль">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -51,15 +51,30 @@
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
-                                <input id="Surname" type="text" class="form-control" name="Surname" value="{{ old('Surname') }}" required autocomplete="family-name" placeholder="Фамилия">
+                                <input id="Surname" type="text" class="form-control @error('Surname') is-invalid @enderror" name="Surname" value="{{ old('Surname') }}" required autocomplete="family-name" minlength="2" maxlength="50" placeholder="Фамилия">
+                                @error('Surname')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
-                                <input id="Name" type="text" class="form-control" name="Name" value="{{ old('Name') }}" required autocomplete="given-name" placeholder="Имя">
+                                <input id="Name" type="text" class="form-control @error('Name') is-invalid @enderror" name="Name" value="{{ old('Name') }}" required autocomplete="given-name" minlength="2" maxlength="50" placeholder="Имя">
+                                @error('Name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
-                                <input id="Middle_Name" type="text" class="form-control" name="Middle_Name" value="{{ old('Middle_Name') }}" autocomplete="additional-name" placeholder="Отчество">
+                                <input id="Middle_Name" type="text" class="form-control @error('Middle_Name') is-invalid @enderror" name="Middle_Name" value="{{ old('Middle_Name') }}" minlength="2" maxlength="50" autocomplete="additional-name" placeholder="Отчество">
+                                @error('Middle_Name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
@@ -72,11 +87,16 @@
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms" id="">
-                                <select class="form-control" id="Floor" name="Floor" required>
+                                <select class="form-control @error('Floor') is-invalid @enderror" id="Floor" name="Floor" required>
                                     <option value="" disabled selected>Пол</option>
                                     <option value="0">Мужской</option>
                                     <option value="1">Женский</option>
                                 </select>
+                                @error('Floor')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
@@ -89,11 +109,16 @@
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms" id="">
-                                <select class="form-control" id="Name_Category_Source" name="Name_Category_Source" required>
+                                <select class="form-control @error('Name_Category_Source') is-invalid @enderror" id="Name_Category_Source"  name="Name_Category_Source" required>
                                     <option value="" disabled selected>Как вы о нас узнали</option>
                                     <option value="1">От знакомых</option>
                                     <option value="2">Другое</option>
                                 </select>
+                                @error('Name_Category_Source')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms" id="addSelect">

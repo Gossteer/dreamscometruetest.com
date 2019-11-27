@@ -5,12 +5,16 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Партнёры <a href="{{ route('partners.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Создать</a></h4>
+
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped verticle-middle">
                         <thead>
                         <tr>
+                            <td colspan="4" style="border:none"><h4 class="card-title">Партнёры</h4></td>
+                            <td colspan="3" align="right" style="border:none"><a href="{{ route('partners.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; ">Создать</a></td>
+                        </tr>
+                        <tr align="center">
                             <th scope="col">Название</th>
                             <th scope="col">Тип занятости</th>
                             <th scope="col">Адрес</th>

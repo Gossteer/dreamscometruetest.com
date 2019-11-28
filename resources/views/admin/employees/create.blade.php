@@ -89,7 +89,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="Byrthday" >Дата рождения</label>
+                                    <label class="col-lg-4 col-form-label" for="Byrthday" >Дата рождения<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <input  type="text" class="form-control @error('Byrthday') is-invalid @enderror" id="Byrthday" name="Byrthday" value="{{ old('Byrthday') }}" placeholder="Дата рождения">
                                         @error('Byrthday')
@@ -101,7 +101,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="Phone_Number" >Телефон</label>
+                                    <label class="col-lg-4 col-form-label" for="Phone_Number" >Телефон<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <input  type="text" class="form-control @error('Phone_Number') is-invalid @enderror" name="Phone_Number" id="Phone_Number" value="{{ old('Phone_Number') }}" placeholder="Телефон">
                                         @error('Phone_Number')
@@ -113,12 +113,12 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="jobs_id" >Должность</label>
+                                    <label class="col-lg-4 col-form-label" for="jobs_id" >Должность<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id" required>
                                             <option value="" disabled selected hidden>Должность</option>
                                             @foreach($jobs as $job)
-                                                <option value="{{ $job->id }}"> {{ $job->Job_Title . ' зп: ' .  $job->Salary}}</option>
+                                                <option value="{{ $job->id }}"> {{ $job->Job_Title . ' зп: ' .  ( ($job->Salary == null)? 'договорная': $job->Salary)}}</option>
                                             @endforeach
                                         </select>
                                         @error('jobs_id')
@@ -130,7 +130,7 @@
                                             <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" id="deletedbutton" style="" name="deletedbutton">Изменить</a>
+                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" id="updatebutton" style="" name="updatebutton">Изменить</a>
                                         </div>
                                     </div>
                                 </div>
@@ -219,12 +219,12 @@
                                             });
                                         });
 
-                                        $('#deletedbutton').on('click',function(){
-                                            var typeactivity = $('#select_type_activitie').val();
+                                        $('#updatebutton').on('click',function(){
+                                            var typeactivity = $('#jobs_id').val();
 
                                             $.ajax({
                                                 url: "typeactivity/"+typeactivity,
-                                                type: "delete",
+                                                type: "GET",
                                                 data: {typeactivity:typeactivity},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -236,8 +236,8 @@
                                                     datas.forEach(function(data){
                                                         str += '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
                                                     });
-                                                    $('#select_type_activitie option').remove();
-                                                    $('#select_type_activitie:last').append(str);
+                                                    $('#jobs_id option').remove();
+                                                    $('#jobs_id:last').append(str);
                                                     alert('Готово');
                                                 },
                                                 error: function (msg) {
@@ -249,7 +249,7 @@
                                 </script>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="Type_User" >Права</label>
+                                    <label class="col-lg-4 col-form-label" for="Type_User" >Права<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <select class="custom-select mr-sm-2" id="Type_User" name="Type_User" required>
                                             <option value="" disabled selected hidden>Права</option>
@@ -276,7 +276,7 @@
                                     <div class="col-lg-6">
                                         <div class="col-md-12 form-group contact-forms" style="margin-top: 15px !important;">
                                             <input class="form-check-input" type="checkbox" id="Processing_Personal_Data" name="Processing_Personal_Data" value="1" style="margin-left: -12px !important;" required>
-                                            <label class="form-check-label" for="Processing_Personal_Data" style="margin-left: 20px !important;" >Разрешить обработку персональных данных.</label>
+                                            <label class="form-check-label" for="Processing_Personal_Data" style="margin-left: 20px !important;" >Разрешить обработку персональных данных.<span class="text-danger">*</span></label>
                                         </div>
                                         <div class="col-md-12 form-group contact-forms" >
                                             <input class="form-check-input" type="checkbox" id="Notifications" name="Notifications" value="1"  style="margin-left: -12px !important;">

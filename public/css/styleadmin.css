@@ -7448,8 +7448,12 @@ sub {
 .img-circle {
   border-radius: 100%; }
 
-.content-body .container-fluid {
-  padding: 15px 30px 0; }
+.content-bod {
+  padding: 0; }
+
+.container-fluid {
+  padding: 15px 30px 0;
+}
 
 @media (max-width: 767px) {
   .content-body .container-fluid {
@@ -10683,7 +10687,20 @@ input[type="checkbox"]:checked:after {
 
 .dataTables_filter {
   float: right;
-  margin-top: 10px; }
+  margin-top: 10px !important; }
+
+@media (max-width: 425px) {
+  .dataTables_filter {
+    float: none;
+    margin-top: 10px; }
+  .btnheader{
+    float: none !important;
+    margin-top: 10px;
+  }
+  .headercard{
+    padding: 0 1rem !important
+  }
+}
 
 .dataTables_filter input {
   background-color: transparent;

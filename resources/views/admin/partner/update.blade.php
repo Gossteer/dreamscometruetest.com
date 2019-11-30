@@ -39,7 +39,9 @@
                                     <label class="col-lg-4 col-form-label" for="INN">Тип деятельности</label>
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select" id="select_type_activitie" name="select_type_activitie">
-
+                                            @if(!isset($partner->type_activity))
+                                                <option value="" disabled selected hidden>Тип занятости</option>
+                                            @endif
                                             @foreach($type_activities as $type_activitie)
                                                 <option value="{{$type_activitie->id}}" id="{{$type_activitie->id}}" @if($partner->type_activities_id == $type_activitie->id) selected @endif>{{$type_activitie->Name_Type_Activity}}</option>
                                             @endforeach
@@ -48,24 +50,10 @@
                                             <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" id="deletedbutton" style="" name="deletedbutton"  >Удалить</a>
+                                            <a class="btn input-group-text selectedbutton" id="deletedbutton" style="" name="deletedbutton"  >Удалить</a>
                                         </div>
                                     </div>
                                 </div>
-                                <script>
-                                    $(function() {
-                                        $('#select_type_activitie').change(function(select_type_activitie) {
-                                            // если значение не равно пустой строке
-                                            var deletedbutton = document.querySelector("#deletedbutton")
-                                            if($('#select_type_activitie').val() == "0") {
-                                                deletedbutton.classList.add("diableddeletedbutton");
-                                            } else {
-                                                deletedbutton.classList.remove("diableddeletedbutton");
-                                            }
-                                        });
-                                    });
-                                </script>
-
                                 <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -75,7 +63,7 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="title">Название типа занятости <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control @error('Name_Type_Activity') is-invalid @enderror" id="Name_Type_Activity" placeholder="Название">
+                                                    <input type="text" class="form-control @error('Name_Type_Activity') is-invalid @enderror" id="Name_Type_Activity"  minlength="2" maxlength="191" placeholder="Название">
                                                     @error('Name_Type_Activity')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -99,7 +87,7 @@
                                             var Name_Type_Activity = $('#Name_Type_Activity').val();
 
                                             $.ajax({
-                                                url: '{{ route('typeactivity.store') }}',
+                                                url: "{{route('typeactivity.store.update', $partner->id)}}",
                                                 type: "POST",
                                                 data: {Name_Type_Activity:Name_Type_Activity},
                                                 headers: {
@@ -111,13 +99,14 @@
                                                     $('#addArticle').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
-                                                    var str = '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
+                                                    var str = '<option value="'+data['id']+'" selected>'+data['Name_Type_Activity']+'</option>';
                                                     $('#select_type_activitie:last').append(str);
+                                                    document.querySelector("#deletedbutton").classList.remove("diableddeletedbutton");
+                                                    alert('Добавлено');
 
                                                 },
                                                 error: function (msg) {
-                                                    alert('Ошибка');
-
+                                                    alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
                                                 }
                                             });
                                         });
@@ -125,8 +114,8 @@
                                             var typeactivity = $('#select_type_activitie').val();
 
                                             $.ajax({
-                                                url: "typeactivity/"+typeactivity,
-                                                type: "delete",
+                                                url: "{{route('typeactivity.destroy.update',$partner->id)}}",
+                                                type: "POST",
                                                 data: {typeactivity:typeactivity},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -140,11 +129,11 @@
                                                     });
                                                     $('#select_type_activitie option').remove();
                                                     $('#select_type_activitie:last').append(str);
-                                                    alert('Готово');
+                                                    alert('Удалено');
 
                                                 },
                                                 error: function (msg) {
-                                                    alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
+                                                    alert('Ошибка');
                                                 }
                                             });
                                         });

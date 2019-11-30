@@ -91,7 +91,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Byrthday" >Дата рождения<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input  type="text" class="form-control @error('Byrthday') is-invalid @enderror" id="Byrthday" name="Byrthday" value="{{ old('Byrthday') }}" placeholder="Дата рождения">
+                                        <input  type="text" class="form-control @error('Byrthday') is-invalid @enderror" id="Byrthday" name="Byrthday" value="{{ old('Byrthday') }}" placeholder="Дата рождения" required>
                                         @error('Byrthday')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -103,7 +103,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Phone_Number" >Телефон<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input  type="text" class="form-control @error('Phone_Number') is-invalid @enderror" name="Phone_Number" id="Phone_Number" value="{{ old('Phone_Number') }}" placeholder="Телефон">
+                                        <input  type="text" class="form-control @error('Phone_Number') is-invalid @enderror" name="Phone_Number" id="Phone_Number" value="{{ old('Phone_Number') }}" placeholder="Телефон" required>
                                         @error('Phone_Number')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -118,8 +118,8 @@
                                         <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id" required>
                                             <option value="" disabled selected hidden>Должность</option>
                                             @foreach($jobs as $job)
-                                                <option value="{{ $job->id }}"> {{ $job->Job_Title . ' зп: ' .  ( ($job->Salary == null)? 'договорная': $job->Salary)}}</option>
-                                            @endforeach
+                                                <option value="{{ $job->id }}" id="{{ $job->id }}">{{$job->Company}} {{ $job->Job_Title}} зп: {{( ($job->Salary == null)? 'договорная': $job->Salary . 'р')}} </option>
+                                                @endforeach
                                         </select>
                                         @error('jobs_id')
                                         <span class="invalid-feedback" role="alert">
@@ -130,24 +130,68 @@
                                             <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" id="updatebutton" style="" name="updatebutton">Изменить</a>
+                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton">Изменить</a>
                                         </div>
                                     </div>
                                 </div>
 
                                 <script>
                                     $(function() {
-                                        $('#jobs_id').change(function(select_type_activitie) {
+                                        $('#jobs_id').change(function(jobs_id) {
                                             // если значение не равно пустой строке
-                                            var deletedbutton = document.querySelector("#deletedbutton")
+                                            var updatebutton = document.querySelector("#updatebutton")
                                             if($('#jobs_id').val() == "0") {
-                                                deletedbutton.classList.add("diableddeletedbutton");
+                                                updatebutton.classList.add("diableddeletedbutton");
                                             } else {
-                                                deletedbutton.classList.remove("diableddeletedbutton");
+                                                updatebutton.classList.remove("diableddeletedbutton");
                                             }
                                         });
                                     });
                                 </script>
+
+                                <div class="modal fade" id="addArticle1" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="addArticleLabel">Изменение должности</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="Job_Title1">Название должности <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control @error('Job_Title') is-invalid @enderror" id="Job_Title1" minlength="2" maxlength="191" name="Job_Title1" placeholder="Название">
+                                                    @error('Job_Title')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="Salary1">Зарплата</label>
+                                                    <input type="number" class="form-control @error('Salary') is-invalid @enderror" id="Salary1" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" name="Salary1" placeholder="Зарплата ₽">
+                                                    @error('Salary')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Company1">Название компании</label>
+                                                    <input type="text" class="form-control @error('Company') is-invalid @enderror" id="Company1" minlength="2" maxlength="191" name="Company1" placeholder="Компания">
+                                                    @error('Company')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" id="delete" name="delete" data-dismiss="modal">Удалить</button>
+                                                <button type="button" id="ubdate" name="ubdate" class="btn btn-primary">Изменить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
@@ -168,7 +212,7 @@
 
                                                 <div class="form-group">
                                                     <label for="Salary">Зарплата</label>
-                                                    <input type="number" class="form-control @error('Salary') is-invalid @enderror" id="Salary" placeholder="Зарплата ₽">
+                                                    <input type="number" class="form-control @error('Salary') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" id="Salary" placeholder="Зарплата ₽">
                                                     @error('Salary')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -177,7 +221,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Company">Название компании</label>
-                                                    <input type="text" class="form-control @error('Company') is-invalid @enderror" id="Company" placeholder="Компания">
+                                                    <input type="text" class="form-control @error('Company') is-invalid @enderror" id="Company" minlength="2" maxlength="191" placeholder="Компания">
                                                     @error('Company')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -186,8 +230,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                                                <button type="button" id="save" class="btn btn-primary">Сохранить</button>
+                                                <button type="button" class="btn btn-default" id="close" name="close" data-dismiss="modal">Закрыть</button>
+                                                <button type="button" id="save" name="save" class="btn btn-primary">Сохранить</button>
                                             </div>
                                         </div>
                                     </div>
@@ -195,23 +239,51 @@
 
                                 <script>
                                     $(function() {
-                                        $('#save').on('click',function(){
-                                            var Name_Type_Activity = $('#Name_Type_Activity').val();
+                                        $("#save").on('click',function(){
+                                            var Job_Title = $('#Job_Title').val();
+                                            var Salary = $('#Salary').val();
+                                            var Company = $('#Company').val();
 
                                             $.ajax({
-                                                url: '{{ route('typeactivity.store') }}',
+                                                url: '{{ route('job.store') }}',
                                                 type: "POST",
-                                                data: {Name_Type_Activity:Name_Type_Activity},
+                                                data: {Job_Title:Job_Title,Salary:Salary,Company:Company },
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
                                                 success: function (data) {
-                                                    $('#Name_Type_Activity').val(' ');
+                                                    $('#Job_Title').val(' ');
+                                                    $('#Salary').val(' ');
+                                                    $('#Company').val(' ');
                                                     $('#addArticle').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
-                                                    var str = '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
-                                                    $('#select_type_activitie:last').append(str);
+                                                    var str = '<option value="'+data['id']+'" selected>'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
+                                                    $('#jobs_id:last').append(str);
+                                                    document.querySelector("#updatebutton").classList.remove("diableddeletedbutton");
+                                                    alert('Добавлено');
+                                                },
+                                                error: function (msg) {
+                                                    alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
+                                                }
+                                            });
+                                        });
+
+                                        $('#updatebutton').on('click',function(){
+                                            var jobsid = $('#jobs_id').val();
+
+                                            $.ajax({
+                                                url: "{{route('job.index')}}",
+                                                type: "POST",
+                                                data: {jobsid:jobsid},
+                                                headers: {
+                                                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                                },
+                                                success:function (data)
+                                                {
+                                                    $('#Company1').val(((data['Company'] == null) ? ' ':data['Company']));
+                                                    $('#Job_Title1').val(data['Job_Title']);
+                                                    $('#Salary1').val(data['Salary']);
                                                 },
                                                 error: function (msg) {
                                                     alert('Ошибка');
@@ -219,29 +291,61 @@
                                             });
                                         });
 
-                                        $('#updatebutton').on('click',function(){
-                                            var typeactivity = $('#jobs_id').val();
+                                        $('#ubdate').on('click',function(){
+                                            var jobsid = $('#jobs_id').val();
+                                            var Job_Title1 = $('#Job_Title1').val();
+                                            var Salary1 = $('#Salary1').val();
+                                            var Company1 = $('#Company1').val();
 
                                             $.ajax({
-                                                url: "typeactivity/"+typeactivity,
-                                                type: "GET",
-                                                data: {typeactivity:typeactivity},
+                                                url: "{{route('job.update')}}",
+                                                type: "POST",
+                                                data: {jobsid:jobsid,Job_Title:Job_Title1,Salary:Salary1,Company:Company1},
+                                                headers: {
+                                                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                                },
+                                                success:function (datas)
+                                                {
+                                                    $('#addArticle1').modal('hide');
+                                                    $('#articles-wrap').removeClass('hidden').addClass('show');
+                                                    $('.alert').removeClass('show').addClass('hidden');
+                                                    var str;
+                                                    datas.forEach(function(data){
+                                                        str += '<option value="'+data['id']+'" '+((data['id'] == jobsid) ? 'selected' : '')+'>'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
+                                                    });
+                                                    $('#jobs_id option').remove();
+                                                    $('#jobs_id:last').append(str);
+                                                    alert('Изменено');
+                                                },
+                                                error: function (msg) {
+                                                    alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
+                                                }
+                                            });
+                                        });
+
+                                        $('#delete').on('click',function(){
+                                            var jobsid = $('#jobs_id').val();
+
+                                            $.ajax({
+                                                url: "{{route('job.destroy')}}",
+                                                type: "POST",
+                                                data: {jobsid:jobsid},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
                                                 success:function (datas)
                                                 {
                                                     var str;
-
                                                     datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
+                                                        str += '<option value="'+data['id']+'" >'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
                                                     });
                                                     $('#jobs_id option').remove();
                                                     $('#jobs_id:last').append(str);
-                                                    alert('Готово');
+                                                    alert('Удалено');
+
                                                 },
                                                 error: function (msg) {
-                                                    alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
+                                                    alert('Ошибка');
                                                 }
                                             });
                                         });

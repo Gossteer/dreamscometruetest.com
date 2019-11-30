@@ -23,6 +23,7 @@
 
 
 
+
     <!-- Fonts -->
     <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('css/jquery.dialog.min.css') }}">
@@ -187,7 +188,7 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('employees.index') }}">Работники</a></li>
-                        <li><a href="{{ route('job.index') }}">Должности</a></li>
+{{--                        <li><a href="{{ route('job.index') }}">Должности</a></li>--}}
                         <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                     </ul>
                 </li>
@@ -279,7 +280,9 @@
 <script src="{{ asset('js/plugins/validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('js/plugins/validation/jquery.validate-init.js') }}"></script>
 <script  src="{{ asset('js/js/jquery.printPage.js') }}"></script>
-
+<script src="{{asset('js/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('js/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('js/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
 {{--Зафиксированный хедер--}}
 {{--<script>hljs.initHighlightingOnLoad();</script>--}}
 {{--<script>--}}

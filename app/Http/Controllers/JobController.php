@@ -13,9 +13,12 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.job', ['jobs' => Job::paginate(12)]);
+        $res = Job::find($request->jobsid);
+        $data = ['id' => $res->id, 'Job_Title' => $res->Job_Title, 'Salary' => $res->Salary, 'Company' => $res->Company,];
+
+        return $data;
     }
 
     /**
@@ -38,19 +41,22 @@ class JobController extends Controller
     {
 
         \Validator::make($request->all(), [
-            'Job_Title' => ['required','unique:jobs'],
-            'Salary' => ['required','integer'],
+            'Job_Title' => ['required','unique:jobs', 'max:191','min:2'],
+            'Salary' => ['digits_between:0,2147483647'],
+            'Company' => ['max:191','min:2']
         ],[
             'Job_Title.unique' => 'Данная должность уже существует',
-            'Salary.integer' => 'Вы указали неверное значение!'
         ])->validate();
 
-        Job::firstOrCreate([
+        $res = Job::firstOrCreate([
             'Job_Title' => $request->Job_Title,
             'Salary' => $request->Salary,
+            'Company' => $request->Company,
         ]);
 
-        return redirect()->route('job.index');
+        $data = ['id' => $res->id, 'Job_Title' => $request->Job_Title, 'Salary' => $request->Salary, 'Company' => $request->Company,];
+
+        return $data;
     }
 
     /**
@@ -82,19 +88,24 @@ class JobController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(Request $request)
     {
         \Validator::make($request->all(), [
-            'Job_Title' => ['required','unique:jobs,Job_Title,' . $job->id],
-            'Salary' => ['required','integer'],
+            'Job_Title' => ['required','unique:jobs,Job_Title,' . $request->jobsid, 'max:191','min:2'],
+            'Salary' => ['digits_between:0,2147483647'],
+            'Company' => ['max:191','min:2']
         ],[
             'Job_Title.unique' => 'Данная должность уже существует',
-            'Salary.integer' => 'Вы указали неверное значение!'
         ])->validate();
 
-        Job::findOrFail($job->id)->update($request->all());
+        Job::find($request->jobsid)->update([
+            'Job_Title' => $request->Job_Title,
+            'Salary' => $request->Salary,
+            'Company' => $request->Company,
+        ]);
 
-        return redirect()->route('job.index');
+        $datas = Job::all();
+        return $datas;
     }
 
     /**
@@ -103,11 +114,11 @@ class JobController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Job $job)
+    public function destroy(Request $request)
     {
-        Employee::where('jobs_id',$job->id)->update(['jobs_id' => null]);
-        $job->delete();
+        Job::find($request->jobsid)->delete();
 
-        return redirect()->route('job.index');
+        $datas = Job::all();
+        return $datas;
     }
 }

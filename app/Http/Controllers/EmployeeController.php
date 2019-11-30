@@ -19,7 +19,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $serh = $request->search ?? "";
-        return view('admin.employees.employees', ['employees' => Employee::where('jobs_id', 'LIKE', "%$serh%")->paginate(12), 'jobs' => Job::all()]);
+        return view('admin.employees', ['employees' => Employee::where('jobs_id', 'LIKE', "%$serh%")->paginate(12), 'jobs' => Job::all()]);
     }
 
     /**

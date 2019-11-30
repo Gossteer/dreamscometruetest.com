@@ -20,7 +20,7 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        return view('admin.partner', ['partners' => Partner::where('LogicalDelete',0)->paginate(12)]);
+        return view('admin.partner', ['partners' => Partner::where('LogicalDelete',0)->paginate(12),'type_activities' => Type_Activity::all()]);
     }
 
     /**

@@ -18,10 +18,22 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
 
     Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
     Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
-    Route::resource('admin/partners/typeactivity', 'TypeActivityController');
+    Route::post('admin/partners/typeactivitycreate', 'TypeActivityController@store')->name('typeactivity.store.index');
+    Route::post('admin/partners/create/typeactivity', 'TypeActivityController@store')->name('typeactivity.store');
+    Route::post('admin/partners/typeactivity', 'TypeActivityController@partnerupdate')->name('typeactivity.partner.update');
+    Route::post('admin/partners/{partner}/edit/typeactivity', 'TypeActivityController@store')->name('typeactivity.store.update');
+    Route::post('admin/partners/create/typeactivity/deletetypeactivity', 'TypeActivityController@destroy')->name('typeactivity.destroy');
+    Route::post('admin/partners/{partner}/edit/deletetypeactivity', 'TypeActivityController@destroy')->name('typeactivity.destroy.update');
     Route::get('/admin', 'SiteController@adminindex')->name('/admin');
     Route::resource('admin/employees', 'EmployeeController');
-    Route::resource('admin/job', 'JobController');
+    Route::post('admin/employees/create/job', 'JobController@index')->name('job.index');
+    Route::post('admin/employees/{employee}/edit/job', 'JobController@index')->name('job.index.update');
+    Route::post('admin/employees/create/jobcreate', 'JobController@store')->name('job.store');
+    Route::post('admin/employees/{employee}/edit/jobcreate', 'JobController@store')->name('job.store.update');
+    Route::post('admin/employees/create/jobupdate', 'JobController@update')->name('job.update');
+    Route::post('admin/employees/{employee}/edit/jobcupdate', 'JobController@update')->name('job.update.update');
+    Route::post('admin/employees/create/job/deletejob', 'JobController@destroy')->name('job.destroy');
+    Route::post('admin/employees/{employee}/edit/deletejob', 'JobController@destroy')->name('job.destroy.update');
     Route::resource('admin/customer', 'CustomerController');
     Route::resource('admin/partners', 'PartnerController');
 

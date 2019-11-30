@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Partner;
 use App\Type_Activity;
 use App\Http\Controllers\Response;
 use Illuminate\Http\Request;
@@ -37,13 +38,13 @@ class TypeActivityController extends Controller
     public function store(Request $request)
     {
         \Validator::make($request->all(), [
-            'Name_Type_Activity' => ['required', 'unique:type_activities'],
+            'Name_Type_Activity' => ['required', 'unique:type_activities', 'min:2', 'max:191'],
         ],[
             'Name_Type_Activity.unique' => 'Уже существует!',
             'Name_Type_Activity.required' => 'Обязательно к заполнению!',
         ])->validate();
 
-       $res = Type_Activity::create([
+       $res = Type_Activity::Create([
          'Name_Type_Activity' => $request->Name_Type_Activity,
        ]);
 
@@ -58,9 +59,15 @@ class TypeActivityController extends Controller
      * @param  \App\Type_Activity  $type_Activity
      * @return \Illuminate\Http\Response
      */
-    public function show(Type_Activity $type_Activity)
+    public function partnerupdate(Request $request)
     {
-        //
+        Partner::find($request->partner_id)->update([
+            'type_activities_id' => $request->type_activities_id,
+        ]);
+
+        $data = ['id' => $request->type_activities_id];
+
+        return $data;
     }
 
     /**
@@ -92,9 +99,9 @@ class TypeActivityController extends Controller
      * @param  \App\Type_Activity  $type_Activity
      * @return \Illuminate\Http\Response
      */
-    public function destroy($typeactivity)
+    public function destroy(Request $request)
     {
-        Type_Activity::find($typeactivity)->delete();
+        Type_Activity::find($request->typeactivity)->delete();
 
         $datas = Type_Activity::all();
         return $datas;

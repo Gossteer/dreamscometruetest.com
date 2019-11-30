@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-
-
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-12">
@@ -82,7 +80,7 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="title">Название типа занятости <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control @error('Name_Type_Activity') is-invalid @enderror" id="Name_Type_Activity" placeholder="Название">
+                                                    <input type="text" class="form-control @error('Name_Type_Activity') is-invalid @enderror" minlength="2" maxlength="191" id="Name_Type_Activity" placeholder="Название">
                                                     @error('Name_Type_Activity')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -104,7 +102,6 @@
 
                                         $('#save').on('click',function(){
                                             var Name_Type_Activity = $('#Name_Type_Activity').val();
-
                                             $.ajax({
                                                 url: '{{ route('typeactivity.store') }}',
                                                 type: "POST",
@@ -118,13 +115,13 @@
                                                     $('#addArticle').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
-                                                    var str = '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
+                                                    var str = '<option value="'+data['id']+'" selected>'+data['Name_Type_Activity']+'</option>';
                                                     $('#select_type_activitie:last').append(str);
-
+                                                    alert('Добавлено');
+                                                    document.querySelector("#deletedbutton").classList.remove("diableddeletedbutton");
                                                 },
                                                 error: function (msg) {
                                                     alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
-
                                                 }
                                             });
                                         });
@@ -132,8 +129,8 @@
                                             var typeactivity = $('#select_type_activitie').val();
 
                                             $.ajax({
-                                                url: "typeactivity/"+typeactivity,
-                                                type: "delete",
+                                                url: "{{route('typeactivity.destroy')}}",
+                                                type: "POST",
                                                 data: {typeactivity:typeactivity},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -143,15 +140,15 @@
                                                     var str;
 
                                                     datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
+                                                        str += '<option value="'+data['id']+'" selected>'+data['Name_Type_Activity']+'</option>';
                                                     });
                                                     $('#select_type_activitie option').remove();
                                                     $('#select_type_activitie:last').append(str);
-                                                    alert('Готово');
+                                                    alert('Удалено');
 
                                                 },
                                                 error: function (msg) {
-                                                    alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
+                                                    alert('Ошибка');
                                                 }
                                             });
                                         });
@@ -306,32 +303,6 @@
                                     </div>
                                 </div>
                                 </div>
-                                <!--
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="type_activities_id">Тип занятости <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <select class="form-control"  name="type_activities_id" required>
-                                            @foreach($type_activities as $type_activitie)
-                                <option value="{{ $type_activitie->id }}">{{ $type_activitie->Name_Type_Activity }}</option>
-                                            @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                            <div class="input-group row ">
-                                <label class="col-lg-4 col-form-label" style="margin-left: 1.3%" for="type_activities_create">Тип занятости <span class="text-danger">*</span>
-                                </label>
-                                <form>
-@csrf
-                                    <input type="text" style="margin-left: 5%" name="Name_Type_Activity" id="Name_Type_Activity" class="form-control col-lg-4">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-dark" id="type_activities_create" name="type_activities_create" type="button">Создать</button>
-                                    </div>
-                                    </form>
-                                </div>
-                                </div>
-                                -->
 
                                 <script>
 

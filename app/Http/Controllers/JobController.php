@@ -42,8 +42,6 @@ class JobController extends Controller
 
         \Validator::make($request->all(), [
             'Job_Title' => ['required','unique:jobs', 'max:191','min:2'],
-            'Salary' => ['digits_between:0,2147483647'],
-            'Company' => ['max:191','min:2']
         ],[
             'Job_Title.unique' => 'Данная должность уже существует',
         ])->validate();
@@ -92,8 +90,6 @@ class JobController extends Controller
     {
         \Validator::make($request->all(), [
             'Job_Title' => ['required','unique:jobs,Job_Title,' . $request->jobsid, 'max:191','min:2'],
-            'Salary' => ['digits_between:0,2147483647'],
-            'Company' => ['max:191','min:2']
         ],[
             'Job_Title.unique' => 'Данная должность уже существует',
         ])->validate();

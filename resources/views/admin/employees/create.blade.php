@@ -12,7 +12,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="login" >Логин<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                    <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required  placeholder="Логин">
+                                    <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" name="login" minlength="2" maxlength="20" value="{{ old('login') }}" required  placeholder="Логин">
                                     @error('login')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -24,7 +24,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="email" >Почта<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required  placeholder="Email">
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" minlength="2" maxlength="191" required  placeholder="Email">
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="password" >Пароль<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required  placeholder="Пароль">
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" minlength="8" maxlength="16" required  placeholder="Пароль">
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -55,7 +55,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Surname" >Фамилия<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input  type="text" class="form-control @error('Surname') is-invalid @enderror" name="Surname" value="{{ old('Surname') }}" required  placeholder="Фамилия">
+                                        <input  type="text" class="form-control @error('Surname') is-invalid @enderror" name="Surname" value="{{ old('Surname') }}" minlength="2" maxlength="50" required  placeholder="Фамилия">
                                         @error('Surname')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -67,7 +67,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name" >Имя<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input  type="text" class="form-control @error('Name') is-invalid @enderror" name="Name" value="{{ old('Name') }}" required  placeholder="Имя">
+                                        <input  type="text" class="form-control @error('Name') is-invalid @enderror" name="Name" value="{{ old('Name') }}" minlength="2" maxlength="50" required  placeholder="Имя">
                                         @error('Name')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -79,7 +79,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Middle_Name" >Отчество</label>
                                     <div class="col-lg-6">
-                                        <input  type="text" class="form-control @error('Middle_Name') is-invalid @enderror" name="Middle_Name" value="{{ old('Middle_Name') }}" placeholder="Отчество">
+                                        <input  type="text" class="form-control @error('Middle_Name') is-invalid @enderror" name="Middle_Name" value="{{ old('Middle_Name') }}" minlength="2" maxlength="50" placeholder="Отчество">
                                         @error('Middle_Name')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -103,8 +103,89 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Phone_Number" >Телефон<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input  type="text" class="form-control @error('Phone_Number') is-invalid @enderror" name="Phone_Number" id="Phone_Number" value="{{ old('Phone_Number') }}" placeholder="Телефон" required>
+                                        <input  type="tel" class="form-control @error('Phone_Number') is-invalid @enderror" name="Phone_Number" id="Phone_Number" value="{{ old('Phone_Number') }}" placeholder="Телефон" required>
                                         @error('Phone_Number')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Description" >Описание</label>
+                                    <div class="col-lg-6">
+                                        <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" value="{{ old('Description') }}" placeholder="Описание"></textarea>
+                                        @error('Description')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" id="Set_Permission_hidden" hidden>
+                                    <label class="col-lg-4 col-form-label" for="Man_brought" >Человек приведено</label>
+                                    <div class="col-lg-6">
+                                        <input  type="number" class="form-control @error('Man_brought') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ old('Joint_excursions') }}" name="Man_brought" id="Man_brought" placeholder="Человек приведено">
+                                        @error('Man_brought')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Joint_excursions" >Совместных мероприятий</label>
+                                    <div class="col-lg-6">
+                                        <input  type="number" class="form-control @error('Joint_excursions') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" name="Joint_excursions" id="Joint_excursions" value="{{ old('Joint_excursions') }}" placeholder="Совместных мероприятий">
+                                        @error('Joint_excursions')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Level">Уровень</label>
+                                    <div class="col-lg-6">
+                                        <input  type="number" class="form-control @error('Level') is-invalid @enderror" min="0" max="10" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" name="Level" id="Level" value="{{ old('Level') }}" placeholder="Уровень">
+                                        @error('Level')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Contract_Employee">Договор</label>
+                                    <div class="col-lg-6">
+                                        <div class="custom-file">
+                                            <input type="file" name="Contract_Employee" accept=".txt,.pdf,.docx,.docm,.doc,.xls,.xml,.xlsx,.xlsm" onchange="
+                                        switch (this.value.match(/\.([^\.]+)$/)[1]) {
+                                            case 'txt':
+                                            case 'pdf':
+                                            case 'docx':
+                                            case 'docm':
+                                            case 'doc':
+                                            case 'xls':
+                                            case 'xml':
+                                            case 'xlsx':
+                                            case 'xlsm':
+                                            document.getElementById('Fille_Conract_Partners').textContent= this.files.item(0).name;
+                                                break;
+                                            default:
+                                                alert('Файл не подходит!');
+                                                this.value = 'Некорректный файл';
+                                                break;
+                                        }
+                                            " class="custom-file-input">
+                                            <label id="Fille_Conract_Partners" for="Contract_Employee" class="custom-file-label">Файл не выбран</label>
+                                        </div>
+                                        @error('Contract_Employee')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -115,10 +196,10 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="jobs_id" >Должность<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id" required>
+                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id"  required>
                                             <option value="" disabled selected hidden>Должность</option>
                                             @foreach($jobs as $job)
-                                                <option value="{{ $job->id }}" id="{{ $job->id }}">{{$job->Company}} {{ $job->Job_Title}} зп: {{( ($job->Salary == null)? 'договорная': $job->Salary . 'р')}} </option>
+                                                <option value="{{ $job->id }}" id="{{ $job->id }}" @if(old('jobs_id') == $job->id) selected @endif>{{$job->Company}} {{ $job->Job_Title}} зп: {{( ($job->Salary == null)? 'договорная': $job->Salary . 'р')}} </option>
                                                 @endforeach
                                         </select>
                                         @error('jobs_id')
@@ -134,20 +215,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <script>
-                                    $(function() {
-                                        $('#jobs_id').change(function(jobs_id) {
-                                            // если значение не равно пустой строке
-                                            var updatebutton = document.querySelector("#updatebutton")
-                                            if($('#jobs_id').val() == "0") {
-                                                updatebutton.classList.add("diableddeletedbutton");
-                                            } else {
-                                                updatebutton.classList.remove("diableddeletedbutton");
-                                            }
-                                        });
-                                    });
-                                </script>
 
                                 <div class="modal fade" id="addArticle1" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
@@ -202,7 +269,7 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="Job_Title">Название должности <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control @error('Job_Title') is-invalid @enderror" id="Job_Title" placeholder="Название">
+                                                    <input type="text" class="form-control @error('Job_Title') is-invalid @enderror" minlength="2" maxlength="191" name="Job_Title" id="Job_Title" placeholder="Название">
                                                     @error('Job_Title')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -212,7 +279,7 @@
 
                                                 <div class="form-group">
                                                     <label for="Salary">Зарплата</label>
-                                                    <input type="number" class="form-control @error('Salary') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" id="Salary" placeholder="Зарплата ₽">
+                                                    <input type="number" class="form-control @error('Salary') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" name="Salary" id="Salary" placeholder="Зарплата ₽">
                                                     @error('Salary')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -221,7 +288,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Company">Название компании</label>
-                                                    <input type="text" class="form-control @error('Company') is-invalid @enderror" id="Company" minlength="2" maxlength="191" placeholder="Компания">
+                                                    <input type="text" class="form-control @error('Company') is-invalid @enderror" id="Company" minlength="2" name="Company" maxlength="191" placeholder="Компания">
                                                     @error('Company')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -238,7 +305,33 @@
                                 </div>
 
                                 <script>
+                                    function Set_Permission_hidden_Shenge(value){
+                                        if(value == 0){
+                                            Set_Permission_hidden.hidden = true;
+                                            Man_brought.value = ' ';
+                                        }
+                                            else
+                                            Set_Permission_hidden.hidden = false;
+                                    };
+
                                     $(function() {
+                                        if(Set_Permission.value == 0){
+                                            Set_Permission_hidden.hidden = true;
+                                            Man_brought.value = ' ';
+                                        }
+                                        else
+                                            Set_Permission_hidden.hidden = false;
+
+                                        $('#jobs_id').change(function(jobs_id) {
+                                            // если значение не равно пустой строке
+                                            var updatebutton = document.querySelector("#updatebutton")
+                                            if($('#jobs_id').val() == "0") {
+                                                updatebutton.classList.add("diableddeletedbutton");
+                                            } else {
+                                                updatebutton.classList.remove("diableddeletedbutton");
+                                            }
+                                        });
+
                                         $("#save").on('click',function(){
                                             var Job_Title = $('#Job_Title').val();
                                             var Salary = $('#Salary').val();
@@ -357,10 +450,26 @@
                                     <div class="col-lg-6">
                                         <select class="custom-select mr-sm-2" id="Type_User" name="Type_User" required>
                                             <option value="" disabled selected hidden>Права</option>
-                                            <option value="0">Без прав</option>
-                                            <option value="1">С правами</option>
+                                            <option value="0"  @if(old('Type_User') == 0) selected @endif>Без прав</option>
+                                            <option value="1" @if(old('Type_User') == 1) selected @endif>С правами</option>
                                         </select>
                                         @error('Type_User')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Set_Permission" >Разрешение на набор</label>
+                                    <div class="col-lg-6">
+                                        <select class="custom-select mr-sm-2" id="Set_Permission" onchange="Set_Permission_hidden_Shenge(this.value)" name="Set_Permission">
+                                            <option value="" disabled selected hidden>Рашрешение</option>
+                                            <option value="0" @if(old('Set_Permission') == 0) selected @endif>Отсуствует</option>
+                                            <option value="1" @if(old('Set_Permission') == 1) selected @endif>Присуствует</option>
+                                        </select>
+                                        @error('Set_Permission')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>

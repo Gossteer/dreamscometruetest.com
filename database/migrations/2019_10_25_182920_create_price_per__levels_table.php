@@ -16,14 +16,12 @@ class CreatePricePerLevelsTable extends Migration
         Schema::create('price_per_levels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('tour_id')->unsigned();
-            $table->bigInteger('level_id')->unsigned();
+            $table->smallInteger('Level')->default(0);
             $table->integer('Price');
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('tour_id')->references('id')
                 ->on('tours');
-            $table->foreign('level_id')->references('id')
-                ->on('levels');
             $table->timestamps();
         });
     }

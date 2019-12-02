@@ -27,7 +27,7 @@
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required maxlength="191" autocomplete="email" placeholder="Email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required minlength="2" maxlength="191" autocomplete="email" placeholder="Email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -89,8 +89,8 @@
                             <div class="col-sm-6 form-group contact-forms" id="">
                                 <select class="form-control @error('Floor') is-invalid @enderror" id="Floor" name="Floor" required>
                                     <option value="" disabled selected>Пол</option>
-                                    <option value="0">Мужской</option>
-                                    <option value="1">Женский</option>
+                                    <option value="0" @if(old('Floor') == 0) selected @endif>Мужской</option>
+                                    <option value="1" @if(old('Floor') == 1) selected @endif>Женский</option>
                                 </select>
                                 @error('Floor')
                                 <span class="invalid-feedback" role="alert">

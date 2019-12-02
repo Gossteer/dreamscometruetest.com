@@ -7,7 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
 
-    protected $fillable = ['Name', 'Surname', 'Middle_Name', 'Byrthday', 'Phone_Number', 'jobs_id', 'users_id',];
+    protected $fillable = [
+        'Name',
+        'Surname',
+        'Middle_Name',
+        'Byrthday',
+        'Phone_Number',
+        'jobs_id',
+        'users_id',
+        'Description',
+        'Contract_Employee',
+        'Set_Permission',
+        'Man_brought',
+        'Joint_excursions',
+        'Level'
+        ];
 
     protected $hidden = [
 
@@ -21,11 +35,6 @@ class Employee extends Model
     public function user()
     {
         return $this->hasOne('App\User', 'users_id');
-    }
-
-    public function level()
-    {
-        return $this->belongsTo('App\Level', 'level_id');
     }
 
     public function work_schedule()

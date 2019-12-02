@@ -13,7 +13,7 @@
                                     <label class="col-lg-4 col-form-label" for="Name_Partners">Наименование <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control @error('Name_Partners') is-invalid @enderror"  name="Name_Partners" placeholder="Наименование" required>
+                                        <input type="text" class="form-control @error('Name_Partners') is-invalid @enderror"  name="Name_Partners" value="{{ old('Name_Partners') }}" placeholder="Наименование" required>
                                         @error('Name_Partners')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -25,7 +25,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="INN">ИНН</label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control @error('INN') is-invalid @enderror" onKeyPress="cislo()" maxlength="191"  name="INN" placeholder="ИНН">
+                                        <input type="text" class="form-control @error('INN') is-invalid @enderror" onKeyPress="cislo()" maxlength="191" value="{{ old('INN') }}"  name="INN" placeholder="ИНН">
                                         @error('Name_Partners')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -40,7 +40,7 @@
                                         <select class="custom-select @error('select_type_activitie') is-invalid @enderror" id="select_type_activitie" name="select_type_activitie" required>
                                             <option value="" disabled selected hidden>Тип занятости</option>
                                             @foreach($type_activities as $type_activitie)
-                                            <option value="{{$type_activitie->id}}" id="{{$type_activitie->id}}">{{$type_activitie->Name_Type_Activity}}</option>
+                                            <option value="{{$type_activitie->id}}" id="{{$type_activitie->id}}" @if( old('select_type_activitie') == $type_activitie->id) selected @endif>{{$type_activitie->Name_Type_Activity}}</option>
                                                 @endforeach
                                         </select>
                                         @error('select_type_activitie')
@@ -180,13 +180,14 @@
                                             " class="custom-file-input">
                                                 <label id="Fille_Conract_Partners" class="custom-file-label">Файл не выбран</label>
                                             </div>
-                                        @error('Name_Partners')
+                                        @error('Conract_Partners')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div id="address_place" >
                                     <template class=""   id="address-template"  v-for="(n, index) in address_place" >
                                 <div class="form-group row" :key='n' >
@@ -222,7 +223,7 @@
                                                 <div class="row justify-content-end">
                                                     <a @click="remove(nn)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
                                                 </div>
-                                                <input type="text" class="form-control @error('Phone_Number') is-invalid @enderror" style="margin-bottom: 10px" :id="n"  maxlength="191"  name="Phone_Number[]" id="Phone_Number" placeholder="Телефонный номер" required>
+                                                <input type="tel" class="form-control @error('Phone_Number') is-invalid @enderror" style="margin-bottom: 10px" :id="n"  maxlength="191"  name="Phone_Number[]" id="Phone_Number" placeholder="Телефонный номер" required>
                                                 @error('Phone_Number')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>

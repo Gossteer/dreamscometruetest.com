@@ -48,21 +48,37 @@ class EmployeeController extends Controller
 
         \Validator::make($attribute, [
             'Phone_Number' => ['required', 'string', 'unique:employees'],
-            'login' => ['required', 'string','min:2', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'Byrthday' => ['before_or_equal:date', 'date']
+            'login' => ['required', 'string','min:2', 'max:20', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
+            'password' => ['required', 'string', 'min:8','max:16', 'confirmed'],
+            'Surname' => ['required','string', 'min:2','max:50'],
+            'Name' => ['required','string', 'min:2','max:50'],
+            'Middle_Name' => ['max:50'],
+            'Byrthday' => ['required','before_or_equal:date', 'date'],
+            'Set_Permission' => ['min:0','max:2147483647'],
+            'Man_brought' => ['min:0','max:2147483647'],
+            'Joint_excursions' => ['min:0','max:2147483647'],
+            'Level' => ['min:0','max:10'],
         ],[
             'Byrthday.before_or_equal' => 'Сотрудник не может быть младше 18 лет!',
             'Byrthday.date' => 'Укажите пожалуйста правильную дату!',
             'Phone_Number.unique' => 'Пользователь с данным номером телефона уже существует!',
             'login.unique' => 'Пользователь с таким ником уже существует!',
             'login.min' => 'Минимальный размер 2 символа!',
-            'login.max' => 'Максимальный размер 255 символов!',
-            'login.required' => 'Пожалуйста укажите логин!',
+            'login.max' => 'Максимальный размер 20 символов!',
             'email.unique' => 'Пользователь с таким email уже существует!',
             'password.min' => 'Пароль должен быть не менее 8 символов!',
+            'password.max' => 'Пароль не должен быть больше 16 символов',
+            'Surname.min' => 'Фамилия должена иметь не менее 2 символов!',
+            'Surname.max' => 'Фамилия должена быть не больше 50 символов',
+            'Name.min' => 'Имя должено иметь не менее 2 символов!',
+            'Name.max' => 'Имя должено быть больше не 50 символов',
+            'Middle_Name.max' => 'Отчество должено быть не больше 50 символов',
             'password.confirmed' => 'Пароль не совпадает!',
+            'required' => 'Это поле обязательно к заполнению!',
+            'min' => 'Предел максимального значение',
+            'max' => 'Превышено максимальное значение',
+            'Level.max' => 'Максимальный уровень = 10',
         ])->validate();
 
         $user = User::Create([
@@ -74,9 +90,18 @@ class EmployeeController extends Controller
             'Type_User' => $request['Type_User'],
         ]);
 
-        $attribute =['Name' => $request->Name, 'Surname' => $request->Surname,
-            'Middle_Name' => $request->Middle_Name, 'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
-            'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,
+        $attribute =[
+            'Name' => $request->Name,
+            'Surname' => $request->Surname,
+            'Middle_Name' => $request->Middle_Name,
+            'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
+            'Phone_Number' => $request->Phone_Number,
+            'Contract_Employee' => $request->Contract_Employee,
+            'Set_Permission' => $request->Set_Permission ?? 0,
+            'Man_brought' => $request->Man_brought ?? 0,
+            'Joint_excursions' => $request->Joint_excursions ?? 0,
+            'Level' => $request->Level ?? 0,
+            'jobs_id' => $request->jobs_id,
             'users_id' => $user->id];
 
         Employee::Create($attribute);
@@ -120,32 +145,59 @@ class EmployeeController extends Controller
 
         \Validator::make($attribute, [
             'Phone_Number' => ['required', 'string', 'unique:employees,Phone_Number,' . $employee->id],
-            'login' => ['required', 'string','min:2', 'max:255', 'unique:users,login,' . $employee->users_id],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $employee->users_id],
-            'Byrthday' => ['before_or_equal:date', 'date']
+            'login' => ['required', 'string','min:2', 'max:20', 'unique:users,login,' . $employee->users_id ],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users,email,' . $employee->users_id],
+            'password' => ['confirmed'],
+            'Surname' => ['required','string', 'min:2','max:50'],
+            'Name' => ['required','string', 'min:2','max:50'],
+            'Middle_Name' => ['max:50'],
+            'Byrthday' => ['required','before_or_equal:date', 'date'],
+            'Set_Permission' => ['min:0','max:2147483647'],
+            'Man_brought' => ['min:0','max:2147483647'],
+            'Joint_excursions' => ['min:0','max:2147483647'],
+            'Level' => ['min:0','max:10'],
         ],[
             'Byrthday.before_or_equal' => 'Сотрудник не может быть младше 18 лет!',
             'Byrthday.date' => 'Укажите пожалуйста правильную дату!',
             'Phone_Number.unique' => 'Пользователь с данным номером телефона уже существует!',
             'login.unique' => 'Пользователь с таким ником уже существует!',
             'login.min' => 'Минимальный размер 2 символа!',
-            'login.max' => 'Максимальный размер 255 символов!',
-            'login.required' => 'Пожалуйста укажите логин!',
+            'login.max' => 'Максимальный размер 20 символов!',
             'email.unique' => 'Пользователь с таким email уже существует!',
+            'password.min' => 'Пароль должен быть не менее 8 символов!',
+            'password.max' => 'Пароль не должен быть больше 16 символов',
+            'Surname.min' => 'Фамилия должена иметь не менее 2 символов!',
+            'Surname.max' => 'Фамилия должена быть не больше 50 символов',
+            'Name.min' => 'Имя должено иметь не менее 2 символов!',
+            'Name.max' => 'Имя должено быть больше не 50 символов',
+            'Middle_Name.max' => 'Отчество должено быть не больше 50 символов',
+            'required' => 'Это поле обязательно к заполнению!',
+            'min' => 'Предел максимального значение',
+            'max' => 'Превышено максимальное значение',
+            'Level.max' => 'Максимальный уровень = 10',
         ])->validate();
 
         User::find($employee->users_id)->update([
             'login' => $request['login'],
             'email' => $request['email'],
+            'password' => $request['password'] == null ?  User::find($employee->users_id)->password :  Hash::make($request['password']) ,
             'Processing_Personal_Data' => 1,
             'Notifications' => 1,
             'Type_User' => $request['Type_User'],
         ]);
 
         Employee::find($employee->id)->update([
+            'Name' => $request->Name,
+            'Surname' => $request->Surname,
+            'Middle_Name' => $request->Middle_Name,
             'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
-            'Name' => $request->Name, 'Surname' => $request->Surname,
-            'Phone_Number' => $request->Phone_Number, 'jobs_id' => $request->jobs_id,
+            'Phone_Number' => $request->Phone_Number,
+            'Contract_Employee' => $request->Contract_Employee,
+            'Set_Permission' => $request->Set_Permission ?? 0,
+            'Man_brought' => $request->Man_brought ?? 0,
+            'Joint_excursions' => $request->Joint_excursions ?? 0,
+            'Level' => $request->Level ?? 0,
+            'jobs_id' => $request->jobs_id,
         ]);
 
         return redirect()->route('employees.index');

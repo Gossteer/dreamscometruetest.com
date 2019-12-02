@@ -9,7 +9,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-validation">
-                            <form class="form-valide" action="{{ route('partners.store') }}" method="post" enctype="multipart/form-data">
+                            <form class="form-valide" action="{{ route('partners.update', $partner->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Partners">Наименование <span class="text-danger">*</span>
@@ -263,7 +263,7 @@
                                                 <div class="row justify-content-end">
                                                     <a @click="remove(nn)" style="position: absolute;" ><span  class="col-4 fa fa-close color-danger " style="cursor: pointer; margin-right: 5px"></span></a>
                                                 </div>
-                                                <input type="email" class="form-control @error('Email') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191"  :id="n" name="Email[]" placeholder="Email" required>
+                                                <input type="tel" class="form-control @error('Email') is-invalid @enderror" style="margin-bottom: 10px"  maxlength="191"  :id="n" name="Email[]" placeholder="Email" required>
                                                 @error('Email')
                                                 <span class="invalid-feedback" role="alert">
                                                  <strong>{{ $message }}</strong>

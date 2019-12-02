@@ -6,20 +6,6 @@
                 <div class="card-body">
                     <h4 class="row card-title">Работники
                         <a href="{{ route('employees.create') }}" class="col-2 btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Добавить работника</a>
-                                    <form id="sadasd" action="{{route('employees.index')}}" class="col-2" method="get">
-                                        <select class="custom-select mr-sm-2 form-control" name="search" id="inlineFormCustomSelect">
-                                            <option  value="" disabled selected>Фильтрация</option>
-                                            <option  value="">Отменить</option>
-                                            @foreach($jobs as $job)
-                                                <option  value="{{ $job->id }}">{{ $job->Job_Title . ' зп: ' .  $job->Salary}}</option>
-                                            @endforeach
-                                        </select>
-                                    </form>
-                        <script>
-                            $('select[name="search"]').change(function () {
-                                $("#sadasd").submit();
-                            });
-                        </script>
                     </h4>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped verticle-middle">
@@ -36,7 +22,7 @@
                             @foreach($employees as $employee)
                                 <tr>
 
-                                    <td> {{ $employee->Name . ' ' . $employee->Surname . ' ' . $employee->Middle_Name}}</td>
+                                    <td title="{{ $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name}}"> {{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</td>
                                     <td>
                                         {{  date('d-m-Y', strtotime($employee->Byrthday)) }}
                                     </td>

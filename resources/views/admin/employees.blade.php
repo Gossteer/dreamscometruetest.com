@@ -22,15 +22,17 @@
                             @foreach($employees as $employee)
                                 <tr>
 
-                                    <td title="{{ $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name}}"> {{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</td>
+                                    <td title="{{ $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name}}">
+                                        <a data-toggle="modal" data-target="#addArticle" class="selectedbutton" style="cursor: pointer" >{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</a>
+                                    </td>
                                     <td>
-                                        {{  date('d-m-Y', strtotime($employee->Byrthday)) }}
+                                        {{  date('d.m.Y', strtotime($employee->Byrthday)) }}
                                     </td>
                                     <td> {{ $employee->Phone_Number }}</td>
 
                                     <td><span class="label gradient-1 btn-rounded">
                                            @if($employee->jobs_id != null)
-                                                {{ $employee->job->Job_Title . ' зп: ' . $employee->job->Salary }}
+                                                {{$employee->job->Company}} {{ $employee->job->Job_Title}} зп: {{( ($employee->job->Salary == null)? 'договорная': $employee->job->Salary . 'р')}}
                                                @else
                                                Неназначен
                                                @endif
@@ -52,6 +54,37 @@
                                 </tr>
                             @endforeach
                             </tbody>
+
+                            <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="addArticleLabel"> ФИО</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="Job_Title">Договор</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Salary">Совместных экскурсий: </label>
+                                                {{--Разварачивать список с совместными экскурсиями, с пагинацией--}}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Company">Разрешение на набор: </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Company">Приведено клиентов: </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Company">Название компании</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" id="close" name="close" data-dismiss="modal">Закрыть</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </table>
                         @if($employees->total() > $employees->count())

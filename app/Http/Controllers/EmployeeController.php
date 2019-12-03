@@ -16,10 +16,17 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $serh = $request->search ?? "";
-        return view('admin.employees', ['employees' => Employee::where('jobs_id', 'LIKE', "%$serh%")->paginate(12), 'jobs' => Job::all()]);
+        return view('admin.employees', ['employees' => Employee::where('LogicalDelete',0)->paginate(12), 'jobs' => Job::all()]);
+    }
+
+    public function indexfull(Request $request)
+    {
+        $res = Employee::find($request->employeeid);
+        $data = ['Joint_excursions' => $res->Joint_excursions, 'Set_Permission' => $res->Set_Permission, 'Man_brought' => $res->Man_brought, 'FIO' => $res->Surname . ' ' . $res->Name  . ' ' . $res->Middle_Name,];
+
+        return $data;
     }
 
     /**

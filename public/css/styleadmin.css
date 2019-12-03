@@ -3987,6 +3987,12 @@ button.close {
   overflow: hidden;
   outline: 0; }
 
+@media (max-width: 320px) {
+ .dialogfontsize{
+   font-size: 14px !important;
+ }
+}
+
 .modal-dialog {
   position: relative;
   width: auto;
@@ -4034,6 +4040,8 @@ button.close {
     opacity: 0; }
   .modal-backdrop.show {
     opacity: 0.5; }
+
+
 
 .modal-header {
   display: flex;

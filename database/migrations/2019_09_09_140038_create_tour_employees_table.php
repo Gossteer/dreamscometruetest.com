@@ -17,6 +17,7 @@ class CreateTourEmployeesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->integer('Salary')->default(0);
+            $table->smallInteger('Occupied_Place_Bus')->nullable();
             $table->bigInteger('tour_id')->unsigned();
             $table->bigInteger('employee_id')->unsigned();
             $table->boolean('Confidentiality')->default(0);

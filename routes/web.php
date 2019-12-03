@@ -18,6 +18,7 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
 
     Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
     Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
+    Route::post('admin/employees/fullindex', 'EmployeeController@indexfull')->name('employees.index.full');
     Route::post('admin/partners/typeactivitycreate', 'TypeActivityController@store')->name('typeactivity.store.index');
     Route::post('admin/partners/create/typeactivity', 'TypeActivityController@store')->name('typeactivity.store');
     Route::post('admin/partners/typeactivity', 'TypeActivityController@partnerupdate')->name('typeactivity.partner.update');

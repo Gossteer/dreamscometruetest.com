@@ -1,12 +1,19 @@
 @extends('layouts.admin')
 
 @section('content')
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="row card-title">Работники
-                        <a href="{{ route('employees.create') }}" class="col-2 btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Добавить работника</a>
-                    </h4>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" >
+                        <div class="row card-header" style="padding-bottom: 25px ">
+                            <div class="col-sm-12 col-md-6" >
+                                <h4 class="" >Работники</h4>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <a href="{{ route('employees.create') }}" class="btn btn-info btn-rounded btnheader" style="float: right">Добавить работника</a>
+                            </div>
+                        </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped verticle-middle">
                             <thead>
@@ -15,16 +22,52 @@
                                 <th scope="col">Дата рождения</th>
                                 <th scope="col">Номер телефона</th>
                                 <th scope="col">Должность</th>
-                                <th scope="col">Действие</th>
+                                <th scope="col">Уровень</th>
+                                <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($employees as $employee)
                                 <tr>
-
                                     <td title="{{ $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name}}">
-                                        <a data-toggle="modal" data-target="#addArticle" class="selectedbutton" style="cursor: pointer" >{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</a>
+                                        <a data-toggle="modal" data-target="#addArticle" class="selectedbutton"  id="fullindex" data-id="{{ $employee->id }}" onclick="indexfull(this.dataset.id)" style="cursor: pointer" >{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</a>
                                     </td>
+                                    <script>
+                                        function indexfull(id){
+                                            $.ajax({
+                                                url: "{{route('employees.index.full')}}",
+                                                type: "POST",
+                                                data: {employeeid:id},
+                                                headers: {
+                                                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                                },
+                                                success:function (data)
+                                                {
+                                                    Joint_excursions.innerHTML = data['Joint_excursions'];
+                                                    if(data['Set_Permission'] == 0 ){
+                                                        Set_Permission.style.color = "red";
+                                                        Set_Permission.innerHTML = 'Нет';
+                                                    }
+                                                    else{
+                                                        Set_Permission.style.color = "green";
+                                                        Set_Permission.innerHTML = 'Нет';
+                                                    }
+
+                                                    Man_brought.innerHTML = data['Man_brought'];
+                                                    FIO.innerHTML = data['FIO'];
+                                                },
+                                                error: function (msg) {
+                                                    alert('Ошибка');
+                                                }
+                                            });
+                                        };
+                                        function closeindexfull(){
+                                            Joint_excursions.innerHTML = '';
+                                            Set_Permission.innerHTML = '';
+                                            Man_brought.innerHTML = '';
+                                            FIO.innerHTML = '';
+                                        };
+                                    </script>
                                     <td>
                                         {{  date('d.m.Y', strtotime($employee->Byrthday)) }}
                                     </td>
@@ -39,6 +82,11 @@
 
                                         </span>
                                     </td>
+
+                                    <td>
+                                        {{  $employee->Level }}
+                                    </td>
+
                                     <td>
                                 <span>
                                     <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('employees.destroy',$employee)}}" method="post">
@@ -56,31 +104,45 @@
                             </tbody>
 
                             <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="addArticleLabel"> ФИО</h4>
+                                <div class="modal-dialog"  role="document">
+                                    <div class="modal-content" style="width: 65%">
+                                        <div class="modal-header" style="justify-content: center; text-align: center;">
+                                            <h4 class="modal-title"  id="FIO"></h4>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="Job_Title">Договор</label>
+                                        <div class="row modal-body" style="padding-bottom: 0">
+                                            <div class="col dialogfontsize" style="font-size: 15px">
+                                                <div class="form-group">
+                                                    <label>Договор</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Совместных экскурсий: <label id="Joint_excursions"></label></label>
+                                                    {{--Разварачивать список с совместными экскурсиями, с пагинацией--}}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Разрешение на набор: <label id="Set_Permission"></label></label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Приведено клиентов: <label id="Man_brought"></label></label>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="Salary">Совместных экскурсий: </label>
-                                                {{--Разварачивать список с совместными экскурсиями, с пагинацией--}}
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Company">Разрешение на набор: </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Company">Приведено клиентов: </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Company">Название компании</label>
-                                            </div>
+{{--                                            <div class="col">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Договор</label>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Совместных экскурсий: <label id="Joint_excursions"></label></label>--}}
+{{--                                                    --}}{{--Разварачивать список с совместными экскурсиями, с пагинацией--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Разрешение на набор: <label id="Set_Permission"></label></label>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Приведено клиентов: <label id="Man_brought"></label></label>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" id="close" name="close" data-dismiss="modal">Закрыть</button>
+                                        <div class="row modal-footer" style="justify-content: center; margin: 0;">
+                                            <button type="button" class="col-md-10 btn btn-default" id="close" name="close" onclick="closeindexfull()" data-dismiss="modal">Закрыть</button>
                                         </div>
                                     </div>
                                 </div>
@@ -98,8 +160,8 @@
                         @endif
                     </div>
                 </div>
+                </div>
             </div>
         </div>
-
-
+    </div>
 @endsection

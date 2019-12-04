@@ -17,6 +17,10 @@ class Tour extends Model
         'Amount_Place',
         'Start_Date_Tours',
         'Occupied_Place',
+        'Seating',
+        'Children_price',
+        'Popular',
+        'End_Date_Tours',
 
     ];
 

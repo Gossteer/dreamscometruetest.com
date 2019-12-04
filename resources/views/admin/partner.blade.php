@@ -51,10 +51,10 @@
                                         </span>
                                                 @enderror
                                                 <div class="input-group-append">
-                                                    <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" data-idi="{{$o = $i-1}}" onclick="createType_Activity(this.dataset.idi)" style="color: #495057;" ><i class="fa fa-pencil color-muted m-r-5"></i></a>
+                                                    <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" data-idi="{{$o = $i-1}}" onclick="createType_Activity(this.dataset.idi)" title="Добавить" style="color: #495057;" ><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                                 </div>
                                                 <div class="input-group-append">
-                                                    <a class="btn input-group-text selectedbutton diableddeletedbutton" id="deletedbutton{{$o}}" onclick="delete_Type_Activity({{$o}})" name="deletedbutton"  ><i class="fa fa-close color-danger"></i></a>
+                                                    <a class="btn input-group-text selectedbutton diableddeletedbutton" id="deletedbutton{{$o}}" onclick="delete_Type_Activity({{$o}})" name="deletedbutton" title="Удалить" ><i class="fa fa-close color-danger"></i></a>
                                                 </div>
                                             </div>
                                         </td>
@@ -90,7 +90,6 @@
                                             };
                                                 function create_Type_Activity() {
                                                     var Name_Type_Activity = $('#Name_Type_Activity').val();
-                                                    alert(Name_Type_Activity);
                                                     $.ajax({
                                                         url: '{{ route('typeactivity.store') }}',
                                                         type: "POST",
@@ -126,7 +125,7 @@
                                                         },
                                                         success: function (datas) {
                                                             document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                                select_select.removeChild(select_select.querySelector('[id="'+ typeactivity +'"]'));
+                                                                select_select.removeChild(select_select.querySelector('[value="'+ typeactivity +'"]'));
                                                             });
                                                             document.getElementById('select_type_activitie' + id).value = 0;
                                                             document.getElementById('deletedbutton' + id).classList.add("diableddeletedbutton");

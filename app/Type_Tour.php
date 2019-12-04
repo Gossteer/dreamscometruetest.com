@@ -9,7 +9,7 @@ class Type_Tour extends Model
     protected $table = 'type_tours';
 
     protected $fillable = [
-'Name_Type_Tours', 'id',
+        'Name_Type_Tours', 'id',
     ];
 
     public function tour()

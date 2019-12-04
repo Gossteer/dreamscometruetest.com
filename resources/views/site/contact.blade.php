@@ -61,7 +61,7 @@
 							  <input type="text" class="form-control" id="name" name="name" placeholder="Имя" required autocomplete="name" required="">
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="email" id="email" name="email" class="form-control" required placeholder="Email" required="">
+							  <input type="email" id="email" name="email" class="form-control" required placeholder="Email" autocomplete="email" required="">
 							</div>
 							<div class="form-group contact-forms">
 							  <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Телефон" autocomplete="tel" required="">

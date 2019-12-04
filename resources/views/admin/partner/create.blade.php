@@ -38,7 +38,7 @@
                                     <label class="col-lg-4 col-form-label" for="select_type_activitie">Тип деятельности</label>
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select @error('select_type_activitie') is-invalid @enderror" id="select_type_activitie" name="select_type_activitie" required>
-                                            <option value="" disabled selected hidden>Тип занятости</option>
+                                            <option value="0" disabled selected hidden>Тип занятости</option>
                                             @foreach($type_activities as $type_activitie)
                                             <option value="{{$type_activitie->id}}" id="{{$type_activitie->id}}" @if( old('select_type_activitie') == $type_activitie->id) selected @endif>{{$type_activitie->Name_Type_Activity}}</option>
                                                 @endforeach
@@ -49,10 +49,10 @@
                                         </span>
                                         @enderror
                                         <div class="input-group-append">
-                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
+                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" id="deletedbutton" style="" name="deletedbutton"  >Удалить</a>
+                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" id="deletedbutton" style="" name="deletedbutton"  title="Удалить"><i class="fa fa-close color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -137,15 +137,9 @@
                                                 },
                                                 success:function (datas)
                                                 {
-                                                    var str;
-
-                                                    datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'" selected>'+data['Name_Type_Activity']+'</option>';
-                                                    });
-                                                    $('#select_type_activitie option').remove();
-                                                    $('#select_type_activitie:last').append(str);
+                                                    select_type_activitie.removeChild(select_type_activitie.querySelector('[value="'+ typeactivity +'"]'));
+                                                    select_type_activitie.value = 0;
                                                     alert('Удалено');
-
                                                 },
                                                 error: function (msg) {
                                                     alert('Ошибка');

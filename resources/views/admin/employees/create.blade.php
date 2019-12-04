@@ -115,7 +115,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Description" >Описание</label>
                                     <div class="col-lg-6">
-                                        <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" value="{{ old('Description') }}" placeholder="Описание"></textarea>
+                                        <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" placeholder="Описание">{{ old('Description') }}</textarea>
                                         @error('Description')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -197,7 +197,7 @@
                                     <label class="col-lg-4 col-form-label" for="jobs_id" >Должность<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id"  required>
-                                            <option value="" disabled selected hidden>Должность</option>
+                                            <option value="0" disabled selected hidden>Должность</option>
                                             @foreach($jobs as $job)
                                                 <option value="{{ $job->id }}" id="{{ $job->id }}" @if(old('jobs_id') == $job->id) selected @endif>{{$job->Company}} {{ $job->Job_Title}} зп: {{( ($job->Salary == null)? 'договорная': $job->Salary . 'р')}} </option>
                                                 @endforeach
@@ -208,10 +208,10 @@
                                         </span>
                                         @enderror
                                         <div class="input-group-append">
-                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
+                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton">Изменить</a>
+                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton" title="Изменить"><i class="fa fa-pencil color-muted m-r-5"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -428,12 +428,8 @@
                                                 },
                                                 success:function (datas)
                                                 {
-                                                    var str;
-                                                    datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'" >'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
-                                                    });
-                                                    $('#jobs_id option').remove();
-                                                    $('#jobs_id:last').append(str);
+                                                    jobs_id.removeChild(jobs_id.querySelector('[value="'+ jobsid +'"]'));
+                                                    jobs_id.value = 0;
                                                     alert('Удалено');
 
                                                 },

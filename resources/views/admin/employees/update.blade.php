@@ -116,7 +116,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Description" >Описание</label>
                                     <div class="col-lg-6">
-                                        <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" value="{{ $employees->Description }}" placeholder="Описание"></textarea>
+                                        <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" maxlength="191" placeholder="Описание">{{ $employees->Description }}</textarea>
                                         @error('Description')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -200,6 +200,7 @@
                                     <label class="col-lg-4 col-form-label" for="jobs_id" >Должность<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select @error('jobs_id') is-invalid @enderror" onchange="jobs_id_change()" id="jobs_id" name="jobs_id" required>
+                                            <option value="0" disabled selected hidden>Должность</option>
                                             @foreach($jobs as $job)
                                                 <option value="{{ $job->id }}" @if($employees->jobs_id == $job->id) selected @endif>{{$job->Company}} {{ $job->Job_Title . ' зп: ' .  ( ($job->Salary == null)? 'договорная': $job->Salary)}}</option>
                                             @endforeach
@@ -210,10 +211,10 @@
                                         </span>
                                         @enderror
                                         <div class="input-group-append">
-                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
+                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton">Изменить</a>
+                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton"  title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -354,7 +355,7 @@
                                             var Company = $('#Company').val();
 
                                             $.ajax({
-                                                url: '{{ route('job.store.update', $employees->id) }}',
+                                                url: '{{ route('job.store', $employees->id) }}',
                                                 type: "POST",
                                                 data: {Job_Title:Job_Title,Salary:Salary,Company:Company },
                                                 headers: {
@@ -382,7 +383,7 @@
                                             var jobsid = $('#jobs_id').val();
 
                                             $.ajax({
-                                                url: "{{route('job.index.update', $employees->id)}}",
+                                                url: "{{route('job.index', $employees->id)}}",
                                                 type: "POST",
                                                 data: {jobsid:jobsid},
                                                 headers: {
@@ -407,7 +408,7 @@
                                             var Company1 = $('#Company1').val();
 
                                             $.ajax({
-                                                url: "{{route('job.update.update', $employees->id)}}",
+                                                url: "{{route('job.update', $employees->id)}}",
                                                 type: "POST",
                                                 data: {jobsid:jobsid,Job_Title:Job_Title1,Salary:Salary1,Company:Company1},
                                                 headers: {
@@ -418,12 +419,8 @@
                                                     $('#addArticle1').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
-                                                    var str;
-                                                    datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'" '+((data['id'] == jobsid) ? 'selected' : '')+'>'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
-                                                    });
-                                                    $('#jobs_id option').remove();
-                                                    $('#jobs_id:last').append(str);
+                                                    jobs_id.removeChild(jobs_id.querySelector('[value="'+ jobsid +'"]'));
+                                                    jobs_id.value = 0;
                                                     alert('Изменено');
                                                 },
                                                 error: function (msg) {
@@ -446,7 +443,8 @@
                                                 {
                                                     var str;
                                                     datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'" >'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
+                                                        str += '<option value="0" disabled selected hidden>Должность</option>' +
+                                                            '<option value="'+data['id']+'" >'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
                                                     });
                                                     $('#jobs_id option').remove();
                                                     $('#jobs_id:last').append(str);

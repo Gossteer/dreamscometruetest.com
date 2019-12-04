@@ -15,7 +15,10 @@
                             <select class="custom-select mr-sm-2" name="employee_id" id="inlineFormCustomSelect">
                                 @foreach($employees as $employee)
                                     <option value="{{ $employee->id }}">{{ $employee->Name . ' ' . $employee->Surname .
-                                ' ' . $employee->Middle_Name . ' Должность: ' . $employee->job->Job_Title}}</option>
+                                ' ' . $employee->Middle_Name }} Должность:  @if($employee->jobs_id != null && isset($employee->job)){{$employee->job->Company}} {{ $employee->job->Job_Title}} зп: {{( ($employee->job->Salary == null)? 'договорная': $employee->job->Salary . 'р')}}
+                                        @else
+                                            Не назначен
+                                        @endif</option>
                                 @endforeach
                             </select>
 

@@ -12,9 +12,12 @@ class TypeTourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $res = Type_Tour::find($request->typetourid);
+        $data = ['id' => $res->id, 'Name_Type_Tours' => $res->Name_Type_Tours];
+
+        return $data;
     }
 
     /**
@@ -35,7 +38,19 @@ class TypeTourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \Validator::make($request->all(), [
+            'Name_Type_Tours' => ['required','unique:type_tours', 'max:191','min:2'],
+        ],[
+            'Name_Type_Tours.unique' => 'Данный тип уже существует',
+        ])->validate();
+
+        $res = Type_Tour::firstOrCreate([
+            'Name_Type_Tours' => $request->Name_Type_Tours,
+        ]);
+
+        $data = ['id' => $res->id, 'Name_Type_Tours' => $request->Name_Type_Tours];
+
+        return $data;
     }
 
     /**
@@ -55,9 +70,9 @@ class TypeTourController extends Controller
      * @param  \App\Type_Tour  $type_Tour
      * @return \Illuminate\Http\Response
      */
-    public function edit(Type_Tour $type_Tour)
+    public function edit(Request $request)
     {
-        //
+
     }
 
     /**
@@ -67,9 +82,20 @@ class TypeTourController extends Controller
      * @param  \App\Type_Tour  $type_Tour
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Type_Tour $type_Tour)
+    public function update(Request $request)
     {
-        //
+        \Validator::make($request->all(), [
+            'Name_Type_Tours' => ['required','unique:type_tours', 'max:191','min:2'],
+        ],[
+            'Name_Type_Tours.unique' => 'Данный тип уже существует',
+        ])->validate();
+
+        Type_Tour::find($request->typetourid)->update([
+            'Name_Type_Tours' => $request->Name_Type_Tours,
+        ]);
+
+        $datas = Type_Tour::all();
+        return $datas;
     }
 
     /**
@@ -78,8 +104,11 @@ class TypeTourController extends Controller
      * @param  \App\Type_Tour  $type_Tour
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Type_Tour $type_Tour)
+    public function destroy(Request $request)
     {
-        //
+        Type_Tour::find($request->typetourid)->delete();
+
+        $datas = '1';
+        return $datas;
     }
 }

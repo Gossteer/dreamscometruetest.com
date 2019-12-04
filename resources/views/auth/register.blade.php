@@ -183,11 +183,11 @@
                                             //$("#SourcesDiv").removeClass('col-md-12').fadeIn('fast');
                                             //$("#SourcesDiv").addClass('col-sm-6').fadeIn('fast');
                                             if ($("#Name_Category_Source option:selected").text() == "Другое"){
-                                                if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
+                                                if (!$("#Name_Source").length && !$("#Phone_Customer_Inviter").length){
                                                     $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input id="Name_Source" type="text" class="form-control" name="Name_Source" required placeholder="А именно?">');
                                                 }
                                                 else {
-                                                    $('#Number_Customers_Inviter').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input id="Name_Source" type="text" class="form-control" required  name="Name_Source"  placeholder="А именно?">');
+                                                    $('#Phone_Customer_Inviter').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input id="Name_Source" type="text" class="form-control" required  name="Name_Source"  placeholder="А именно?">');
                                                     $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input id="Name_Source" type="text" class="form-control" name="Name_Source" required placeholder="А именно?">');
                                                 }
                                             }
@@ -211,13 +211,13 @@
                                             // }
                                             //$("#Name_Source").prop('disabled', false);
                                         } else if ($("#Name_Category_Source option:selected").text() == "От знакомых") {
-                                            if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
-                                                $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input type="text" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Number_Customers_Inviter" required autocomplete="tel" >');
+                                            if (!$("#Name_Source").length && !$("#Phone_Customer_Inviter").length){
+                                                $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input type="text" class="form-control" id="Phone_Customer_Inviter" placeholder="Телефон знакомого" name="Phone_Customer_Inviter" required autocomplete="tel" >');
                                             }
                                             else {
-                                                $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input type="text" class="form-control" id="Number_Customers_Inviter" placeholder="Телефон знакомого" name="Number_Customers_Inviter" required autocomplete="tel" >');
+                                                $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input type="text" class="form-control" id="Phone_Customer_Inviter" placeholder="Телефон знакомого" name="Phone_Customer_Inviter" required autocomplete="tel" >');
                                             }
-                                            $("#Number_Customers_Inviter").mask("+7 (999) 999-99-99");
+                                            $("#Phone_Customer_Inviter").mask("+7 (999) 999-99-99");
                                         }
                                     });
                                 });

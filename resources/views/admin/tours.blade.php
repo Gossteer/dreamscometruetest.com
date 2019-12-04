@@ -1,94 +1,94 @@
 @extends('layouts.admin')
 
 @section('content')
-
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="row card-title">Экскурсии
-                    <a href="{{ route('tours.create') }}" class="col-2 ml-auto btn btn-info btn-rounded" style="margin-bottom: 10px;">Создать</a>
-                    <a href="{{ route('prnpriviewvauher') }}" id="prinvauher" class="col-2 ml-auto  btn btn-info btn-rounded" style="margin-bottom: 10px;">Ваучер</a>
-                    <a href="{{ route('prnpriviewspisok') }}" class="col-2 ml-auto btn btn-info btn-rounded" style="margin-bottom: 10px; ">Список</a>
-                    <form id="sadasd" action="{{route('tours.index')}}" class="col-2 ml-auto" method="get">
-                        <input type="text" name="search" id="search" class=" form-control input-rounded" placeholder="Найти">
-                    </form>
-
-                </h4>
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $("#prinvauher").printPage({
-                            message:"Пожалуйста ожидайте!"
-                        });
-                    });
-
-                    $("#search").keypress(function (e) {
-                        if (e.which == 13) {
-                            $("#sadasd").submit();
-                            return false;    //<---- Add this line
-                        }
-                    });
-                </script>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped verticle-middle">
-                        <thead>
-                        <tr>
-                            <th scope="col">Название</th>
-                            <th scope="col">Свободных мест</th>
-                            <th scope="col">Дата</th>
-                            <th scope="col">Цена</th>
-                            <th scope="col">Сотрудники</th>
-                            <th scope="col">Партнёры</th>
-                            <th scope="col">Действие</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($tours as $tour)
-                        <tr style="{{ $tour->Start_Date_Tours < now()->subDay() ? 'color: green' : 'color: black' }}">
-
-                            <td> <a style="{{ $tour->Start_Date_Tours < now()->subDay() ? 'color: green' : 'color: black' }}" href="{{ route('tours.show', $tour) }}">{{ $tour->Name_Tours }}</a></td>
-                            <td>
-                                {{ ($tour->Amount_Place - $tour->Occupied_Place) }}
-                            </td>
-                            <td> {{ $tour->Start_Date_Tours }}</td>
-                            <td><span class="label gradient-1 btn-rounded">{{ $tour->Price }} ₽</span>
-                            </td>
-                            <td>
-                                <a class="label gradient-1 btn-rounded" href="{{ route('jobsindex', [$tour]) }}">Посмотреть</a>
-                            </td>
-                            <td>
-                                <a class="label gradient-1 btn-rounded" href="{{ route('contractsindex', [$tour]) }}">Посмотреть</a>
-                            </td>
-                            <td>
-                                <span>
-                                    <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('tours.destroy',$tour)}}" method="post">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        @csrf
-                                        <a href="{{ route('tours.edit', $tour) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i>
-                                    </a>
-                                        <button type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></button>
-                                    </form>
-
-                                </span>
-                            </td>
-
-                        </tr>
-                            @endforeach
-                        </tbody>
-
-                    </table>
-                    @if($tours->total() > $tours->count())
-                        <div class="bootstrap-pagination">
-                            <nav>
-                                <ul class="pagination">
-                                    {{ $tours->links() }}
-                                </ul>
-                            </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row card-header" style="padding-bottom: 25px ">
+                            <div class="col-sm-12 col-md-3" >
+                                <h4 class="" >Экскурсии</h4>
+                            </div>
+                            <div class="col-sm-12 col-md-9">
+                                <a href="{{ route('prnpriviewvauher') }}" id="prinvauher" class="btn btn-info btn-rounded btnheader" style="float: right" >Ваучер</a>
+                                <a href="{{ route('prnpriviewspisok') }}" class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Список</a>
+                                <a href="{{ route('tours.create') }}" class="btn btn-info btn-rounded btnheader"  style="float: right; margin-right: 3px">Создать Экскурсию</a>
+                            </div>
                         </div>
-                    @endif
+                        <script type="text/javascript">
+                            $(document).ready(function(){
+                                $("#prinvauher").printPage({
+                                    message:"Пожалуйста ожидайте!"
+                                });
+                            });
+
+                            $("#search").keypress(function (e) {
+                                if (e.which == 13) {
+                                    $("#sadasd").submit();
+                                    return false;    //<---- Add this line
+                                }
+                            });
+                        </script>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped verticle-middle">
+                                <thead>
+                                <tr align="center">
+                                    <th scope="col">Название</th>
+                                    <th scope="col">Места</th>
+                                    <th scope="col">Дата</th>
+                                    <th scope="col">Цена</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($tours as $tour)
+                                    <tr align="center">
+
+                                    <td> <a href="{{ route('tours.show', $tour) }}">{{ $tour->Name_Tours }}</a></td>
+                                    <td>
+                                        <span title="Всего мест">{{ $tour->Amount_Place }}</span>:<span style="color: red;" title="Занято мест">{{ $tour->Occupied_Place }}</span>:<span style="color: green" title="Свободно мест">{{ ($tour->Amount_Place - $tour->Occupied_Place) }}</span>
+
+
+
+                                    </td>
+                                    <td style="{{ $tour->Start_Date_Tours < now()->subDay() ? 'color: green' : 'color: black' }}">@if($tour->End_Date_Tours != null) c @endif {{  date('d.m.Y H:i', strtotime($tour->Start_Date_Tours)) }} @if($tour->End_Date_Tours != null) <p style="margin: 0">по {{date('d.m.Y H:i', strtotime($tour->End_Date_Tours))}}</p> @endif</td>
+                                    <td>{{ number_format($tour->Price, 0, ',', ' ') }}₽
+                                        @if($tour->Privilegens_Price != null)<p style="margin: 0">ПЦ: {{ number_format($tour->Privilegens_Price, 0, ',', ' ') }}₽</p> @endif
+                                        @if($tour->Children_price != null) <p style="margin: 0">ЦДД: {{ number_format($tour->Children_price, 0, ',', ' ') }}₽</p> @endif
+                                    </td>
+                                    <td>
+                                        <span>
+                                            <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('tours.destroy',$tour)}}" method="post">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                @csrf
+                                                <a href="{{ route('tours.edit', $tour) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i>
+                                            </a>
+                                                <button type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></button>
+                                            </form>
+
+                                        </span>
+                                    </td>
+
+                                </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                            @if($tours->total() > $tours->count())
+                                <div class="bootstrap-pagination">
+                                    <nav>
+                                        <ul class="pagination">
+                                            {{ $tours->links() }}
+                                        </ul>
+                                    </nav>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 
 @endsection

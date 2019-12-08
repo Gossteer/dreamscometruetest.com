@@ -37,14 +37,25 @@ class TourEmployeesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $tour)
+    public function store(Request $request)
     {
-        Tour_employees::firstOrCreate([
-           'tour_id' => $tour,
-           'employee_id' => $request->employee_id,
+        $res = Tour_employees::firstOrCreate([
+            'Salary' => $request->Salary ?? 0,
+            'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
+            'tour_id' => $request->tour_id,
+            'employee_id' => $request->employee_id,
+            'Confidentiality' => $request->Confidentiality,
         ]);
 
-        return redirect()->route('jobsindex', $tour);
+        $data = [
+            'id' => $res->id,
+            'Salary' => $request->Salary ?? 0,
+            'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
+            'tour_id' => $request->tour_id,
+            'employee_id' => $request->employee_id,
+            'Confidentiality' => $request->Confidentiality,];
+
+        return $data;
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid" id="idtour" data-idi="{{$tour->id}}">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -11,7 +11,8 @@
                                 <h4 class="">{{$tour->Name_Tours}} - Пассажиры</h4>
                             </div>
                             <div class="col-sm-12 col-md-9">
-                                <a href="{{ route('printpastour', [$tour]) }}" data-toggle="tooltip" data-placement="top" class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Список</a>
+                                <a href="{{ route('printpastour', [$tour]) }}" data-toggle="tooltip" data-placement="top" class="btn btn-info btn-rounded btnheader" style="float: right;">Список</a>
+                                <a href="" data-toggle="tooltip" data-placement="top" class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Добавить</a>
                             </div>
                         </div>
 
@@ -174,7 +175,7 @@
                                 <h4 class="">{{$tour->Name_Tours}} - Партнёры</h4>
                             </div>
                             <div class="col-sm-12 col-md-9">
-                                <a href="" data-toggle="modal" data-target="#addArticle" class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Добавить</a>
+                                <a href="" data-toggle="modal" data-target="#addArticle" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
                                 <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -443,7 +444,7 @@
                                 <h4 class="">{{$tour->Name_Tours}} - Работники</h4>
                             </div>
                             <div class="col-sm-12 col-md-9">
-                                <a href="" data-toggle="modal" data-target="#addArticle1" class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Добавить</a>
+                                <a href="" data-toggle="modal" data-target="#addArticle1" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
                                 <div class="modal fade" id="addArticle1" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -452,14 +453,14 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="title">Работники<span class="text-danger">*</span></label>
-                                                    <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id"  required>
+                                                    <label for="employee_id">Работники<span class="text-danger">*</span></label>
+                                                    <select class="custom-select @error('employee_id') is-invalid @enderror" id="employee_id" name="employee_id"  required>
                                                         <option value="0" disabled selected hidden>Партнёр</option>
                                                         @foreach($employees as $employee)
                                                             <option value="{{ $employee->id }}" id="{{ $employee->id }}">{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }} {{ $employee->job->Job_Title ?? '' }}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('Name_Type_Activity')
+                                                    @error('employee_id')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -468,16 +469,25 @@
                                                 <div class="form-group">
                                                     <label for="Salary1">Стоимость<span class="text-danger">*</span></label>
                                                     <input  type="number" class="form-control @error('Salary') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" name="Salary1" id="Salary1" placeholder="Стоимость">
-                                                    @error('Salary1')
+                                                    @error('Salary')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="Occupied_Place_Bus">Стоимость<span class="text-danger">*</span></label>
+                                                    <label for="Occupied_Place_Bus">Место<span class="text-danger">*</span></label>
                                                     <input  type="number" class="form-control @error('Occupied_Place_Bus') is-invalid @enderror" min="0" max="32767" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==5) return false;" name="Occupied_Place_Bus" id="Occupied_Place_Bus" placeholder="Место">
                                                     @error('Occupied_Place_Bus')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Confidentiality">Скрытый<span class="text-danger">*</span></label>
+                                                    <input class="form-check-input" type="checkbox" id="Confidentiality" name="Confidentiality" style="margin-left: 5px !important; border: 1px solid #ced4da;" value="1" >
+                                                    @error('Confidentiality')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -486,11 +496,107 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default"  data-dismiss="modal">Закрыть</button>
-                                                <button type="button" id="save1" data-idi="" onclick="create_Type_Activity()" class="btn btn-primary">Добавить</button>
+                                                <button type="button" id="save1" data-idi="" onclick="create_tour_employee()" class="btn btn-primary">Добавить</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    function create_tour_employee() {
+                                        var employee_id = $('#employee_id').val();
+                                        var Salary = $('#Salary1').val();
+                                        var Occupied_Place_Bus = $('#Occupied_Place_Bus').val();
+                                        if ($('#Confidentiality').checked)
+                                            var Confidentiality = 1;
+                                        else
+                                            var Confidentiality = 0;
+                                        var tour_id = document.getElementById('idtour').dataset.idi;
+                                        $.ajax({
+                                            url: '{{ route('touremployee.store') }}',
+                                            type: "POST",
+                                            data: {employee_id:employee_id, Salary:Salary, Occupied_Place_Bus:Occupied_Place_Bus, Confidentiality:Confidentiality, tour_id:tour_id},
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+
+                                            success: function (data) {
+                                                $('#Salary1').val('');
+                                                $('#Occupied_Place_Bus').val('');
+                                                $('#employee_id').val('0');
+                                                $('#Confidentiality').attr('checked', false);
+                                                $('#addArticle1').modal('hide');
+                                                $('#articles-wrap').removeClass('hidden').addClass('show');
+                                                $('.alert').removeClass('show').addClass('hidden');
+                                                // document.getElementsByName('select_type_activitie').forEach(function (select_select) {
+                                                //     select_select[select_select.length] = new Option(data['Name_Type_Activity'], data['id']);
+                                                // });
+                                                alert('Добавлено');
+                                            },
+                                            error: function (msg) {
+                                                alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
+                                            }
+                                        });
+                                    };
+                                    function delete_Type_Activity(id) {
+                                        var typeactivity = document.getElementById('select_type_activitie' + id).value;
+
+                                        $.ajax({
+                                            url: "{{route('typeactivity.destroy')}}",
+                                            type: "POST",
+                                            data: {typeactivity: typeactivity},
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (datas) {
+                                                document.getElementsByName('select_type_activitie').forEach(function (select_select) {
+                                                    select_select.removeChild(select_select.querySelector('[value="'+ typeactivity +'"]'));
+                                                });
+                                                document.getElementById('select_type_activitie' + id).value = 0;
+                                                document.getElementById('deletedbutton' + id).classList.add("diableddeletedbutton");
+                                                alert('Удалено');
+
+                                            },
+                                            error: function (msg) {
+                                                alert('Ошибка');
+                                            }
+                                        });
+                                    };
+
+
+                                    function cheng_type_activities(id) {
+                                        var type_activities_id = document.getElementById(id).value;
+                                        var partner_id = document.getElementById(id).dataset.value;
+
+                                        $.ajax({
+                                            url: "{{route('typeactivity.partner.update')}}",
+                                            type: "POST",
+                                            data: {type_activities_id:type_activities_id,partner_id:partner_id},
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success:function (data)
+                                            {
+                                            },
+                                            error: function (msg) {
+                                                alert('Ошибка');
+                                            }
+                                        });
+                                    };
+
+                                    $(function() {
+                                        document.getElementsByName('select_type_activitie').forEach(function (select_select) {
+                                            disable_disabled(select_select.dataset.idi)
+                                        });
+                                    });
+                                    function disable_disabled(id) {
+                                        var deletedbutton = document.getElementById('deletedbutton' + id);
+                                        if(document.getElementById('select_type_activitie' + id).value == "0") {
+                                            deletedbutton.classList.add("diableddeletedbutton");
+                                        } else {
+                                            deletedbutton.classList.remove("diableddeletedbutton");
+                                        }
+                                    };
+                                </script>
                             </div>
                         </div>
 
@@ -508,156 +614,24 @@
                                 <tbody>
                                 @foreach($passengers as $passenger)
                                     <tr>
-                                        {{--Модельное окно для партнёров и работников--}}
-
-
                                         <td style="{{ ( ($passenger->Presence == 1) ?
                                            'color: green !important;' :
                                             (($passenger->Presence == -1) ?
-                                           'color: red !important;' : 'lol')) }}"> {{ $passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name }}</td>
+                                           'color: red !important;' : 'lol')) }}">
+                                            {{ $passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name }}
+                                        </td>
                                         <td>
                                             {{ ($passenger->Preferential_Terms == 1) ? 'Да' : 'Нет' }}
                                         </td>
-                                        <td> {{ $passenger->tour->created_at }}</td>
                                         <td>
-                                            <script>
-                                                function createType_Activity(id) {
-                                                    document.getElementById('save').dataset.idi = id;
-                                                };
-                                                function create_Type_Activity() {
-                                                    var Name_Type_Activity = $('#Name_Type_Activity').val();
-                                                    $.ajax({
-                                                        url: '{{ route('typeactivity.store') }}',
-                                                        type: "POST",
-                                                        data: {Name_Type_Activity: Name_Type_Activity},
-                                                        headers: {
-                                                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-
-                                                        success: function (data) {
-                                                            $('#Name_Type_Activity').val(' ');
-                                                            $('#addArticle').modal('hide');
-                                                            $('#articles-wrap').removeClass('hidden').addClass('show');
-                                                            $('.alert').removeClass('show').addClass('hidden');
-                                                            document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                                select_select[select_select.length] = new Option(data['Name_Type_Activity'], data['id']);
-                                                            });
-                                                            alert('Добавлено');
-                                                        },
-                                                        error: function (msg) {
-                                                            alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
-                                                        }
-                                                    });
-                                                };
-                                                function delete_Type_Activity(id) {
-                                                    var typeactivity = document.getElementById('select_type_activitie' + id).value;
-
-                                                    $.ajax({
-                                                        url: "{{route('typeactivity.destroy')}}",
-                                                        type: "POST",
-                                                        data: {typeactivity: typeactivity},
-                                                        headers: {
-                                                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-                                                        success: function (datas) {
-                                                            document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                                select_select.removeChild(select_select.querySelector('[value="'+ typeactivity +'"]'));
-                                                            });
-                                                            document.getElementById('select_type_activitie' + id).value = 0;
-                                                            document.getElementById('deletedbutton' + id).classList.add("diableddeletedbutton");
-                                                            alert('Удалено');
-
-                                                        },
-                                                        error: function (msg) {
-                                                            alert('Ошибка');
-                                                        }
-                                                    });
-                                                };
-
-
-                                                function cheng_type_activities(id) {
-                                                    var type_activities_id = document.getElementById(id).value;
-                                                    var partner_id = document.getElementById(id).dataset.value;
-
-                                                    $.ajax({
-                                                        url: "{{route('typeactivity.partner.update')}}",
-                                                        type: "POST",
-                                                        data: {type_activities_id:type_activities_id,partner_id:partner_id},
-                                                        headers: {
-                                                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-                                                        success:function (data)
-                                                        {
-                                                        },
-                                                        error: function (msg) {
-                                                            alert('Ошибка');
-                                                        }
-                                                    });
-                                                };
-
-                                                $(function() {
-                                                    document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                        disable_disabled(select_select.dataset.idi)
-                                                    });
-                                                });
-                                                function disable_disabled(id) {
-                                                    var deletedbutton = document.getElementById('deletedbutton' + id);
-                                                    if(document.getElementById('select_type_activitie' + id).value == "0") {
-                                                        deletedbutton.classList.add("diableddeletedbutton");
-                                                    } else {
-                                                        deletedbutton.classList.remove("diableddeletedbutton");
-                                                    }
-                                                };
-                                            </script>
-                                            <span>
-                                        <form id="Precence_True" action="{{ route('passengers.update', $passenger) }}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" name="_method" value="put">
-                                            <input id="" type="hidden" name="Presence" value="1">
-                                             <a  style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;"
-                                                 onclick="{{ (
-                                            ($passenger->Presence == 1) ?
-                                           'alert_precence_true ()' :
-                                            (($passenger->Presence == -1) ?
-                                           'alert_occupaid_true_forfalse ()' : 'Precence_True_submit (Precence_True)'))
-                                               }}"
-                                                 data-toggle="tooltip" data-placement="top" title="Присутствовал"><i class="fa fa-check color-muted m-r-5"></i>
-                                             </a>
-
-                                        </form>
-
-                                        <form id="Precence_False" action="{{ route('passengers.update', $passenger) }}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <input id="" type="hidden" name="Presence" value="-1">
-                                            <input type="hidden" name="_method" value="put">
-                                             <a style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;"
-                                                onclick="{{ (
-                                            ($passenger->Presence == -1) ?
-                                           'alert_occupaid_false ()' :
-                                            (($passenger->Presence == 1) ?
-                                           'alert_occupaid_false_fortrue ()' : 'Precence_True_submit (Precence_False)'))
-                                               }}"
-                                                data-toggle="tooltip" data-placement="top" title="Отсутствовал"><i class="fa fa-upload color-muted m-r-5"></i>
-                                        </a>
-                                        </form>
-
-
-
-                                        <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('passengers.destroy',$passenger)}}" method="post">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            @csrf
-
-
-                                            <button type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></button>
-                                        </form>
-
-                                    </span>
+                                            {{ $passenger->tour->created_at }}
                                         </td>
+                                        <td>
 
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
-
                             </table>
                             @if($passengers->total() > $passengers->count())
                                 <div class="bootstrap-pagination">

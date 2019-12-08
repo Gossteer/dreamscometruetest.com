@@ -15,39 +15,43 @@ use App\Tour;
 
 Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::resource('admin/tours', 'TourController');
+    Route::resource('admin/customer', 'CustomerController');
+    Route::resource('admin/partners', 'PartnerController');
+
+    Route::get('/admin', 'SiteController@adminindex')->name('/admin');
 
     Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
     Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
+    Route::get('admin/tours/{tour}/passengers/printspisoc', 'PassengerController@printpastour')->name('printpastour');
+
     Route::post('admin/employees/fullindex', 'EmployeeController@indexfull')->name('employees.index.full');
+    Route::resource('admin/employees', 'EmployeeController');
+
     Route::post('admin/typeactivity', 'TypeActivityController@store')->name('typeactivity.store');
     Route::post('admin/deletetypeactivity', 'TypeActivityController@destroy')->name('typeactivity.destroy');
     Route::post('admin/partnerupdatetypeactivity', 'TypeActivityController@partnerupdate')->name('typeactivity.partner.update');
-    Route::get('/admin', 'SiteController@adminindex')->name('/admin');
-    Route::resource('admin/employees', 'EmployeeController');
+
     Route::post('admin/typetourcreate', 'TypeTourController@store')->name('typetour.store');
     Route::post('admin/typetourindex', 'TypeTourController@index')->name('typetour.index');
     Route::post('admin/typetourupdate', 'TypeTourController@update')->name('typetour.update');
     Route::post('admin/create/typetourdestroy', 'TypeTourController@destroy')->name('typetour.destroy');
+
+    Route::delete('admin/partners/{partner}/edit/{addres}', 'AddressController@destroy')->name('addresssdestroy');
+
     Route::post('admin/job', 'JobController@index')->name('job.index');
     Route::post('admin/jobcreate', 'JobController@store')->name('job.store');
     Route::post('admin/jobupdate', 'JobController@update')->name('job.update');
     Route::post('admin/deletejob', 'JobController@destroy')->name('job.destroy');
-    Route::resource('admin/customer', 'CustomerController');
-    Route::resource('admin/partners', 'PartnerController');
+
+    Route::post('admin/touremployeecreate', 'TourEmployeesController@store')->name('touremployee.store');
+    Route::post('admin/touremployeeindex', 'TourEmployeesController@index')->name('touremployee.index');
+    Route::post('admin/touremployeeupdate', 'TourEmployeesController@update')->name('touremployee.update');
+    Route::post('admin/touremployeedestroy', 'TourEmployeesController@destroy')->name('touremployee.destroy');
 
     Route::post('admin/tours/passengers', 'PassengerController@store')->name('passengers.store');
     Route::get('admin/tours/passengers', 'PassengerController@index')->name('passengers.index');
     Route::put('admin/tours/passengers/{passenger}', 'PassengerController@update')->name('passengers.update');
-    Route::get('admin/tours/{tour}/passengers/printspisoc', 'PassengerController@printpastour')->name('printpastour');
     Route::get('admin/tours/passengers/{passenger}/edit', 'PassengerController@edit')->name('passengers.edit');
-
-    Route::get('admin/tours/{tour}/jobs', 'TourEmployeesController@index')->name('jobsindex');
-    Route::delete('admin/tours/{tour}/jobs/{job_for_tour}', 'TourEmployeesController@destroy')->name('jobsdestroy');
-    Route::post('admin/tours/{tour}/jobs', 'TourEmployeesController@store')->name('jobsstore');
-    Route::get('admin/tours/{tour}/contracts', 'ContractController@index')->name('contractsindex');
-    Route::delete('admin/tours/{tour}/contracts/{contranct}', 'ContractController@destroy')->name('contractsdestroy');
-    Route::delete('admin/partners/{partner}/edit/{addres}', 'AddressController@destroy')->name('addresssdestroy');
-    Route::post('admin/tours/{tour}/contracts', 'ContractController@store')->name('contractsstore');
 });
 
 Route::group(['middleware' => ['auth']], function () {

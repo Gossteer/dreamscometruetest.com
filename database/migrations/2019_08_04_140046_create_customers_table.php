@@ -23,6 +23,7 @@ class CreateCustomersTable extends Migration
             $table->smallInteger('Black_Days')->default(0);
             $table->integer('The_amount_of_tokens_spent')->default(0);
             $table->smallInteger('Amount_Customers_Listed')->default(0);
+            $table->string('Photo', 191)->nullable();
             $table->string('Phone_Number_Customer', 20)->unique();
             $table->string('Phone_Customer_Inviter', 20)->nullable();
             $table->bigInteger('sources_id')->unsigned()->nullable();

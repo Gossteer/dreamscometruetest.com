@@ -162,6 +162,32 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Photo">Фото</label>
+                                    <div class="col-lg-6">
+                                        <div class="custom-file">
+                                            <input type="file" name="Photo" accept=".jpg,.png" onchange="
+                                        switch (this.value.match(/\.([^\.]+)$/)[1]) {
+                                            case 'png':
+                                            case 'jpg':
+                                            document.getElementById('Fille_Conract_Partners').textContent= this.files.item(0).name;
+                                                break;
+                                            default:
+                                                alert('Файл не подходит!');
+                                                this.value = 'Некорректный файл';
+                                                break;
+                                        }
+                                            " class="custom-file-input">
+                                            <label id="Fille_Conract_Partners" for="Photo" class="custom-file-label">Файл не выбран</label>
+                                        </div>
+                                        @error('Photo')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="floor" >Пол<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <select class="custom-select mr-sm-2 form-control @error('floor') is-invalid @enderror" id="floor" name="floor" required>

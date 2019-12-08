@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
+use App\Partner;
 use App\Passenger;
 use App\tour;
 use App\Type_Tour;
@@ -98,7 +100,7 @@ class TourController extends Controller
      */
     public function show(tour $tour)
     {
-        return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $tour->id)->paginate(12), 'tour' => $tour]);
+        return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $tour->id)->paginate(6), 'tour' => $tour, 'partners' => Partner::where('LogicalDelete',0)->paginate(3), 'employees' => Employee::where('LogicalDelete',0)->paginate(3)]);
 
     }
 

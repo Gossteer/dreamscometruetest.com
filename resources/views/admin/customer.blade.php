@@ -18,7 +18,7 @@
                     <table class="table table-bordered table-striped verticle-middle">
                         <thead>
                         <tr align="center">
-                            <th scope="col">ФИО</th>
+                            <th scope="col" colspan="2">ФИО</th>
                             <th scope="col">Номер телефона</th>
                             <th scope="col">День рождение</th>
                             <th scope="col">Дни</th>
@@ -28,8 +28,8 @@
                         <tbody>
                         @foreach($customers as $customer)
                             <tr>
-
-                                <td title="{{ $customer->Surname . ' ' . $customer->Name  . ' ' . $customer->Middle_Name}}">
+                                <td style="border-right: #fff0ff; width: 50px"><img style="float: left;" src="{{ asset('images/2.jpg') }}" alt=""></td>
+                                <td style="border-left: #fff0ff; padding-left: 0px; width: 150px" title="{{ $customer->Surname . ' ' . $customer->Name  . ' ' . $customer->Middle_Name}}">
                                     {{ $customer->Surname . ' ' . mb_substr($customer->Name, 0, 1)  . '. ' . mb_substr($customer->Middle_Name, 0, 1) . ($customer->Middle_Name != '' ? '.' : '') }}
                                 </td>
                                 <td>

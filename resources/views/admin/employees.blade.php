@@ -18,7 +18,7 @@
                         <table class="table table-bordered table-striped verticle-middle">
                             <thead>
                             <tr align="center">
-                                <th scope="col">ФИО</th>
+                                <th scope="col" colspan="2">ФИО</th>
                                 <th scope="col">Дата рождения</th>
                                 <th scope="col">Номер телефона</th>
                                 <th scope="col">Должность</th>
@@ -29,8 +29,9 @@
                             <tbody>
                             @foreach($employees as $employee)
                                 <tr align="center"  >
-                                    <td title="{{ $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name}}">
-                                        <a href="" data-toggle="modal" data-target="#addArticle" id="fullindex" data-id="{{ $employee->id }}" onclick="indexfull(this.dataset.id)">{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</a>
+                                    <td style="border-right: #fff0ff; width: 50px"><img style="float: left" src="{{ asset('images/2.jpg') }}" alt=""></td>
+                                    <td style="border-left: #fff0ff; width: 150px; padding-left: 0px" title="{{ $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name}}">
+                                    <a href="" style="float: left" data-toggle="modal" data-target="#addArticle" id="fullindex" data-id="{{ $employee->id }}" onclick="indexfull(this.dataset.id)">{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</a>
                                     </td>
                                     <script>
                                         function indexfull(id){

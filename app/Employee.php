@@ -20,7 +20,8 @@ class Employee extends Model
         'Set_Permission',
         'Man_brought',
         'Joint_excursions',
-        'Level'
+        'Level',
+        'Photo'
         ];
 
     protected $hidden = [

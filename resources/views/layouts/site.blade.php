@@ -90,10 +90,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<label for="drop" class="toggle" style="line-height: 24px"><span class="fa fa-bars"></span></label>
 			<input type="checkbox" id="drop" />
 			<ul class="menu ml-auto mt-1">
-				<li class=""><a href="{{ route('/') }}">Главная</a></li>
-				<li class=""><a href="{{ route('/about') }}">О нас</a></li>
-				<li class=""><a href="{{ route('/packages') }}">Экскурсии</a></li>
-				<li class=""><a href="{{ route('/contact') }}">Контакты</a></li>
+				<li class=""><a @if(Route::current()->getName() == '/') style="font-weight: bold" @endif href="{{ route('/') }}">Главная</a></li>
+				<li class=""><a @if(Route::current()->getName() == '/about') style="font-weight: bold" @endif href="{{ route('/about') }}">О нас</a></li>
+				<li class=""><a @if(Route::current()->getName() == '/packages') style="font-weight: bold" @endif href="{{ route('/packages') }}">Экскурсии</a></li>
+				<li class=""><a @if(Route::current()->getName() == '/contact') style="font-weight: bold" @endif href="{{ route('/contact') }}">Контакты</a></li>
 				<li id="lineNavbar"><br ></li>
 				@guest
 					<li class=" ">

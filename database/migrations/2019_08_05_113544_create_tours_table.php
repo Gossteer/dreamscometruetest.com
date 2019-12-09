@@ -31,6 +31,7 @@ class CreateToursTable extends Migration
             $table->datetime('Start_Date_Tours');
             $table->datetime('End_Date_Tours')->nullable();
             $table->mediumInteger('Price');
+            $table->boolean('Confidentiality')->default(0);
             $table->mediumInteger('Privilegens_Price')->nullable();
             $table->mediumInteger('Children_price')->nullable();
             $table->string('Notification_OPDA',191)->nullable();

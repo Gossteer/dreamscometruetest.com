@@ -1544,13 +1544,13 @@ p.duration {
 /* //places */
 
 #pacagesunit {
-	font-size: 1.2rem;
+	font-size: 1rem;
 	background-color: #047ffc;
 	margin-top: 15px;
-	margin-left: 10%;
+	margin-left: 12.8%;
 	padding-top: 7px;
-	width: 80%;
-	height: 46px;
+	width: 75%;
+	height: 43px;
 }
 
 /*-- Responsive design --*/

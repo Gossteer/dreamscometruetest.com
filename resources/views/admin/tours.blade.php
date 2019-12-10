@@ -48,9 +48,6 @@
                                     <td> <a href="{{ route('tours.show', $tour) }}">{{ $tour->Name_Tours }}</a></td>
                                     <td>
                                         <span title="Всего мест">{{ $tour->Amount_Place }}</span>:<span style="color: red;" title="Занято мест">{{ $tour->Occupied_Place }}</span>:<span style="color: green" title="Свободно мест">{{ ($tour->Amount_Place - $tour->Occupied_Place) }}</span>
-
-
-
                                     </td>
                                     <td style="{{ $tour->Start_Date_Tours < now()->subDay() ? 'color: green' : 'color: black' }}">@if($tour->End_Date_Tours != null) c @endif {{  date('d.m.Y H:i', strtotime($tour->Start_Date_Tours)) }} @if($tour->End_Date_Tours != null) <p style="margin: 0">по {{date('d.m.Y H:i', strtotime($tour->End_Date_Tours))}}</p> @endif</td>
                                     <td>{{ number_format($tour->Price, 0, ',', ' ') }}₽

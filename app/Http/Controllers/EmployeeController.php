@@ -107,13 +107,14 @@ class EmployeeController extends Controller
             'Description' => $request->Description ?? 'Лучший в своём деле',
             'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
             'Phone_Number' => $request->Phone_Number,
-            'Contract_Employee' => $request->Contract_Employee,
+            'Contract_Employee' => $request->Contract_Employee ?? null,
             'Set_Permission' => $request->Set_Permission ?? 0,
             'Man_brought' => $request->Man_brought ?? 0,
             'Joint_excursions' => $request->Joint_excursions ?? 0,
             'Level' => $request->Level ?? 0,
             'jobs_id' => $request->jobs_id,
-            'users_id' => $user->id];
+            'users_id' => $user->id,
+            'Photo'=>$request->Photo ?? null];
 
         Employee::Create($attribute);
 
@@ -204,12 +205,13 @@ class EmployeeController extends Controller
             'Description' => $request->Description ?? 'Лучший в своём деле',
             'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
             'Phone_Number' => $request->Phone_Number,
-            'Contract_Employee' => $request->Contract_Employee,
+            'Contract_Employee' => $request->Contract_Employee ?? null,
             'Set_Permission' => $request->Set_Permission ?? 0,
             'Man_brought' => $request->Man_brought ?? 0,
             'Joint_excursions' => $request->Joint_excursions ?? 0,
             'Level' => $request->Level ?? 0,
             'jobs_id' => $request->jobs_id,
+            'Photo'=>$request->Photo ?? null,
         ]);
 
         return redirect()->route('employees.index');

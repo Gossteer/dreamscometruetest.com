@@ -194,6 +194,32 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Photo">Фото</label>
+                                    <div class="col-lg-6">
+                                        <div class="custom-file">
+                                            <input type="file" name="Photo" accept=".jpg,.png" onchange="
+                                        switch (this.value.match(/\.([^\.]+)$/)[1]) {
+                                            case 'png':
+                                            case 'jpg':
+                                            document.getElementById('Fille_Conract_Partners').textContent= this.files.item(0).name;
+                                                break;
+                                            default:
+                                                alert('Файл не подходит!');
+                                                this.value = 'Некорректный файл';
+                                                break;
+                                        }
+                                            " class="custom-file-input">
+                                            <label id="Fille_Conract_Partners" for="Photo" class="custom-file-label">Файл не выбран</label>
+                                        </div>
+                                        @error('Photo')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="jobs_id" >Должность<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id"  required>
@@ -226,7 +252,7 @@
                                                 <div class="form-group">
                                                     <label for="Job_Title1">Название должности <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control @error('Job_Title') is-invalid @enderror" id="Job_Title1" minlength="2" maxlength="191" name="Job_Title1" placeholder="Название">
-                                                    @error('Job_Title')
+                                                    @error('Job_Title1')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -236,7 +262,7 @@
                                                 <div class="form-group">
                                                     <label for="Salary1">Зарплата</label>
                                                     <input type="number" class="form-control @error('Salary') is-invalid @enderror" id="Salary1" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" name="Salary1" placeholder="Зарплата ₽">
-                                                    @error('Salary')
+                                                    @error('Salary1')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -245,7 +271,7 @@
                                                 <div class="form-group">
                                                     <label for="Company1">Название компании</label>
                                                     <input type="text" class="form-control @error('Company') is-invalid @enderror" id="Company1" minlength="2" maxlength="191" name="Company1" placeholder="Компания">
-                                                    @error('Company')
+                                                    @error('Company1')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>

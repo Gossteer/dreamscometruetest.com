@@ -21,12 +21,12 @@
                             <table class="table table-striped table-bordered zero-configuration" id="tablepartner" {{$i = 0}} {{ $o = 0 }} style="padding: 0">
                                 <thead>
                                 <tr align="center">
-                                    <th >Название</th>
+                                    <th>Название</th>
                                     <th>Тип занятости</th>
-                                    <th >Адрес</th>
-                                    <th >Номер телефона</th>
-                                    <th >Email</th>
-                                    <th >Сайт</th>
+                                    <th>Адрес</th>
+                                    <th>Номер телефона</th>
+                                    <th>Email</th>
+                                    <th>Сайт</th>
                                     <th id="activite"></th>
                                 </tr>
                                 </thead>

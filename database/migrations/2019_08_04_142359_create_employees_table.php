@@ -22,6 +22,7 @@ class CreateEmployeesTable extends Migration
             $table->date('Byrthday', 191)->nullable();
             $table->string('Description', 191)->default('Лучший в своем деле!');
             $table->string('Phone_Number', 191)->unique();
+            $table->string('Photo', 191)->nullable();
             $table->string('Contract_Employee', 191)->nullable();
             $table->boolean('Set_Permission')->default(0);
             $table->integer('Man_brought')->default(0);

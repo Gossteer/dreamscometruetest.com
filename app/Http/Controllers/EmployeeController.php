@@ -24,7 +24,10 @@ class EmployeeController extends Controller
     public function indexfull(Request $request)
     {
         $res = Employee::find($request->employeeid);
-        $data = ['Joint_excursions' => $res->Joint_excursions, 'Set_Permission' => $res->Set_Permission, 'Man_brought' => $res->Man_brought, 'FIO' => $res->Surname . ' ' . $res->Name  . ' ' . $res->Middle_Name,];
+        $us = User::find($res->users_id);
+        $data = ['Type_User' => ($us->Type_User == 0 ? 'Без прав' : 'С правами'),'login' => $us->login, 'email' => $us->email, 'Description'=> $res->Description,
+            'Joint_excursions' => $res->Joint_excursions, 'Set_Permission' => $res->Set_Permission,
+            'Man_brought' => $res->Man_brought, 'FIO' => $res->Surname . ' ' . $res->Name  . ' ' . $res->Middle_Name,];
 
         return $data;
     }
@@ -101,6 +104,7 @@ class EmployeeController extends Controller
             'Name' => $request->Name,
             'Surname' => $request->Surname,
             'Middle_Name' => $request->Middle_Name,
+            'Description' => $request->Description ?? 'Лучший в своём деле',
             'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
             'Phone_Number' => $request->Phone_Number,
             'Contract_Employee' => $request->Contract_Employee,
@@ -188,8 +192,8 @@ class EmployeeController extends Controller
             'login' => $request['login'],
             'email' => $request['email'],
             'password' => $request['password'] == null ?  User::find($employee->users_id)->password :  Hash::make($request['password']) ,
-            'Processing_Personal_Data' => 1,
-            'Notifications' => 1,
+            'Processing_Personal_Data' => $request['Processing_Personal_Data'],
+            'Notifications' => $request['Notifications'] ?? 0,
             'Type_User' => $request['Type_User'],
         ]);
 
@@ -197,6 +201,7 @@ class EmployeeController extends Controller
             'Name' => $request->Name,
             'Surname' => $request->Surname,
             'Middle_Name' => $request->Middle_Name,
+            'Description' => $request->Description ?? 'Лучший в своём деле',
             'Byrthday' => date('Y-m-d', strtotime($request->Byrthday)),
             'Phone_Number' => $request->Phone_Number,
             'Contract_Employee' => $request->Contract_Employee,

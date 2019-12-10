@@ -1,28 +1,37 @@
 @extends('layouts.admin')
 
 @section('content')
-
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Клиенты <a href="{{ route('customer.create') }}" class="btn btn-info btn-rounded" style="margin-bottom: 10px; margin-left: 70%;">Создать</a></h4>
-
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row card-header" style="padding-bottom: 25px ">
+                            <div class="col-sm-12 col-md-6" >
+                                <h4 class="" >Работники</h4>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <a href="{{ route('customer.create') }}" class="btn btn-info btn-rounded btnheader" style="float: right">Добавить Клиента</a>
+                            </div>
+                        </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped verticle-middle">
                         <thead>
-                        <tr>
+                        <tr align="center">
                             <th scope="col">ФИО</th>
                             <th scope="col">Номер телефона</th>
                             <th scope="col">День рождение</th>
                             <th scope="col">Дни</th>
-                            <th scope="col">Действие</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($customers as $customer)
                             <tr>
 
-                                <td> {{ $customer->Name . ' ' . $customer->Surname . ' ' . $customer->Middle_Name }}</td>
+                                <td title="{{ $customer->Surname . ' ' . $customer->Name  . ' ' . $customer->Middle_Name}}">
+                                    {{ $customer->Surname . ' ' . mb_substr($customer->Name, 0, 1)  . '. ' . mb_substr($customer->Middle_Name, 0, 1) . ($customer->Middle_Name != '' ? '.' : '') }}
+                                </td>
                                 <td>
                                     {{ $customer->Phone_Number_Customer  }}
                                 </td>
@@ -57,7 +66,8 @@
                     @endif
                 </div>
             </div>
+                </div>
+            </div>
         </div>
     </div>
-
 @endsection

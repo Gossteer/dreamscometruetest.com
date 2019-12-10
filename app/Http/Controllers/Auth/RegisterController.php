@@ -110,9 +110,10 @@ class RegisterController extends Controller
             'Date_Birth_Customer' => date('Y-m-d', strtotime( $data['Date_Birth_Customer'])),
             'Phone_Number_Customer' => $data['Phone_Number_Customer'],
             'Floor' => $data['Floor'],
+            'Description' => $data['Description'] ?? 'Отсуствует',
             'Phone_Customer_Inviter' =>  $data['Number_Customers_Inviter'] ?? null,
             'Amount_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->count(),
-            'Age_Group' => (Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60) ? 1 : 0,
+            'Age_Group' => ((Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60 &&  $data['Floor'] == 0) || (Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 65 && $data['Floor'] == 1)) ? 1 : 0,
 
         ]);
 

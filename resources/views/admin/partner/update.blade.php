@@ -10,6 +10,7 @@
                     <div class="card-body">
                         <div class="form-validation">
                             <form class="form-valide" action="{{ route('partners.update', $partner->id) }}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="_method" value="put">
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Partners">Наименование <span class="text-danger">*</span>
@@ -40,17 +41,17 @@
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select" id="select_type_activitie" name="select_type_activitie">
                                             @if(!isset($partner->type_activity))
-                                                <option value="" disabled selected hidden>Тип занятости</option>
+                                                <option value="0" disabled selected hidden>Тип занятости</option>
                                             @endif
                                             @foreach($type_activities as $type_activitie)
                                                 <option value="{{$type_activitie->id}}" id="{{$type_activitie->id}}" @if($partner->type_activities_id == $type_activitie->id) selected @endif>{{$type_activitie->Name_Type_Activity}}</option>
                                             @endforeach
                                         </select>
                                         <div class="input-group-append">
-                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" >Создать</a>
+                                            <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton" id="deletedbutton" style="" name="deletedbutton"  >Удалить</a>
+                                            <a class="btn input-group-text selectedbutton" id="deletedbutton" style="" name="deletedbutton"   title="Удалить"><i class="fa fa-close color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +88,7 @@
                                             var Name_Type_Activity = $('#Name_Type_Activity').val();
 
                                             $.ajax({
-                                                url: "{{route('typeactivity.store.update', $partner->id)}}",
+                                                url: "{{route('typeactivity.store')}}",
                                                 type: "POST",
                                                 data: {Name_Type_Activity:Name_Type_Activity},
                                                 headers: {
@@ -114,7 +115,7 @@
                                             var typeactivity = $('#select_type_activitie').val();
 
                                             $.ajax({
-                                                url: "{{route('typeactivity.destroy.update',$partner->id)}}",
+                                                url: "{{route('typeactivity.destroy')}}",
                                                 type: "POST",
                                                 data: {typeactivity:typeactivity},
                                                 headers: {
@@ -122,13 +123,8 @@
                                                 },
                                                 success:function (datas)
                                                 {
-                                                    var str;
-
-                                                    datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'">'+data['Name_Type_Activity']+'</option>';
-                                                    });
-                                                    $('#select_type_activitie option').remove();
-                                                    $('#select_type_activitie:last').append(str);
+                                                    select_type_activitie.removeChild(select_type_activitie.querySelector('[value="'+ typeactivity +'"]'));
+                                                    select_type_activitie.value = 0;
                                                     alert('Удалено');
 
                                                 },

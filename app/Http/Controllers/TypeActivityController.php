@@ -103,7 +103,7 @@ class TypeActivityController extends Controller
     {
         Type_Activity::find($request->typeactivity)->delete();
 
-        $datas = Type_Activity::all();
+        $datas = '1';
         return $datas;
     }
 }

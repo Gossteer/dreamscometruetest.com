@@ -17,7 +17,7 @@
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped verticle-middle">
                             <thead>
-                            <tr>
+                            <tr align="center">
                                 <th scope="col">ФИО</th>
                                 <th scope="col">Дата рождения</th>
                                 <th scope="col">Номер телефона</th>
@@ -28,9 +28,9 @@
                             </thead>
                             <tbody>
                             @foreach($employees as $employee)
-                                <tr>
+                                <tr align="center"  >
                                     <td title="{{ $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name}}">
-                                        <a data-toggle="modal" data-target="#addArticle" class="selectedbutton"  id="fullindex" data-id="{{ $employee->id }}" onclick="indexfull(this.dataset.id)" style="cursor: pointer" >{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</a>
+                                        <a href="" data-toggle="modal" data-target="#addArticle" id="fullindex" data-id="{{ $employee->id }}" onclick="indexfull(this.dataset.id)">{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }}</a>
                                     </td>
                                     <script>
                                         function indexfull(id){
@@ -55,6 +55,10 @@
 
                                                     Man_brought.innerHTML = data['Man_brought'];
                                                     FIO.innerHTML = data['FIO'];
+                                                    Description_employee.innerHTML = data['Description'];
+                                                    login_employee.innerHTML = data['login'];
+                                                    email_employee.innerHTML = data['email'];
+                                                    type_user_employee.innerHTML = data['Type_User'];
                                                 },
                                                 error: function (msg) {
                                                     alert('Ошибка');
@@ -66,6 +70,10 @@
                                             Set_Permission.innerHTML = '';
                                             Man_brought.innerHTML = '';
                                             FIO.innerHTML = '';
+                                            Description_employee.innerHTML = '';
+                                            login_employee.innerHTML = '';
+                                            email_employee.innerHTML = '';
+                                            type_user_employee.innerHTML = '';
                                         };
                                     </script>
                                     <td>
@@ -74,10 +82,10 @@
                                     <td> {{ $employee->Phone_Number }}</td>
 
                                     <td><span class="label gradient-1 btn-rounded">
-                                           @if($employee->jobs_id != null)
+                                           @if($employee->jobs_id != null && isset($employee->job))
                                                 {{$employee->job->Company}} {{ $employee->job->Job_Title}} зп: {{( ($employee->job->Salary == null)? 'договорная': $employee->job->Salary . 'р')}}
                                                @else
-                                               Неназначен
+                                               Не назначен
                                                @endif
 
                                         </span>
@@ -105,12 +113,12 @@
 
                             <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                 <div class="modal-dialog"  role="document">
-                                    <div class="modal-content" style="width: 65%">
+                                    <div class="modal-content" style="">
                                         <div class="modal-header" style="justify-content: center; text-align: center;">
                                             <h4 class="modal-title"  id="FIO"></h4>
                                         </div>
                                         <div class="row modal-body" style="padding-bottom: 0">
-                                            <div class="col dialogfontsize" style="font-size: 15px">
+                                            <div class="col dialogfontsize" style="font-size: 15px;">
                                                 <div class="form-group">
                                                     <label>Договор</label>
                                                 </div>
@@ -124,22 +132,22 @@
                                                 <div class="form-group">
                                                     <label>Приведено клиентов: <label id="Man_brought"></label></label>
                                                 </div>
+
                                             </div>
-{{--                                            <div class="col">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Договор</label>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Совместных экскурсий: <label id="Joint_excursions"></label></label>--}}
-{{--                                                    --}}{{--Разварачивать список с совместными экскурсиями, с пагинацией--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Разрешение на набор: <label id="Set_Permission"></label></label>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Приведено клиентов: <label id="Man_brought"></label></label>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            <div class="col dialogfontsize" style="font-size: 15px;">
+                                                <div class="form-group" >
+                                                    <label >Логин: <label  id="login_employee"></label></label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label >Почта: <label  id="email_employee"></label></label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label >Права: <label  id="type_user_employee"></label></label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label >Описание: <label style="display: contents;" id="Description_employee"></label></label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row modal-footer" style="justify-content: center; margin: 0;">
                                             <button type="button" class="col-md-10 btn btn-default" id="close" name="close" onclick="closeindexfull()" data-dismiss="modal">Закрыть</button>

@@ -114,7 +114,7 @@ class JobController extends Controller
     {
         Job::find($request->jobsid)->delete();
 
-        $datas = Job::all();
+        $datas = '1';
         return $datas;
     }
 }

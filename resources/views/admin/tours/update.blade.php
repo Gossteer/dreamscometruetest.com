@@ -8,13 +8,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-validation">
-                            <form class="form-valide" action="{{route('tours.store')}}" method="post" enctype="multipart/form-data">
+                            <form class="form-valide" action="{{route('tours.update', $tour->id)}}" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="_method" value="put">
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Tours" >Название<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input id="login" type="text" class="form-control @error('Name_Tours') is-invalid @enderror" name="Name_Tours" minlength="2" maxlength="20" value="{{ $tour->Name_Tours }}" required  placeholder="Название">
+                                        <input id="login" type="text" class="form-control @error('Name_Tours') is-invalid @enderror" name="Name_Tours" minlength="2" maxlength="100" value="{{ $tour->Name_Tours }}" required  placeholder="Название">
                                         @error('Name_Tours')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -212,7 +212,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Start_Date_Tours" >Отправление<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input  type="text" class="form-control @error('Start_Date_Tours') is-invalid @enderror" id="Start_Date_Tours" name="Start_Date_Tours" value="{{ $tour->Start_Date_Tours }}" placeholder="Отправление" required>
+                                        <input  type="text" class="form-control @error('Start_Date_Tours') is-invalid @enderror" id="Start_Date_Tours" name="Start_Date_Tours" value="{{  date('d-m-Y H:i', strtotime($tour->Start_Date_Tours)) }}" placeholder="Отправление" required>
                                         @error('Start_Date_Tours')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -224,7 +224,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="End_Date_Tours" >Возвращение</label>
                                     <div class="col-lg-6">
-                                        <input  type="text" class="form-control @error('End_Date_Tours') is-invalid @enderror" id="End_Date_Tours" name="End_Date_Tours" value="{{ $tour->End_Date_Tours }}" placeholder="Возвращение">
+                                        <input  type="text" class="form-control @error('End_Date_Tours') is-invalid @enderror" id="End_Date_Tours" name="End_Date_Tours" value="{{  date('d-m-Y H:i', strtotime($tour->End_Date_Tours)) }}" placeholder="Возвращение">
                                         @error('End_Date_Tours')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

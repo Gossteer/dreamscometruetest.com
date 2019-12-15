@@ -15,10 +15,19 @@ class TourEmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($tour)
+    public function index(Request $request)
     {
-        return view('admin.tours_jobs', ['jobs_for_tour' => Tour_employees::where('tour_id',$tour)->paginate(12),
-            'tour' => $tour,'employees' => Employee::all()]);
+        $index_TourEmployees = Tour_employees::find($request->id);
+
+        $date = [
+            'Salary' =>  $index_TourEmployees->Salary ?? 0,
+            'Occupied_Place_Bus' =>  $index_TourEmployees->Occupied_Place_Bus,
+            'tour_id' => $request->tour_id,
+            'employee_id' =>  $index_TourEmployees->employee_id,
+            'Confidentiality' =>  $index_TourEmployees->Confidentiality == 1 ? 1 : 0,
+        ];
+
+        return $date;
     }
 
     /**
@@ -39,7 +48,7 @@ class TourEmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $res = Tour_employees::firstOrCreate([
+        $res = Tour_employees::Create([
             'Salary' => $request->Salary ?? 0,
             'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
             'tour_id' => $request->tour_id,
@@ -47,13 +56,19 @@ class TourEmployeesController extends Controller
             'Confidentiality' => $request->Confidentiality,
         ]);
 
+        $employee = Employee::find($request->employee_id);
+
         $data = [
             'id' => $res->id,
-            'Salary' => $request->Salary ?? 0,
+            'Salary' => number_format($request->Salary, 0, ',', ' ') . '₽' ?? 0,
             'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
             'tour_id' => $request->tour_id,
-            'employee_id' => $request->employee_id,
-            'Confidentiality' => $request->Confidentiality,];
+            'FIO_Full' => $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name,
+            'FIO' => $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : ''),
+            'Job' => $employee->job != null ? $employee->job->Company . ' ' . $employee->job->Job_Title . ' зп: ' . (($employee->job->Salary == null)? 'договорная': number_format($employee->job->Salary, 0, ',', ' ') . '₽') : 'Не назначена',
+            'Confidentiality' => $request->Confidentiality == 1 ? 'Да' : 'Нет',
+            'Class_Style' => $request->Confidentiality == 1 ? 'label gradient-2 btn-rounded' : 'label gradient-1 btn-rounded'
+            ];
 
         return $data;
     }
@@ -75,9 +90,9 @@ class TourEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+
     }
 
     /**
@@ -87,9 +102,31 @@ class TourEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        Tour_employees::find($request->id)->update([
+            'Salary' => $request->Salary ?? 0,
+            'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
+            'tour_id' => $request->tour_id,
+            'employee_id' => $request->employee_id,
+            'Confidentiality' => $request->Confidentiality,
+        ]);
+
+        $employee = Employee::find($request->employee_id);
+
+        $data = [
+            'id' => $request->id,
+            'Salary' => number_format($request->Salary, 0, ',', ' ') . '₽' ?? 0,
+            'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
+            'tour_id' => $request->tour_id,
+            'FIO_Full' => $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name,
+            'FIO' => $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : ''),
+            'Job' => $employee->job != null ? $employee->job->Company . ' ' . $employee->job->Job_Title . ' зп: ' . (($employee->job->Salary == null)? 'договорная': number_format($employee->job->Salary, 0, ',', ' ') . '₽') : 'Не назначена',
+            'Confidentiality' => $request->Confidentiality == 1 ? 'Да' : 'Нет',
+            'Class_Style' => $request->Confidentiality == 1 ? 'label gradient-2 btn-rounded' : 'label gradient-1 btn-rounded'
+        ];
+
+        return $data;
     }
 
     /**
@@ -98,10 +135,12 @@ class TourEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($tour, $job_for_tour)
+    public function destroy(Request $request)
     {
-        Tour_employees::findOrFail($job_for_tour)->delete();
+        Tour_employees::find($request->id)->delete();
 
-        return redirect()->route('jobsindex', $tour);
+        $date = 1;
+
+        return $date;
     }
 }

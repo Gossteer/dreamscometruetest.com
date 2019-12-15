@@ -6,7 +6,9 @@ use App\Employee;
 use App\Partner;
 use App\Passenger;
 use App\tour;
+use App\Tour_employees;
 use App\Type_Tour;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Concerns\FromView;
@@ -57,36 +59,49 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-//        \Validator::make($request->all(), [
-//            'Amount_Place' => ['required', 'digits_between:0,8388607', 'integer'],
-//            'Privilegens_Price' => ['required', 'digits_between:0,8388607', 'integer'],
-//            'Price' => ['required', 'digits_between:0,8388607', 'integer'],
-//            'Expenses' => ['required', 'integer']
-//        ],[
-//            'Amount_Place.integer' => 'Введите пожалуйста число!',
-//            'Privilegens_Price.integer' => 'Введите пожалуйста число!',
-//            'Price.integer' => 'Введите пожалуйста число!',
-//            'Expenses.integer' => 'Введите пожалуйста число!',
-//            'Amount_Place.digits_between' => 'Размер превысил все допустимые пределы!',
-//            'Privilegens_Price.digits_between' => 'Размер превысил все допустимые пределы!',
-//            'Price.digits_between' => 'Размер превысил все допустимые пределы!',
-//        ])->validate();
+
+       $Start_Date_Tours = Carbon::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', strtotime($request->Start_Date_Tours)));
+       $End_Date_Tours = Carbon::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', strtotime($request->End_Date_Tours)));
+
+        \Validator::make($request->all(), [
+            'Name_Tours' => ['required', 'min:2', 'max:50'],
+            'type_tours_id' => ['required'],
+            'Assessment' => ['required', 'between:0,10', 'integer'],
+            'Price' => ['required', 'between:0,8388607', 'integer'],
+            'Children_price' => ['required', 'between:0,8388607', 'integer'],
+            'Privilegens_Price' => ['required', 'between:0,8388607', 'integer'],
+            'Amount_Place' => ['required', 'between:0,8388607', 'integer'],
+            'Expenses' => ['required', 'between:0,2147483647', 'integer'],
+            'Start_Date_Tours' => ['required','date'],
+            'End_Date_Tours' => ['required','date'],
+
+        ],[
+            'date' => 'Не является правильной датой',
+            'between' => 'Укажите пожалуйста число в диапазоне :min - :max',
+            'Amount_Place.integer' => 'Введите пожалуйста число!',
+            'Privilegens_Price.integer' => 'Введите пожалуйста число!',
+            'Price.integer' => 'Введите пожалуйста число!',
+            'Expenses.integer' => 'Введите пожалуйста число!',
+            'Amount_Place.digits_between' => 'Размер превысил все допустимые пределы!',
+            'Privilegens_Price.digits_between' => 'Размер превысил все допустимые пределы!',
+            'Price.digits_between' => 'Размер превысил все допустимые пределы!',
+        ])->validate();
 
         Tour::create([
             'Name_Tours'=> $request->Name_Tours,
             'Description'=> $request->Description,
             'type_tours_id' => $request->type_tours_id,
             'Price'=> $request->Price,
+            'Duration' => $End_Date_Tours->diffInDays($Start_Date_Tours),
             'Privilegens_Price'=> $request->Privilegens_Price,
             'Children_price' => $request->Children_price,
             'Expenses'=> $request->Expenses,
             'Amount_Place'=> $request->Amount_Place,
-            'Start_Date_Tours'=> date('Y-m-d h:i', strtotime($request->Start_Date_Tours)),
-            'End_Date_Tours'=> $request->End_Date_Tours,
+            'Start_Date_Tours'=> date('Y-m-d H:i', strtotime($request->Start_Date_Tours)),
+            'End_Date_Tours'=> date('Y-m-d H:i', strtotime($request->End_Date_Tours)),
             'Assessment'=> $request->Assessment ?? 0,
             'Popular'=> $request->Popular ?? 0,
             'Seating'=> $request->Seating,
-
         ]);
 
         return redirect()->route('tours.index');
@@ -100,7 +115,13 @@ class TourController extends Controller
      */
     public function show(tour $tour)
     {
-        return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $tour->id)->paginate(6), 'tour' => $tour, 'partners' => Partner::where('LogicalDelete',0)->paginate(3), 'employees' => Employee::where('LogicalDelete',0)->paginate(3)]);
+        return view('admin.passenger', [
+            'passengers' => Passenger::whereRaw('tours_id = ? and LogicalDelete = 0', $tour->id)->paginate(6),
+            'tour' => $tour,
+            'tour_employees' => Tour_employees::whereRaw('LogicalDelete = 0 and tour_id = ?', $tour->id)->paginate(3),
+            'partners' => Partner::where('LogicalDelete',0)->get(),
+            'employees' => Employee::where('LogicalDelete',0)->get()
+        ]);
 
     }
 
@@ -129,21 +150,32 @@ class TourController extends Controller
      */
     public function update(Request $request, tour $tour)
     {
+        $Start_Date_Tours = Carbon::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', strtotime($request->Start_Date_Tours)));
+        $End_Date_Tours = Carbon::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', strtotime($request->End_Date_Tours)));
 
-//        \Validator::make($request->all(), [
-//            'Amount_Place' => ['required', 'digits_between:0,8388607', 'integer'],
-//            'Privilegens_Price' => ['required', 'digits_between:0,8388607', 'integer'],
-//            'Price' => ['required', 'digits_between:0,8388607', 'integer'],
-//            'Expenses' => ['required', 'integer']
-//        ],[
-//            'Amount_Place.integer' => 'Введите пожалуйста число!',
-//            'Privilegens_Price.integer' => 'Введите пожалуйста число!',
-//            'Price.integer' => 'Введите пожалуйста число!',
-//            'Expenses.integer' => 'Введите пожалуйста число!',
-//            'Amount_Place.digits_between' => 'Размер превысил все допустимые пределы!',
-//            'Privilegens_Price.digits_between' => 'Размер превысил все допустимые пределы!',
-//            'Price.digits_between' => 'Размер превысил все допустимые пределы!',
-//        ])->validate();
+        \Validator::make($request->all(), [
+            'Name_Tours' => ['required', 'min:2', 'max:50'],
+            'type_tours_id' => ['required'],
+            'Assessment' => ['required', 'between:0,10', 'integer'],
+            'Price' => ['required', 'between:0,8388607', 'integer'],
+            'Children_price' => ['required', 'between:0,8388607', 'integer'],
+            'Privilegens_Price' => ['required', 'between:0,8388607', 'integer'],
+            'Amount_Place' => ['required', 'between:0,8388607', 'integer'],
+            'Expenses' => ['required', 'between:0,2147483647', 'integer'],
+            'Start_Date_Tours' => ['required','date'],
+            'End_Date_Tours' => ['required','date'],
+
+        ],[
+            'date' => 'Не является правильной датой',
+            'between' => 'Укажите пожалуйста число в диапазоне :min - :max',
+            'Amount_Place.integer' => 'Введите пожалуйста число!',
+            'Privilegens_Price.integer' => 'Введите пожалуйста число!',
+            'Price.integer' => 'Введите пожалуйста число!',
+            'Expenses.integer' => 'Введите пожалуйста число!',
+            'Amount_Place.digits_between' => 'Размер превысил все допустимые пределы!',
+            'Privilegens_Price.digits_between' => 'Размер превысил все допустимые пределы!',
+            'Price.digits_between' => 'Размер превысил все допустимые пределы!',
+        ])->validate();
 
 
         $attributes =[
@@ -151,10 +183,17 @@ class TourController extends Controller
             'Description'=> $request->Description,
             'type_tours_id' => $request->type_tours_id,
             'Price'=> $request->Price,
+            'Duration' => $End_Date_Tours->diffInDays($Start_Date_Tours),
             'Privilegens_Price'=> $request->Privilegens_Price,
+            'Children_price' => $request->Children_price,
             'Expenses'=> $request->Expenses,
             'Amount_Place'=> $request->Amount_Place,
-            'Start_Date_Tours'=> $request->Start_Date_Tours];
+            'Start_Date_Tours'=> date('Y-m-d H:i', strtotime($request->Start_Date_Tours)),
+            'End_Date_Tours'=> date('Y-m-d H:i', strtotime($request->End_Date_Tours)),
+            'Assessment'=> $request->Assessment ,
+            'Popular'=> $request->Popular ?? 0,
+            'Seating'=> $request->Seating
+        ];
         $tour->update($attributes);
 
         return redirect()->route('tours.index');

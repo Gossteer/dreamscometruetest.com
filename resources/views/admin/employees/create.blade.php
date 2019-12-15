@@ -225,7 +225,7 @@
                                         <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id"  required>
                                             <option value="0" disabled selected hidden>Должность</option>
                                             @foreach($jobs as $job)
-                                                <option value="{{ $job->id }}" id="{{ $job->id }}" @if(old('jobs_id') == $job->id) selected @endif>{{$job->Company}} {{ $job->Job_Title}} зп: {{( ($job->Salary == null)? 'договорная': $job->Salary . 'р')}} </option>
+                                                <option value="{{ $job->id }}" id="{{ $job->id }}" @if(old('jobs_id') == $job->id) selected @endif>{{$job->Company}} {{ $job->Job_Title}} зп: {{( ($job->Salary == null)? 'договорная': number_format($job->Salary, 0, ',', ' ') . '₽')}} </option>
                                                 @endforeach
                                         </select>
                                         @error('jobs_id')

@@ -444,8 +444,8 @@
                                 <h4 class="">{{$tour->Name_Tours}} - Работники</h4>
                             </div>
                             <div class="col-sm-12 col-md-9">
-                                <a href="" data-toggle="modal" data-target="#addArticle1" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
-                                <div class="modal fade" id="addArticle1" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
+                                <a href="" data-toggle="modal" data-target="#addArticle3" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
+                                <div class="modal fade" id="addArticle3" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -455,7 +455,7 @@
                                                 <div class="form-group">
                                                     <label for="employee_id">Работники<span class="text-danger">*</span></label>
                                                     <select class="custom-select @error('employee_id') is-invalid @enderror" id="employee_id" name="employee_id"  required>
-                                                        <option value="0" disabled selected hidden>Партнёр</option>
+                                                        <option value="0" disabled selected hidden>Работник</option>
                                                         @foreach($employees as $employee)
                                                             <option value="{{ $employee->id }}" id="{{ $employee->id }}">{{ $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : '') }} {{ $employee->job->Job_Title ?? '' }}</option>
                                                         @endforeach
@@ -476,8 +476,13 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="Occupied_Place_Bus">Место<span class="text-danger">*</span></label>
-                                                    <input  type="number" class="form-control @error('Occupied_Place_Bus') is-invalid @enderror" min="0" max="32767" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==5) return false;" name="Occupied_Place_Bus" id="Occupied_Place_Bus" placeholder="Место">
+                                                    <label for="Occupied_Place_Bus">Место</label>
+                                                    <select class="custom-select @error('Occupied_Place_Bus') is-invalid @enderror" id="Occupied_Place_Bus" name="Occupied_Place_Bus"  required>
+                                                        <option value="0" disabled selected hidden>Выберете место</option>
+                                                        @for($i = 1; $i <= $tour->Amount_Place; $i++)
+                                                            <option value="{{ $i }}" id="{{ $i }}" @if(\App\Passenger::where('Occupied_Place_Bus',$i)->first() != null) hidden disabled @endif>{{$i}}</option>
+                                                        @endfor
+                                                    </select>
                                                     @error('Occupied_Place_Bus')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -495,8 +500,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default"  data-dismiss="modal">Закрыть</button>
-                                                <button type="button" id="save1" data-idi="" onclick="create_tour_employee()" class="btn btn-primary">Добавить</button>
+                                                <button type="button" class="btn btn-default" onclick="close_chenge_tour_employee()"  data-dismiss="modal">Закрыть</button>
+                                                <button type="button" id="save3" data-idi="" onclick="create_tour_employee()" class="btn btn-primary">Добавить</button>
                                             </div>
                                         </div>
                                     </div>
@@ -506,7 +511,7 @@
                                         var employee_id = $('#employee_id').val();
                                         var Salary = $('#Salary1').val();
                                         var Occupied_Place_Bus = $('#Occupied_Place_Bus').val();
-                                        if ($('#Confidentiality').checked)
+                                        if ($('#Confidentiality').prop('checked'))
                                             var Confidentiality = 1;
                                         else
                                             var Confidentiality = 0;
@@ -523,13 +528,26 @@
                                                 $('#Salary1').val('');
                                                 $('#Occupied_Place_Bus').val('');
                                                 $('#employee_id').val('0');
-                                                $('#Confidentiality').attr('checked', false);
-                                                $('#addArticle1').modal('hide');
+                                                $('#Confidentiality').prop('checked', false);
+                                                $('#addArticle3').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
-                                                // document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                //     select_select[select_select.length] = new Option(data['Name_Type_Activity'], data['id']);
-                                                // });
+                                                var str = '<tr id="tour_employee'+data['id']+'"><td title="'+data['FIO_Full']+'">'+data['FIO']+
+                                                    '</td><td>'+data['Job']+
+                                                    '</td><td>'+data['Occupied_Place_Bus']+
+                                                    '</td><td>'+data['Salary']+
+                                                    '</td><td>'+
+                                                    '<span class="'+data['Class_Style']+'">'+
+                                                    data['Confidentiality']+
+                                                    '</span>'+
+                                                    '</td><td  align="center">'+
+                                                    '<span>'+
+                                                    '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
+                                                    '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick=""  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '</span>'+
+                                                    '</td></tr>';
+
+                                                $('#table_for_employees > tbody:last').append(str);
                                                 alert('Добавлено');
                                             },
                                             error: function (msg) {
@@ -537,23 +555,49 @@
                                             }
                                         });
                                     };
-                                    function delete_Type_Activity(id) {
-                                        var typeactivity = document.getElementById('select_type_activitie' + id).value;
+                                    function update_tour_employee(id) {
+                                        var employee_id = $('#employee_id').val();
+                                        var Salary = $('#Salary1').val();
+                                        var Occupied_Place_Bus = $('#Occupied_Place_Bus').val();
+                                        if ($('#Confidentiality').prop('checked'))
+                                            var Confidentiality = 1;
+                                        else
+                                            var Confidentiality = 0;
+                                        var tour_id = document.getElementById('idtour').dataset.idi;
 
                                         $.ajax({
-                                            url: "{{route('typeactivity.destroy')}}",
+                                            url: "{{route('touremployee.update')}}",
                                             type: "POST",
-                                            data: {typeactivity: typeactivity},
+                                            data: {id:id, employee_id:employee_id, Salary:Salary, Occupied_Place_Bus:Occupied_Place_Bus, Confidentiality:Confidentiality, tour_id:tour_id},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
-                                            success: function (datas) {
-                                                document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                    select_select.removeChild(select_select.querySelector('[value="'+ typeactivity +'"]'));
-                                                });
-                                                document.getElementById('select_type_activitie' + id).value = 0;
-                                                document.getElementById('deletedbutton' + id).classList.add("diableddeletedbutton");
-                                                alert('Удалено');
+                                            success: function (data) {
+                                                $('#addArticle3').modal('hide');
+                                                $('#articles-wrap').removeClass('hidden').addClass('show');
+                                                $('.alert').removeClass('show').addClass('hidden');
+                                                $('#Salary1').val('');
+                                                $('#Occupied_Place_Bus').val('');
+                                                $('#employee_id').val('0');
+                                                $('#Confidentiality').prop('checked', false);
+                                                var str = '<tr id="tour_employee'+data['id']+'"><td title="'+data['FIO_Full']+'">'+data['FIO']+
+                                                    '</td><td>'+data['Job']+
+                                                    '</td><td>'+data['Occupied_Place_Bus']+
+                                                    '</td><td>'+data['Salary']+
+                                                    '</td><td>'+
+                                                    '<span class="'+data['Class_Style']+'">'+
+                                                    data['Confidentiality']+
+                                                    '</span>'+
+                                                    '</td><td  align="center">'+
+                                                    '<span>'+
+                                                    '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
+                                                    '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick="destroy_tour_employee(this.id)"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '</span>'+
+                                                    '</td></tr>';
+                                                $('#save3').text('Добавить');
+                                                $('#save3').attr("onclick","create_tour_employee()");
+                                                document.getElementById('tour_employee'+id).innerHTML = str;
+                                                alert('Изменено');
 
                                             },
                                             error: function (msg) {
@@ -562,20 +606,46 @@
                                         });
                                     };
 
+                                    function close_chenge_tour_employee() {
+                                        $('#save3').text('Добавить');
+                                        $('#save3').attr("onclick","create_tour_employee()");
+                                    }
 
-                                    function cheng_type_activities(id) {
-                                        var type_activities_id = document.getElementById(id).value;
-                                        var partner_id = document.getElementById(id).dataset.value;
-
+                                    function index_tour_employee(id) {
+                                        $('#save3').text('Редактировать');
                                         $.ajax({
-                                            url: "{{route('typeactivity.partner.update')}}",
+                                            url: "{{route('touremployee.index')}}",
                                             type: "POST",
-                                            data: {type_activities_id:type_activities_id,partner_id:partner_id},
+                                            data: {id:id},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
                                             success:function (data)
                                             {
+                                                $('#Salary1').val(data['Salary']);
+                                                $('#Occupied_Place_Bus').val(data['Occupied_Place_Bus']);
+                                                $('#employee_id').val(data['employee_id']);
+                                                $('#Confidentiality').prop('checked', data['Confidentiality']);
+                                                $('#save3').attr("onclick","update_tour_employee(this.dataset.idi)");
+                                                $('#save3').attr("data-idi",id);
+                                            },
+                                            error: function (msg) {
+                                                alert('Ошибка');
+                                            }
+                                        });
+                                    };
+                                    function destroy_tour_employee(id) {
+                                        $.ajax({
+                                            url: "{{route('touremployee.destroy')}}",
+                                            type: "POST",
+                                            data: {id:id},
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success:function (data)
+                                            {
+                                                document.getElementById('tour_employee'+id).parentNode.removeChild(document.getElementById('tour_employee'+id));
+                                                alert('Удалено');
                                             },
                                             error: function (msg) {
                                                 alert('Ошибка');
@@ -583,61 +653,67 @@
                                         });
                                     };
 
-                                    $(function() {
-                                        document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                            disable_disabled(select_select.dataset.idi)
-                                        });
-                                    });
-                                    function disable_disabled(id) {
-                                        var deletedbutton = document.getElementById('deletedbutton' + id);
-                                        if(document.getElementById('select_type_activitie' + id).value == "0") {
-                                            deletedbutton.classList.add("diableddeletedbutton");
-                                        } else {
-                                            deletedbutton.classList.remove("diableddeletedbutton");
-                                        }
-                                    };
                                 </script>
                             </div>
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped verticle-middle">
+                            <table class="table table-bordered table-striped verticle-middle" id="table_for_employees">
                                 <thead>
                                 <tr>
                                     <th scope="col">ФИО</th>
                                     <th scope="col">Должность</th>
                                     <th scope="col">Место</th>
                                     <th scope="col">Стоимость</th>
-                                    <th scope="col">Действие</th>
+                                    <th scope="col">Скрытый</th>
+                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($passengers as $passenger)
-                                    <tr>
-                                        <td style="{{ ( ($passenger->Presence == 1) ?
-                                           'color: green !important;' :
-                                            (($passenger->Presence == -1) ?
-                                           'color: red !important;' : 'lol')) }}">
-                                            {{ $passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name }}
+                                @foreach($tour_employees as $tour_employee)
+                                    <tr id="tour_employee{{$tour_employee->id}}" >
+                                        <td  title="{{ $tour_employee->employee->Surname . ' ' . $tour_employee->employee->Name  . ' ' . $tour_employee->employee->Middle_Name}}">
+                                            {{ $tour_employee->employee->Surname . ' ' . mb_substr($tour_employee->employee->Name, 0, 1)  . '. ' . mb_substr($tour_employee->employee->Middle_Name, 0, 1) . ($tour_employee->employee->Middle_Name != '' ? '.' : '') }}
                                         </td>
                                         <td>
-                                            {{ ($passenger->Preferential_Terms == 1) ? 'Да' : 'Нет' }}
+                                                @if($tour_employee->employee->jobs_id != null && isset($tour_employee->employee->job))
+                                                    {{$tour_employee->employee->job->Company}} {{ $tour_employee->employee->job->Job_Title}} зп: {{( ($tour_employee->employee->job->Salary == null)? 'договорная': $tour_employee->employee->job->Salary . 'р')}}
+                                                @else
+                                                    Не назначена
+                                                @endif
                                         </td>
                                         <td>
-                                            {{ $passenger->tour->created_at }}
+                                            {{ $tour_employee->Occupied_Place_Bus }}
                                         </td>
                                         <td>
-
+                                            {{ number_format($tour_employee->Salary, 0, ',', ' ') . '₽' }}
+                                        </td>
+                                        <td>
+                                            @if($tour_employee->Confidentiality == 1)
+                                                <span class="label gradient-2 btn-rounded">
+                                                    Да
+                                                </span>
+                                            @else
+                                                <span class="label gradient-1 btn-rounded">
+                                                    Нет
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td align="center">
+                                            <span>
+                                                <a href="" id="{{ $tour_employee->id }}" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>
+                                                <a id="{{ $tour_employee->id }}" data-toggle="tooltip" data-placement="top" onclick="destroy_tour_employee(this.id)" title="Удалить"><i class="fa fa-close color-danger"></i></a>
+                                            </span>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            @if($passengers->total() > $passengers->count())
-                                <div class="bootstrap-pagination">
+                            @if($tour_employees->total() > $tour_employees->count())
+                                <div class="pagination justify-content-center" >
                                     <nav>
                                         <ul class="pagination">
-                                            {{ $passengers->links() }}
+                                            {{ $tour_employees->links() }}
                                         </ul>
                                     </nav>
                                 </div>

@@ -13,7 +13,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Tours" >Название<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input id="login" type="text" class="form-control @error('Name_Tours') is-invalid @enderror" name="Name_Tours" minlength="2" maxlength="20" value="{{ old('Name_Tours') }}" required  placeholder="Название">
+                                        <input id="login" type="text" class="form-control @error('Name_Tours') is-invalid @enderror" name="Name_Tours" minlength="2" maxlength="50" value="{{ old('Name_Tours') }}" required  placeholder="Название">
                                         @error('Name_Tours')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -242,7 +242,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Assessment" >Оценка</label>
                                     <div class="col-lg-6">
-                                        <input  type="number" class="form-control @error('Assessment') is-invalid @enderror" min="0" max="10" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" value="{{ old('Assessment') }}" name="Assessment" id="Assessment" placeholder="Оценка">
+                                        <input  type="number" class="form-control @error('Assessment') is-invalid @enderror" min="0" max="100" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" value="{{ old('Assessment') }}" name="Assessment" id="Assessment" placeholder="Оценка">
                                         @error('Assessment')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

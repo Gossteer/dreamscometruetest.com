@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Bus;
+use App\Contract;
 use App\Employee;
 use App\Partner;
 use App\Passenger;
@@ -38,7 +40,7 @@ class TourController extends Controller
 
     public function create()
     {
-        return view('admin.tours.create', ['type_tours' => Type_Tour::all(), 'Tour' => []]);
+        return view('admin.tours.create', ['type_tours' => Type_Tour::all(), 'Tour' => [], 'buses_ids' => Bus::all() ]);
     }
 
     public function prnpriviewvauher()
@@ -102,6 +104,7 @@ class TourController extends Controller
             'Assessment'=> $request->Assessment ?? 0,
             'Popular'=> $request->Popular ?? 0,
             'Seating'=> $request->Seating,
+            'Confidentiality' => $request->Confidentiality,
         ]);
 
         return redirect()->route('tours.index');
@@ -119,6 +122,7 @@ class TourController extends Controller
             'passengers' => Passenger::whereRaw('tours_id = ? and LogicalDelete = 0', $tour->id)->paginate(6),
             'tour' => $tour,
             'tour_employees' => Tour_employees::whereRaw('LogicalDelete = 0 and tour_id = ?', $tour->id)->paginate(3),
+            'contracts' => Contract::where('LogicalDelete',0)->get(),
             'partners' => Partner::where('LogicalDelete',0)->get(),
             'employees' => Employee::where('LogicalDelete',0)->get()
         ]);
@@ -192,7 +196,8 @@ class TourController extends Controller
             'End_Date_Tours'=> date('Y-m-d H:i', strtotime($request->End_Date_Tours)),
             'Assessment'=> $request->Assessment ,
             'Popular'=> $request->Popular ?? 0,
-            'Seating'=> $request->Seating
+            'Seating'=> $request->Seating,
+            'Confidentiality' => $request->Confidentiality,
         ];
         $tour->update($attributes);
 

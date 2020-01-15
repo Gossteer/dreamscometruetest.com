@@ -25,7 +25,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="INN">ИНН</label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control @error('INN') is-invalid @enderror" onKeyPress="cislo()" maxlength="191" value="{{ old('INN') }}"  name="INN" placeholder="ИНН">
+                                        <input type="text" class="form-control @error('INN') is-invalid @enderror"  maxlength="12"  onKeyPress="if(this.value.length==12) return false;" value="{{ old('INN') }}"  name="INN" placeholder="ИНН">
                                         @error('Name_Partners')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

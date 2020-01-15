@@ -13,10 +13,18 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($tour)
+    public function index(Request $request)
     {
-        return view('admin.tours_partner', ['partner_for_tour' => Contract::where('tours_id',$tour)->paginate(12),
-            'tour' => $tour,'partners' => Partner::all()]);
+        $tour_Contract = Contract::find($request->id);
+
+        $date = [
+            'Name_Contract_doc' =>  $tour_Contract->Name_Contract_doc,
+            'Salary' =>  $tour_Contract->Salary ?? 0,
+            'Document_Contract' =>  $tour_Contract->Document_Contract,
+            'partners_id' =>  $tour_Contract->partners_id,
+        ];
+
+        return $date;
     }
 
     /**
@@ -35,16 +43,28 @@ class ContractController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $tour)
+    public function store(Request $request)
     {
-        if ($request->partners_id != null)
-        Contract::firstOrCreate([
-            'partners_id' => $request->partners_id,
-            'tours_id' => $tour,
-            'Document_Contract' => "Меня здесь нет!",
+        $tour_Contract = Contract::Create([
+            'Name_Contract_doc' =>  $request->Name_Contract_doc,
+            'Salary' =>  $request->Salary ?? 0,
+            'tours_id' => $request->tours_id,
+            'Document_Contract' =>  'Я ещё не сделан',
+            'partners_id' =>  $request->partners_id,
         ]);
 
-        return redirect()->route('contractsindex', $tour);
+        $date = [
+            'id' => $tour_Contract->id,
+            'Name_Contract_doc' =>  $tour_Contract->Name_Contract_doc,
+            'Salary' =>  $tour_Contract->Salary,
+            'tours_id' => $request->tours_id,
+            'Document_Contract' =>  'Я ещё не сделан',
+            'partners_id' =>  $tour_Contract->partners_id,
+            'Name_Partners' =>  $tour_Contract->partner->Name_Partners,
+            'title' =>  $tour_Contract->partner->INN . ' ' . $tour_Contract->partner->type_activity->Name_Type_Activity,
+        ];
+
+        return $date;
     }
 
     /**
@@ -76,9 +96,25 @@ class ContractController extends Controller
      * @param  \App\contranct  $contranct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contract $contract)
+    public function update(Request $request)
     {
-        //
+        Contract::find($request->id)->update([
+            'Name_Contract_doc' =>  $request->Name_Contract_doc,
+            'Salary' =>  $request->Salary ?? 0,
+            'Document_Contract' =>  'Я ещё не сделан',
+            'partners_id' =>  $request->partners_id,
+        ]);
+
+        $date = [
+            'id' => $request->id,
+            'Name_Contract_doc' =>  $request->Name_Contract_doc,
+            'Salary' =>  $request->Salary ?? 0,
+            'Document_Contract' =>  'Я ещё не сделан',
+            'partners_id' =>  $request->partners_id,
+            'title' => Contract::find($request->id)->partner->INN . ' ' . Contract::find($request->id)->partner->type_activity->Name_Type_Activity,
+        ];
+
+        return $date;
     }
 
     /**
@@ -87,10 +123,12 @@ class ContractController extends Controller
      * @param  \App\contranct  $contranct
      * @return \Illuminate\Http\Response
      */
-    public function destroy($tour, $contract)
+    public function destroy(Request $request)
     {
-        Contract::findOrFail($contract)->delete();
+        Contract::find($request->id)->delete();
 
-        return redirect()->route('contractsindex', $tour);
+        $date = 1;
+
+        return $date;
     }
 }

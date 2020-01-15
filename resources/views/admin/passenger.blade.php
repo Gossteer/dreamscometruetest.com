@@ -175,8 +175,147 @@
                                 <h4 class="">{{$tour->Name_Tours}} - Партнёры</h4>
                             </div>
                             <div class="col-sm-12 col-md-9">
-                                <a href="" data-toggle="modal" data-target="#addArticle" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
-                                <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
+
+                                <script>
+                                    function create_tour_contract() {
+                                        var Name_Contract_doc = $('#Name_Contract_doc').val();
+                                        var Salary = $('#Salary').val();
+                                        var Document_Contract = $('#Document_Contract').val();
+                                        var partners_id = $('#partners_id').val();
+                                        var tour_id = document.getElementById('idtour').dataset.idi;
+                                        $.ajax({
+                                            url: '{{ route('Contract.store') }}',
+                                            type: "POST",
+                                            data: {Name_Contract_doc:Name_Contract_doc, Salary:Salary, Document_Contract:Document_Contract, partners_id:partners_id, tours_id:tour_id},
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+
+                                            success: function (data) {
+                                                $('#Name_Contract_doc').val('');
+                                                $('#Salary').val('');
+                                                $('#partners_id').val('0');
+                                                $('#Document_Contract').val('');
+                                                $('#addArticle2').modal('hide');
+                                                $('#articles-wrap').removeClass('hidden').addClass('show');
+                                                $('.alert').removeClass('show').addClass('hidden');
+                                                var str = '<tr id="contract'+data['id']+'"><td title="'+data['title']+'">'+data['Name_Partners']+
+                                                    '</td><td>'+data['Name_Contract_doc']+
+                                                    '</td><td>'+data['Document_Contract']+
+                                                    '</td><td>'+data['Salary']+
+                                                    '</td><td  align="center">'+
+                                                    '<span>'+
+                                                    '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle2" onclick="index_tour_contract(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
+                                                    '<a  id="'+data['id']+'" style="cursor: pointer;"   data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_contract(this.id)}else{return false}"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '</span>'+
+                                                    '</td></tr>';
+
+                                                $('#table_for_contract > tbody:last').append(str);
+                                                alert('Добавлено');
+                                            },
+                                            error: function (msg) {
+                                                alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
+                                            }
+                                        });
+                                    };
+                                    function update_tour_contract(id) {
+                                        var Name_Contract_doc = $('#Name_Contract_doc').val();
+                                        var Salary = $('#Salary').val();
+                                        var Document_Contract = $('#Document_Contract').val();
+                                        var partners_id = $('#partners_id').val();
+                                        var tour_id = document.getElementById('idtour').dataset.idi;
+                                        $.ajax({
+                                            url: '{{ route('Contract.update') }}',
+                                            type: "POST",
+                                            data: {Name_Contract_doc:Name_Contract_doc, Salary:Salary, Document_Contract:Document_Contract, partners_id:partners_id, tours_id:tour_id, id:id},
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (data) {
+                                                $('#addArticle2').modal('hide');
+                                                $('#articles-wrap').removeClass('hidden').addClass('show');
+                                                $('.alert').removeClass('show').addClass('hidden');
+                                                $('#Name_Contract_doc').val('');
+                                                $('#Salary').val('');
+                                                $('#partners_id').val('0');
+                                                $('#Document_Contract').val('');
+                                                var str = '<tr id="contract'+data['id']+'"><td title="'+data['title']+'">'+data['Name_Partners']+
+                                                    '</td><td>'+data['Name_Contract_doc']+
+                                                    '</td><td>'+data['Document_Contract']+
+                                                    '</td><td>'+data['Salary']+
+                                                    '</td><td  align="center">'+
+                                                    '<span>'+
+                                                    '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle2" onclick="index_tour_contract(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
+                                                    '<a  id="'+data['id']+'" style="cursor: pointer;"   data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_contract(this.id)}else{return false}"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '</span>'+
+                                                    '</td></tr>';
+                                                $('#save2').text('Добавить');
+                                                $('#save2').attr("onclick","create_tour_contract()");
+                                                document.getElementById('contract'+id).innerHTML = str;
+                                                alert('Изменено');
+
+                                            },
+                                            error: function (msg) {
+                                                alert('Ошибка');
+                                            }
+                                        });
+                                    };
+
+                                    function close_chenge_tour_contract() {
+                                        $('#Name_Contract_doc').val('');
+                                        $('#Salary').val('');
+                                        $('#partners_id').val('0');
+                                        $('#Document_Contract').val('');
+                                        $('#save2').text('Добавить');
+                                        $('#save2').attr("onclick","create_tour_contract()");
+                                    }
+
+                                    function index_tour_contract(id) {
+                                        $('#save2').text('Редактировать');
+                                        $.ajax({
+                                            url: '{{ route('Contract.index') }}',
+                                            type: "POST",
+                                            data: {id:id},
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success:function (data)
+                                            {
+                                                $('#Name_Contract_doc').val(data['Name_Contract_doc']);
+                                                $('#Salary').val(data['Salary']);
+                                                $('#partners_id').val(data['partners_id']);
+                                                $('#Document_Contract').val(data['Document_Contract']);
+                                                $('#save2').attr("onclick","update_tour_contract(this.dataset.idi)");
+                                                $('#save2').attr("data-idi",id);
+                                            },
+                                            error: function (msg) {
+                                                alert('Ошибка');
+                                            }
+                                        });
+                                    };
+                                    function destroy_tour_contract(id) {
+                                        $.ajax({
+                                            url: '{{ route('Contract.destroy') }}',
+                                            type: "POST",
+                                            data: {id:id},
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success:function (data)
+                                            {
+                                                document.getElementById('contract'+id).parentNode.removeChild(document.getElementById('contract'+id));
+                                                alert('Удалено');
+                                            },
+                                            error: function (msg) {
+                                                alert('Ошибка');
+                                            }
+                                        });
+                                    };
+
+                                </script>
+
+                                <a href="" data-toggle="modal" data-target="#addArticle2" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
+                                <div class="modal fade" id="addArticle2" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -236,7 +375,7 @@
                                                     <select class="custom-select @error('partners_id') is-invalid @enderror" id="partners_id" name="partners_id"  required>
                                                         <option value="0" disabled selected hidden>Партнёр</option>
                                                         @foreach($partners as $partner)
-                                                            <option value="{{ $partner->id }}" id="{{ $partner->id }}">{{$partner->Name_Partners}} {{$partner->type_activity->Name_Type_Activity ?? ''}}</option>
+                                                            <option value="{{ $partner->id }}" id="{{ $partner->id }}" title="{{ $partner->INN . ' ' . $partner->type_activity->Name_Type_Activity }}">{{$partner->Name_Partners}} {{$partner->type_activity->Name_Type_Activity ?? ''}}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('partners_id')
@@ -247,8 +386,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default"  data-dismiss="modal">Закрыть</button>
-                                                <button type="button" id="save" data-idi="" onclick="create_Type_Activity()" class="btn btn-primary">Добавить</button>
+                                                <button type="button" class="btn btn-default" onclick="close_chenge_tour_contract()"  data-dismiss="modal">Закрыть</button>
+                                                <button type="button" id="save2" data-idi="" onclick="create_tour_contract()" class="btn btn-primary">Добавить</button>
                                             </div>
                                         </div>
                                     </div>
@@ -257,165 +396,29 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped verticle-middle">
+                            <table class="table table-bordered table-striped verticle-middle" id="table_for_contract">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Название</th>
                                     <th scope="col">Партнёр</th>
+                                    <th scope="col">Название</th>
                                     <th scope="col">Договор</th>
                                     <th scope="col">Стоимость</th>
-                                    <th scope="col">Действие</th>
+                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($passengers as $passenger)
-                                    <tr>
-                                        {{--Модельное окно для партнёров и работников--}}
-
-
-                                        <td style="{{ ( ($passenger->Presence == 1) ?
-                                           'color: green !important;' :
-                                            (($passenger->Presence == -1) ?
-                                           'color: red !important;' : 'lol')) }}"> {{ $passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name }}</td>
-                                        <td>
-                                            {{ ($passenger->Preferential_Terms == 1) ? 'Да' : 'Нет' }}
-                                        </td>
-                                        <td> {{ $passenger->tour->created_at }}</td>
-                                        <td>
-                                            <script>
-                                                function createType_Activity(id) {
-                                                    document.getElementById('save').dataset.idi = id;
-                                                };
-                                                function create_Type_Activity() {
-                                                    var Name_Type_Activity = $('#Name_Type_Activity').val();
-                                                    $.ajax({
-                                                        url: '{{ route('typeactivity.store') }}',
-                                                        type: "POST",
-                                                        data: {Name_Type_Activity: Name_Type_Activity},
-                                                        headers: {
-                                                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-
-                                                        success: function (data) {
-                                                            $('#Name_Type_Activity').val(' ');
-                                                            $('#addArticle').modal('hide');
-                                                            $('#articles-wrap').removeClass('hidden').addClass('show');
-                                                            $('.alert').removeClass('show').addClass('hidden');
-                                                            document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                                select_select[select_select.length] = new Option(data['Name_Type_Activity'], data['id']);
-                                                            });
-                                                            alert('Добавлено');
-                                                        },
-                                                        error: function (msg) {
-                                                            alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
-                                                        }
-                                                    });
-                                                };
-                                                function delete_Type_Activity(id) {
-                                                    var typeactivity = document.getElementById('select_type_activitie' + id).value;
-
-                                                    $.ajax({
-                                                        url: "{{route('typeactivity.destroy')}}",
-                                                        type: "POST",
-                                                        data: {typeactivity: typeactivity},
-                                                        headers: {
-                                                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-                                                        success: function (datas) {
-                                                            document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                                select_select.removeChild(select_select.querySelector('[value="'+ typeactivity +'"]'));
-                                                            });
-                                                            document.getElementById('select_type_activitie' + id).value = 0;
-                                                            document.getElementById('deletedbutton' + id).classList.add("diableddeletedbutton");
-                                                            alert('Удалено');
-
-                                                        },
-                                                        error: function (msg) {
-                                                            alert('Ошибка');
-                                                        }
-                                                    });
-                                                };
-
-
-                                                function cheng_type_activities(id) {
-                                                    var type_activities_id = document.getElementById(id).value;
-                                                    var partner_id = document.getElementById(id).dataset.value;
-
-                                                    $.ajax({
-                                                        url: "{{route('typeactivity.partner.update')}}",
-                                                        type: "POST",
-                                                        data: {type_activities_id:type_activities_id,partner_id:partner_id},
-                                                        headers: {
-                                                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-                                                        success:function (data)
-                                                        {
-                                                        },
-                                                        error: function (msg) {
-                                                            alert('Ошибка');
-                                                        }
-                                                    });
-                                                };
-
-                                                $(function() {
-                                                    document.getElementsByName('select_type_activitie').forEach(function (select_select) {
-                                                        disable_disabled(select_select.dataset.idi)
-                                                    });
-                                                });
-                                                function disable_disabled(id) {
-                                                    var deletedbutton = document.getElementById('deletedbutton' + id);
-                                                    if(document.getElementById('select_type_activitie' + id).value == "0") {
-                                                        deletedbutton.classList.add("diableddeletedbutton");
-                                                    } else {
-                                                        deletedbutton.classList.remove("diableddeletedbutton");
-                                                    }
-                                                };
-                                            </script>
+                                @foreach($contracts as $contract)
+                                    <tr id="contract{{$contract->id}}">
+                                        <td title="{{ $contract->partner->INN . ' ' . $contract->partner->type_activity->Name_Type_Activity }}"> {{ $contract->partner->Name_Partners }}</td>
+                                        <td> {{ $contract->Name_Contract_doc }} </td>
+                                        <td> <a href="">{{ $contract->Document_Contract }}</a></td>
+                                        <td> {{ $contract->Salary }} </td>
+                                        <td align="center">
                                             <span>
-                                        <form id="Precence_True" action="{{ route('passengers.update', $passenger) }}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" name="_method" value="put">
-                                            <input id="" type="hidden" name="Presence" value="1">
-                                             <a  style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;"
-                                                 onclick="{{ (
-                                            ($passenger->Presence == 1) ?
-                                           'alert_precence_true ()' :
-                                            (($passenger->Presence == -1) ?
-                                           'alert_occupaid_true_forfalse ()' : 'Precence_True_submit (Precence_True)'))
-                                               }}"
-                                                 data-toggle="tooltip" data-placement="top" title="Присутствовал"><i class="fa fa-check color-muted m-r-5"></i>
-                                             </a>
-
-                                        </form>
-
-                                        <form id="Precence_False" action="{{ route('passengers.update', $passenger) }}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <input id="" type="hidden" name="Presence" value="-1">
-                                            <input type="hidden" name="_method" value="put">
-                                             <a style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;"
-                                                onclick="{{ (
-                                            ($passenger->Presence == -1) ?
-                                           'alert_occupaid_false ()' :
-                                            (($passenger->Presence == 1) ?
-                                           'alert_occupaid_false_fortrue ()' : 'Precence_True_submit (Precence_False)'))
-                                               }}"
-                                                data-toggle="tooltip" data-placement="top" title="Отсутствовал"><i class="fa fa-upload color-muted m-r-5"></i>
-                                        </a>
-                                        </form>
-
-
-
-                                        <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('passengers.destroy',$passenger)}}" method="post">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            @csrf
-
-
-                                            <button type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></button>
-                                        </form>
-
-                                    </span>
+                                                <a href="" id="{{ $contract->id }}" data-toggle="modal" data-target="#addArticle2" onclick="index_tour_contract(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>
+                                                <a style="cursor: pointer;" id="{{ $contract->id }}" data-toggle="tooltip" data-placement="top" onclick="if(confirm('Удалить?')){return destroy_tour_contract(this.id)}else{return false}" title="Удалить"><i class="fa fa-close color-danger"></i></a>
+                                            </span>
                                         </td>
-
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -490,7 +493,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="Confidentiality">Скрытый<span class="text-danger">*</span></label>
+                                                    <label for="Confidentiality">Скрытый</label>
                                                     <input class="form-check-input" type="checkbox" id="Confidentiality" name="Confidentiality" style="margin-left: 5px !important; border: 1px solid #ced4da;" value="1" >
                                                     @error('Confidentiality')
                                                     <span class="invalid-feedback" role="alert">
@@ -543,7 +546,7 @@
                                                     '</td><td  align="center">'+
                                                     '<span>'+
                                                     '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
-                                                    '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick=""  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '<a style="cursor: pointer;"  id="'+data['id']+'"  data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_employee(this.id)}else{return false}"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
                                                     '</span>'+
                                                     '</td></tr>';
 
@@ -591,7 +594,7 @@
                                                     '</td><td  align="center">'+
                                                     '<span>'+
                                                     '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
-                                                    '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick="destroy_tour_employee(this.id)"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '<a style="cursor: pointer;"  id="'+data['id']+'" data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_employee(this.id)}else{return false}"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
                                                     '</span>'+
                                                     '</td></tr>';
                                                 $('#save3').text('Добавить');
@@ -607,6 +610,10 @@
                                     };
 
                                     function close_chenge_tour_employee() {
+                                        $('#Salary1').val('');
+                                        $('#Occupied_Place_Bus').val('');
+                                        $('#employee_id').val('0');
+                                        $('#Confidentiality').prop('checked', false);
                                         $('#save3').text('Добавить');
                                         $('#save3').attr("onclick","create_tour_employee()");
                                     }
@@ -702,7 +709,7 @@
                                         <td align="center">
                                             <span>
                                                 <a href="" id="{{ $tour_employee->id }}" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>
-                                                <a id="{{ $tour_employee->id }}" data-toggle="tooltip" data-placement="top" onclick="destroy_tour_employee(this.id)" title="Удалить"><i class="fa fa-close color-danger"></i></a>
+                                                <a style="cursor: pointer;" id="{{ $tour_employee->id }}" data-toggle="tooltip" data-placement="top" onclick="if(confirm('Удалить?')){return destroy_tour_employee(this.id)}else{return false}" title="Удалить"><i class="fa fa-close color-danger"></i></a>
                                             </span>
                                         </td>
                                     </tr>

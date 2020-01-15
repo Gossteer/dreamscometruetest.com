@@ -18,7 +18,6 @@ class CreateContractsTable extends Migration
             $table->timestamps();
             $table->string('Name_Contract_doc', 191);
             $table->integer('Salary')->default(0);
-            $table->bigInteger('type_contracts_id')->unsigned()->nullable();
             $table->bigInteger('tours_id')->unsigned();
             $table->bigInteger('partners_id')->unsigned();
             $table->string('Document_Contract', 191);
@@ -28,8 +27,6 @@ class CreateContractsTable extends Migration
                 ->on('partners');
             $table->foreign('tours_id')->references('id')
                 ->on('tours');
-            $table->foreign('type_contracts_id')->references('id')
-                ->on('type_contracts');
         });
     }
 

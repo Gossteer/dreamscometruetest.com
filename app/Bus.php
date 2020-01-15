@@ -15,4 +15,9 @@ class Bus extends Model
     {
         return $this->hasMany('App\Tour', 'buses_id');
     }
+
+    public function employee()
+    {
+        return $this->belongsTo('App\Employee', 'employee_id');
+    }
 }

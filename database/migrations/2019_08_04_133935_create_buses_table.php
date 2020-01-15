@@ -15,6 +15,7 @@ class CreateBusesTable extends Migration
     {
         Schema::create('buses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('employee_id')->unsigned();
             $table->timestamps();
             $table->string('Brand_Bus', 191);
             $table->string('State_Registration_Number', 191);
@@ -25,6 +26,9 @@ class CreateBusesTable extends Migration
             $table->boolean('Tachograph')->default(0);
             $table->boolean('Glonas_GPS')->default(0);
             $table->boolean('LogicalDelete')->default(0);
+
+            $table->foreign('employee_id')->references('id')
+                ->on('employees');
         });
     }
 

@@ -33,6 +33,11 @@ class Employee extends Model
         return $this->hasMany('App\Dept', 'employee_id');
     }
 
+    public function bus()
+    {
+        return $this->hasMany('App\Bus', 'employee_id');
+    }
+
     public function user()
     {
         return $this->hasOne('App\User', 'users_id');

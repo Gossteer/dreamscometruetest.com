@@ -22,6 +22,7 @@ class Tour extends Model
         'Children_price',
         'Popular',
         'End_Date_Tours',
+        'Confidentiality',
 
     ];
 

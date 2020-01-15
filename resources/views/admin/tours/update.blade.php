@@ -367,6 +367,22 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Confidentiality" >Скрытый<span class="text-danger"></span></label>
+                                    <div class="col-lg-6">
+                                        <select class="custom-select mr-sm-2" id="Confidentiality" name="Confidentiality" required>
+                                            <option value="" disabled selected hidden>Есть?</option>
+                                            <option value="0" @if($tour->Confidentiality == 0) selected @endif>Нет</option>
+                                            <option value="1" @if($tour->Confidentiality == 1) selected @endif>Да</option>
+                                        </select>
+                                        @error('Confidentiality')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Popular" >Популярные</label>
                                     <div class="col-lg-6">
                                         <select class="custom-select mr-sm-2" id="Popular" name="Popular">

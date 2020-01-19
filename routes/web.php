@@ -53,6 +53,11 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::post('admin/contractupdate', 'ContractController@update')->name('Contract.update');
     Route::post('admin/contractdestroy', 'ContractController@destroy')->name('Contract.destroy');
 
+    Route::post('admin/buscreate', 'BusController@store')->name('bus.store');
+    Route::post('admin/busindex', 'BusController@index')->name('bus.index');
+    Route::post('admin/busupdate', 'BusController@update')->name('bus.update');
+    Route::post('admin/busdestroy', 'BusController@destroy')->name('bus.destroy');
+
     Route::post('admin/tours/passengers', 'PassengerController@store')->name('passengers.store');
     Route::get('admin/tours/passengers', 'PassengerController@index')->name('passengers.index');
     Route::put('admin/tours/passengers/{passenger}', 'PassengerController@update')->name('passengers.update');

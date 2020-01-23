@@ -35,7 +35,17 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $date = Route::create([
+            'Map' => '123',
+            'Itinerary' => $request->Itinerary,
+            'Time_Sending_From_Initial_Pop' => date('H:i', strtotime($request->Time_Sending_From_Initial_Pop)),
+            'Distination_From_Initial_Pop' => $request->Distination_From_Initial_Pop,
+            'Distination_From_End_Point' => $request->Distination_From_End_Point,
+            'Time_Sending_From_End_Point' => date('H:i', strtotime($request->Time_Sending_From_End_Point)),
+            'Name_Car_Dorough_Dorog_Report_Transportation' => $request->Name_Car_Dorough_Dorog_Report_Transportation,
+        ]);
+
+        return $date;
     }
 
     /**

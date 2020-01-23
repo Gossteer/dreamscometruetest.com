@@ -58,6 +58,11 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::post('admin/busupdate', 'BusController@update')->name('bus.update');
     Route::post('admin/busdestroy', 'BusController@destroy')->name('bus.destroy');
 
+    Route::post('admin/routecreate', 'RouteController@store')->name('route.store');
+    Route::post('admin/routeindex', 'RouteController@index')->name('route.index');
+    Route::post('admin/routeupdate', 'RouteController@update')->name('route.update');
+    Route::post('admin/routedestroy', 'RouteController@destroy')->name('route.destroy');
+
     Route::post('admin/tours/passengers', 'PassengerController@store')->name('passengers.store');
     Route::get('admin/tours/passengers', 'PassengerController@index')->name('passengers.index');
     Route::put('admin/tours/passengers/{passenger}', 'PassengerController@update')->name('passengers.update');

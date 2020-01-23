@@ -7,6 +7,7 @@ use App\Contract;
 use App\Employee;
 use App\Partner;
 use App\Passenger;
+use App\Route;
 use App\tour;
 use App\Tour_employees;
 use App\Type_Tour;
@@ -40,7 +41,7 @@ class TourController extends Controller
 
     public function create()
     {
-        return view('admin.tours.create', ['type_tours' => Type_Tour::all(), 'Tour' => [], 'buses_ids' => Bus::all() ]);
+        return view('admin.tours.create', ['type_tours' => Type_Tour::all(), 'Tour' => [], 'buses_ids' => Bus::all(), 'routes_ids' => Route::all() ]);
     }
 
     public function prnpriviewvauher()
@@ -99,6 +100,7 @@ class TourController extends Controller
             'Children_price' => $request->Children_price,
             'Expenses'=> $request->Expenses,
             'Amount_Place'=> $request->Amount_Place,
+            'buses_id' => $request->buses_id,
             'Start_Date_Tours'=> date('Y-m-d H:i', strtotime($request->Start_Date_Tours)),
             'End_Date_Tours'=> date('Y-m-d H:i', strtotime($request->End_Date_Tours)),
             'Assessment'=> $request->Assessment ?? 0,
@@ -142,7 +144,7 @@ class TourController extends Controller
      */
     public function edit(tour $tour)
     {
-        return view('admin.tours.update', ['type_tours' => Type_Tour::all(), 'tour' => $tour,]);
+        return view('admin.tours.update', ['type_tours' => Type_Tour::all(), 'tour' => $tour, 'buses_ids' => Bus::all()]);
     }
 
     /**
@@ -187,6 +189,7 @@ class TourController extends Controller
             'Description'=> $request->Description,
             'type_tours_id' => $request->type_tours_id,
             'Price'=> $request->Price,
+            'buses_id' => $request->buses_id,
             'Duration' => $End_Date_Tours->diffInDays($Start_Date_Tours),
             'Privilegens_Price'=> $request->Privilegens_Price,
             'Children_price' => $request->Children_price,

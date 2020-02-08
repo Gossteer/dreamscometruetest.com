@@ -222,7 +222,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="jobs_id" >Должность<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id"  required>
+                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" id="jobs_id" name="jobs_id" onchange="change_job()" required>
                                             <option value="0" disabled selected hidden>Должность</option>
                                             @foreach($jobs as $job)
                                                 <option value="{{ $job->id }}" id="{{ $job->id }}" @if(old('jobs_id') == $job->id) selected @endif>{{$job->Company}} {{ $job->Job_Title}} зп: {{( ($job->Salary == null)? 'договорная': number_format($job->Salary, 0, ',', ' ') . '₽')}} </option>
@@ -340,6 +340,16 @@
                                             Set_Permission_hidden.hidden = false;
                                     };
 
+                                    function change_job(i) {
+                                        // если значение не равно пустой строке
+                                        var updatebutton = document.querySelector("#updatebutton")
+                                        if($('#jobs_id').val() == "0" || i == 0) {
+                                            updatebutton.classList.add("diableddeletedbutton");
+                                        } else {
+                                            updatebutton.classList.remove("diableddeletedbutton");
+                                        }
+                                    };
+
                                     $(function() {
                                         if(Set_Permission.value == 0){
                                             Set_Permission_hidden.hidden = true;
@@ -347,16 +357,6 @@
                                         }
                                         else
                                             Set_Permission_hidden.hidden = false;
-
-                                        $('#jobs_id').change(function(jobs_id) {
-                                            // если значение не равно пустой строке
-                                            var updatebutton = document.querySelector("#updatebutton")
-                                            if($('#jobs_id').val() == "0") {
-                                                updatebutton.classList.add("diableddeletedbutton");
-                                            } else {
-                                                updatebutton.classList.remove("diableddeletedbutton");
-                                            }
-                                        });
 
                                         $("#save").on('click',function(){
                                             var Job_Title = $('#Job_Title').val();
@@ -455,7 +455,8 @@
                                                 success:function (datas)
                                                 {
                                                     jobs_id.removeChild(jobs_id.querySelector('[value="'+ jobsid +'"]'));
-                                                    jobs_id.value = 0;
+                                                    $('#jobs_id').val('0');
+                                                    change_job(0);
                                                     alert('Удалено');
 
                                                 },

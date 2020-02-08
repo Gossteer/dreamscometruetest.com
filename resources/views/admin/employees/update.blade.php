@@ -225,8 +225,8 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="jobs_id" >Должность<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" onchange="jobs_id_change()" id="jobs_id" name="jobs_id" required>
-                                            <option value="0" disabled selected hidden>Должность</option>
+                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" onchange="jobs_id_change(this.value)" id="jobs_id" name="jobs_id" required>
+                                            <option value="0"  selected hidden>Должность</option>
                                             @foreach($jobs as $job)
                                                 <option value="{{ $job->id }}" @if($employees->jobs_id == $job->id) selected @endif>{{$job->Company}} {{ $job->Job_Title . ' зп: ' .  ( ($job->Salary == null)? 'договорная': number_format($job->Salary, 0, ',', ' ') . '₽')}}</option>
                                             @endforeach
@@ -349,18 +349,18 @@
                                         }
                                     };
 
-                                    function jobs_id_change() {
+                                    function jobs_id_change(i) {
                                         // если значение не равно пустой строке
-                                        var deletedbutton = document.querySelector("#updatebutton")
-                                        if($('#jobs_id').val() == "0") {
-                                            deletedbutton.classList.add("diableddeletedbutton");
+                                        var updatebutton = document.querySelector("#updatebutton")
+                                        if($('#jobs_id').val() == "0" || i == 0 || i == null) {
+                                            updatebutton.classList.add("diableddeletedbutton");
                                         } else {
-                                            deletedbutton.classList.remove("diableddeletedbutton");
+                                            updatebutton.classList.remove("diableddeletedbutton");
                                         }
                                     };
 
                                     $(function() {
-                                        jobs_id_change();
+                                        jobs_id_change({{$job->id ?? 0}});
 
                                         if(Set_Permission.value == 0){
                                             if(Set_Permission_hidden.dataset.value == '0'){
@@ -467,13 +467,8 @@
                                                 },
                                                 success:function (datas)
                                                 {
-                                                    var str;
-                                                    datas.forEach(function(data){
-                                                        str += '<option value="0" disabled selected hidden>Должность</option>' +
-                                                            '<option value="'+data['id']+'" >'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
-                                                    });
-                                                    $('#jobs_id option').remove();
-                                                    $('#jobs_id:last').append(str);
+                                                    jobs_id_change(0);
+                                                    document.getElementById('jobs_id').options[document.getElementById('jobs_id').selectedIndex].remove();
                                                     alert('Удалено');
 
                                                 },

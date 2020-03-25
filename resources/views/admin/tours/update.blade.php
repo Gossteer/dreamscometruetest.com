@@ -630,6 +630,32 @@
                                                     </span>
                                                     @enderror
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="Name_Car_Dorough_Dorog_Report_Transportation">Карта<span class="text-danger">*</span></label>
+                                                    <div class="custom-file">
+                                                        <input type="file" name="Map" accept=".txt,.pdf,.docx,.docm,.doc,.xls,.xml,.xlsx,.xlsm" onchange="
+                                        switch (this.value.match(/\.([^\.]+)$/)[1]) {
+                                            case 'png':
+                                            case 'jpg':
+                                            case 'jpeg':
+                                            case 'iso':
+                                            case 'img':
+                                            document.getElementById('Fille_Conract_Partners').textContent= this.files.item(0).name;
+                                                break;
+                                            default:
+                                                alert('Файл не подходит!');
+                                                this.value = 'Некорректный файл';
+                                                break;
+                                        }
+                                            " class="custom-file-input">
+                                                        <label id="Map" for="Map" class="custom-file-label">Файл не выбран</label>
+                                                    </div>
+                                                    @error('Map')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" id="close3" class="btn btn-default" onclick="close_chenge_tour_route()"  data-dismiss="modal">Закрыть</button>
@@ -642,7 +668,7 @@
                                 <script>
                                     function onchange_route(i) {
                                         // если значение не равно пустой строке
-                                        var updatebutton3 = document.querySelector("#updatebutton3")
+                                        var updatebutton3 = document.querySelector("#updatebutton2")
                                         if($('#routes_id').val() == "0" || i == 0 || i == null) {
                                             updatebutton3.classList.add("diableddeletedbutton");
                                         } else {
@@ -690,50 +716,38 @@
                                         });
                                     };
 
-                                    function update_tour_bus() {
-                                        var Brand_Bus = $('#Brand_Bus').val();
-                                        var State_Registration_Number = $('#State_Registration_Number').val();
-                                        var Year_Issue = $('#Year_Issue').val();
-                                        var Diagnostic_card = $('#Diagnostic_card').val();
-                                        var Validity_Date = $('#Validity_Date').val();
-                                        var Amount_Place_Bus = $('#Amount_Place_Bus').val();
-                                        var employee_id = $('#employee_id').val();
-                                        var buses_id = $('#buses_id').val();
-                                        if ($('#Glonas_GPS').prop('checked'))
-                                            var Glonas_GPS = 1;
-                                        else
-                                            var Glonas_GPS = 0;
-                                        if ($('#Tachograph').prop('checked'))
-                                            var Tachograph = 1;
-                                        else
-                                            var Tachograph = 0;
-
+                                    function update_tour_route() {
+                                        var Map = $('#Map').val();
+                                        var Itinerary = $('#Itinerary').val();
+                                        var Distination_From_Initial_Pop = $('#Distination_From_Initial_Pop').val();
+                                        var Time_Sending_From_Initial_Pop = $('#Time_Sending_From_Initial_Pop').val();
+                                        var Distination_From_End_Point = $('#Distination_From_End_Point').val();
+                                        var Time_Sending_From_End_Point = $('#Time_Sending_From_End_Point').val();
+                                        var Name_Car_Dorough_Dorog_Report_Transportation = $('#Name_Car_Dorough_Dorog_Report_Transportation').val();
+                                        var routes_id = $('#routes_id').val();
                                         $.ajax({
-                                            url: "{{route('bus.update')}}",
+                                            url: "{{route('route.update')}}",
                                             type: "POST",
-                                            data: {id:buses_id, Brand_Bus:Brand_Bus, State_Registration_Number:State_Registration_Number,
-                                                Year_Issue:Year_Issue, Diagnostic_card:Diagnostic_card, Validity_Date:Validity_Date,
-                                                Amount_Place_Bus:Amount_Place_Bus, employee_id:employee_id, Glonas_GPS:Glonas_GPS, Tachograph:Tachograph},
+                                            data: {id:routes_id, Map:Map, Itinerary:Itinerary,
+                                                Distination_From_Initial_Pop:Distination_From_Initial_Pop, Time_Sending_From_Initial_Pop:Time_Sending_From_Initial_Pop, Distination_From_End_Point:Distination_From_End_Point,
+                                                Time_Sending_From_End_Point:Time_Sending_From_End_Point, Name_Car_Dorough_Dorog_Report_Transportation:Name_Car_Dorough_Dorog_Report_Transportation},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
                                             success: function (data) {
-                                                $('#addArticle2').modal('hide');
+                                                $('#Map').val('');
+                                                $('#Itinerary').val('');
+                                                $('#Distination_From_Initial_Pop').val('');
+                                                $('#Time_Sending_From_Initial_Pop').val('');
+                                                $('#Distination_From_End_Point').val('');
+                                                $('#Time_Sending_From_End_Point').val('');
+                                                $('#Name_Car_Dorough_Dorog_Report_Transportation').val('');
+                                                $('#addArticle3').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
-                                                $('#Brand_Bus').val('');
-                                                $('#State_Registration_Number').val('');
-                                                $('#Year_Issue').val('');
-                                                $('#Diagnostic_card').val('');
-                                                $('#Validity_Date').val('');
-                                                $('#Amount_Place_Bus').val('0');
-                                                $('#employee_id').val('0');
-                                                $('#Glonas_GPS').prop('checked', false);
-                                                $('#Tachograph').prop('checked', false);
-                                                $('#addArticle2').modal('hide');
-                                                document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].text = data['String'];
-                                                $('#save2').text('Добавить');
-                                                $('#save2').attr("onclick","create_tour_bus()");
+                                                document.getElementById('routes_id').options[document.getElementById('routes_id').selectedIndex].text = data['Itinerary'];
+                                                $('#save3').text('Добавить');
+                                                $('#save3').attr("onclick","create_tour_route()");
                                                 alert('Изменено');
 
                                             },
@@ -743,27 +757,24 @@
                                         });
                                     };
 
-                                    function close_chenge_tour_bus() {
-                                        $('#Brand_Bus').val('');
-                                        $('#State_Registration_Number').val('');
-                                        $('#Year_Issue').val('');
-                                        $('#Diagnostic_card').val('');
-                                        $('#Validity_Date').val('');
-                                        $('#Amount_Place_Bus').val('0');
-                                        $('#employee_id').val('0');
-                                        $('#Glonas_GPS').prop('checked', false);
-                                        $('#Tachograph').prop('checked', false);
-                                        $('#save2').text('Добавить');
-                                        $('#save2').attr("onclick","create_tour_bus()");
-                                        $('#close2').text('Закрыть');
-                                        $('#close2').attr("onclick","");
+                                    function close_chenge_tour_route() {
+                                        $('#Map').val('');
+                                        $('#Itinerary').val('');
+                                        $('#Distination_From_Initial_Pop').val('');
+                                        $('#Time_Sending_From_Initial_Pop').val('');
+                                        $('#Distination_From_End_Point').val('');
+                                        $('#Time_Sending_From_End_Point').val('');
+                                        $('#Name_Car_Dorough_Dorog_Report_Transportation').val('');
+                                        $('#save3').text('Добавить');
+                                        $('#save3').attr("onclick","create_tour_bus()");
+                                        $('#close3').text('Закрыть');
+                                        $('#close3').attr("onclick","");
                                     }
 
-                                    function index_tour_bus() {
-                                        var id = $('#buses_id').val();
-                                        $('#save3').text('Редактировать');
+                                    function index_tour_route() {
+                                        var id = $('#routes_id').val();
                                         $.ajax({
-                                            url: "{{route('bus.index')}}",
+                                            url: "{{route('route.index')}}",
                                             type: "POST",
                                             data: {id:id},
                                             headers: {
@@ -771,40 +782,37 @@
                                             },
                                             success:function (data)
                                             {
-                                                $('#Brand_Bus').val(data['Brand_Bus']);
-                                                $('#State_Registration_Number').val(data['State_Registration_Number']);
-                                                $('#Year_Issue').val(data['Year_Issue']);
-                                                $('#Diagnostic_card').val(data['Diagnostic_card']);
-                                                $('#Validity_Date').val(data['Validity_Date']);
-                                                $('#Amount_Place_Bus').val(data['Amount_Place_Bus']);
-                                                $('#employee_id').val(data['employee_id']);
-                                                $('#Glonas_GPS').prop('checked', data['Glonas_GPS']);
-                                                $('#Tachograph').prop('checked', data['Tachograph']);
-                                                $('#save2').text('Изменить');
-                                                $('#close2').text('Удалить');
-                                                $('#save2').attr("onclick","update_tour_bus()");
-                                                $('#close2').attr("onclick","destroy_tour_bus()");
+                                                $('#Itinerary').val(data['Itinerary']);
+                                                $('#Distination_From_Initial_Pop').val(data['Distination_From_Initial_Pop']);
+                                                $('#Time_Sending_From_Initial_Pop').val(data['Time_Sending_From_Initial_Pop']);
+                                                $('#Distination_From_End_Point').val(data['Distination_From_End_Point']);
+                                                $('#Time_Sending_From_End_Point').val(data['Time_Sending_From_End_Point']);
+                                                $('#Name_Car_Dorough_Dorog_Report_Transportation').val(data['Name_Car_Dorough_Dorog_Report_Transportation']);
+                                                $('#save3').text('Изменить');
+                                                $('#close3').text('Удалить');
+                                                $('#save3').attr("onclick","update_tour_route()");
+                                                $('#close3').attr("onclick","destroy_tour_route()");
                                             },
                                             error: function (msg) {
                                                 alert('Ошибка');
                                             }
                                         });
                                     };
-                                    function destroy_tour_bus(id) {
-                                        var buses_id = $('#buses_id').val();
+                                    function destroy_tour_route(id) {
+                                        var routes_id = $('#routes_id').val();
                                         $.ajax({
-                                            url: "{{route('bus.destroy')}}",
+                                            url: "{{route('route.destroy')}}",
                                             type: "POST",
-                                            data: {id:buses_id},
+                                            data: {id:routes_id},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
                                             success:function (data)
                                             {
-                                                document.querySelector("#updatebutton2").classList.add("diableddeletedbutton");
-                                                document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].remove();
-                                                $('#buses_id').val('0');
-                                                close_chenge_tour_bus();
+                                                document.querySelector("#updatebutton3").classList.add("diableddeletedbutton");
+                                                document.getElementById('routes_id').options[document.getElementById('routes_id').selectedIndex].remove();
+                                                $('#routes_id').val('0');
+                                                close_chenge_tour_route();
                                                 alert('Удалено');
                                             },
                                             error: function (msg) {

@@ -84,11 +84,6 @@ class TypeTourController extends Controller
      */
     public function update(Request $request)
     {
-        \Validator::make($request->all(), [
-            'Name_Type_Tours' => ['required','unique:type_tours', 'max:191','min:2'],
-        ],[
-            'Name_Type_Tours.unique' => 'Данный тип уже существует',
-        ])->validate();
 
         Type_Tour::find($request->typetourid)->update([
             'Name_Type_Tours' => $request->Name_Type_Tours,

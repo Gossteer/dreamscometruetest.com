@@ -31,6 +31,20 @@ class CustomerController extends Controller
             , 'customer' => Customer::where('users_id', Auth::user()->id)->first(), ]);
     }
 
+    public function indexfull(Request $request)
+    {
+        $res = Customer::find($request->customer);
+        $Inviter = Customer::where('Phone_Number_Customer', $res->Phone_Customer_Inviter)->first();
+        $Phone_Customer_Inviter_Title = $Inviter->Name . ' ' . $Inviter->Surname . ' ' . $Inviter->Middle_Name;
+        $us = User::find($res->users_id);
+        $data = ['Phone_Customer_Inviter' => $res->Phone_Customer_Inviter,'login' => $us->login, 'email' => $us->email, 'Description'=> $res->Description,
+            'White_Days' => $res->White_Days, 'floor' => $res->floor == 0 ? 'М':'Ж',
+             'The_amount_of_tokens_spent' => $res->The_amount_of_tokens_spent , 'Amount_Customers_Listed' => $res->Amount_Customers_Listed,
+            'Age_Group' => $res->Age_Group, 'Debt' => $res->Debt, 'Phone_Customer_Inviter_Title' => $Phone_Customer_Inviter_Title];
+
+        return $data;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -116,14 +130,14 @@ class CustomerController extends Controller
                 'The_amount_of_tokens_spent' => $request['The_amount_of_tokens_spent'] ?? 0,
                 'floor' => $request['floor'],
                 'Photo' => $request['Photo'] ?? null,
-                'Phone_Customer_Inviter' =>  $request['Phone_Customer_Inviter'] ?? null,
+                'Phone_Customer_Inviter' =>  $request['Phone_Customer_Inviter'],
                 'Amount_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
                 'Age_Group' => ((Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60 &&  $request['Floor'] == 0) || (Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 65 &&  $request['Floor'] == 1)) ? 1 : 0,
             ]);
 
-        if(Customer::where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->exists())
-        Customer::where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->update([
-           'Number_Customers_Listed' => 1 + Customer::where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->get()->Number_Customers_Listed
+        if(Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->exists())
+        Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->update([
+           'Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
         ]);
 
         return redirect()->route('customer.index');

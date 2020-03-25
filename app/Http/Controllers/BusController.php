@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bus;
 use App\Employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BusController extends Controller
@@ -16,6 +17,8 @@ class BusController extends Controller
     public function index(Request $request)
     {
         $date = Bus::find($request->id);
+        $date->Year_Issue = date('d-m-Y', strtotime($date->Year_Issue));
+        $date->Validity_Date = date('d-m-Y', strtotime($date->Validity_Date));
 
         return $date;
     }
@@ -38,13 +41,24 @@ class BusController extends Controller
      */
     public function store(Request $request)
     {
+        $attribute = $request->all();
+        $attribute['date'] = Carbon::today();
+
+        \Validator::make($attribute, [
+            'Year_Issue' => ['date','before_or_equal:date'],
+            'Validity_Date' => ['date']
+        ],[
+            'Year_Issue.before_or_equal' => 'Дата выпуска не может быть позже нынешней даты!',
+            'date' => 'Укажите поажалуйста правильную дату!',
+        ])->validate();
+
         $date = Bus::create([
             'Brand_Bus' => $request->Brand_Bus,
             'State_Registration_Number' => $request->State_Registration_Number,
-            'Year_Issue' => date('Y-m-d H:i', strtotime($request->Year_Issue)),
+            'Year_Issue' => date('Y-m-d', strtotime($request->Year_Issue)),
             'employee_id' => $request->employee_id,
             'Diagnostic_card' => $request->Diagnostic_card,
-            'Validity_Date' => date('Y-m-d H:i', strtotime($request->Validity_Date)),
+            'Validity_Date' => date('Y-m-d', strtotime($request->Validity_Date)),
             'Amount_Place_Bus' => $request->Amount_Place_Bus,
             'Tachograph' => $request->Tachograph,
             'Glonas_GPS' => $request->Glonas_GPS,
@@ -86,13 +100,24 @@ class BusController extends Controller
      */
     public function update(Request $request)
     {
+        $attribute = $request->all();
+        $attribute['date'] = Carbon::today();
+
+        \Validator::make($attribute, [
+            'Year_Issue' => ['date','before_or_equal:date'],
+            'Validity_Date' => ['date']
+        ],[
+            'Year_Issue.before_or_equal' => 'Дата выпуска не может быть позже нынешней даты!',
+            'date' => 'Укажите поажалуйста правильную дату!',
+        ])->validate();
+
         Bus::find($request->id)->update([
             'Brand_Bus' => $request->Brand_Bus,
             'State_Registration_Number' => $request->State_Registration_Number,
-            'Year_Issue' => date('Y-m-d H:i', strtotime($request->Year_Issue)),
+            'Year_Issue' => date('Y-m-d', strtotime($request->Year_Issue)),
             'employee_id' => $request->employee_id,
             'Diagnostic_card' => $request->Diagnostic_card,
-            'Validity_Date' => date('Y-m-d H:i', strtotime($request->Validity_Date)),
+            'Validity_Date' => date('Y-m-d', strtotime($request->Validity_Date)),
             'Amount_Place_Bus' => $request->Amount_Place_Bus,
             'Tachograph' => $request->Tachograph,
             'Glonas_GPS' => $request->Glonas_GPS,

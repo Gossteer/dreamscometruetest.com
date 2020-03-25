@@ -15,8 +15,10 @@ use App\Tour;
 
 Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::resource('admin/tours', 'TourController');
-    Route::resource('admin/customer', 'CustomerController');
     Route::resource('admin/partners', 'PartnerController');
+
+    Route::resource('admin/customer', 'CustomerController');
+    Route::post('admin/customer/fullindex', 'CustomerController@indexfull')->name('customer.index.full');
 
     Route::get('/admin', 'SiteController@adminindex')->name('/admin');
 

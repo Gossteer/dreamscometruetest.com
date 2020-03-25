@@ -31,7 +31,8 @@ class CreatePassengersTable extends Migration
             $table->tinyInteger('Stars')->nullable();
             $table->integer('Final_Price')->default(0);
             $table->boolean('Payment_method');
-            $table->string('Comment', 191)->default('Отсутствует');
+            $table->string('Comment_Customer', 191)->default('Отсутствует');
+            $table->string('Comment_Employee', 191)->default('Отсутствует');
             $table->boolean('LogicalDelete')->default(0);
 
 

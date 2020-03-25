@@ -12,9 +12,13 @@ class RouteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $date = Route::find($request->id);
+        $date->Time_Sending_From_Initial_Pop = date('H:i', strtotime($date->Time_Sending_From_Initial_Pop));
+        $date->Time_Sending_From_End_Point = date('H:i', strtotime($date->Time_Sending_From_End_Point));
+
+        return $date;
     }
 
     /**
@@ -79,7 +83,19 @@ class RouteController extends Controller
      */
     public function update(Request $request, Route $route)
     {
-        //
+         Route::find($request->id)->update([
+            'Map' => '123',
+            'Itinerary' => $request->Itinerary,
+            'Time_Sending_From_Initial_Pop' => date('H:i', strtotime($request->Time_Sending_From_Initial_Pop)),
+            'Distination_From_Initial_Pop' => $request->Distination_From_Initial_Pop,
+            'Distination_From_End_Point' => $request->Distination_From_End_Point,
+            'Time_Sending_From_End_Point' => date('H:i', strtotime($request->Time_Sending_From_End_Point)),
+            'Name_Car_Dorough_Dorog_Report_Transportation' => $request->Name_Car_Dorough_Dorog_Report_Transportation,
+        ]);
+
+        $date = Route::find($request->id);
+
+        return $date;
     }
 
     /**

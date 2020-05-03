@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTypeContractsTable extends Migration
+class CreateTransortsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateTypeContractsTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_contracts', function (Blueprint $table) {
+        Schema::create('transorts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('buses_id')->unsigned();
+            $table->bigInteger('tour_id')->unsigned();
+
+            $table->foreign('buses_id')->references('id')
+            ->on('buses');
+            $table->foreign('tour_id')->references('id')
+            ->on('tours');
             $table->timestamps();
-            $table->string('Name_Type_Contract', 191)->unique();
-            $table->string('Document_Extension', 191);
-            $table->boolean('LogicalDelete')->default(0);
         });
     }
 
@@ -29,6 +33,6 @@ class CreateTypeContractsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_contracts');
+        Schema::dropIfExists('transorts');
     }
 }

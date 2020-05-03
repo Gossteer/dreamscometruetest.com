@@ -7,10 +7,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row card-header" style="padding-bottom: 25px ">
-                            <div class="col-sm-12 col-md-3" >
+                            <div class="col-sm-12 col-md-7" >
                                 <h4 class="">{{$tour->Name_Tours}} - Пассажиры</h4>
                             </div>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-5">
                                 <a href="{{ route('printpastour', [$tour]) }}" data-toggle="tooltip" data-placement="top" class="btn btn-info btn-rounded btnheader" style="float: right;">Список</a>
                                 <a href="" data-toggle="tooltip" data-placement="top" class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Добавить</a>
                             </div>
@@ -166,15 +166,17 @@
                 </div>
             </div>
         </div>
+
+        
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row card-header" style="padding-bottom: 25px ">
-                            <div class="col-sm-12 col-md-3" >
+                            <div class="col-sm-12 col-md-7" >
                                 <h4 class="">{{$tour->Name_Tours}} - Партнёры</h4>
                             </div>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-5">
 
                                 <script>
                                     function create_tour_contract() {
@@ -438,24 +440,40 @@
                 </div>
             </div>
         </div>
+
+                                            {{-- @if (!$voditel_dobavlen_answer  and $tour->bus)
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function(event) {
+                                            $('#dobavit_employee').click();
+                                            $('#employee_id').attr("style", "pointer-events: none;" + "background: #eee;" + "touch-action: none;"); 
+                                            $('<div class="form-group" id="message_voditel" > <p style="font-weight: bold">Ранее при создании экскурсии вы указали водителя, добавить его в работники? Если вы хотите поменять водителя, зайдите пожалуйста в редактирование экскурсии {{$tour->Name_Tours}}.</p></div>').prependTo('#employee_div_modal_body');
+                                            $('#employee_id').val({{ $tour->bus->employee_id }});
+                                        }, {once: true});
+                                        close3.addEventListener("click", function(event) {
+                                            $('#message_voditel').detach();
+                                            $('#employee_id').attr("style", ""); 
+                                        }, {once: true});
+                                    </script>
+                                    @endif --}}
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row card-header" style="padding-bottom: 25px ">
-                            <div class="col-sm-12 col-md-3" >
+                            <div class="col-sm-12 col-md-7" >
                                 <h4 class="">{{$tour->Name_Tours}} - Работники</h4>
                             </div>
-                            <div class="col-sm-12 col-md-9">
-                                <a href="" data-toggle="modal" data-target="#addArticle3" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
+                            <div class="col-sm-12 col-md-5">
+                                <a href="" id="dobavit_employee" data-toggle="modal" data-target="#addArticle3" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
                                 <div class="modal fade" id="addArticle3" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="addArticleLabel">Работники</h4>
+                                        <div class="modal-content" >
+                                            <div class="modal-header" >
+                                                <h4 class="modal-title" >Работники</h4>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
+                                            <div class="modal-body" id="employee_div_modal_body">
+                                                <div class="form-group" >
                                                     <label for="employee_id">Работники<span class="text-danger">*</span></label>
                                                     <select class="custom-select @error('employee_id') is-invalid @enderror" id="employee_id" name="employee_id"  required>
                                                         <option value="0" disabled selected hidden>Работник</option>
@@ -471,8 +489,22 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Salary1">Стоимость<span class="text-danger">*</span></label>
-                                                    <input  type="number" class="form-control @error('Salary') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" name="Salary1" id="Salary1" placeholder="Стоимость">
+                                                    <input  type="number" class="form-control @error('Salary') is-invalid @enderror" min="0" max="2147483647" value="0" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" name="Salary1" id="Salary1" placeholder="Стоимость">
                                                     @error('Salary')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="partners_id">Партнёр</label>
+                                                    <select class="custom-select @error('partners_id') is-invalid @enderror" id="partners_id" name="partners_id"  required>
+                                                        <option value="0" disabled selected hidden>Партнёр</option>
+                                                        @foreach($partners as $partner)
+                                                            <option value="{{ $partner->id }}" id="{{ $partner->id }}" title="{{ $partner->INN . ' ' . $partner->type_activity->Name_Type_Activity }}">{{$partner->Name_Partners}} {{$partner->type_activity->Name_Type_Activity ?? ''}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('partners_id')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -483,7 +515,7 @@
                                                     <select class="custom-select @error('Occupied_Place_Bus') is-invalid @enderror" id="Occupied_Place_Bus" name="Occupied_Place_Bus"  required>
                                                         <option value="0" disabled selected hidden>Выберете место</option>
                                                         @for($i = 1; $i <= $tour->Amount_Place; $i++)
-                                                            <option value="{{ $i }}" id="{{ $i }}" @if(\App\Passenger::where('Occupied_Place_Bus',$i)->first() != null) hidden disabled @endif>{{$i}}</option>
+                                                            <option value="{{ $i }}" id="{{ $i }}" @if(\App\Passenger::where('Occupied_Place_Bus',$i)->exists()) hidden disabled @endif>{{$i}}</option>
                                                         @endfor
                                                     </select>
                                                     @error('Occupied_Place_Bus')
@@ -503,16 +535,20 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" onclick="close_chenge_tour_employee()"  data-dismiss="modal">Закрыть</button>
+                                                <button type="button" class="btn btn-default" id="close3" onclick="close_chenge_tour_employee()"  data-dismiss="modal">Закрыть</button>
                                                 <button type="button" id="save3" data-idi="" onclick="create_tour_employee()" class="btn btn-primary">Добавить</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
+
                                 <script>
                                     function create_tour_employee() {
                                         var employee_id = $('#employee_id').val();
                                         var Salary = $('#Salary1').val();
+                                        var partners_id = $('#partners_id').val();
                                         var Occupied_Place_Bus = $('#Occupied_Place_Bus').val();
                                         if ($('#Confidentiality').prop('checked'))
                                             var Confidentiality = 1;
@@ -522,7 +558,7 @@
                                         $.ajax({
                                             url: '{{ route('touremployee.store') }}',
                                             type: "POST",
-                                            data: {employee_id:employee_id, Salary:Salary, Occupied_Place_Bus:Occupied_Place_Bus, Confidentiality:Confidentiality, tour_id:tour_id},
+                                            data: {partners_id:partners_id, employee_id:employee_id, Salary:Salary, Occupied_Place_Bus:Occupied_Place_Bus, Confidentiality:Confidentiality, tour_id:tour_id},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
@@ -531,6 +567,7 @@
                                                 $('#Salary1').val('');
                                                 $('#Occupied_Place_Bus').val('');
                                                 $('#employee_id').val('0');
+                                                $('#partners_id').val('0');
                                                 $('#Confidentiality').prop('checked', false);
                                                 $('#addArticle3').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
@@ -561,6 +598,7 @@
                                     function update_tour_employee(id) {
                                         var employee_id = $('#employee_id').val();
                                         var Salary = $('#Salary1').val();
+                                        var partners_id = $('#partners_id').val();
                                         var Occupied_Place_Bus = $('#Occupied_Place_Bus').val();
                                         if ($('#Confidentiality').prop('checked'))
                                             var Confidentiality = 1;
@@ -580,6 +618,7 @@
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
                                                 $('#Salary1').val('');
+                                                $('#partners_id').val('0');
                                                 $('#Occupied_Place_Bus').val('');
                                                 $('#employee_id').val('0');
                                                 $('#Confidentiality').prop('checked', false);
@@ -613,6 +652,7 @@
                                         $('#Salary1').val('');
                                         $('#Occupied_Place_Bus').val('');
                                         $('#employee_id').val('0');
+                                        $('#partners_id').val('0');
                                         $('#Confidentiality').prop('checked', false);
                                         $('#save3').text('Добавить');
                                         $('#save3').attr("onclick","create_tour_employee()");
@@ -629,6 +669,7 @@
                                             },
                                             success:function (data)
                                             {
+                                                $('#partners_id').val(data['partners_id']);
                                                 $('#Salary1').val(data['Salary']);
                                                 $('#Occupied_Place_Bus').val(data['Occupied_Place_Bus']);
                                                 $('#employee_id').val(data['employee_id']);
@@ -670,6 +711,7 @@
                                 <tr>
                                     <th scope="col">ФИО</th>
                                     <th scope="col">Должность</th>
+                                    <th scope="col">Партнёр</th>
                                     <th scope="col">Место</th>
                                     <th scope="col">Стоимость</th>
                                     <th scope="col">Скрытый</th>
@@ -688,6 +730,9 @@
                                                 @else
                                                     Не назначена
                                                 @endif
+                                        </td>
+                                        <td>
+                                            {{ $tour_employee->partner->Name_Partners ?? Отсутствует }}
                                         </td>
                                         <td>
                                             {{ $tour_employee->Occupied_Place_Bus }}

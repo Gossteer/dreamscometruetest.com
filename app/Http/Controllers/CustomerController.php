@@ -136,6 +136,8 @@ class CustomerController extends Controller
             ]);
 
         if(Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->exists())
+            // DB::table('customers')->where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->
+            // update(['Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
         Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->update([
            'Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
         ]);

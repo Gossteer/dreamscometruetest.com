@@ -111,10 +111,18 @@ class RegisterController extends Controller
             'Phone_Number_Customer' => $data['Phone_Number_Customer'],
             'Floor' => $data['Floor'],
             'Description' => $data['Description'] ?? 'Отсуствует',
-            'Phone_Customer_Inviter' =>  $data['Number_Customers_Inviter'] ?? null,
+            'Phone_Customer_Inviter' =>  $data['Phone_Customer_Inviter'] ?? null,
             'Amount_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->count(),
             'Age_Group' => ((Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60 &&  $data['Floor'] == 0) || (Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 65 && $data['Floor'] == 1)) ? 1 : 0,
 
+        ]);
+
+
+        if(isset($data['Phone_Customer_Inviter']) and Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->exists())
+            // DB::table('customers')->where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->
+            // update(['Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
+        Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->update([
+           'Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
         ]);
 
        // if(\Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->exists())

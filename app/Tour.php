@@ -10,7 +10,6 @@ class Tour extends Model
     protected $fillable = [
         'Name_Tours',
         'Description',
-        'type_tours_id',
         'Price',
         'Duration',
         'Privilegens_Price',
@@ -23,9 +22,6 @@ class Tour extends Model
         'Popular',
         'End_Date_Tours',
         'Confidentiality',
-        'buses_id',
-        'routes_id',
-
     ];
 
 
@@ -44,19 +40,19 @@ class Tour extends Model
         return $this->hasMany('App\Price_Per_Level', 'tour_id');
     }
 
-    public function type_tour()
+    public function type_tour_many()
     {
-        return $this->belongsTo('App\Type_Tour', 'type_tours_id');
+        return $this->hasMany('App\Type_Tour_Many', 'tour_id');
+    }
+
+    public function transport()
+    {
+        return $this->hasMany('App\Transort', 'tour_id');
     }
 
     public function route()
     {
-        return $this->belongsTo('App\Route', 'routes_id');
-    }
-
-    public function bus()
-    {
-        return $this->belongsTo('App\Bus', 'buses_id');
+        return $this->hasMany('App\Route', 'routes_id');
     }
 
     public function passenger()

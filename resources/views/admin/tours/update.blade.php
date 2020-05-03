@@ -10,11 +10,11 @@
                         <div class="form-validation">
                             <script>
 
-                                $(function() {
-                                    onchange_route({{$tour->routes_id}});
-                                    shengebus({{$tour->buses_id}});
-                                    schange_type({{$tour->type_tours_id}});
-                                });
+                                // $(function() {
+                                //     onchange_route({{$tour->routes_id}});
+                                //     shengebus({{$tour->buses_id}});
+                                //     schange_type({{$tour->type_tours_id}});
+                                // });
 
                             </script>
                             <form class="form-valide" action="{{route('tours.update', $tour->id)}}" method="post" enctype="multipart/form-data">
@@ -35,10 +35,10 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="type_tours_id" >Тип экскурсии<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" id="type_tours_id" name="type_tours_id" onchange="schange_type(this.value)"  required>
-                                            <option value="0" disabled selected hidden>Тип экскурсии</option>
+                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" id="type_tours_id" multiple name="type_tours_id[]" required>
+                                            {{-- <option value="0" disabled selected hidden>Тип экскурсии</option> --}}
                                             @foreach($type_tours as $type_tour)
-                                                <option value="{{ $type_tour->id }}" id="{{ $type_tour->id }}" @if( $tour->type_tours_id == $type_tour->id) selected @endif>{{$type_tour->Name_Type_Tours}}</option>
+                                                <option value="{{ $type_tour->id }}" id="{{ $type_tour->id }}" @if( in_array($type_tour->id, $type_tour_many) ) selected @endif >{{$type_tour->Name_Type_Tours}}</option>
                                             @endforeach
                                         </select>
                                         @error('type_tours_id')
@@ -50,7 +50,7 @@
                                             <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;"  title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
+                                            <a class="btn input-group-text selectedbutton @if($type_tours->count() == 0) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -106,15 +106,15 @@
                                 </div>
 
                                 <script>
-                                    function schange_type(i) {
-                                        // если значение не равно пустой строке
-                                        var updatebutton = document.querySelector("#updatebutton")
-                                        if ($('#type_tours_id').val() == "0" || i == 0 || i == null) {
-                                            updatebutton.classList.add("diableddeletedbutton");
-                                        } else {
-                                            updatebutton.classList.remove("diableddeletedbutton");
-                                        }
-                                    }
+                                    // function schange_type(i) {
+                                    //     // если значение не равно пустой строке
+                                    //     var updatebutton = document.querySelector("#updatebutton")
+                                    //     if ($('#type_tours_id').val() == "0" || i == 0 || i == null) {
+                                    //         updatebutton.classList.add("diableddeletedbutton");
+                                    //     } else {
+                                    //         updatebutton.classList.remove("diableddeletedbutton");
+                                    //     }
+                                    // }
 
                                     $(function() {
                                         $("#save").on('click',function(){
@@ -148,7 +148,7 @@
                                             $.ajax({
                                                 url: "{{route('typetour.index')}}",
                                                 type: "POST",
-                                                data: {typetourid:typetourid},
+                                                data: {typetourid:typetourid[0]},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
@@ -169,7 +169,7 @@
                                             $.ajax({
                                                 url: "{{route('typetour.update')}}",
                                                 type: "POST",
-                                                data: {typetourid:typetourid,Name_Type_Tours:Name_Type_Tours},
+                                                data: {typetourid:typetourid[0],Name_Type_Tours:Name_Type_Tours},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
@@ -198,13 +198,13 @@
                                             $.ajax({
                                                 url: "{{route('typetour.destroy')}}",
                                                 type: "POST",
-                                                data: {typetourid:typetourid},
+                                                data: {typetourid:typetourid[0]},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
                                                 success:function (datas)
                                                 {
-                                                    schange_type(0);
+                                                    //schange_type(0);
                                                     type_tours_id.removeChild(type_tours_id.querySelector('[value="'+ typetourid +'"]'));
                                                     type_tours_id.value = 0;
                                                     alert('Удалено');
@@ -219,12 +219,12 @@
                                 </script>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="buses_id" >Автобус<span class="text-danger">*</span></label>
+                                    <label class="col-lg-4 col-form-label" for="buses_id" >Транспорт</label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('buses_id') is-invalid @enderror" id="buses_id" name="buses_id" onchange="shengebus(this.value)" required>
-                                            <option value="0" disabled   selected hidden>Автобус</option>
+                                        <select class="custom-select @error('buses_id') is-invalid @enderror" multiple id="buses_id" name="buses_id[]" onchange="shengebus(this.value)">
+                                            {{-- <option value="0" disabled   selected hidden>Автобус</option> --}}
                                             @foreach($buses_ids as $buses_id)
-                                                <option value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if($tour->buses_id == $buses_id->id) selected @endif>{{ $buses_id->Amount_Place_Bus . 'м ' . $buses_id->Brand_Bus . ' ' .  date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}}</option>
+                                                <option value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if( in_array($buses_id->id, $transpor) ) selected @endif>{{ $buses_id->Type_Transport . ' ' . $buses_id->Title_Transport . ' ' .   $buses_id->Amount_Place_Bus . 'м '}} @if($buses_id->Type_Transport == 'Автобус' or $buses_id->Type_Transport == 'Микроавтобус') {{date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}}@endif</option>
                                             @endforeach
                                         </select>
                                         @error('buses_id')
@@ -236,28 +236,131 @@
                                             <a  data-toggle="modal" data-target="#addArticle2" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle2" id="updatebutton2" style="" name="updatebutton2"  onclick="index_tour_bus()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
+                                            <a class="btn input-group-text selectedbutton @if($buses_ids->count() == 0) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle2" id="updatebutton2" style="" name="updatebutton2"  onclick="index_tour_bus()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    function Hidden_All_Transport(){
+                                        Description_Transport_div.hidden = true;
+                                        Title_Transport_div.hidden = true;
+                                        Main_Transort_div.hidden = true;
+                                        Amount_Place_Bus_div.hidden = true;
+                                        employee_id_div.hidden = true;
+                                            State_Registration_Number_div.hidden = true;
+                                            Year_Issue_div.hidden = true;
+                                            Diagnostic_card_div.hidden = true;
+                                            Validity_Date_div.hidden = true;
+                                            Tachograph_div.hidden = true;
+                                            Glonas_GPS_div.hidden = true;
+                                            Company_div.hidden = true;
+                                            Classes_div.hidden = true;
+                                    }
+                                    function Set_Trnaport_hidden_Shenge(value){
+                                        Description_Transport_div.hidden = false;
+                                        Title_Transport_div.hidden = false;
+                                        Main_Transort_div.hidden = false;
+                                        Amount_Place_Bus_div.hidden = false;
+
+                                        if(value == 'Автобус' || value == 'Микроавтобус'){
+                                            Company_div.hidden = true;
+                                            Classes_div.hidden = true;
+                                            Company.value = '';
+                                            Classes.value = '';
+
+                                            Title_Transport.placeholder = 'Марка';
+                                            State_Registration_Number_div.hidden = false;
+                                            Year_Issue_div.hidden = false;
+                                            Diagnostic_card_div.hidden = false;
+                                            Validity_Date_div.hidden = false;
+                                            Tachograph_div.hidden = false;
+                                            Glonas_GPS_div.hidden = false;
+                                            employee_id_div.hidden = false;
+                                        }
+                                        else{
+                                            employee_id_div.hidden = true;
+                                            State_Registration_Number_div.hidden = true;
+                                            Year_Issue_div.hidden = true;
+                                            Diagnostic_card_div.hidden = true;
+                                            Validity_Date_div.hidden = true;
+                                            Tachograph_div.hidden = true;
+                                            Glonas_GPS_div.hidden = true;
+                                            State_Registration_Number.value = '';
+                                            Year_Issue.value = '';
+                                            Diagnostic_card.value = '';
+                                            Validity_Date.value = '';
+                                            Tachograph.checked = false;
+                                            Glonas_GPS.checked = false;
+
+                                            Company_div.hidden = false;
+                                            Classes_div.hidden = false;
+                                            Title_Transport.placeholder = 'Название';
+                                        }
+                                    };
+                                </script>
 
                                 <div class="modal fade" id="addArticle2" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="addArticleLabel">Автобус</h4>
+                                                <h4 class="modal-title" id="addArticleLabel">Транспорт</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label for="Brand_Bus">Марка<span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control @error('Brand_Bus') is-invalid @enderror" minlength="2" maxlength="100" onKeyPress="if(this.value.length==100) return false;" name="Brand_Bus" id="Brand_Bus" placeholder="Название">
-                                                    @error('Brand_Bus')
+                                                <div class="form-group" >
+                                                    <label for="Type_Transport">Тип транспорта<span class="text-danger">*</span></label>
+                                                    <select onchange="Set_Trnaport_hidden_Shenge(this.value)" class="custom-select @error('Type_Transport') is-invalid @enderror" id="Type_Transport" name="Type_Transport" >
+                                                        <option value="0" disabled selected hidden>Тип транспорта</option>
+                                                        <option value="Водное судно" id="1">Водное судно</option>
+                                                        <option value="Возднушное судно" id="2">Воздушное судно</option>
+                                                        <option value="Железная дорога" id="3">Железная дорога</option>
+                                                        <option value="Автобус" id="4">Автобус</option>
+                                                        <option value="Микроавтобус" id="5">Микроавтобус</option>
+                                                        <option value="Другой..." id="6">Другой...</option>
+                                                    </select>
+                                                    @error('Type_Transport')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group"  id="Title_Transport_div" hidden>
+                                                    <label for="Title_Transport">Название<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control @error('Title_Transport') is-invalid @enderror" minlength="2" maxlength="100" onKeyPress="if(this.value.length==100) return false;" name="Title_Transport" id="Title_Transport" placeholder="Название">
+                                                    @error('Title_Transport')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group"  id="Description_Transport_div" hidden>
+                                                    <label for="Description_Transport">Описание</label>
+                                                    <textarea  class="form-control @error('Description_Transport') is-invalid @enderror" minlength="2" name="Description_Transport" id="Description_Transport" placeholder="Описание"></textarea>
+                                                    @error('Description_Transport')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group"  id="Company_div" hidden>
+                                                    <label for="Company">Компания</label>
+                                                    <input type="text" class="form-control @error('Company') is-invalid @enderror" minlength="2" maxlength="100" onKeyPress="if(this.value.length==100) return false;" name="Company" id="Company" placeholder="Компания">
+                                                    @error('Company')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group"  id="Classes_div" hidden>
+                                                    <label for="Classes">Классы</label>
+                                                    <input type="text" class="form-control @error('Classes') is-invalid @enderror" minlength="2" maxlength="100" onKeyPress="if(this.value.length==100) return false;" name="Classes" id="Classes" placeholder="Люкс; Эконом;...">
+                                                    @error('Classes')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group" id="State_Registration_Number_div" hidden>
                                                     <label for="State_Registration_Number">ГРНТС<span class="text-danger">*</span></label>
                                                     <input title="Государственный регистрационный номер транспортного средства" type="text" class="form-control @error('State_Registration_Number') is-invalid @enderror" minlength="2" maxlength="14" onKeyPress="if(this.value.length==14) return false;" name="State_Registration_Number" id="State_Registration_Number" placeholder="ГРНТС">
                                                     @error('State_Registration_Number')
@@ -266,7 +369,7 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" id="Year_Issue_div" hidden>
                                                     <label for="Year_Issue">Год выпуска<span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control @error('Year_Issue') is-invalid @enderror"  name="Year_Issue" id="Year_Issue" placeholder="Год выпуска">
                                                     @error('Year_Issue')
@@ -281,7 +384,7 @@
                                                         $("#Validity_Date").mask("99-99-9999");
                                                     });
                                                 </script>
-                                                <div class="form-group">
+                                                <div class="form-group"  id="Diagnostic_card_div" hidden>
                                                     <label for="Diagnostic_card">Регистрационный номер<span class="text-danger">*</span></label>
                                                     <input title="Из диагностической карты" type="text" class="form-control @error('Diagnostic_card') is-invalid @enderror" minlength="2" maxlength="16" name="Diagnostic_card" id="Diagnostic_card" placeholder="Номер">
                                                     @error('Diagnostic_card')
@@ -290,7 +393,7 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" id="Validity_Date_div" hidden>
                                                     <label for="Validity_Date">Срок действия<span class="text-danger">*</span></label>
                                                     <input title="Диагностическая карта годна до:" type="text" class="form-control @error('Validity_Date') is-invalid @enderror"  name="Validity_Date" id="Validity_Date" placeholder="Годен до:">
                                                     @error('Validity_Date')
@@ -299,7 +402,7 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" id="Amount_Place_Bus_div" hidden> 
                                                     <label for="Amount_Place_Bus">Вместимость<span class="text-danger">*</span></label>
                                                     <input type="number" class="form-control @error('Amount_Place_Bus') is-invalid @enderror" minlength="2" maxlength="4" onKeyPress="if(this.value.length==4) return false;" name="Amount_Place_Bus" id="Amount_Place_Bus" placeholder="Количество мест">
                                                     @error('Amount_Place_Bus')
@@ -308,15 +411,15 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" id="employee_id_div" hidden>
                                                     <label for="employee_id">Водитель</label>
-                                                    <select class="custom-select @error('employee_id') is-invalid @enderror" id="employee_id" name="employee_id"  >
+                                                    <select class="custom-select @error('employee_id') is-invalid @enderror" id="employee_id" name="employee_id" >
                                                         <option value="0" disabled selected hidden>Водитель</option>
                                                         @foreach(\App\Employee::all() as $employee_bus)
                                                             @if($employee_bus->jobs_id != null && isset($employee_bus->job))
-                                                                @if(mb_strtolower($employee_bus->job->Job_Title) == 'водитель' || mb_strtolower($employee_bus->job->Job_Title) == 'шофёр')
-                                                                    <option title="{{ $employee_bus->Surname . ' ' . $employee_bus->Name  . ' ' . $employee_bus->Middle_Name}}" value="{{ $employee_bus->id }}" id="{{ $employee_bus->id }}">{{ $employee_bus->Surname . ' ' . mb_substr($employee_bus->Name, 0, 1)  . '. ' . mb_substr($employee_bus->Middle_Name, 0, 1) . ($employee_bus->Middle_Name != '' ? '.' : '')}}</option>
-                                                                @endif
+                                                            @if(mb_strtolower($employee_bus->job->Job_Title) == 'водитель' || mb_strtolower($employee_bus->job->Job_Title) == 'шофёр')
+                                                            <option title="{{ $employee_bus->Surname . ' ' . $employee_bus->Name  . ' ' . $employee_bus->Middle_Name}}" value="{{ $employee_bus->id }}" id="{{ $employee_bus->id }}">{{ $employee_bus->Surname . ' ' . mb_substr($employee_bus->Name, 0, 1)  . '. ' . mb_substr($employee_bus->Middle_Name, 0, 1) . ($employee_bus->Middle_Name != '' ? '.' : '')}}</option>
+                                                            @endif
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -326,7 +429,7 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" id="Tachograph_div" hidden>
                                                     <label for="Tachograph">Тахограф</label>
                                                     <input class="form-check-input" type="checkbox" id="Tachograph" name="Tachograph" style="margin-left: 5px !important; border: 1px solid #ced4da;" value="1" >
                                                     @error('Tachograph')
@@ -335,10 +438,19 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" id="Glonas_GPS_div" hidden>
                                                     <label for="Glonas_GPS">ГЛОНАСС/GPS</label>
                                                     <input class="form-check-input" type="checkbox" id="Glonas_GPS" name="Glonas_GPS" style="margin-left: 5px !important; border: 1px solid #ced4da;" value="1" >
                                                     @error('Glonas_GPS')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group" id="Main_Transort_div" hidden>
+                                                    <label for="Main_Transort">Основной</label>
+                                                    <input class="form-check-input" type="checkbox" id="Main_Transort" name="Main_Transort" style="margin-left: 5px !important; border: 1px solid #ced4da;" value="1" >
+                                                    @error('Main_Transort')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -354,19 +466,26 @@
                                 </div>
 
                                 <script>
-                                    function shengebus(i) {
-                                        // если значение не равно пустой строке
-                                        var updatebutton2 = document.querySelector("#updatebutton2")
-                                        if($('#buses_id').val() == "0" || i == 0 || i == null) {
-                                            updatebutton2.classList.add("diableddeletedbutton");
-                                        } else {
-                                            updatebutton2.classList.remove("diableddeletedbutton");
-                                        }
-                                    };
+                                    // $(function() {
+
+                                    //     $('#buses_id').change(function(buses_id) {
+                                    //         // если значение не равно пустой строке
+                                    //         var updatebutton2 = document.querySelector("#updatebutton")
+                                    //         if($('#buses_id').val() == "0") {
+                                    //             updatebutton2.classList.add("diableddeletedbutton");
+                                    //         } else {
+                                    //             updatebutton2.classList.remove("diableddeletedbutton");
+                                    //         }
+                                    //     });
+                                    // });
 
                                     function create_tour_bus() {
-                                        var Brand_Bus = $('#Brand_Bus').val();
+                                        var Title_Transport = $('#Title_Transport').val();
                                         var State_Registration_Number = $('#State_Registration_Number').val();
+                                        var Description = $('#Description_Transport').val();
+                                        var Company = $('#Company').val();
+                                        var Classes = $('#Classes').val();
+                                        var Type_Transport = $('#Type_Transport').val();
                                         var Year_Issue = $('#Year_Issue').val();
                                         var Diagnostic_card = $('#Diagnostic_card').val();
                                         var Validity_Date = $('#Validity_Date').val();
@@ -376,6 +495,12 @@
                                             var Glonas_GPS = 1;
                                         else
                                             var Glonas_GPS = 0;
+                                        
+                                        if ($('#Main_Transort').prop('checked'))
+                                            var Main_Transort = 1;
+                                        else
+                                            var Main_Transort = 0;
+
                                         if ($('#Tachograph').prop('checked'))
                                             var Tachograph = 1;
                                         else
@@ -383,7 +508,8 @@
                                         $.ajax({
                                             url: '{{ route('bus.store') }}',
                                             type: "POST",
-                                            data: {Brand_Bus:Brand_Bus, State_Registration_Number:State_Registration_Number,
+                                            data: {Title_Transport:Title_Transport,Description:Description,Classes:Classes,Type_Transport:Type_Transport,
+                                                Company:Company, State_Registration_Number:State_Registration_Number,Main_Transort:Main_Transort,
                                                 Year_Issue:Year_Issue, Diagnostic_card:Diagnostic_card, Validity_Date:Validity_Date,
                                                 Amount_Place_Bus:Amount_Place_Bus, employee_id:employee_id, Glonas_GPS:Glonas_GPS, Tachograph:Tachograph},
                                             headers: {
@@ -391,7 +517,12 @@
                                             },
 
                                             success: function (data) {
-                                                $('#Brand_Bus').val('');
+                                                Hidden_All_Transport();
+                                                $('#Title_Transport').val('');
+                                                $('#Description_Transport').val('');
+                                                $('#Company').val('');
+                                                $('#Classes').val('');
+                                                $('#Type_Transport').val('0');
                                                 $('#State_Registration_Number').val('');
                                                 $('#Year_Issue').val('');
                                                 $('#Diagnostic_card').val('');
@@ -400,10 +531,11 @@
                                                 $('#employee_id').val('0');
                                                 $('#Glonas_GPS').prop('checked', false);
                                                 $('#Tachograph').prop('checked', false);
+                                                $('#Main_Transort').prop('checked', false);
                                                 $('#addArticle2').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
-                                                var str = '<option value="'+data['id']+'" id="'+data['id']+'" selected>'+data['String']+'</option>';
+                                                var str = '<option value="'+data['id']+'" id="'+data['id']+'" title= "'+data['Description']+'" selected>'+data['String']+'</option>';
 
                                                 $('#buses_id:last').append(str);
                                                 document.querySelector("#updatebutton2").classList.remove("diableddeletedbutton");
@@ -416,27 +548,38 @@
                                     };
 
                                     function update_tour_bus() {
-                                        var Brand_Bus = $('#Brand_Bus').val();
+                                        var Title_Transport = $('#Title_Transport').val();
                                         var State_Registration_Number = $('#State_Registration_Number').val();
+                                        var Description = $('#Description_Transport').val();
+                                        var Company = $('#Company').val();
+                                        var Classes = $('#Classes').val();
+                                        var Type_Transport = $('#Type_Transport').val();
                                         var Year_Issue = $('#Year_Issue').val();
                                         var Diagnostic_card = $('#Diagnostic_card').val();
                                         var Validity_Date = $('#Validity_Date').val();
                                         var Amount_Place_Bus = $('#Amount_Place_Bus').val();
                                         var employee_id = $('#employee_id').val();
-                                        var buses_id = $('#buses_id').val();
                                         if ($('#Glonas_GPS').prop('checked'))
                                             var Glonas_GPS = 1;
                                         else
                                             var Glonas_GPS = 0;
+                                        
+                                        if ($('#Main_Transort').prop('checked'))
+                                            var Main_Transort = 1;
+                                        else
+                                            var Main_Transort = 0;
+
                                         if ($('#Tachograph').prop('checked'))
                                             var Tachograph = 1;
                                         else
                                             var Tachograph = 0;
+                                        var buses_id = $('#buses_id').val();
 
                                         $.ajax({
                                             url: "{{route('bus.update')}}",
                                             type: "POST",
-                                            data: {id:buses_id, Brand_Bus:Brand_Bus, State_Registration_Number:State_Registration_Number,
+                                            data: {id:buses_id[0], Title_Transport:Title_Transport,Description:Description,Classes:Classes,Type_Transport:Type_Transport,
+                                                Company:Company, State_Registration_Number:State_Registration_Number,Main_Transort:Main_Transort,
                                                 Year_Issue:Year_Issue, Diagnostic_card:Diagnostic_card, Validity_Date:Validity_Date,
                                                 Amount_Place_Bus:Amount_Place_Bus, employee_id:employee_id, Glonas_GPS:Glonas_GPS, Tachograph:Tachograph},
                                             headers: {
@@ -446,19 +589,8 @@
                                                 $('#addArticle2').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
-                                                $('#Brand_Bus').val('');
-                                                $('#State_Registration_Number').val('');
-                                                $('#Year_Issue').val('');
-                                                $('#Diagnostic_card').val('');
-                                                $('#Validity_Date').val('');
-                                                $('#Amount_Place_Bus').val('0');
-                                                $('#employee_id').val('0');
-                                                $('#Glonas_GPS').prop('checked', false);
-                                                $('#Tachograph').prop('checked', false);
-                                                $('#addArticle2').modal('hide');
+                                                close_chenge_tour_bus();
                                                 document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].text = data['String'];
-                                                $('#save2').text('Добавить');
-                                                $('#save2').attr("onclick","create_tour_bus()");
                                                 alert('Изменено');
 
                                             },
@@ -469,15 +601,21 @@
                                     };
 
                                     function close_chenge_tour_bus() {
-                                        $('#Brand_Bus').val('');
-                                        $('#State_Registration_Number').val('');
-                                        $('#Year_Issue').val('');
-                                        $('#Diagnostic_card').val('');
-                                        $('#Validity_Date').val('');
-                                        $('#Amount_Place_Bus').val('0');
-                                        $('#employee_id').val('0');
-                                        $('#Glonas_GPS').prop('checked', false);
-                                        $('#Tachograph').prop('checked', false);
+                                        Hidden_All_Transport();
+                                                $('#Title_Transport').val('');
+                                                $('#Description_Transport').val('');
+                                                $('#Company').val('');
+                                                $('#Classes').val('');
+                                                $('#Type_Transport').val('0');
+                                                $('#State_Registration_Number').val('');
+                                                $('#Year_Issue').val('');
+                                                $('#Diagnostic_card').val('');
+                                                $('#Validity_Date').val('');
+                                                $('#Amount_Place_Bus').val('0');
+                                                $('#employee_id').val('0');
+                                                $('#Glonas_GPS').prop('checked', false);
+                                                $('#Tachograph').prop('checked', false);
+                                                $('#Main_Transort').prop('checked', false);
                                         $('#save2').text('Добавить');
                                         $('#save2').attr("onclick","create_tour_bus()");
                                         $('#close2').text('Закрыть');
@@ -486,17 +624,21 @@
 
                                     function index_tour_bus() {
                                         var id = $('#buses_id').val();
-                                        $('#save3').text('Редактировать');
                                         $.ajax({
                                             url: "{{route('bus.index')}}",
                                             type: "POST",
-                                            data: {id:id},
+                                            data: {id:id[0]},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
                                             success:function (data)
                                             {
-                                                $('#Brand_Bus').val(data['Brand_Bus']);
+                                                Set_Trnaport_hidden_Shenge(data['Type_Transport']);
+                                                $('#Description_Transport').val(data['Description']);
+                                                $('#Company').val(data['Company']);
+                                                $('#Classes').val(data['Classes']);
+                                                $('#Type_Transport').val(data['Type_Transport']);
+                                                $('#Title_Transport').val(data['Title_Transport']);
                                                 $('#State_Registration_Number').val(data['State_Registration_Number']);
                                                 $('#Year_Issue').val(data['Year_Issue']);
                                                 $('#Diagnostic_card').val(data['Diagnostic_card']);
@@ -505,6 +647,7 @@
                                                 $('#employee_id').val(data['employee_id']);
                                                 $('#Glonas_GPS').prop('checked', data['Glonas_GPS']);
                                                 $('#Tachograph').prop('checked', data['Tachograph']);
+                                                $('#Main_Transort').prop('checked', data['Main_Transort']);
                                                 $('#save2').text('Изменить');
                                                 $('#close2').text('Удалить');
                                                 $('#save2').attr("onclick","update_tour_bus()");
@@ -520,7 +663,7 @@
                                         $.ajax({
                                             url: "{{route('bus.destroy')}}",
                                             type: "POST",
-                                            data: {id:buses_id},
+                                            data: {id:buses_id[0]},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
@@ -528,7 +671,7 @@
                                             {
                                                 document.querySelector("#updatebutton2").classList.add("diableddeletedbutton");
                                                 document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].remove();
-                                                $('#buses_id').val('0');
+                                                //$('#buses_id').val('0');
                                                 close_chenge_tour_bus();
                                                 alert('Удалено');
                                             },
@@ -541,12 +684,12 @@
                                 </script>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="buses_id" >Маршрут<span class="text-danger">*</span></label>
+                                    <label class="col-lg-4 col-form-label" for="buses_id" >Маршрут</label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('buses_id') is-invalid @enderror" id="routes_id" name="routes_id" onchange="onchange_route(this.value)" required>
+                                        <select class="custom-select @error('buses_id') is-invalid @enderror" multiple id="routes_id" name="routes_id[]" onchange="onchange_route(this.value)">
                                             <option value="0"disabled selected hidden>Маршрут</option>
                                             @foreach($routes_ids as $routes_id)
-                                                <option value="{{ $routes_id->id }}" id="{{ $routes_id->id }}" @if( $tour->routes_id == $routes_id->id) selected @endif>{{$routes_id->Itinerary}}</option>
+                                                <option value="{{ $routes_id->id }}" id="{{ $routes_id->id }}" @if( in_array($routes_id->id, $route) ) selected @endif>{{$routes_id->Itinerary}}</option>
                                             @endforeach
                                         </select>
                                         @error('$routes_id')
@@ -555,10 +698,10 @@
                                         </span>
                                         @enderror
                                         <div class="input-group-append">
-                                            <a  data-toggle="modal" data-target="#addArticle3" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
+                                            <a  data-toggle="modal" data-target="#addArticle3" class="btn input-group-text selectedbutton" onclick="close_chenge_tour_route()" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle3" id="updatebutton3" style="" name="updatebutton3"  onclick="index_tour_route()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
+                                            <a class="btn input-group-text selectedbutton @if($routes_ids->count() == 0) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle3" id="updatebutton3" style="" name="updatebutton3"  onclick="index_tour_route()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -666,15 +809,15 @@
                                 </div>
 
                                 <script>
-                                    function onchange_route(i) {
-                                        // если значение не равно пустой строке
-                                        var updatebutton3 = document.querySelector("#updatebutton2")
-                                        if($('#routes_id').val() == "0" || i == 0 || i == null) {
-                                            updatebutton3.classList.add("diableddeletedbutton");
-                                        } else {
-                                            updatebutton3.classList.remove("diableddeletedbutton");
-                                        }
-                                    };
+                                    // function onchange_route(i) {
+                                    //     // если значение не равно пустой строке
+                                    //     var updatebutton3 = document.querySelector("#updatebutton2")
+                                    //     if($('#routes_id').val() == "0" || i == 0 || i == null) {
+                                    //         updatebutton3.classList.add("diableddeletedbutton");
+                                    //     } else {
+                                    //         updatebutton3.classList.remove("diableddeletedbutton");
+                                    //     }
+                                    // };
 
                                     function create_tour_route() {
                                         var Map = $('#Map').val();
@@ -728,7 +871,7 @@
                                         $.ajax({
                                             url: "{{route('route.update')}}",
                                             type: "POST",
-                                            data: {id:routes_id, Map:Map, Itinerary:Itinerary,
+                                            data: {id:routes_id[0], Map:Map, Itinerary:Itinerary,
                                                 Distination_From_Initial_Pop:Distination_From_Initial_Pop, Time_Sending_From_Initial_Pop:Time_Sending_From_Initial_Pop, Distination_From_End_Point:Distination_From_End_Point,
                                                 Time_Sending_From_End_Point:Time_Sending_From_End_Point, Name_Car_Dorough_Dorog_Report_Transportation:Name_Car_Dorough_Dorog_Report_Transportation},
                                             headers: {
@@ -766,7 +909,7 @@
                                         $('#Time_Sending_From_End_Point').val('');
                                         $('#Name_Car_Dorough_Dorog_Report_Transportation').val('');
                                         $('#save3').text('Добавить');
-                                        $('#save3').attr("onclick","create_tour_bus()");
+                                        $('#save3').attr("onclick","create_tour_route()");
                                         $('#close3').text('Закрыть');
                                         $('#close3').attr("onclick","");
                                     }
@@ -776,7 +919,7 @@
                                         $.ajax({
                                             url: "{{route('route.index')}}",
                                             type: "POST",
-                                            data: {id:id},
+                                            data: {id:id[0]},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
@@ -803,7 +946,7 @@
                                         $.ajax({
                                             url: "{{route('route.destroy')}}",
                                             type: "POST",
-                                            data: {id:routes_id},
+                                            data: {id:routes_id[0]},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
@@ -836,7 +979,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="End_Date_Tours" >Возвращение</label>
+                                    <label class="col-lg-4 col-form-label" for="End_Date_Tours" >Возвращение<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <input  type="text" class="form-control @error('End_Date_Tours') is-invalid @enderror" id="End_Date_Tours" name="End_Date_Tours" value="{{  date('d-m-Y H:i', strtotime($tour->End_Date_Tours)) }}" placeholder="Возвращение">
                                         @error('End_Date_Tours')

@@ -31,6 +31,11 @@ class Partner extends Model
         return $this->hasMany('App\Email', 'partners_id');
     }
 
+    public function tour_employees()
+    {
+      return $this->hasMany('App\Tour_employees', 'partner_id');
+    }
+
     public function website()
     {
         return $this->hasMany('App\Website', 'partners_id');

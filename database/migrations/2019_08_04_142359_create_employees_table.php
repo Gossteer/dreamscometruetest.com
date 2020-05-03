@@ -26,6 +26,8 @@ class CreateEmployeesTable extends Migration
             $table->string('Contract_Employee', 191)->nullable();
             $table->boolean('Set_Permission')->default(0);
             $table->integer('Man_brought')->default(0);
+            $table->boolean('Fired')->default(0);
+            $table->string('Reason_Fired')->nullable();
             $table->integer('Joint_excursions')->default(0);
             $table->smallInteger('Level')->default(0);
             $table->bigInteger('jobs_id')->unsigned()->nullable();

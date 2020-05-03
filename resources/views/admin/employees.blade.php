@@ -143,7 +143,7 @@
                                                     <label >Почта: <label  id="email_employee"></label></label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label >Права: <label  id="type_user_employee"></label></label>
+                                                    <label >Доступ к административной панели: <label  id="type_user_employee"></label></label>
                                                 </div>
                                                 <div class="form-group">
                                                     <label >Описание: <label style="display: contents;" id="Description_employee"></label></label>

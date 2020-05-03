@@ -20,12 +20,14 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="{{ asset('js/jquery.dialog.min.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
 
 
 
 
     <!-- Fonts -->
     <!-- Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/jquery.dialog.min.css') }}">
     <link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
     <link href="{{ asset('css/styleadmin.css') }}" rel='stylesheet' type='text/css' /><!-- custom css -->
@@ -228,6 +230,7 @@
     <!--**********************************
         Content body start
     ***********************************-->
+
     <div class="content-body">
 
         <!-- row -->

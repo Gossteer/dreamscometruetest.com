@@ -25,6 +25,7 @@ class TourEmployeesController extends Controller
             'tour_id' => $request->tour_id,
             'employee_id' =>  $index_TourEmployees->employee_id,
             'Confidentiality' =>  $index_TourEmployees->Confidentiality == 1 ? 1 : 0,
+            'partner_id' => $index_TourEmployees->partner_id
         ];
 
         return $date;
@@ -54,6 +55,7 @@ class TourEmployeesController extends Controller
             'tour_id' => $request->tour_id,
             'employee_id' => $request->employee_id,
             'Confidentiality' => $request->Confidentiality,
+            'partner_id' => $request->partner_id
         ]);
 
         $employee = Employee::find($request->employee_id);
@@ -110,6 +112,7 @@ class TourEmployeesController extends Controller
             'tour_id' => $request->tour_id,
             'employee_id' => $request->employee_id,
             'Confidentiality' => $request->Confidentiality,
+            'partner_id' => $request->partner_id
         ]);
 
         $employee = Employee::find($request->employee_id);

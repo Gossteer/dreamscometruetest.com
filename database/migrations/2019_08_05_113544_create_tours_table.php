@@ -17,9 +17,6 @@ class CreateToursTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('albums_id')->unsigned()->nullable();
-            $table->bigInteger('type_tours_id')->unsigned();
-            $table->bigInteger('routes_id')->unsigned()->nullable();
-            $table->bigInteger('buses_id')->unsigned()->nullable();
             $table->boolean('Seating');
             $table->string('Duration', 191)->default('Подробности по телефону.');
             $table->boolean('Popular')->default(0);
@@ -42,12 +39,6 @@ class CreateToursTable extends Migration
             $table->tinyInteger('Confirmation_Tours')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 
-            $table->foreign('buses_id')->references('id')
-                ->on('buses');
-            $table->foreign('routes_id')->references('id')
-                ->on('routes');
-            $table->foreign('type_tours_id')->references('id')
-                ->on('type_tours')->onDelete('SET NULL');
             $table->foreign('albums_id')->references('id')
                 ->on('albums')->onDelete('SET NULL');
 

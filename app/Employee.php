@@ -21,7 +21,9 @@ class Employee extends Model
         'Man_brought',
         'Joint_excursions',
         'Level',
-        'Photo'
+        'Photo',
+        'Fired',
+        'Reason_Fired',
         ];
 
     protected $hidden = [

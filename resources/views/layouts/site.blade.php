@@ -97,11 +97,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<li id="lineNavbar"><br ></li>
 				@guest
 					<li class=" ">
-						<a id="autorizStile" class="" href="{{ route('login') }}" >Войти</a>
+						<a @if(Route::current()->getName() == 'login') style="font-weight: bold" @endif id="autorizStile" class="" href="{{ route('login') }}" >Войти</a>
 					</li>
 					@if (Route::has('register'))
 						<li class="">
-							<a id="autorizStile" class="" href="{{ route('register') }}" >Регистрация</a>
+							<a @if(Route::current()->getName() == 'register') style="font-weight: bold" @endif id="autorizStile" class="" href="{{ route('register') }}" >Регистрация</a>
 						</li>
 					@endif
 				@else

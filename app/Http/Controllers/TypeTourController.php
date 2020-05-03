@@ -39,13 +39,17 @@ class TypeTourController extends Controller
     public function store(Request $request)
     {
         \Validator::make($request->all(), [
-            'Name_Type_Tours' => ['required','unique:type_tours', 'max:191','min:2'],
+            'Name_Type_Tours' => ['required', 'max:191','min:2'],
         ],[
             'Name_Type_Tours.unique' => 'Данный тип уже существует',
         ])->validate();
 
         $res = Type_Tour::firstOrCreate([
             'Name_Type_Tours' => $request->Name_Type_Tours,
+        ]);
+
+        $res->update([
+            'LogicalDelete' => 0
         ]);
 
         $data = ['id' => $res->id, 'Name_Type_Tours' => $request->Name_Type_Tours];
@@ -101,7 +105,9 @@ class TypeTourController extends Controller
      */
     public function destroy(Request $request)
     {
-        Type_Tour::find($request->typetourid)->delete();
+        Type_Tour::find($request->typetourid)->update([
+            'LogicalDelete' => 1,
+        ]);
 
         $datas = '1';
         return $datas;

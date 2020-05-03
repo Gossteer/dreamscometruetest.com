@@ -41,30 +41,39 @@ class BusController extends Controller
      */
     public function store(Request $request)
     {
-        $attribute = $request->all();
-        $attribute['date'] = Carbon::today();
+        // $attribute = $request->all();
+        // $attribute['date'] = Carbon::today();
 
-        \Validator::make($attribute, [
-            'Year_Issue' => ['date','before_or_equal:date'],
-            'Validity_Date' => ['date']
-        ],[
-            'Year_Issue.before_or_equal' => 'Дата выпуска не может быть позже нынешней даты!',
-            'date' => 'Укажите поажалуйста правильную дату!',
-        ])->validate();
+        // \Validator::make($attribute, [
+        //     'Year_Issue' => ['before_or_equal:date'],
+        //     'Validity_Date' => ['after_or_equal:date']
+        // ],[
+        //     'Year_Issue.before_or_equal' => 'Дата выпуска не может быть позже нынешней даты!',
+        //     'Validity_Date.after_or_equal' => 'Срок годности истёк!',
+        //     'date' => 'Укажите поажалуйста правильную дату!',
+        // ])->validate();
 
         $date = Bus::create([
-            'Brand_Bus' => $request->Brand_Bus,
+            'Title_Transport' => $request->Title_Transport,
+            'Description' => $request->Description,
+            'Company' => $request->Company,
+            'Classes' => $request->Classes,
+            'Type_Transport' => $request->Type_Transport,
+            'Main_Transort' => $request->Main_Transort ?? 0,
             'State_Registration_Number' => $request->State_Registration_Number,
-            'Year_Issue' => date('Y-m-d', strtotime($request->Year_Issue)),
+            'Year_Issue' => date('Y-m-d', strtotime($request->Year_Issue)) ?? null,
             'employee_id' => $request->employee_id,
             'Diagnostic_card' => $request->Diagnostic_card,
-            'Validity_Date' => date('Y-m-d', strtotime($request->Validity_Date)),
+            'Validity_Date' => date('Y-m-d', strtotime($request->Validity_Date)) ?? null,
             'Amount_Place_Bus' => $request->Amount_Place_Bus,
-            'Tachograph' => $request->Tachograph,
-            'Glonas_GPS' => $request->Glonas_GPS,
+            'Tachograph' => $request->Tachograph ?? 0,
+            'Glonas_GPS' => $request->Glonas_GPS ?? 0,
         ]);
 
-        $date['String'] = $date->Amount_Place_Bus . 'м ' . $date->Brand_Bus . ' ' .  date('d.m.Y', strtotime($date->Year_Issue)) . ' ' . $date->employee->Surname . ' ' . mb_substr($date->employee->Name, 0, 1)  . '. ' . mb_substr($date->employee->Middle_Name, 0, 1) . ($date->employee->Middle_Name != '' ? '.' : '');
+        $date['String'] = $request->Type_Transport . ' ' . $date->Title_Transport . ' ' . $date->Amount_Place_Bus . 'м ';
+        if($request->Type_Transport == 'Автобус' or $request->Type_Transport == 'Микроавтобус')
+        $date['String'] += date('d.m.Y', strtotime($date->Year_Issue)) . ' ' . $date->employee->Surname . ' ' . mb_substr($date->employee->Name, 0, 1)  . '. ' . mb_substr($date->employee->Middle_Name, 0, 1) . ($date->employee->Middle_Name != '' ? '.' : '');
+        
 
         return $date;
     }
@@ -100,32 +109,39 @@ class BusController extends Controller
      */
     public function update(Request $request)
     {
-        $attribute = $request->all();
-        $attribute['date'] = Carbon::today();
+        // $attribute = $request->all();
+        // $attribute['date'] = Carbon::today();
 
-        \Validator::make($attribute, [
-            'Year_Issue' => ['date','before_or_equal:date'],
-            'Validity_Date' => ['date']
-        ],[
-            'Year_Issue.before_or_equal' => 'Дата выпуска не может быть позже нынешней даты!',
-            'date' => 'Укажите поажалуйста правильную дату!',
-        ])->validate();
+        // \Validator::make($attribute, [
+        //     'Year_Issue' => ['date','before_or_equal:date'],
+        //     'Validity_Date' => ['date']
+        // ],[
+        //     'Year_Issue.before_or_equal' => 'Дата выпуска не может быть позже нынешней даты!',
+        //     'date' => 'Укажите поажалуйста правильную дату!',
+        // ])->validate();
 
         Bus::find($request->id)->update([
-            'Brand_Bus' => $request->Brand_Bus,
+            'Title_Transport' => $request->Title_Transport,
+            'Description' => $request->Description,
+            'Company' => $request->Company,
+            'Classes' => $request->Classes,
+            'Type_Transport' => $request->Type_Transport,
+            'Main_Transort' => $request->Main_Transort ?? 0,
             'State_Registration_Number' => $request->State_Registration_Number,
-            'Year_Issue' => date('Y-m-d', strtotime($request->Year_Issue)),
+            'Year_Issue' => date('Y-m-d', strtotime($request->Year_Issue)) ?? null,
             'employee_id' => $request->employee_id,
             'Diagnostic_card' => $request->Diagnostic_card,
-            'Validity_Date' => date('Y-m-d', strtotime($request->Validity_Date)),
+            'Validity_Date' => date('Y-m-d', strtotime($request->Validity_Date)) ?? null,
             'Amount_Place_Bus' => $request->Amount_Place_Bus,
-            'Tachograph' => $request->Tachograph,
-            'Glonas_GPS' => $request->Glonas_GPS,
+            'Tachograph' => $request->Tachograph ?? 0,
+            'Glonas_GPS' => $request->Glonas_GPS ?? 0,
         ]);
 
         $date = Bus::find($request->id);
 
-        $date['String'] = $date->Amount_Place_Bus . 'м ' . $date->Brand_Bus . ' ' .  date('d.m.Y', strtotime($date->Year_Issue)) . ' ' . $date->employee->Surname . ' ' . mb_substr($date->employee->Name, 0, 1)  . '. ' . mb_substr($date->employee->Middle_Name, 0, 1) . ($date->employee->Middle_Name != '' ? '.' : '');
+        $date['String'] = $request->Type_Transport . ' ' . $date->Title_Transport . ' ' . $date->Amount_Place_Bus . 'м ';
+        if($request->Type_Transport == 'Автобус' or $request->Type_Transport == 'Микроавтобус')
+        $date['String'] += date('d.m.Y', strtotime($date->Year_Issue)) . ' ' . $date->employee->Surname . ' ' . mb_substr($date->employee->Name, 0, 1)  . '. ' . mb_substr($date->employee->Middle_Name, 0, 1) . ($date->employee->Middle_Name != '' ? '.' : '');
 
         return $date;
     }

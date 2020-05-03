@@ -20,9 +20,12 @@ class CreateTourEmployeesTable extends Migration
             $table->smallInteger('Occupied_Place_Bus')->nullable();
             $table->bigInteger('tour_id')->unsigned();
             $table->bigInteger('employee_id')->unsigned();
+            $table->bigInteger('partner_id')->unsigned()->nullable();
             $table->boolean('Confidentiality')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 
+            $table->foreign('partner_id')->references('id')
+                ->on('partner');
             $table->foreign('tour_id')->references('id')
                 ->on('tours');
             $table->foreign('employee_id')->references('id')

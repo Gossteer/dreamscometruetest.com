@@ -11,6 +11,6 @@ class Route extends Model
 
     public function tour()
     {
-        return $this->hasMany('App\Tour', 'routes_id');
+        return $this->belongsTo('App\Tour', 'routes_id');
     }
 }

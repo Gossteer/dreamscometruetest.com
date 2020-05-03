@@ -9,11 +9,11 @@ class Type_Tour extends Model
     protected $table = 'type_tours';
 
     protected $fillable = [
-        'Name_Type_Tours', 'id',
+        'Name_Type_Tours', 'id', 'LogicalDelete',
     ];
 
-    public function tour()
+    public function type_tour_many()
     {
-        return $this->hasMany('App\Tour', 'type_tours_id');
+        return $this->hasMany('App\Type_Tour_Many', 'type_tours_id');
     }
 }

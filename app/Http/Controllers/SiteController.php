@@ -41,6 +41,15 @@ class SiteController extends Controller
             }
            $expenses = $tour->Expenses;
         }
-        return view('admin.index', ['sum' => ($sum - $expenses)]);
+        
+        $count_tour = tour::whereRaw('Start_Date_Tours < ?',[now()->subDay()])->count();
+        $count_all_customers = Customer::all()->count();
+        $count_men_customers = Customer::where('Floor', 0)->count();
+        $count_women_customers = Customer::where('Floor', 1)->count();
+        $substr_count_women_customers = substr($count_women_customers, -1);
+
+        return view('admin.index', ['sum' => ($sum - $expenses), 'count_tour' => $count_tour, 
+        'count_all_customers' => $count_all_customers, 'count_men_customers' => $count_men_customers,
+        'count_women_customers'=> $count_women_customers, 'substr_count_women_customers' => $substr_count_women_customers]);
     }
 }

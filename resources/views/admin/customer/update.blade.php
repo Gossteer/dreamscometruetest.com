@@ -38,6 +38,7 @@
                                     <label class="col-lg-4 col-form-label" for="password" >Новый пароль<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" minlength="8" maxlength="16"  placeholder="Пароль">
+                                        <p id="capsWarning" style="color: red; display: none;">Внимание! Caps lock включен.</p>
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -50,8 +51,46 @@
                                     <label class="col-lg-4 col-form-label" for="password_confirmation" >Подтвердите пароль<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  placeholder="Подтвердите пароль">
+                                        <p id="capsWarning" style="color: red; display: none;">Внимание! Caps lock включен.</p>
                                     </div>
                                 </div>
+
+                                <script>
+
+                                    // Получить поле ввода
+                                        var input = document.getElementById("password");
+                                        var input2 = document.getElementById("password-confirm");
+            
+                                        // Получить текст предупреждения
+                                        var text = document.getElementById("capsWarning");
+                                        var text2 = document.getElementById("capsWarning2");
+            
+                                        // Когда пользователь нажимает любую клавишу на клавиатуре, запустите функцию
+                                        input.addEventListener("keyup", function(event) {
+            
+                                        // Если "caps lock" нажат, отобразится текст предупреждения
+                                        if (event.getModifierState("CapsLock")) {
+                                            text.style.display = "block";
+                                            text2.style.display = "block";
+                                        } else {
+                                            text.style.display = "none"
+                                            text2.style.display = "none";
+                                        }
+                                        });
+        
+                                        input2.addEventListener("keyup", function(event) {
+            
+                                        // Если "caps lock" нажат, отобразится текст предупреждения
+                                        if (event.getModifierState("CapsLock")) {
+                                            text.style.display = "block";
+                                            text2.style.display = "block";
+                                        } else {
+                                            text.style.display = "none"
+                                            text2.style.display = "none";
+                                        }
+                                        });
+                                        
+                                </script>
 
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Surname" >Фамилия<span class="text-danger">*</span></label>

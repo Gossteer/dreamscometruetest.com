@@ -6,6 +6,7 @@ use App\Bus;
 use App\Contract;
 use App\Employee;
 use App\Partner;
+use DB;
 use App\Passenger;
 use App\Route;
 use App\tour;
@@ -45,7 +46,7 @@ class TourController extends Controller
 
     public function create()
     {
-        return view('admin.tours.create', ['type_tours' => Type_Tour::where('LogicalDelete', 0)->get(),  'Tour' => [], 'buses_ids' => Bus::all(), 'routes_ids' => Route::where('tour_id', null)->get() ]);
+        return view('admin.tours.create', ['type_tours' => Type_Tour::where('LogicalDelete', 0)->get(),  'Tour' => [], 'buses_ids' => Bus::where('LogicalDelete', 0)->get(), 'routes_ids' => Route::where('tour_id', null)->get() ]);
     }
 
     public function prnpriviewvauher()
@@ -104,7 +105,6 @@ class TourController extends Controller
             'Children_price' => $request->Children_price,
             'Expenses'=> $request->Expenses,
             'Amount_Place'=> $request->Amount_Place,
-            'routes_id' => $request->routes_id,
             'Start_Date_Tours'=> date('Y-m-d H:i', strtotime($request->Start_Date_Tours)),
             'End_Date_Tours'=> date('Y-m-d H:i', strtotime($request->End_Date_Tours)),
             'Assessment'=> $request->Assessment ?? 0,
@@ -181,23 +181,26 @@ class TourController extends Controller
             array_push($type_tour_many_array, $type_tour_many[$i]['type_tours_id']);
         };
 
-        $Route = Route::select('id')->where('tour_id', $tour->id)->get()->toArray();
-        $Route_array = array();
-        for ($i=0; $i < count($Route); $i++) { 
-            array_push($Route_array, $Route[$i]['id']);
-        };
-
         $Transort = Transort::select('buses_id')->where('tour_id', $tour->id)->get()->toArray();
         $Transort_array = array();
         for ($i=0; $i < count($Transort); $i++) { 
             array_push($Transort_array, $Transort[$i]['buses_id']);
         };
 
-        //dd($type_tour_many_array);
+        // $latestPosts = DB::table('type_tour_manies')
+        //            ->where('tour_id', $tour->id)
+        //            ->groupBy('type_tours_id');
 
-        return view('admin.tours.update', ['type_tours' => Type_Tour::all(), 
+        // $users = DB::table('type_tours')
+        //         ->joinSub($latestPosts, 'type_tour_manies', function ($join) {
+        //             $join->on('type_tours.id', '=', 'type_tour_manies.type_tours_id');
+        //         })->get();
+
+        //dd( DB::table('type_tours')->leftJoin('type_tour_manies', 'type_tours.id', '=', 'type_tour_manies.type_tours_id')->where('type_tours.LogicalDelete', '=', 0)->orWhere('type_tour_manies.tour_id', '=', $tour->id)->select('type_tours.*')->distinct()->get(), $tour->id);
+
+        return view('admin.tours.update', ['type_tours' => DB::table('type_tours')->leftJoin('type_tour_manies', 'type_tours.id', '=', 'type_tour_manies.type_tours_id')->where('type_tours.LogicalDelete', '=', 0)->orWhere('type_tour_manies.tour_id', '=', $tour->id)->select('type_tours.*')->distinct()->get(), 
           'tour' => $tour, 'type_tour_many' => $type_tour_many_array, 'transpor' => $Transort_array,
-          'buses_ids' => Bus::all(),  'routes_ids' => Route::where('tour_id', $tour->id)->get(), 'route' => $Route_array]);
+          'buses_ids' => DB::table('buses')->leftJoin('transorts', 'transorts.buses_id', '=', 'buses.id')->where('buses.LogicalDelete', '=', 0)->orWhere('transorts.tour_id', '=', $tour->id)->select('buses.*')->distinct()->get(),  'routes_ids' => Route::where('tour_id', $tour->id)->get()]);
     }
 
     /**
@@ -240,13 +243,11 @@ class TourController extends Controller
             'Name_Tours'=> $request->Name_Tours,
             'Description'=> $request->Description,
             'Price'=> $request->Price,
-            'buses_id' => $request->buses_id,
             'Duration' => $End_Date_Tours->diffInDays($Start_Date_Tours),
             'Privilegens_Price'=> $request->Privilegens_Price,
             'Children_price' => $request->Children_price,
             'Expenses'=> $request->Expenses,
             'Amount_Place'=> $request->Amount_Place,
-            'routes_id' => $request->routes_id,
             'Start_Date_Tours'=> date('Y-m-d H:i', strtotime($request->Start_Date_Tours)),
             'End_Date_Tours'=> date('Y-m-d H:i', strtotime($request->End_Date_Tours)),
             'Assessment'=> $request->Assessment ,

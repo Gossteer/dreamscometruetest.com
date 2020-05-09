@@ -11,7 +11,7 @@ class ContactController extends Controller
 
     public function send(Request $request)
     {
-$sender['email'] = $request->email;
+        $sender['email'] = $request->email;
         $sender['name'] = $request->name;
 
       \Mail::send('vendor.mail.contact',[
@@ -19,6 +19,7 @@ $sender['email'] = $request->email;
             'email' => $request->email,
             'messagee' =>  $request->message,
             'phone_number' => $request->phone_number,
+            'g-recaptcha-response' => 'required|captcha',
         ],function ($message) use ($sender) {
             $message->from($sender['email'], $sender['name']);
 

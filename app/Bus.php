@@ -10,7 +10,7 @@ class Bus extends Model
         'Brand_Bus', 'State_Registration_Number',  'Year_Issue', 'employee_id',
         'Diagnostic_card', 'Validity_Date', 'Amount_Place_Bus', 'Tachograph', 
         'Glonas_GPS', 'Title_Transport', 'Description', 'Company', 'Classes',
-        'Type_Transport', 'Main_Transort'
+        'Type_Transport', 'Main_Transort', 'LogicalDelete'
     ];
 
     public function employee()

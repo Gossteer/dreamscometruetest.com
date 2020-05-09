@@ -69,13 +69,21 @@
 							<div class="form-group contact-forms">
 							  <textarea class="form-control" id="message" name="message" placeholder="Сообщение" required=""></textarea>
 							</div>
+							<div class="form-group contact-forms">
+                                {!! NoCaptcha::display() !!}
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block">
+                                        <strong class="text-danger" style="font-family: Raleway, sans-serif;">{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 							<script>
 								$(function() {
 									$("#phone_number").mask("+7 (999) 999-99-99");
 								});
 							</script>
 							<button class="btn btn-block sent-butnn" style="margin-right: 0; margin-left: 0; " type="submit">Отправить</button>
-						</form>
+							</form>
 					</div>
 
 					<script>
@@ -134,3 +142,6 @@
 <!-- //map -->
 
 @endsection
+@push('scripts')
+    {!! NoCaptcha::renderJs() !!}
+@endpush

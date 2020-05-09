@@ -212,5 +212,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- move top -->
 </body>
 
+	@stack('scripts')
 </html>
 </html>

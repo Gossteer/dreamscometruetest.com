@@ -38,7 +38,10 @@
 
                             <div class="col-sm-6 form-group contact-forms">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" minlength="8" maxlength="16" required autocomplete="new-password" placeholder="Пароль">
-
+                                <small id="passwordHelpBlock" class="form-text text-muted">
+                                    Ваш пароль должен состоиять от 8 до 16 символо.
+                                </small>
+                                <p id="capsWarning" style="color: red; display: none;">Внимание! Caps lock включен.</p>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -48,6 +51,7 @@
 
                             <div class="col-sm-6 form-group contact-forms">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Подтвердите пароль">
+                                <p id="capsWarning2" style="color: red; display: none;">Внимание! Caps lock включен.</p>
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms">
@@ -58,6 +62,43 @@
                                     </span>
                                 @enderror
                             </div>
+
+                            <script>
+
+                                // Получить поле ввода
+                                    var input = document.getElementById("password");
+                                    var input2 = document.getElementById("password-confirm");
+        
+                                    // Получить текст предупреждения
+                                    var text = document.getElementById("capsWarning");
+                                    var text2 = document.getElementById("capsWarning2");
+        
+                                    // Когда пользователь нажимает любую клавишу на клавиатуре, запустите функцию
+                                    input.addEventListener("keyup", function(event) {
+        
+                                    // Если "caps lock" нажат, отобразится текст предупреждения
+                                    if (event.getModifierState("CapsLock")) {
+                                        text.style.display = "block";
+                                        text2.style.display = "block";
+                                    } else {
+                                        text.style.display = "none"
+                                        text2.style.display = "none";
+                                    }
+                                    });
+    
+                                    input2.addEventListener("keyup", function(event) {
+        
+                                    // Если "caps lock" нажат, отобразится текст предупреждения
+                                    if (event.getModifierState("CapsLock")) {
+                                        text.style.display = "block";
+                                        text2.style.display = "block";
+                                    } else {
+                                        text.style.display = "none"
+                                        text2.style.display = "none";
+                                    }
+                                    });
+                                    
+                            </script>
 
                             <div class="col-sm-6 form-group contact-forms">
                                 <input id="Name" type="text" class="form-control @error('Name') is-invalid @enderror" name="Name" value="{{ old('Name') }}" required autocomplete="given-name" minlength="2" maxlength="50" placeholder="Имя">
@@ -140,6 +181,15 @@
                                     $("#Date_Birth_Customer").mask("99-99-9999");
                                 });
                             </script>
+
+                            <div class="col-md-12 form-group contact-forms">
+                                {!! NoCaptcha::display() !!}
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block">
+                                        <strong class="text-danger" style="font-family: Raleway, sans-serif;">{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 
                             <script >
                                 $(function() {
@@ -240,3 +290,7 @@
 </div>
     </section>
 @endsection
+
+@push('scripts')
+    {!! NoCaptcha::renderJs() !!}
+@endpush

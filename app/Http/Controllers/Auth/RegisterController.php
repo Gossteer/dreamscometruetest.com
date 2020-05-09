@@ -60,6 +60,7 @@ class RegisterController extends Controller
             'Surname' => ['required','string', 'min:2','max:50'],
             'Name' => ['required','string', 'min:2','max:50'],
             'Middle_Name' => ['string', 'min:2','max:50'],
+            'g-recaptcha-response' => 'required|captcha',
             'Floor' => ['required'],
             'Name_Category_Source' => ['required'],
             'Date_Birth_Customer' => ['required','date','before_or_equal:date']
@@ -81,6 +82,7 @@ class RegisterController extends Controller
             'Middle_Name.max' => 'Отчество должено быть не больше 50 символов',
             'password.confirmed' => 'Пароль не совпадает',
             'email.email' => 'Укажите пожалуйста правильную почту!',
+            'g-recaptcha-response.required' => 'Пожалуйста подтвердите, что вы не робот!',
             'required' => 'Это поле обязательно к заполнению!'
         ]);
     }

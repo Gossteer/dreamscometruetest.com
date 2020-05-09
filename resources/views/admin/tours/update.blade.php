@@ -23,7 +23,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Tours" >Название<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input id="login" type="text" class="form-control @error('Name_Tours') is-invalid @enderror" name="Name_Tours" minlength="2" maxlength="100" value="{{ $tour->Name_Tours }}" required  placeholder="Название">
+                                        <input id="login" type="text" class="form-control @error('Name_Tours') is-invalid @enderror"  name="Name_Tours" minlength="2" maxlength="100" value="{{ $tour->Name_Tours }}" required  placeholder="Название">
                                         @error('Name_Tours')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -35,7 +35,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="type_tours_id" >Тип экскурсии<span class="text-danger">*</span></label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" id="type_tours_id" multiple name="type_tours_id[]" required>
+                                        <select class="custom-select @error('jobs_id') is-invalid @enderror" id="type_tours_id" multiple onchange="chenge_ubdate_button(this, 'updatebutton')" name="type_tours_id[]" required>
                                             {{-- <option value="0" disabled selected hidden>Тип экскурсии</option> --}}
                                             @foreach($type_tours as $type_tour)
                                                 <option value="{{ $type_tour->id }}" id="{{ $type_tour->id }}" @if( in_array($type_tour->id, $type_tour_many) ) selected @endif >{{$type_tour->Name_Type_Tours}}</option>
@@ -49,8 +49,8 @@
                                         <div class="input-group-append">
                                             <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;"  title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
-                                        <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton @if($type_tours->count() == 0) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
+                                        <div class="input-group-append" id="div_updatebutton">
+                                            <a class="btn input-group-text selectedbutton @if(count($type_tour_many) > 1 or count($type_tour_many) > 1) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" id="delete" name="delete" data-dismiss="modal">Удалить</button>
-                                                <button type="button" id="ubdate" name="ubdate" class="btn btn-primary">Изменить</button>
+                                                <button type="button" id="update" name="update" class="btn btn-primary">Изменить</button>
                                             </div>
                                         </div>
                                     </div>
@@ -133,7 +133,7 @@
                                                     $('.alert').removeClass('show').addClass('hidden');
                                                     var str = '<option value="'+data['id']+'" selected>'+data['Name_Type_Tours']+'</option>';
                                                     $('#type_tours_id:last').append(str);
-                                                    document.querySelector("#updatebutton").classList.remove("diableddeletedbutton");
+                                                    chenge_ubdate_button($('#type_tours_id'), 'updatebutton')
                                                     alert('Добавлено');
                                                 },
                                                 error: function (msg) {
@@ -178,12 +178,9 @@
                                                     $('#addArticle1').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
-                                                    var str;
-                                                    datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'" '+((data['id'] == typetourid) ? 'selected' : '')+'>'+data['Name_Type_Tours']+'</option>';
-                                                    });
-                                                    $('#type_tours_id option').remove();
-                                                    $('#type_tours_id:last').append(str);
+                                                    document.getElementById('type_tours_id').options[document.getElementById('type_tours_id').selectedIndex].text = data['Name_Type_Tours'];
+                                                    document.getElementById('type_tours_id').options[document.getElementById('type_tours_id').selectedIndex].id = data['id'];
+                                                    document.getElementById('type_tours_id').options[document.getElementById('type_tours_id').selectedIndex].value = data['id'];
                                                     alert('Изменено');
                                                 },
                                                 error: function (msg) {
@@ -198,15 +195,18 @@
                                             $.ajax({
                                                 url: "{{route('typetour.destroy')}}",
                                                 type: "POST",
-                                                data: {typetourid:typetourid[0]},
+                                                data: {typetourid:typetourid[0], tour_id:{{$tour->id}}},
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
                                                 success:function (datas)
                                                 {
+                                                    document.querySelector("#updatebutton").classList.add("diableddeletedbutton");
+                                                    document.getElementById('type_tours_id').options[document.getElementById('type_tours_id').selectedIndex].remove();
+                                                    //$('#type_tours_id').val('0');
                                                     //schange_type(0);
-                                                    type_tours_id.removeChild(type_tours_id.querySelector('[value="'+ typetourid +'"]'));
-                                                    type_tours_id.value = 0;
+                                                    //type_tours_id.removeChild(type_tours_id.querySelector('[value="'+ typetourid +'"]'));
+                                                    //type_tours_id.value = 0;
                                                     alert('Удалено');
 
                                                 },
@@ -221,7 +221,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="buses_id" >Транспорт</label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('buses_id') is-invalid @enderror" multiple id="buses_id" name="buses_id[]" onchange="shengebus(this.value)">
+                                        <select class="custom-select @error('buses_id') is-invalid @enderror" onchange="chenge_ubdate_button(this, 'updatebutton2')" multiple id="buses_id" name="buses_id[]">
                                             {{-- <option value="0" disabled   selected hidden>Автобус</option> --}}
                                             @foreach($buses_ids as $buses_id)
                                                 <option value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if( in_array($buses_id->id, $transpor) ) selected @endif>{{ $buses_id->Type_Transport . ' ' . $buses_id->Title_Transport . ' ' .   $buses_id->Amount_Place_Bus . 'м '}} @if($buses_id->Type_Transport == 'Автобус' or $buses_id->Type_Transport == 'Микроавтобус') {{date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}}@endif</option>
@@ -233,71 +233,16 @@
                                         </span>
                                         @enderror
                                         <div class="input-group-append">
-                                            <a  data-toggle="modal" data-target="#addArticle2" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
+                                            <a  data-toggle="modal" data-target="#addArticle2" class="btn input-group-text selectedbutton"  onclick="close_chenge_tour_bus()" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
-                                        <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton @if($buses_ids->count() == 0) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle2" id="updatebutton2" style="" name="updatebutton2"  onclick="index_tour_bus()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
+                                        <div class="input-group-append" id="div_updatebutton2">
+                                            <a class="btn input-group-text selectedbutton @if(count($transpor) == 0 or count($transpor) > 1) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle2" id="updatebutton2" style="" name="updatebutton2"  onclick="index_tour_bus()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
 
                                 <script>
-                                    function Hidden_All_Transport(){
-                                        Description_Transport_div.hidden = true;
-                                        Title_Transport_div.hidden = true;
-                                        Main_Transort_div.hidden = true;
-                                        Amount_Place_Bus_div.hidden = true;
-                                        employee_id_div.hidden = true;
-                                            State_Registration_Number_div.hidden = true;
-                                            Year_Issue_div.hidden = true;
-                                            Diagnostic_card_div.hidden = true;
-                                            Validity_Date_div.hidden = true;
-                                            Tachograph_div.hidden = true;
-                                            Glonas_GPS_div.hidden = true;
-                                            Company_div.hidden = true;
-                                            Classes_div.hidden = true;
-                                    }
-                                    function Set_Trnaport_hidden_Shenge(value){
-                                        Description_Transport_div.hidden = false;
-                                        Title_Transport_div.hidden = false;
-                                        Main_Transort_div.hidden = false;
-                                        Amount_Place_Bus_div.hidden = false;
-
-                                        if(value == 'Автобус' || value == 'Микроавтобус'){
-                                            Company_div.hidden = true;
-                                            Classes_div.hidden = true;
-                                            Company.value = '';
-                                            Classes.value = '';
-
-                                            Title_Transport.placeholder = 'Марка';
-                                            State_Registration_Number_div.hidden = false;
-                                            Year_Issue_div.hidden = false;
-                                            Diagnostic_card_div.hidden = false;
-                                            Validity_Date_div.hidden = false;
-                                            Tachograph_div.hidden = false;
-                                            Glonas_GPS_div.hidden = false;
-                                            employee_id_div.hidden = false;
-                                        }
-                                        else{
-                                            employee_id_div.hidden = true;
-                                            State_Registration_Number_div.hidden = true;
-                                            Year_Issue_div.hidden = true;
-                                            Diagnostic_card_div.hidden = true;
-                                            Validity_Date_div.hidden = true;
-                                            Tachograph_div.hidden = true;
-                                            Glonas_GPS_div.hidden = true;
-                                            State_Registration_Number.value = '';
-                                            Year_Issue.value = '';
-                                            Diagnostic_card.value = '';
-                                            Validity_Date.value = '';
-                                            Tachograph.checked = false;
-                                            Glonas_GPS.checked = false;
-
-                                            Company_div.hidden = false;
-                                            Classes_div.hidden = false;
-                                            Title_Transport.placeholder = 'Название';
-                                        }
-                                    };
+                                    
                                 </script>
 
                                 <div class="modal fade" id="addArticle2" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
@@ -404,7 +349,7 @@
                                                 </div>
                                                 <div class="form-group" id="Amount_Place_Bus_div" hidden> 
                                                     <label for="Amount_Place_Bus">Вместимость<span class="text-danger">*</span></label>
-                                                    <input type="number" class="form-control @error('Amount_Place_Bus') is-invalid @enderror" minlength="2" maxlength="4" onKeyPress="if(this.value.length==4) return false;" name="Amount_Place_Bus" id="Amount_Place_Bus" placeholder="Количество мест">
+                                                    <input type="number" class="form-control @error('Amount_Place_Bus') is-invalid @enderror" min="0" max="1000" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" name="Amount_Place_Bus" id="Amount_Place_Bus" placeholder="Количество мест">
                                                     @error('Amount_Place_Bus')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -479,6 +424,63 @@
                                     //     });
                                     // });
 
+                                    function Hidden_All_Transport(){
+                                        Description_Transport_div.hidden = true;
+                                        Title_Transport_div.hidden = true;
+                                        Main_Transort_div.hidden = true;
+                                        Amount_Place_Bus_div.hidden = true;
+                                        employee_id_div.hidden = true;
+                                            State_Registration_Number_div.hidden = true;
+                                            Year_Issue_div.hidden = true;
+                                            Diagnostic_card_div.hidden = true;
+                                            Validity_Date_div.hidden = true;
+                                            Tachograph_div.hidden = true;
+                                            Glonas_GPS_div.hidden = true;
+                                            Company_div.hidden = true;
+                                            Classes_div.hidden = true;
+                                    };
+                                    function Set_Trnaport_hidden_Shenge(value){
+                                        Description_Transport_div.hidden = false;
+                                        Title_Transport_div.hidden = false;
+                                        Main_Transort_div.hidden = false;
+                                        Amount_Place_Bus_div.hidden = false;
+
+                                        if(value == 'Автобус' || value == 'Микроавтобус'){
+                                            Company_div.hidden = true;
+                                            Classes_div.hidden = true;
+                                            Company.value = '';
+                                            Classes.value = '';
+
+                                            Title_Transport.placeholder = 'Марка';
+                                            State_Registration_Number_div.hidden = false;
+                                            Year_Issue_div.hidden = false;
+                                            Diagnostic_card_div.hidden = false;
+                                            Validity_Date_div.hidden = false;
+                                            Tachograph_div.hidden = false;
+                                            Glonas_GPS_div.hidden = false;
+                                            employee_id_div.hidden = false;
+                                        }
+                                        else{
+                                            employee_id_div.hidden = true;
+                                            State_Registration_Number_div.hidden = true;
+                                            Year_Issue_div.hidden = true;
+                                            Diagnostic_card_div.hidden = true;
+                                            Validity_Date_div.hidden = true;
+                                            Tachograph_div.hidden = true;
+                                            Glonas_GPS_div.hidden = true;
+                                            State_Registration_Number.value = '';
+                                            Year_Issue.value = '';
+                                            Diagnostic_card.value = '';
+                                            Validity_Date.value = '';
+                                            Tachograph.checked = false;
+                                            Glonas_GPS.checked = false;
+
+                                            Company_div.hidden = false;
+                                            Classes_div.hidden = false;
+                                            Title_Transport.placeholder = 'Название';
+                                        }
+                                    };
+                                    
                                     function create_tour_bus() {
                                         var Title_Transport = $('#Title_Transport').val();
                                         var State_Registration_Number = $('#State_Registration_Number').val();
@@ -508,7 +510,7 @@
                                         $.ajax({
                                             url: '{{ route('bus.store') }}',
                                             type: "POST",
-                                            data: {Title_Transport:Title_Transport,Description:Description,Classes:Classes,Type_Transport:Type_Transport,
+                                            data: { Title_Transport:Title_Transport, Description:Description,Classes:Classes, Type_Transport:Type_Transport,
                                                 Company:Company, State_Registration_Number:State_Registration_Number,Main_Transort:Main_Transort,
                                                 Year_Issue:Year_Issue, Diagnostic_card:Diagnostic_card, Validity_Date:Validity_Date,
                                                 Amount_Place_Bus:Amount_Place_Bus, employee_id:employee_id, Glonas_GPS:Glonas_GPS, Tachograph:Tachograph},
@@ -536,9 +538,8 @@
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
                                                 var str = '<option value="'+data['id']+'" id="'+data['id']+'" title= "'+data['Description']+'" selected>'+data['String']+'</option>';
-
                                                 $('#buses_id:last').append(str);
-                                                document.querySelector("#updatebutton2").classList.remove("diableddeletedbutton");
+                                                chenge_ubdate_button($('#buses_id'), 'updatebutton2');
                                                 alert('Добавлено');
                                             },
                                             error: function (msg) {
@@ -658,12 +659,12 @@
                                             }
                                         });
                                     };
-                                    function destroy_tour_bus(id) {
+                                    function destroy_tour_bus() {
                                         var buses_id = $('#buses_id').val();
                                         $.ajax({
                                             url: "{{route('bus.destroy')}}",
                                             type: "POST",
-                                            data: {id:buses_id[0]},
+                                            data: {id:buses_id[0], tour_id:{{$tour->id}}},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
@@ -686,10 +687,10 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="buses_id" >Маршрут</label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('buses_id') is-invalid @enderror" multiple id="routes_id" name="routes_id[]" onchange="onchange_route(this.value)">
+                                        <select class="custom-select @error('buses_id') is-invalid @enderror" multiple id="routes_id" onchange="chenge_ubdate_button(this, 'updatebutton3');" name="routes_id[]" >
                                             <option value="0"disabled selected hidden>Маршрут</option>
                                             @foreach($routes_ids as $routes_id)
-                                                <option value="{{ $routes_id->id }}" id="{{ $routes_id->id }}" @if( in_array($routes_id->id, $route) ) selected @endif>{{$routes_id->Itinerary}}</option>
+                                                <option value="{{ $routes_id->id }}" id="{{ $routes_id->id }}" selected>{{$routes_id->Itinerary_Route}}</option>
                                             @endforeach
                                         </select>
                                         @error('$routes_id')
@@ -700,8 +701,8 @@
                                         <div class="input-group-append">
                                             <a  data-toggle="modal" data-target="#addArticle3" class="btn input-group-text selectedbutton" onclick="close_chenge_tour_route()" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
-                                        <div class="input-group-append">
-                                            <a class="btn input-group-text selectedbutton @if($routes_ids->count() == 0) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle3" id="updatebutton3" style="" name="updatebutton3"  onclick="index_tour_route()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
+                                        <div class="input-group-append" id="div_updatebutton3">
+                                            <a class="btn input-group-text selectedbutton @if($routes_ids->count() > 1 or $routes_ids->count() == 0) diableddeletedbutton @endif" data-toggle="modal" data-target="#addArticle3" id="updatebutton3" style="" name="updatebutton3"  onclick="index_tour_route()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -714,9 +715,9 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="Itinerary">Маршрут следования<span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control @error('Itinerary') is-invalid @enderror" minlength="2" maxlength="191" onKeyPress="if(this.value.length==191) return false;" name="Itinerary" id="Itinerary" placeholder="Маршрут следования">
-                                                    @error('Itinerary')
+                                                    <label for="Itinerary_Route">Маршрут следования<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control @error('Itinerary_Route') is-invalid @enderror" minlength="2" maxlength="191" onKeyPress="if(this.value.length==191) return false;" name="Itinerary_Route" id="Itinerary_Route" placeholder="Маршрут следования">
+                                                    @error('Itinerary_Route')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -821,7 +822,7 @@
 
                                     function create_tour_route() {
                                         var Map = $('#Map').val();
-                                        var Itinerary = $('#Itinerary').val();
+                                        var Itinerary_Route = $('#Itinerary_Route').val();
                                         var Distination_From_Initial_Pop = $('#Distination_From_Initial_Pop').val();
                                         var Time_Sending_From_Initial_Pop = $('#Time_Sending_From_Initial_Pop').val();
                                         var Distination_From_End_Point = $('#Distination_From_End_Point').val();
@@ -830,7 +831,7 @@
                                         $.ajax({
                                             url: '{{ route('route.store') }}',
                                             type: "POST",
-                                            data: {Map:Map, Itinerary:Itinerary,
+                                            data: {tour_id:{{$tour->id}}, Map:Map, Itinerary_Route:Itinerary_Route,
                                                 Distination_From_Initial_Pop:Distination_From_Initial_Pop, Time_Sending_From_Initial_Pop:Time_Sending_From_Initial_Pop, Distination_From_End_Point:Distination_From_End_Point,
                                                 Time_Sending_From_End_Point:Time_Sending_From_End_Point, Name_Car_Dorough_Dorog_Report_Transportation:Name_Car_Dorough_Dorog_Report_Transportation},
                                             headers: {
@@ -839,7 +840,7 @@
 
                                             success: function (data) {
                                                 $('#Map').val('');
-                                                $('#Itinerary').val('');
+                                                $('#Itinerary_Route').val('');
                                                 $('#Distination_From_Initial_Pop').val('');
                                                 $('#Time_Sending_From_Initial_Pop').val('');
                                                 $('#Distination_From_End_Point').val('');
@@ -848,9 +849,9 @@
                                                 $('#addArticle3').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
-                                                var str = '<option value="'+data['id']+'" id="'+data['id']+'" selected>'+data['Itinerary']+'</option>';
+                                                var str = '<option value="'+data['id']+'" id="'+data['id']+'" selected>'+data['Itinerary_Route']+'</option>';
                                                 $('#routes_id:last').append(str);
-                                                document.querySelector("#updatebutton3").classList.remove("diableddeletedbutton");
+                                                chenge_ubdate_button($('#routes_id'), 'updatebutton3');
                                                 alert('Добавлено');
                                             },
                                             error: function (msg) {
@@ -861,7 +862,7 @@
 
                                     function update_tour_route() {
                                         var Map = $('#Map').val();
-                                        var Itinerary = $('#Itinerary').val();
+                                        var Itinerary_Route = $('#Itinerary_Route').val();
                                         var Distination_From_Initial_Pop = $('#Distination_From_Initial_Pop').val();
                                         var Time_Sending_From_Initial_Pop = $('#Time_Sending_From_Initial_Pop').val();
                                         var Distination_From_End_Point = $('#Distination_From_End_Point').val();
@@ -871,7 +872,7 @@
                                         $.ajax({
                                             url: "{{route('route.update')}}",
                                             type: "POST",
-                                            data: {id:routes_id[0], Map:Map, Itinerary:Itinerary,
+                                            data: {id:routes_id[0], Map:Map, Itinerary_Route:Itinerary_Route,
                                                 Distination_From_Initial_Pop:Distination_From_Initial_Pop, Time_Sending_From_Initial_Pop:Time_Sending_From_Initial_Pop, Distination_From_End_Point:Distination_From_End_Point,
                                                 Time_Sending_From_End_Point:Time_Sending_From_End_Point, Name_Car_Dorough_Dorog_Report_Transportation:Name_Car_Dorough_Dorog_Report_Transportation},
                                             headers: {
@@ -879,7 +880,7 @@
                                             },
                                             success: function (data) {
                                                 $('#Map').val('');
-                                                $('#Itinerary').val('');
+                                                $('#Itinerary_Route').val('');
                                                 $('#Distination_From_Initial_Pop').val('');
                                                 $('#Time_Sending_From_Initial_Pop').val('');
                                                 $('#Distination_From_End_Point').val('');
@@ -888,7 +889,7 @@
                                                 $('#addArticle3').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
-                                                document.getElementById('routes_id').options[document.getElementById('routes_id').selectedIndex].text = data['Itinerary'];
+                                                document.getElementById('routes_id').options[document.getElementById('routes_id').selectedIndex].text = data['Itinerary_Route'];
                                                 $('#save3').text('Добавить');
                                                 $('#save3').attr("onclick","create_tour_route()");
                                                 alert('Изменено');
@@ -902,7 +903,7 @@
 
                                     function close_chenge_tour_route() {
                                         $('#Map').val('');
-                                        $('#Itinerary').val('');
+                                        $('#Itinerary_Route').val('');
                                         $('#Distination_From_Initial_Pop').val('');
                                         $('#Time_Sending_From_Initial_Pop').val('');
                                         $('#Distination_From_End_Point').val('');
@@ -925,7 +926,7 @@
                                             },
                                             success:function (data)
                                             {
-                                                $('#Itinerary').val(data['Itinerary']);
+                                                $('#Itinerary_Route').val(data['Itinerary_Route']);
                                                 $('#Distination_From_Initial_Pop').val(data['Distination_From_Initial_Pop']);
                                                 $('#Time_Sending_From_Initial_Pop').val(data['Time_Sending_From_Initial_Pop']);
                                                 $('#Distination_From_End_Point').val(data['Distination_From_End_Point']);
@@ -954,7 +955,7 @@
                                             {
                                                 document.querySelector("#updatebutton3").classList.add("diableddeletedbutton");
                                                 document.getElementById('routes_id').options[document.getElementById('routes_id').selectedIndex].remove();
-                                                $('#routes_id').val('0');
+                                                //$('#routes_id').val('0');
                                                 close_chenge_tour_route();
                                                 alert('Удалено');
                                             },
@@ -1053,7 +1054,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Amount_Place" >Количество мест<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input  type="number" class="form-control @error('Amount_Place') is-invalid @enderror" min="0" max="8388607" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==7) return false;" value="{{ $tour->Amount_Place }}" name="Amount_Place" id="Amount_Place" placeholder="Количество мест" required>
+                                        <input  type="number" class="form-control @error('Amount_Place') is-invalid @enderror" min="0" max="1000" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" value="{{ $tour->Amount_Place }}" name="Amount_Place" id="Amount_Place" placeholder="Количество мест" required>
                                         @error('Amount_Place')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -1175,4 +1176,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function chenge_ubdate_button(celect, button_select) {
+            if ($(celect).val().length > 1) {
+                document.querySelector("#" + button_select).classList.add("diableddeletedbutton");
+                document.querySelector("#div_" + button_select).title = "Для редактирования, пожалуйста выберете одну запись";
+            } else {
+                document.querySelector("#" + button_select).classList.remove("diableddeletedbutton");
+                document.querySelector("#div_" + button_select).title = "";
+            }
+        }
+    </script>
 @endsection

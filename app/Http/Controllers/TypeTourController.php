@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Type_Tour;
+use App\Type_Tour_Many;
 use Illuminate\Http\Request;
 
 class TypeTourController extends Controller
@@ -89,12 +90,21 @@ class TypeTourController extends Controller
     public function update(Request $request)
     {
 
-        Type_Tour::find($request->typetourid)->update([
-            'Name_Type_Tours' => $request->Name_Type_Tours,
-        ]);
+        if(Type_Tour::where('Name_Type_Tours',$request->Name_Type_Tours)->exists()){
+            Type_Tour::where('Name_Type_Tours',$request->Name_Type_Tours)->update([
+                'LogicalDelete' => 0,
+            ]);
+            Type_Tour::find($request->typetourid)->update([
+                'LogicalDelete' => 1,
+            ]);
+        }else{
+            Type_Tour::find($request->typetourid)->update([
+                'Name_Type_Tours' => $request->Name_Type_Tours,
+            ]);
+        }
 
-        $datas = Type_Tour::all();
-        return $datas;
+        $data = Type_Tour::where('Name_Type_Tours',$request->Name_Type_Tours)->first;
+        return $data;
     }
 
     /**
@@ -108,6 +118,10 @@ class TypeTourController extends Controller
         Type_Tour::find($request->typetourid)->update([
             'LogicalDelete' => 1,
         ]);
+
+        if(Type_Tour_Many::whereRaw('type_tours_id = ? and tour_id = ?', [$request->typetourid, $request->tour_id])->exists()){
+            Type_Tour_Many::whereRaw('type_tours_id = ? and tour_id = ?', [$request->typetourid, $request->tour_id])->delete();
+        }
 
         $datas = '1';
         return $datas;

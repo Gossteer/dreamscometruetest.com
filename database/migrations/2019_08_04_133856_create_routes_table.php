@@ -17,7 +17,7 @@ class CreateRoutesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('Map', 191);
-            $table->string('Itinerary', 191);
+            $table->string('Itinerary_Route', 191);
             $table->bigInteger('tour_id')->unsigned()->nullable();
             $table->string('Distination_From_Initial_Pop', 191);
             $table->time('Time_Sending_From_Initial_Pop');

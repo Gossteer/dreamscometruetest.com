@@ -314,5 +314,6 @@
 
 </body>
 
+    @stack('scripts')
 </html>
 </html>

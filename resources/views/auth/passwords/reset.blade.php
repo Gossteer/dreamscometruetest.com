@@ -39,7 +39,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
+                                <p id="capsWarning" style="color: red; display: none;">Внимание! Caps lock включен.</p>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -53,8 +53,46 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <p id="capsWarning2" style="color: red; display: none;">Внимание! Caps lock включен.</p>
                             </div>
                         </div>
+
+                        <script>
+
+                            // Получить поле ввода
+                                var input = document.getElementById("password");
+                                var input2 = document.getElementById("password-confirm");
+    
+                                // Получить текст предупреждения
+                                var text = document.getElementById("capsWarning");
+                                var text2 = document.getElementById("capsWarning2");
+    
+                                // Когда пользователь нажимает любую клавишу на клавиатуре, запустите функцию
+                                input.addEventListener("keyup", function(event) {
+    
+                                // Если "caps lock" нажат, отобразится текст предупреждения
+                                if (event.getModifierState("CapsLock")) {
+                                    text.style.display = "block";
+                                    text2.style.display = "block";
+                                } else {
+                                    text.style.display = "none"
+                                    text2.style.display = "none";
+                                }
+                                });
+
+                                input2.addEventListener("keyup", function(event) {
+    
+                                // Если "caps lock" нажат, отобразится текст предупреждения
+                                if (event.getModifierState("CapsLock")) {
+                                    text.style.display = "block";
+                                    text2.style.display = "block";
+                                } else {
+                                    text.style.display = "none"
+                                    text2.style.display = "none";
+                                }
+                                });
+                                
+                        </script>
 
                         <div class="form-group row justify-content-center mb-0">
                             <button type="submit" style="font-size: 16px; margin: 0 15px" class="col-md-5  btn btn-primary">

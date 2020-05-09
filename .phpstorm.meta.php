@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2020-02-10 21:51:45.
+    * Generated on 2020-05-06 16:10:09.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -44,6 +44,7 @@ namespace PHPSTORM_META {
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'cache' => \Illuminate\Cache\CacheManager::class,
         'cache.store' => \Illuminate\Cache\Repository::class,
+        'captcha' => \Anhskohbo\NoCaptcha\NoCaptcha::class,
         'command.app.name' => \Illuminate\Foundation\Console\AppNameCommand::class,
         'command.auth.make' => \Illuminate\Auth\Console\AuthMakeCommand::class,
         'command.auth.resets.clear' => \Illuminate\Auth\Console\ClearResetsCommand::class,
@@ -193,6 +194,7 @@ namespace PHPSTORM_META {
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'cache' => \Illuminate\Cache\CacheManager::class,
         'cache.store' => \Illuminate\Cache\Repository::class,
+        'captcha' => \Anhskohbo\NoCaptcha\NoCaptcha::class,
         'command.app.name' => \Illuminate\Foundation\Console\AppNameCommand::class,
         'command.auth.make' => \Illuminate\Auth\Console\AuthMakeCommand::class,
         'command.auth.resets.clear' => \Illuminate\Auth\Console\ClearResetsCommand::class,
@@ -342,6 +344,7 @@ namespace PHPSTORM_META {
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'cache' => \Illuminate\Cache\CacheManager::class,
         'cache.store' => \Illuminate\Cache\Repository::class,
+        'captcha' => \Anhskohbo\NoCaptcha\NoCaptcha::class,
         'command.app.name' => \Illuminate\Foundation\Console\AppNameCommand::class,
         'command.auth.make' => \Illuminate\Auth\Console\AuthMakeCommand::class,
         'command.auth.resets.clear' => \Illuminate\Auth\Console\ClearResetsCommand::class,
@@ -491,6 +494,7 @@ namespace PHPSTORM_META {
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'cache' => \Illuminate\Cache\CacheManager::class,
         'cache.store' => \Illuminate\Cache\Repository::class,
+        'captcha' => \Anhskohbo\NoCaptcha\NoCaptcha::class,
         'command.app.name' => \Illuminate\Foundation\Console\AppNameCommand::class,
         'command.auth.make' => \Illuminate\Auth\Console\AuthMakeCommand::class,
         'command.auth.resets.clear' => \Illuminate\Auth\Console\ClearResetsCommand::class,
@@ -640,6 +644,7 @@ namespace PHPSTORM_META {
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'cache' => \Illuminate\Cache\CacheManager::class,
         'cache.store' => \Illuminate\Cache\Repository::class,
+        'captcha' => \Anhskohbo\NoCaptcha\NoCaptcha::class,
         'command.app.name' => \Illuminate\Foundation\Console\AppNameCommand::class,
         'command.auth.make' => \Illuminate\Auth\Console\AuthMakeCommand::class,
         'command.auth.resets.clear' => \Illuminate\Auth\Console\ClearResetsCommand::class,
@@ -789,6 +794,7 @@ namespace PHPSTORM_META {
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'cache' => \Illuminate\Cache\CacheManager::class,
         'cache.store' => \Illuminate\Cache\Repository::class,
+        'captcha' => \Anhskohbo\NoCaptcha\NoCaptcha::class,
         'command.app.name' => \Illuminate\Foundation\Console\AppNameCommand::class,
         'command.auth.make' => \Illuminate\Auth\Console\AuthMakeCommand::class,
         'command.auth.resets.clear' => \Illuminate\Auth\Console\ClearResetsCommand::class,
@@ -938,6 +944,7 @@ namespace PHPSTORM_META {
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'cache' => \Illuminate\Cache\CacheManager::class,
         'cache.store' => \Illuminate\Cache\Repository::class,
+        'captcha' => \Anhskohbo\NoCaptcha\NoCaptcha::class,
         'command.app.name' => \Illuminate\Foundation\Console\AppNameCommand::class,
         'command.auth.make' => \Illuminate\Auth\Console\AuthMakeCommand::class,
         'command.auth.resets.clear' => \Illuminate\Auth\Console\ClearResetsCommand::class,
@@ -1087,6 +1094,7 @@ namespace PHPSTORM_META {
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'cache' => \Illuminate\Cache\CacheManager::class,
         'cache.store' => \Illuminate\Cache\Repository::class,
+        'captcha' => \Anhskohbo\NoCaptcha\NoCaptcha::class,
         'command.app.name' => \Illuminate\Foundation\Console\AppNameCommand::class,
         'command.auth.make' => \Illuminate\Auth\Console\AuthMakeCommand::class,
         'command.auth.resets.clear' => \Illuminate\Auth\Console\ClearResetsCommand::class,

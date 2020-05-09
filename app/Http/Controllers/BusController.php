@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bus;
 use App\Employee;
+use App\Transort;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -53,7 +54,7 @@ class BusController extends Controller
         //     'date' => 'Укажите поажалуйста правильную дату!',
         // ])->validate();
 
-        $date = Bus::create([
+        $date = Bus::firstOrCreate([
             'Title_Transport' => $request->Title_Transport,
             'Description' => $request->Description,
             'Company' => $request->Company,
@@ -68,6 +69,10 @@ class BusController extends Controller
             'Amount_Place_Bus' => $request->Amount_Place_Bus,
             'Tachograph' => $request->Tachograph ?? 0,
             'Glonas_GPS' => $request->Glonas_GPS ?? 0,
+        ]);
+
+        $date->update([
+            'LogicalDelete' => 0,
         ]);
 
         $date['String'] = $request->Type_Transport . ' ' . $date->Title_Transport . ' ' . $date->Amount_Place_Bus . 'м ';
@@ -154,8 +159,14 @@ class BusController extends Controller
      */
     public function destroy(Request $request)
     {
-        Bus::find($request->id)->delete();
+        Bus::find($request->id)->update([
+            'LogicalDelete' => 1,
+        ]);
 
-        return 1;
+        if(Transort::whereRaw('buses_id = ? and tour_id = ?', [$request->id, $request->tour_id])->exists()){
+            Transort::whereRaw('buses_id = ? and tour_id = ?', [$request->id, $request->tour_id])->delete();
+        }
+
+        return $request->buses_id;
     }
 }

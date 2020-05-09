@@ -38,7 +38,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" min="8" maxlength="16" required autocomplete="current-password">
-
+                                <p id="capsWarning" style="color: red; display: none;">Внимание! Caps lock включен.</p>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -47,11 +47,44 @@
                             </div>
                         </div>
 
+                        <script>
+
+                            // Получить поле ввода
+                                var input = document.getElementById("password");
+    
+                                // Получить текст предупреждения
+                                var text = document.getElementById("capsWarning");
+    
+                                // Когда пользователь нажимает любую клавишу на клавиатуре, запустите функцию
+                                input.addEventListener("keyup", function(event) {
+    
+                                // Если "caps lock" нажат, отобразится текст предупреждения
+                                if (event.getModifierState("CapsLock")) {
+                                    text.style.display = "block";
+                                } else {
+                                    text.style.display = "none"
+                                }
+                                });
+                                
+                        </script>
+
+                        <div class="form-group row">
+                            <h3 for="password" class="col-md-4 col-form-label text-md-right"></h3>
+
+                            <div class="col-md-6">
+                                {!! NoCaptcha::display() !!}
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block">
+                                        <strong class="text-danger" style="font-family: Raleway, sans-serif;">{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
+                                <div class="form-check" style="margin-left: 5%;">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
                                     <label class="form-check-label " for="remember">
                                        Запомнить меня
                                     </label>
@@ -80,3 +113,7 @@
 </div>
     </section>
 @endsection
+
+@push('scripts')
+    {!! NoCaptcha::renderJs() !!}
+@endpush

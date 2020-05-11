@@ -19,13 +19,14 @@
                 @foreach($tours as $tour)
                     <tr><td>{{ $tour->Name_Tours }}</td>
                         <td>{{ $tour->Price }}</td>
-                        <td>Около 'ДК МИР'</td>
-                        <td>{{ $tour->Start_Date_Tours }}</td> </tr>
+                        <td>{{ $tour->Privilegens_Price ?? "ДК МИР" }}</td>
+                        <td>{{ date('Y.m.d H:i', strtotime($tour->Start_Date_Tours)) }}</td> </tr>
                 @endforeach
             </table>
         </center>
         <h4>Номер телефон: 213123123</h4>
-        <h4>Группа вконтакте: Мечты Сбываются</h4>
+        <h4>Социальные сети:</h4>
+        <h5 style="padding-left: 10px">1. Мечты Сбываются</h5>
     </div>
 </div>
 </body>

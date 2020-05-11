@@ -176,7 +176,7 @@
 							<hr style="margin-top: 12px ">
 							<div class="">
 								<p class="colorsingledescriptioninfo3">Место отправления: {{$tour->Start_point ?? "Подробности по телефону"}}</p>
-								<p class="colorsingledescriptioninfo3">Примерная продолжительность: {{ date('j',strtotime($tour->Start_Date_Tours)) == date('j',strtotime($tour->End_Date_Tours)) ? '' : date('j', strtotime($tour->End_Date_Tours)) - date('j',strtotime($tour->Start_Date_Tours)) . 'дн.'}} {{date('G',strtotime($tour->Start_Date_Tours)) == date('G',strtotime($tour->End_Date_Tours)) ? '' : date('G', ABS(strtotime($tour->End_Date_Tours) - strtotime($tour->Start_Date_Tours))) . 'ч.'}}</p>
+								<p class="colorsingledescriptioninfo3" {{$duration = strtotime($tour->End_Date_Tours) - strtotime($tour->Start_Date_Tours)}}>Примерная продолжительность: {{ date('n', $duration)-1 == 0 ? '' : date('n', $duration)-1 . 'м.'}} {{ date('j', $duration)-1 == 0 ? '' : date('j', $duration)-1 . 'дн.'}} {{date('G', $duration) == 0 ? '' : date('G', $duration)-2 . 'ч.'}}</p>
 								<p class="colorsingledescriptioninfo3">Дополнительные услуги: </p>
 								<p class="colorsingledescriptioninfo3" style="padding-left: 10px"><strong>В разработке; </strong></p>
 								<p class="colorsingledescriptioninfo3" {{$number_bus = 1}}>Транспорт: </p>

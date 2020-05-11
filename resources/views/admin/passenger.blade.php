@@ -11,8 +11,8 @@
                                 <h4 class="">{{$tour->Name_Tours}} - Пассажиры</h4>
                             </div>
                             <div class="col-sm-12 col-md-5">
-                                <a href="{{ route('printpastour', [$tour]) }}" data-toggle="tooltip" data-placement="top" class="btn btn-info btn-rounded btnheader" style="float: right;">Список</a>
-                                <a href="" data-toggle="tooltip" data-placement="top" class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Добавить</a>
+                                <a href="{{ route('printpastour', [$tour]) }}" data-toggle="tooltip" onclick="return false;" title="Функция будет добавлена в последующих обновлениях!" data-placement="top" class="btn btn-info btn-rounded btnheader" style="cursor: default; color: DarkGray; float: right;">Список</a>
+                                <a href="" data-toggle="tooltip"  data-placement="top" onclick="return false;" title="Функция будет добавлена в последующих обновлениях!" class="btn btn-info btn-rounded btnheader" style="cursor: default; color: DarkGray; float: right; margin-right: 3px">Добавить</a>
                             </div>
                         </div>
 
@@ -732,7 +732,7 @@
                                                 @endif
                                         </td>
                                         <td>
-                                            {{ $tour_employee->partner->Name_Partners ?? Отсутствует }}
+                                            {{ $tour_employee->partner->Name_Partners ?? 'Отсутствует' }}
                                         </td>
                                         <td>
                                             {{ $tour_employee->Occupied_Place_Bus }}

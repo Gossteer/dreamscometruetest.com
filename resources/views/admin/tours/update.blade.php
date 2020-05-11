@@ -1069,6 +1069,18 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Expenses" >Прибль</label>
+                                    <div class="col-lg-6">
+                                        <input  type="number" class="form-control @error('Profit') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Profit }}" name="Profit" id="Profit" placeholder="Прибль">
+                                        @error('Expenses')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Amount_Place" >Количество мест<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <input  type="number" class="form-control @error('Amount_Place') is-invalid @enderror" min="0" max="1000" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" value="{{ $tour->Amount_Place }}" name="Amount_Place" id="Amount_Place" placeholder="Количество мест" required>

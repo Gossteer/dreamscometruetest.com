@@ -52,7 +52,7 @@ class TourController extends Controller
 
     public function prnpriviewvauher()
 {
-    return view('admin.tours.toursvauher', ['tours' => tour::whereRaw('Start_Date_Tours >= ?',[now()->subDay()])->get()]);
+    return view('admin.tours.toursvauher', ['tours' => tour::whereRaw('Start_Date_Tours >= ?',[Carbon::now()])->get()]);
 }
 
     public function prnpriviewspisok()
@@ -107,6 +107,7 @@ class TourController extends Controller
             'Privilegens_Price'=> $request->Privilegens_Price,
             'Children_price' => $request->Children_price,
             'Expenses'=> $request->Expenses,
+            'Profit'=> $request->Profit,
             'Amount_Place'=> $request->Amount_Place,
             'Start_Date_Tours'=> date('Y-m-d H:i', strtotime($request->Start_Date_Tours)),
             'End_Date_Tours'=> date('Y-m-d H:i', strtotime($request->End_Date_Tours)),
@@ -253,6 +254,7 @@ class TourController extends Controller
             'Duration' => $End_Date_Tours->diffInDays($Start_Date_Tours),
             'Privilegens_Price'=> $request->Privilegens_Price,
             'Program'=> $request->Program,
+            'Profit'=> $request->Profit,
             'Start_point' => $request->Start_point,
             'Children_price' => $request->Children_price,
             'Expenses'=> $request->Expenses,

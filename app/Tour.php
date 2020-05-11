@@ -24,6 +24,10 @@ class Tour extends Model
         'Confidentiality',
         'Program',
         'Start_point',
+        'Confirmation_Tours',
+        'LogicalDelete',
+        'Profit',
+        'created_at',
     ];
 
 

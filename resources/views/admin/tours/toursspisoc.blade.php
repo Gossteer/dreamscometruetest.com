@@ -20,8 +20,8 @@
                     <tr>
                         <td>{{ $tour->Name_Tours }}</td>
                         <td>{{ $tour->Price }}</td>
-                        <td>Около 'ДК МИР'</td>
-                        <td>{{ $tour->Start_Date_Tours }}</td>
+                        <td>{{ $tour->Privilegens_Price ?? "ДК МИР" }}</td>
+                        <td>{{ date('Y.m.d H:i', strtotime($tour->Start_Date_Tours)) }}</td>
 
                         <td width="33">
                             @if($tour->tour_employees->count() != 0)

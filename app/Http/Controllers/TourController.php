@@ -46,7 +46,8 @@ class TourController extends Controller
 
     public function create()
     {
-        return view('admin.tours.create', ['type_tours' => Type_Tour::where('LogicalDelete', 0)->get(),  'Tour' => [], 'buses_ids' => Bus::where('LogicalDelete', 0)->get(), 'routes_ids' => Route::where('tour_id', null)->get() ]);
+        return view('admin.tours.create', ['type_tours' => Type_Tour::where('LogicalDelete', 0)->get(),  
+        'Tour' => [], 'buses_ids' => Bus::where('LogicalDelete', 0)->get(), 'routes_ids' => Route::where('tour_id', null)->get() ]);
     }
 
     public function prnpriviewvauher()
@@ -100,6 +101,8 @@ class TourController extends Controller
             'Name_Tours'=> $request->Name_Tours,
             'Description'=> $request->Description,
             'Price'=> $request->Price,
+            'Program'=> $request->Program,
+            'Start_point' => $request->Start_point,
             'Duration' => $End_Date_Tours->diffInDays($Start_Date_Tours),
             'Privilegens_Price'=> $request->Privilegens_Price,
             'Children_price' => $request->Children_price,
@@ -115,18 +118,21 @@ class TourController extends Controller
 
         if ($request->routes_id)
             for ($i=0; $i < count($request->routes_id); $i++) { 
-                Route::find($request->routes_id[$i])->update([
-                    'tour_id'=> $tour->id
-                ]);
-                Route::where('tour_id', null)->delete();
+                if ($request->routes_id[$i] != "null") {
+                    Route::find($request->routes_id[$i])->update([
+                        'tour_id'=> $tour->id
+                    ]);
+                }
             };
+            Route::where('tour_id', null)->delete();
 
         if ($request->buses_id)
             for ($i=0; $i < count($request->buses_id); $i++) { 
-                Transort::create([
-                    'buses_id' => $request->buses_id[$i],
-                    'tour_id'=> $tour->id
-                ]);
+                if ($request->buses_id[$i] != "null")
+                    Transort::create([
+                        'buses_id' => $request->buses_id[$i],
+                        'tour_id'=> $tour->id
+                    ]);
             };
 
         for ($i=0; $i < count($request->type_tours_id); $i++) { 
@@ -164,7 +170,8 @@ class TourController extends Controller
 
     public function tourdescript($tour,$Name_Tours)
     {
-        return view('site.packagesingle',['tour'=> Tour::where('id',$tour)->first(), 'tours' => Tour::orderByDesc('Price')->paginate(4)]);
+        return view('site.packagesingle',['tour'=> Tour::find($tour),'Carbon' => Carbon::now()->addDays(14), 
+        'Cardon_hot' => Carbon::now(), 'tours' => Tour::orderByDesc('Price')->paginate(4), ]);
     }
 
     /**
@@ -245,6 +252,8 @@ class TourController extends Controller
             'Price'=> $request->Price,
             'Duration' => $End_Date_Tours->diffInDays($Start_Date_Tours),
             'Privilegens_Price'=> $request->Privilegens_Price,
+            'Program'=> $request->Program,
+            'Start_point' => $request->Start_point,
             'Children_price' => $request->Children_price,
             'Expenses'=> $request->Expenses,
             'Amount_Place'=> $request->Amount_Place,
@@ -261,6 +270,7 @@ class TourController extends Controller
             if ($request->routes_id){
                 //dd(Route::where('id', $request->routes_id[0])->exists());
                 for ($i=0; $i < count($request->routes_id); $i++) { 
+                    if($request->routes_id[$i] != "null")
                         Route::find($request->routes_id[$i])->update([
                             'tour_id'=> $tour->id
                         ]);
@@ -285,7 +295,7 @@ class TourController extends Controller
             
             //$Transorts = Transort::where('tour_id', $tour->id);
             for ($i=0; $i < count($request->buses_id); $i++) { 
-                if (!Transort::whereRaw('buses_id = ? and tour_id = ?', [$request->buses_id[$i], $tour->id])->exists())
+                if (!Transort::whereRaw('buses_id = ? and tour_id = ?', [$request->buses_id[$i], $tour->id])->exists() and $request->buses_id[$i] != "null")
                     Transort::create([
                         'buses_id' => $request->buses_id[$i],
                         'tour_id'=> $tour->id

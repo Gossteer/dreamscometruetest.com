@@ -24,7 +24,9 @@ class CreateToursTable extends Migration
             $table->boolean('ZGP')->default(0);
             $table->boolean('PRF')->default(0);
             $table->string('Name_Tours', 191);
+            $table->string('Start_point', 191);
             $table->text('Description')->nullable();
+            $table->text('Program')->nullable();
             $table->datetime('Start_Date_Tours');
             $table->datetime('End_Date_Tours')->nullable();
             $table->mediumInteger('Price');

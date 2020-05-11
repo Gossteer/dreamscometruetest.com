@@ -7,13 +7,19 @@ use App\Employee;
 use App\Passenger;
 use App\tour;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
     public function packages()
     {
-        return view('site.packages', ['tours' => Tour::orderByDesc('Start_Date_Tours')->paginate(12),
+        //dd(Carbon::now()->addDays(14), Carbon::now());
+        $Carbon_add14 = Carbon::now()->addDays(14);
+        $Carbon_now = Carbon::now();
+        
+        return view('site.packages', ['Carbon' => $Carbon_add14, 'Cardon_hot' => $Carbon_now, 'tours_hots' => Tour::whereRaw('Start_Date_Tours <= ? and Start_Date_Tours >= ? and Confidentiality = 0',[$Carbon_add14, $Carbon_now])->orderBy('Start_Date_Tours')->paginate(4),
+            'tours' => Tour::where('Confidentiality', 0)->orderByDesc('Start_Date_Tours')->paginate(12),
             'Age_Group' => Customer::where('users_id',(Auth::user()->id ?? null))->first()->Age_Group  ?? 0,
             'Condition' => Customer::where('users_id',(Auth::user()->id ?? null))->first()->Condition ?? 0,
             'customer_activ' => Customer::where('users_id',(Auth::user()->id ?? null))->first() ?? null,]);

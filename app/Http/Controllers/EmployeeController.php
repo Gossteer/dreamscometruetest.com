@@ -54,7 +54,7 @@ class EmployeeController extends Controller
     {
         //$date = Carbon::new->subYear(18);
         $attribute = $request->all();
-        $attribute['date'] = Carbon::now()->subYear(18);
+        $attribute['date'] = Carbon::now()->subYears(18);
 
         \Validator::make($attribute, [
             'Phone_Number' => ['required', 'string', 'unique:employees'],

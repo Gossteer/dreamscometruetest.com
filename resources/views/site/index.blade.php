@@ -146,20 +146,44 @@
 			<h3 class="heading text-capitalize text-center mt-2 mb-5">Наши предложения</h3>
 			<div class="row">
 				@foreach($tours as $tour)
-					<div class="col-lg-3 col-sm-6 mb-5" href="">
-						<div class="image-tour position-relative">
-							<a href="{{ route('/packages') }}"><img  src="images/p1.jpg" alt="" class="img-fluid" /></a>
-							<p><span class="fa fa-tags"></span> <span>{{ number_format($tour->Price, 0, ',', ' ') }}₽</span></p>
-						</div>
-						<div class="package-info">
-							<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
-							<h5 class="my-2">{{ $tour->Name_Tours }}</h5>
-							<p class="">{{str_limit($tour->Description,20,'...')}}</p>
-							<ul class="listing mt-3">
-								<li><span class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
-							</ul>
-						</div>
-					</div>
+			<div class="col-lg-3 col-sm-6 mb-5" href="">
+				<div class="image-tour position-relative">
+					<a href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}"><img src="images/banner1.jpg"  alt="" class="img-fluid" /></a>
+					<p><span class="fa fa-tags"></span> <span id="{{$tour->id}}">
+							{{ number_format((($tour->Privilegens_Price > $tour->Children_price and $tour->Children_price != null) ? $tour->Children_price : $tour->Privilegens_Price) ?? $tour->Price, 0, ',', ' ') }}₽
+						</span></p>
+				</div>
+				<script>
+					function alert_occupaid ()
+					{
+						dialog.alert({
+							title: "Уведомление",
+							message: "Вы уже записаны на данное мероприятие!",
+						});
+
+						return false
+					}
+
+					function alert_occupaid_null_plase ()
+					{
+						dialog.alert({
+							title: "Уведомление",
+							message: "На данный момент места заняты.",
+						});
+
+						return false
+					}
+				</script>
+				<div class="package-info">
+					<h6 class="mt-1" style="font-family: Open Sans, sans-serif;"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
+					<h5 class="my-2" style="font-family: Open Sans, sans-serif;">{{ $tour->Name_Tours }}</h5>
+					<p class="" style="font-family: Open Sans, sans-serif;">{{str_limit($tour->Description,20,'...')}}</p>
+					<ul class="listing mt-3" style="font-family: Open Sans, sans-serif;">
+						<li><span  class="fa fa-clock-o mr-2" ></span>Дата: <span @if(date('d-m-Y', strtotime($Carbon))  >= date('d-m-Y',strtotime($tour->Start_Date_Tours)) and $Cardon_hot <= $tour->Start_Date_Tours) style="color: red;" title="Экскурсия состоится мене чем через 2 недели. Успейте записаться!" @endif @if(date('d-m-Y', strtotime($Carbon))  < date('d-m-Y',strtotime($tour->Start_Date_Tours))) style="color: green;" @endif> {{date('d-m-Y H:i', strtotime($tour->Start_Date_Tours)) }}</span></li>
+					</ul>
+					<a class="btn btn-success" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
+				</div>
+			</div>
 				@endforeach
 			</div>
 			<div class="view-package text-center mt-4">

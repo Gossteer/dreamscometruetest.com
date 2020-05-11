@@ -77,7 +77,10 @@
 									</div>
 								</div>
 							</div>
-							<a class="btn btn-success  col-md-12 bypackeg" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Записаться</a>
+							<div title="Функция будет добавлена в последующих обновлениях!">
+								<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;"  id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Записаться</a>
+							</div>
+							
 						</div>
 
 					</div>
@@ -85,8 +88,12 @@
 					<!-- single-product-info start -->
 					<div class="col-md-7 col-sm-7 col-xs-12" id="">
 						<div class="single-product-info">
-							<h3 class="text-black-1 " style="font-size: 25px; padding-bottom: 10px;">Название экскурсии </h3>
-							<h6 class="brand-name-2 ">Типа экскурсии</h6>
+						<h3 class="text-black-1 " style="font-size: 25px; padding-bottom: 10px;">{{$tour->Name_Tours}}</h3>
+							<h6 class="brand-name-2 " style="font-family: Open Sans, sans-serif;">
+								@foreach ($tour->type_tour_many as $type_tour_many)
+									{{$type_tour_many->type_tour->Name_Type_Tours}};
+								@endforeach
+							</h6>
 							<div class="pro-rating sin-pro-rating f-right">
 								<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a>
 								<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a>
@@ -106,31 +113,38 @@
 								</ul>
 								<div class="tab-content">
 									<div role="tabpanel" class="tab-pane active " id="description">
-										<p class="">Описание</p>
+										<p class="">{{$tour->Description ?? "Подробности узнавайте по телефону"}}</p>
 									</div>
 									<div role="tabpanel" class="tab-pane" id="schedule">
-										<p>Программа</p>
+										<p>{{$tour->Program ?? "Мероприятие которое вас порадует!"}}</p>
 									</div>
 									<div role="tabpanel" class="tab-pane" id="escorting">
 										<!-- reviews-tab-desc -->
 										<div class="reviews-tab-desc">
 											<!-- single comments -->
-											<div class="media mt-30">
-												<div class="media-left">
-													<a href="#"><img class="media-object" src="{{asset('images/author/1.jpg')}}" alt="#"></a>
-												</div>
-												<div class="media-body">
-													<div class="clearfix">
-														<div class="name-commenter pull-left">
-															<h6 class="media-heading"><a href="#">ФИО</a></h6>
-															<p class="mb-10">Должность</p>
+											@if (count($tour->tour_employees) > 0)
+												@foreach ($tour->tour_employees as $tour_employees)
+													@if($tour_employees->Confidentiality == 0)
+													<div class="media mt-30">
+														<div class="media-left">
+															<img class="media-object" src="{{asset('images/author/1.jpg')}}" alt="#">
+														</div>
+														<div class="media-body">
+															<div class="clearfix">
+																<div class="name-commenter pull-left">
+																	<h6 class="media-heading">{{ $tour_employees->employee->Surname . ' ' . mb_substr($tour_employees->employee->Name, 0, 1)  . '. ' . mb_substr($tour_employees->employee->Middle_Name, 0, 1) . ($tour_employees->employee->Middle_Name != '' ? '.' : '')}}</h6>
+																<p class="mb-10">{{$tour_employees->employee->job->Job_Title}}</p>
+																</div>
+															</div>
+															<p class="mb-0">{{$tour_employees->employee->Description}}</p>
 														</div>
 													</div>
-													<p class="mb-0">Описание</p>
-												</div>
-											</div>
+													@endif
+												@endforeach
+											@else
+											<p class="">Подробности по телефону</p>
+											@endif
 											<!-- single comments -->
-
 										</div>
 									</div>
 								</div>
@@ -142,18 +156,18 @@
 								<div class="row mt-5 text-center ">
 									<div class="col-lg-4 col-6 counter">
 										<span class="fa fa-smile-o singledescriptioninfo2"></span>
-										<div class="timer count-title count-number singledescriptioninfo1 colorsingledescriptioninfo1">24.10.19</div>
+										<div class="timer count-title count-number singledescriptioninfo1 colorsingledescriptioninfo1">{{ date('d.m.Y',strtotime($tour->Start_Date_Tours))}}</div>
 
 										<p class="count-text text-uppercase colorsingledescriptioninfo2">Дата</p>
 									</div>
 									<div class="col-lg-4 col-6 counter">
 										<span class="fa fa-smile-o singledescriptioninfo2"></span>
-										<div class="timer count-title count-number singledescriptioninfo1 colorsingledescriptioninfo1">8:00</div>
+										<div class="timer count-title count-number singledescriptioninfo1 colorsingledescriptioninfo1">{{ date('H:i',strtotime($tour->Start_Date_Tours))}}</div>
 										<p class="count-text text-uppercase colorsingledescriptioninfo2">Время</p>
 									</div>
 									<div class="col-lg-4 col-6 counter">
 										<span class="fa fa-smile-o singledescriptioninfo2"></span>
-										<div class="timer count-title count-number singledescriptioninfo1 colorsingledescriptioninfo1">10</div>
+										<div class="timer count-title count-number singledescriptioninfo1 colorsingledescriptioninfo1">{{ ($tour->Amount_Place - $tour->Occupied_Place) }}</div>
 										<p class="count-text text-uppercase colorsingledescriptioninfo2">Свободных мест</p>
 									</div>
 
@@ -161,13 +175,20 @@
 							</div>
 							<hr style="margin-top: 12px ">
 							<div class="">
-								<p class="colorsingledescriptioninfo3">Место отправления: ДК МИР</p>
-								<p class="colorsingledescriptioninfo3">Примерная продолжительность: 8 часов</p>
+								<p class="colorsingledescriptioninfo3">Место отправления: {{$tour->Start_point ?? "Подробности по телефону"}}</p>
+								<p class="colorsingledescriptioninfo3">Примерная продолжительность: {{ date('j',strtotime($tour->Start_Date_Tours)) == date('j',strtotime($tour->End_Date_Tours)) ? '' : date('j', strtotime($tour->End_Date_Tours)) - date('j',strtotime($tour->Start_Date_Tours)) . 'дн.'}} {{date('G',strtotime($tour->Start_Date_Tours)) == date('G',strtotime($tour->End_Date_Tours)) ? '' : date('G', ABS(strtotime($tour->End_Date_Tours) - strtotime($tour->Start_Date_Tours))) . 'ч.'}}</p>
 								<p class="colorsingledescriptioninfo3">Дополнительные услуги: </p>
-								<p class="colorsingledescriptioninfo3" style="padding-left: 10px">1. Счастье; </p>
-								<p class="colorsingledescriptioninfo3">Марка автобуса: Мерседес</p>
+								<p class="colorsingledescriptioninfo3" style="padding-left: 10px"><strong>В разработке; </strong></p>
+								<p class="colorsingledescriptioninfo3" {{$number_bus = 1}}>Транспорт: </p>
+									@if (count($tour->transport) > 0)
+										@foreach ($tour->transport as $transport)
+										<p class="colorsingledescriptioninfo3"  style="padding-left: 10px">{{$number_bus++ . '. ' .  ($transport->bus->Type_Transport ?? '') .  ' ' . ($transport->bus->Title_Transport ?? '') .  ' ' .($transport->bus->Description ?? ' ')}}</p>
+										@endforeach
+									@else
+									<p class="colorsingledescriptioninfo3"  style="padding-left: 10px">Подробности по телефону</p>
+									@endif
 								<p class="colorsingledescriptioninfo3" style="text-decoration: underline;">Требования: </p>
-								<p class="colorsingledescriptioninfo3" style="padding-left: 10px">1. Российский паспорт; </p>
+								<p class="colorsingledescriptioninfo3" style="padding-left: 10px"><strong>В разработке; </strong> </p>
 							</div>
 							<hr style="margin-bottom: 15px">
 							<!-- plus-minus-pro-action -->
@@ -184,7 +205,7 @@
 									<div class="col-lg-4 col-6 counter" style="	padding-bottom: 20px ;">
 										<div >
 											<div class="icon iconforsinglepachage">
-												<span class="priceforsinglepachage">{{ number_format(1000, 0, ',', ' ') }}₽</span>
+												<span class="priceforsinglepachage">{{ number_format($tour->Privilegens_Price ?? $tour->Price, 0, ',', ' ') }}₽</span>
 											</div>
 											<h3 style="">Пенсионеры</h3>
 										</div>
@@ -192,7 +213,7 @@
 									<div class="col-lg-4 col-6 counter" style="	padding-bottom: 20px ;">
 										<div >
 											<div class="icon iconforsinglepachage">
-												<span class="priceforsinglepachage">10&nbsp000₽</span>
+												<span class="priceforsinglepachage">{{ number_format($tour->Children_price ?? $tour->Price, 0, ',', ' ') }}₽</span>
 											</div>
 											<h3>Дети</h3>
 										</div>
@@ -219,58 +240,46 @@
 					</div>
 				</div>
 				<div class="row">
-					@foreach($tours as $tour)
-						<div class="col-lg-3 col-sm-6 mb-5" href="">
-							<div class="image-tour position-relative">
-								<a href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}"><img src="{{asset('images/banner1.jpg')}}" alt="" class="img-fluid" /></a>
-								<p><span class="fa fa-tags"></span> <span>
-							{{--@if( $Age_Group != 0  or $Condition == 1)--}}
-										{{--{{ $tour->Privilegens_Price }}--}}
-										{{--@else--}}
-										{{ number_format($tour->Price, 0, ',', ' ') }}₽
-										{{--@endif--}}
+									@foreach($tours as $tour)
+			<div class="col-lg-3 col-sm-6 mb-5" href="">
+				<div class="image-tour position-relative">
+					<a href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}"><img src="{{asset('images/banner1.jpg')}}" alt="" class="img-fluid" /></a>
+					<p><span class="fa fa-tags"></span> <span id="{{$tour->id}}">
+							{{ number_format((($tour->Privilegens_Price > $tour->Children_price and $tour->Children_price != null) ? $tour->Children_price : $tour->Privilegens_Price) ?? $tour->Price, 0, ',', ' ') }}₽
 						</span></p>
-							</div>
-							<script>
-								function alert_occupaid ()
-								{
-									dialog.alert({
-										title: "Уведомление",
-										message: "Вы уже записаны на данное мероприятие!",
-									});
+				</div>
+				<script>
+					function alert_occupaid ()
+					{
+						dialog.alert({
+							title: "Уведомление",
+							message: "Вы уже записаны на данное мероприятие!",
+						});
 
-									return false
-								}
+						return false
+					}
 
-								function alert_occupaid_null_plase ()
-								{
-									dialog.alert({
-										title: "Уведомление",
-										message: "На данный момент места заняты.",
-									});
+					function alert_occupaid_null_plase ()
+					{
+						dialog.alert({
+							title: "Уведомление",
+							message: "На данный момент места заняты.",
+						});
 
-									return false
-								}
-							</script>
-							<div class="package-info">
-								<h6 class="mt-1"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
-								<h5 class="my-2">{{ $tour->Name_Tours }}</h5>
-								<p class="">{{str_limit($tour->Description,20,'...')}}</p>
-								<ul class="listing mt-3">
-									<li><span  class="fa fa-clock-o mr-2"></span>Дата: <span> {{ $tour->Start_Date_Tours }}</span></li>
-								</ul>
-								<a class="btn btn-success" id="pacagesunit" style="font-size: 16px" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
-								{{--@if($tour->Start_Date_Tours >= now()->subDay())--}}
-								{{--@if (Route::has('register') and $customer_activ != null )--}}
-								{{--<a class="btn mb-1 btn-success" onclick="{{ (\App\Passenger::whereRaw('tours_id = ? and customers_id = ?', [$tour->id, $customer_activ->id])->exists()) ? 'return alert_occupaid ()' :--}}
-								{{--((($tour->Amount_Place - $tour->Occupied_Place) == 0) ? 'return alert_occupaid_null_plase ()' : 'lol') }}" style="background-color: #047ffc; margin-top: 15px;" href="{{route('passengers.create',['tours_id' => $tour->id])}}">Записаться на тур</a>--}}
-								{{--@endif--}}
-								{{--@else--}}
-								{{--<p class="" style="color: green; padding-top: 10px !important;">Экскурсия прошла</p>--}}
-								{{--@endif--}}
-							</div>
-						</div>
-					@endforeach
+						return false
+					}
+				</script>
+				<div class="package-info">
+					<h6 class="mt-1" style="font-family: Open Sans, sans-serif;"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
+					<h5 class="my-2" style="font-family: Open Sans, sans-serif;">{{ $tour->Name_Tours }}</h5>
+					<p class="" style="font-family: Open Sans, sans-serif;">{{str_limit($tour->Description,20,'...')}}</p>
+					<ul class="listing mt-3" style="font-family: Open Sans, sans-serif;">
+						<li><span  class="fa fa-clock-o mr-2" ></span>Дата: <span @if(date('d-m-Y', strtotime($Carbon))  >= date('d-m-Y',strtotime($tour->Start_Date_Tours)) and $Cardon_hot <= $tour->Start_Date_Tours) style="color: red;" title="Экскурсия состоится мене чем через 2 недели. Успейте записаться!" @endif @if(date('d-m-Y', strtotime($Carbon))  < date('d-m-Y',strtotime($tour->Start_Date_Tours))) style="color: green;" @endif> {{date('d-m-Y H:i', strtotime($tour->Start_Date_Tours)) }}</span></li>
+					</ul>
+					<a class="btn btn-success" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
+				</div>
+			</div>
+				@endforeach
 
 				</div>
 			</div>

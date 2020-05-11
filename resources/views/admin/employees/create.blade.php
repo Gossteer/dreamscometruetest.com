@@ -416,7 +416,7 @@
                                                     $('#addArticle').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
-                                                    var str = '<option value="'+data['id']+'" selected>'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
+                                                    var str = '<option value="'+data['id']+'" selected>'+ data['String']+'</option>';
                                                     $('#jobs_id:last').append(str);
                                                     document.querySelector("#updatebutton").classList.remove("diableddeletedbutton");
                                                     alert('Добавлено');
@@ -462,17 +462,12 @@
                                                 headers: {
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
-                                                success:function (datas)
+                                                success:function (data)
                                                 {
                                                     $('#addArticle1').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
-                                                    var str;
-                                                    datas.forEach(function(data){
-                                                        str += '<option value="'+data['id']+'" '+((data['id'] == jobsid) ? 'selected' : '')+'>'+((data['Company'] == null) ? '':data['Company'])+' '+data['Job_Title']+' зп: '+((data['Salary'] == null) ? 'договорная':data['Salary'])+'</option>';
-                                                    });
-                                                    $('#jobs_id option').remove();
-                                                    $('#jobs_id:last').append(str);
+                                                    document.getElementById('jobs_id').options[document.getElementById('jobs_id').selectedIndex].text = data['String'];
                                                     alert('Изменено');
                                                 },
                                                 error: function (msg) {

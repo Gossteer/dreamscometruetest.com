@@ -22,6 +22,8 @@ class Tour extends Model
         'Popular',
         'End_Date_Tours',
         'Confidentiality',
+        'Program',
+        'Start_point',
     ];
 
 

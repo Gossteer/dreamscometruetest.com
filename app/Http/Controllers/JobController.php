@@ -46,13 +46,13 @@ class JobController extends Controller
             'Job_Title.unique' => 'Данная должность уже существует',
         ])->validate();
 
-        $res = Job::firstOrCreate([
+        $data = Job::firstOrCreate([
             'Job_Title' => $request->Job_Title,
             'Salary' => $request->Salary,
             'Company' => $request->Company,
         ]);
 
-        $data = ['id' => $res->id, 'Job_Title' => $request->Job_Title, 'Salary' => $request->Salary, 'Company' => $request->Company,];
+        $data['String'] = $data->Company . ' '. $data->Job_Title . ' зп: ' .  ( ($data->Salary == null)? 'договорная': number_format($data->Salary, 0, ',', ' ') . '₽');
 
         return $data;
     }
@@ -100,8 +100,9 @@ class JobController extends Controller
             'Company' => $request->Company,
         ]);
 
-        $datas = Job::all();
-        return $datas;
+        $data =  Job::find($request->jobsid);
+        $data['String'] = $data->Company . ' '. $data->Job_Title . ' зп: ' .  ( ($data->Salary == null)? 'договорная': number_format($data->Salary, 0, ',', ' ') . '₽');
+        return $data;
     }
 
     /**

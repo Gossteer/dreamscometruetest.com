@@ -76,8 +76,8 @@ class BusController extends Controller
         ]);
 
         $date['String'] = $request->Type_Transport . ' ' . $date->Title_Transport . ' ' . $date->Amount_Place_Bus . 'м ';
-        if($request->Type_Transport == 'Автобус' or $request->Type_Transport == 'Микроавтобус')
-        $date['String'] += date('d.m.Y', strtotime($date->Year_Issue)) . ' ' . $date->employee->Surname . ' ' . mb_substr($date->employee->Name, 0, 1)  . '. ' . mb_substr($date->employee->Middle_Name, 0, 1) . ($date->employee->Middle_Name != '' ? '.' : '');
+        if(($request->Type_Transport == 'Автобус' or $request->Type_Transport == 'Микроавтобус') and ($request->employee != null))
+            $date['String'] += date('d.m.Y', strtotime($date->Year_Issue)) . ' ' . $date->employee->Surname . ' ' . mb_substr($date->employee->Name, 0, 1)  . '. ' . mb_substr($date->employee->Middle_Name, 0, 1) . ($date->employee->Middle_Name != '' ? '.' : '');
         
 
         return $date;
@@ -145,8 +145,8 @@ class BusController extends Controller
         $date = Bus::find($request->id);
 
         $date['String'] = $request->Type_Transport . ' ' . $date->Title_Transport . ' ' . $date->Amount_Place_Bus . 'м ';
-        if($request->Type_Transport == 'Автобус' or $request->Type_Transport == 'Микроавтобус')
-        $date['String'] += date('d.m.Y', strtotime($date->Year_Issue)) . ' ' . $date->employee->Surname . ' ' . mb_substr($date->employee->Name, 0, 1)  . '. ' . mb_substr($date->employee->Middle_Name, 0, 1) . ($date->employee->Middle_Name != '' ? '.' : '');
+        if(($request->Type_Transport == 'Автобус' or $request->Type_Transport == 'Микроавтобус') and ($request->employee != null))
+            $date['String'] += date('d.m.Y', strtotime($date->Year_Issue)) . ' ' . $date->employee->Surname . ' ' . mb_substr($date->employee->Name, 0, 1)  . '. ' . mb_substr($date->employee->Middle_Name, 0, 1) . ($date->employee->Middle_Name != '' ? '.' : '');
 
         return $date;
     }

@@ -228,9 +228,9 @@
                                     <label class="col-lg-4 col-form-label" for="buses_id" >Транспорт</label>
                                     <div class="col-lg-6 input-group">
                                         <select class="custom-select @error('buses_id') is-invalid @enderror" id="buses_id" onchange="chenge_ubdate_button(this, 'updatebutton2')" multiple name="buses_id[]">
-                                            {{-- <option value="0" id="dont_select_bus" selected @if($buses_ids->count() == 0) hidden @endif>Без выбора</option> --}}
+                                            <option value="null" id="dont_select_bus" selected @if($buses_ids->count() == 0) hidden @endif>Без выбора</option>
                                             @foreach($buses_ids as $buses_id)
-                                                <option title="{{ $buses_id->Description }}" value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if(old('buses_id') == $buses_id->id) selected @endif>{{ $buses_id->Type_Transport . ' ' . $buses_id->Title_Transport . ' ' .   $buses_id->Amount_Place_Bus . 'м '}} @if($buses_id->Type_Transport == 'Автобус' or $buses_id->Type_Transport == 'Микроавтобус') {{date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}} @endif</option>
+                                                <option title="{{ $buses_id->Description }}" value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if(old('buses_id') == $buses_id->id) selected @endif>{{ $buses_id->Type_Transport . ' ' . $buses_id->Title_Transport . ' ' .   $buses_id->Amount_Place_Bus . 'м '}} @if(($buses_id->Type_Transport == 'Автобус' or $buses_id->Type_Transport == 'Микроавтобус') and $buses_id->employee != null) {{date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}} @endif</option>
                                             @endforeach
                                         </select>
                                         @error('buses_id')
@@ -364,9 +364,9 @@
                                                         <option value="0" disabled selected hidden>Водитель</option>
                                                         @foreach(\App\Employee::all() as $employee_bus)
                                                             @if($employee_bus->jobs_id != null && isset($employee_bus->job))
-                                                            @if(mb_strtolower($employee_bus->job->Job_Title) == 'водитель' || mb_strtolower($employee_bus->job->Job_Title) == 'шофёр')
-                                                            <option title="{{ $employee_bus->Surname . ' ' . $employee_bus->Name  . ' ' . $employee_bus->Middle_Name}}" value="{{ $employee_bus->id }}" id="{{ $employee_bus->id }}">{{ $employee_bus->Surname . ' ' . mb_substr($employee_bus->Name, 0, 1)  . '. ' . mb_substr($employee_bus->Middle_Name, 0, 1) . ($employee_bus->Middle_Name != '' ? '.' : '')}}</option>
-                                                            @endif
+                                                                @if(mb_strtolower($employee_bus->job->Job_Title) == 'водитель' || mb_strtolower($employee_bus->job->Job_Title) == 'шофёр')
+                                                                    <option title="{{ $employee_bus->Surname . ' ' . $employee_bus->Name  . ' ' . $employee_bus->Middle_Name}}" value="{{ $employee_bus->id }}" id="{{ $employee_bus->id }}">{{ $employee_bus->Surname . ' ' . mb_substr($employee_bus->Name, 0, 1)  . '. ' . mb_substr($employee_bus->Middle_Name, 0, 1) . ($employee_bus->Middle_Name != '' ? '.' : '')}}</option>
+                                                                @endif
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -534,6 +534,7 @@
                                                 $('#employee_id').val('0');
                                                 $('#Glonas_GPS').prop('checked', false);
                                                 $('#dont_select_bus').prop('hidden', false);
+                                                $('#dont_select_bus').prop('selected', false);
                                                 $('#Tachograph').prop('checked', false);
                                                 $('#Main_Transort').prop('checked', false);
                                                 $('#addArticle2').modal('hide');
@@ -674,6 +675,7 @@
                                             {
                                                 document.querySelector("#updatebutton2").classList.add("diableddeletedbutton");
                                                 document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].remove();
+                                                $('#dont_select_bus').prop('selected', true);
                                                 //$('#buses_id').val('0');
                                                 close_chenge_tour_bus();
                                                 alert('Удалено');
@@ -687,10 +689,10 @@
                                 </script>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="buses_id" >Маршрут</label>
+                                    <label class="col-lg-4 col-form-label" for="routes_id" >Маршрут</label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('buses_id') is-invalid @enderror" multiple onchange="chenge_ubdate_button(this, 'updatebutton3');" id="routes_id" name="routes_id[]">
-                                            {{-- <option value="0" disabled selected hidden>Маршрут</option> --}}
+                                        <select class="custom-select @error('routes_id') is-invalid @enderror" multiple onchange="chenge_ubdate_button(this, 'updatebutton3');" id="routes_id" name="routes_id[]">
+                                            <option value="null" id="dont_select_route" selected @if(count($routes_ids) == 0) hidden @endif>Без выбора</option>
                                             @foreach($routes_ids as $routes_id)
                                                 <option value="{{ $routes_id->id }}" id="{{ $routes_id->id }}" @if(old('routes_id') == $routes_id->id) selected @endif>{{$routes_id->Itinerary_Route}}</option>
                                             @endforeach
@@ -850,6 +852,8 @@
                                                 $('#Time_Sending_From_Initial_Pop').val('');
                                                 $('#Distination_From_End_Point').val('');
                                                 $('#Time_Sending_From_End_Point').val('');
+                                                $('#dont_select_route').prop('hidden', false);
+                                                $('#dont_select_route').prop('selected', false);
                                                 $('#Name_Car_Dorough_Dorog_Report_Transportation').val('');
                                                 $('#addArticle3').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
@@ -960,6 +964,7 @@
                                             {
                                                 document.querySelector("#updatebutton3").classList.add("diableddeletedbutton");
                                                 document.getElementById('routes_id').options[document.getElementById('routes_id').selectedIndex].remove();
+                                                $('#dont_select_route').prop('selected', true);
                                                 //$('#routes_id').val('0');
                                                 close_chenge_tour_route();
                                                 alert('Удалено');
@@ -1002,6 +1007,18 @@
                                         $("#End_Date_Tours").mask("99-99-9999 99:99");
                                     });
                                 </script>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Start_point" >Место отправления<span class="text-danger">*</span></label>
+                                    <div class="col-lg-6">
+                                        <input id="login" type="text" class="form-control @error('Start_point') is-invalid @enderror" name="Start_point" minlength="2" maxlength="191" value="{{ old('Start_point') }}" required  placeholder="Название">
+                                        @error('Start_point')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Assessment" >Оценка</label>
@@ -1080,6 +1097,17 @@
                                     <div class="col-lg-6">
                                         <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" placeholder="Описание">{{ old('Description') }}</textarea>
                                         @error('Description')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Program" >Программа</label>
+                                    <div class="col-lg-6">
+                                        <textarea  type="text" class="form-control @error('Program') is-invalid @enderror" name="Program" id="Program" placeholder="Описание">{{ old('Program') }}</textarea>
+                                        @error('Program')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -1188,6 +1216,9 @@
             if ($(celect).val().length > 1) {
                 document.querySelector("#" + button_select).classList.add("diableddeletedbutton");
                 document.querySelector("#div_" + button_select).title = "Для редактирования, пожалуйста выберете одну запись";
+            }  else if ($(celect).val() == "null") {
+                document.querySelector("#" + button_select).classList.add("diableddeletedbutton");
+                document.querySelector("#div_" + button_select).title = "Выберете пожалуйста другую запись!";
             } else {
                 document.querySelector("#" + button_select).classList.remove("diableddeletedbutton");
                 document.querySelector("#div_" + button_select).title = "";

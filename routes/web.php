@@ -12,6 +12,7 @@
 */
 
 use App\Tour;
+use Carbon\Carbon;
 
 Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::resource('admin/tours', 'TourController');
@@ -82,7 +83,7 @@ Route::get('/packages/{tour}/{Name_Tours}', 'TourController@tourdescript')->name
 Route::get('/ухади', 'SiteController@type_user_false')->name('typeuserfalse');
 
 Route::get('/', function () {
-    return view('site.index', ['tours' => Tour::orderByDesc('Price')->paginate(4)]);
+    return view('site.index', ['Carbon' => Carbon::now()->addDays(14), 'Cardon_hot' =>Carbon::now(), 'tours' => Tour::where('Confidentiality',0)->orderByDesc('Price')->paginate(4)]);
 })->name('/');
 
 Route::get('/about', function () {

@@ -178,12 +178,15 @@
                                                  document.getElementById('logout-form').submit();" style="display: inline !important;">
                                             На главную
                                         </a>
+                                    </li>
+                                    <li>
                                         <a  class="icon-key" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" style="display: inline !important;">
                                             Выйти
                                         </a>
-
+                                    </li>
+                                    <li>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
                                         </form>

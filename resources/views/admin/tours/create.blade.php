@@ -230,7 +230,7 @@
                                         <select class="custom-select @error('buses_id') is-invalid @enderror" id="buses_id" onchange="chenge_ubdate_button(this, 'updatebutton2'), chenge_Main_Transport(this)" multiple name="buses_id[]">
                                             <option value="null" id="dont_select_bus" selected @if($buses_ids->count() == 0) hidden @endif>Без выбора</option>
                                             @foreach($buses_ids as $buses_id)
-                                                <option title="{{ $buses_id->Description }}" data-amountPlace="{{ $buses_id->Amount_Place_Bus }}" value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if(old('buses_id') == $buses_id->id) selected @endif>{{ $buses_id->Type_Transport . ' ' . $buses_id->Title_Transport . ' ' .   $buses_id->Amount_Place_Bus . 'м '}} @if(($buses_id->Type_Transport == 'Автобус' or $buses_id->Type_Transport == 'Микроавтобус') and $buses_id->employee != null) {{date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}} @endif</option>
+                                                <option title="{{ $buses_id->Description }}" data-amountplace="{{ $buses_id->Amount_Place_Bus }}"  value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if(old('buses_id') == $buses_id->id) selected @endif>{{ $buses_id->Type_Transport . ' ' . $buses_id->Title_Transport . ' ' .   $buses_id->Amount_Place_Bus . 'м '}} @if(($buses_id->Type_Transport == 'Автобус' or $buses_id->Type_Transport == 'Микроавтобус') and $buses_id->employee != null) {{date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}} @endif</option>
                                             @endforeach
                                         </select>
                                         <div class="input-group-append">
@@ -252,7 +252,7 @@
                                     </div>
                                 </div>
 
-                                <input type="number" hidden id="bus_Main_Transort" name="bus_Main_Transort" data-idi="" data-amountplace="0"  title="{{ old('bus_Main_Transort.title') }}" value="{{ old('bus_Main_Transort') }}">
+                                <input type="number" hidden id="bus_Main_Transort" name="bus_Main_Transort" data-idi="" data-amountplace="0"  title="" value="">
 
                                 <div class="modal fade" id="addArticle2" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
@@ -435,12 +435,12 @@
                                     function chenge_Main_Transport(value){
                                         var buses_id = $( "#buses_id" ).val() || [];
                                         if (!buses_id.includes(bus_Main_Transort.dataset.idi)) {
-                                            document.getElementById('bus_Main_Transort').dataset.amountPlace = 0;
+                                            document.getElementById('bus_Main_Transort').dataset.amountplace = 0;
                                             document.getElementById('bus_Main_Transort').value = "0";
                                             $('#bus_Main_Transort').prop('title', '');
                                         } else{
                                             //$( "#buses_id" )toArray().map(item => item.text).join();
-                                            document.getElementById('bus_Main_Transort').dataset.amountPlace = $("#buses_id :selected").map(function(i, el) {if(bus_Main_Transort.dataset.idi == el.value){return el.dataset.amountPlace;}}).get();
+                                            document.getElementById('bus_Main_Transort').dataset.amountplace = $("#buses_id :selected").map(function(i, el) {if(bus_Main_Transort.dataset.idi == el.value){return el.dataset.amountplace;}}).get();
                                             document.getElementById('bus_Main_Transort').value = bus_Main_Transort.dataset.idi;
                                             $('#bus_Main_Transort').prop('title',  $("#buses_id :selected").map(function(i, el) { if(bus_Main_Transort.dataset.idi == el.value){return el.text;}  }).get());
                                         }
@@ -562,12 +562,12 @@
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
                                                 document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].selected = false;
-                                                var str = '<option value="'+data['id']+'" data-amountPlace="'+data['Amount_Place_Bus']+'" id="'+data['id']+'" title= "'+data['Description']+'" selected>'+data['String']+'</option>';
+                                                var str = '<option value="'+data['id']+'" data-amountplace="'+data['Amount_Place_Bus']+'" id="'+data['id']+'" title= "'+data['Description']+'" selected>'+data['String']+'</option>';
                                                 $('#buses_id:last').append(str);
                                                 if(Main_Transort == 1){
                                                     document.getElementById('bus_Main_Transort').value = data['id'];
                                                     bus_Main_Transort.title = data['String'];
-                                                    document.getElementById('bus_Main_Transort').dataset.amountPlace = data['Amount_Place_Bus'];
+                                                    document.getElementById('bus_Main_Transort').dataset.amountplace = data['Amount_Place_Bus'];
                                                     document.getElementById('bus_Main_Transort').dataset.idi = data['id'];
                                                 }
                                                     // $('#bus_Main_Transort').val('1');
@@ -630,15 +630,15 @@
                                                 if(data['Main_Transort'] == 1){
                                                     document.getElementById('bus_Main_Transort').value = data['id'];
                                                     bus_Main_Transort.title = data['String'];
-                                                    document.getElementById('bus_Main_Transort').dataset.amountPlace = data['Amount_Place_Bus'];
+                                                    document.getElementById('bus_Main_Transort').dataset.amountplace = data['Amount_Place_Bus'];
                                                     document.getElementById('bus_Main_Transort').dataset.idi = data['id'];
                                                 } else if(data['Main_Transort'] == 0 &&  document.getElementById('bus_Main_Transort').value == buses_id){
                                                     document.getElementById('bus_Main_Transort').value = 0;
-                                                    document.getElementById('bus_Main_Transort').dataset.amountPlace = 0;
+                                                    document.getElementById('bus_Main_Transort').dataset.amountplace = 0;
                                                     document.getElementById('bus_Main_Transort').dataset.idi = 0;
                                                     bus_Main_Transort.title = '';
                                                 }
-                                                document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].dataset.amountPlace = data['Amount_Place_Bus'];
+                                                document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].dataset.amountplace = data['Amount_Place_Bus'];
                                                 document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].text = data['String'];
                                                 alert('Изменено');
 
@@ -744,7 +744,7 @@
                                                 document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].remove();
                                                 $('#dont_select_bus').prop('selected', true);
                                                 if(document.getElementById('bus_Main_Transort').value == buses_id){
-                                                    document.getElementById('bus_Main_Transort').dataset.amountPlace = 0;
+                                                    document.getElementById('bus_Main_Transort').dataset.amountplace = 0;
                                                     document.getElementById('bus_Main_Transort').value = "0";
                                                     document.getElementById('bus_Main_Transort').dataset.idi = 0;
                                                     $('#bus_Main_Transort').prop('title', '');

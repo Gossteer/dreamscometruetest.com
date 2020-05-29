@@ -17,7 +17,7 @@
 		{{-- @if()
 		<p class="text mt-2 mb-5 text-center">Дата начала: </p>
 		@endif --}}
-		@if($bus_tour and ($bus_tour->bus->Type_Transport == 'Автобус' or $bus_tour->bus->Type_Transport == 'Микроавтобус'))
+		@if($bus_tour and ($bus_tour->bus->Type_Transport == 'Автобус' or $bus_tour->bus->Type_Transport == 'Микроавтобус') and $tour->Seating == 1)
 		<div class="row">
 			<div class="col-12 col-lg-5 text-center">
 				@if($bus_tour->bus->Description)

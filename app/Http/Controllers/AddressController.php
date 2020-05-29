@@ -12,9 +12,9 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Address::find($request->id);
     }
 
     /**
@@ -22,9 +22,11 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        
+
+
     }
 
     /**
@@ -35,7 +37,11 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $res = Address::create([
+            'Address' => $request->Address,
+            ]);
+
+        return $res;
     }
 
     /**
@@ -67,9 +73,13 @@ class AddressController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Address $address)
+    public function update(Request $request)
     {
-        //
+        Address::find($request->id)->update([
+            'Address' => $request->Address,
+        ]);
+
+        return $request;
     }
 
     /**
@@ -78,10 +88,10 @@ class AddressController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function destroy($addres, $partner)
+    public function destroy(Request $request)
     {
-       Address::findOrFail($addres)->delete();
+       Address::findOrFail($request->id)->delete();
 
-        return redirect()->back();
+        return 1;
     }
 }

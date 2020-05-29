@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Job;
 use App\User;
+use Auth;
 use Carbon\Carbon;
 use Hash;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('admin.employees', ['employees' => Employee::where('LogicalDelete',0)->paginate(12), 'jobs' => Job::all()]);
+        return view('admin.employees', ['employees' => Employee::where('LogicalDelete',0)->where('users_id', '!=', Auth::user()->id)->paginate(12), 'jobs' => Job::all()]);
     }
 
     public function indexfull(Request $request)
@@ -225,7 +226,9 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        $employee->delete();
+        $employee->update([
+            'LogicalDelete' => 1
+        ]);
 
         return redirect()->route('employees.index');
     }

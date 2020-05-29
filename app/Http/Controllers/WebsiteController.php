@@ -12,9 +12,9 @@ class WebsiteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Website::find($request->id);
     }
 
     /**
@@ -35,7 +35,9 @@ class WebsiteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Website::create([
+            'Site' => $request->Site
+        ]);
     }
 
     /**
@@ -55,9 +57,9 @@ class WebsiteController extends Controller
      * @param  \App\Website  $website
      * @return \Illuminate\Http\Response
      */
-    public function edit(Website $website)
+    public function edit(Request $request)
     {
-        //
+
     }
 
     /**
@@ -67,9 +69,13 @@ class WebsiteController extends Controller
      * @param  \App\Website  $website
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Website $website)
+    public function update(Request $request)
     {
-        //
+        Website::find($request->id)->update([
+            'Site' => $request->Site,
+        ]);
+
+        return $request;
     }
 
     /**
@@ -78,8 +84,10 @@ class WebsiteController extends Controller
      * @param  \App\Website  $website
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Website $website)
+    public function destroy(Request $request)
     {
-        //
+        Website::find($request->id)->delete();
+
+        return 1;
     }
 }

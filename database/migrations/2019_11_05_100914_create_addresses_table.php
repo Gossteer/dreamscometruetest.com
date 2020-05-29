@@ -15,7 +15,7 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('partners_id')->unsigned();
+            $table->bigInteger('partners_id')->unsigned()->nullable();
             $table->string('Address', 191)->default('Нет');
             $table->boolean('LogicalDelete')->default(0);
 

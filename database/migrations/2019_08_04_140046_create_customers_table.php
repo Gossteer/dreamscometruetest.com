@@ -33,8 +33,8 @@ class CreateCustomersTable extends Migration
             $table->date('Date_Birth_Customer');
             $table->string('Preferred_Type_Tours', 191)->nullable();
             $table->boolean('floor');
-            $table->string('Description', 191)->default('Отсуствует');
-            $table->smallInteger('Age_Group')->nullable();
+            $table->text('Description')->nullable();
+            $table->smallInteger('Age_customer')->nullable();
             $table->tinyInteger('Condition')->default(0);
             $table->mediumInteger('Debt')->default(0);
             $table->boolean('LogicalDelete')->default(0);

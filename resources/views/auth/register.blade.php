@@ -134,7 +134,7 @@
                                     <option value="1" @if(old('Floor') == 1) selected @endif>Женский</option>
                                 </select>
                                 @error('Floor')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -147,6 +147,11 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                @error('number_error')
+                                <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms" id="">
@@ -156,23 +161,26 @@
                                     <option value="2">Другое</option>
                                 </select>
                                 @error('Name_Category_Source')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
                             <div class="col-sm-6 form-group contact-forms" id="addSelect">
-
+                                
                             </div>
 
                             <div class="col-md-12 form-group contact-forms" >
                                 <input class="form-check-input" type="checkbox" id="Processing_Personal_Data" name="Processing_Personal_Data" value="1" style="margin-left: 0px !important;" required>
-                                <label class="form-check-label" for="Processing_Personal_Data" style="margin-left: 20px !important;" >Разрешить обработку персональных данных.</label>
+                                <label class="form-check-label text-muted" for="Processing_Personal_Data" style="font-size: 15px; margin-left: 20px !important;" >Разрешить обработку персональных данных.<span class="text-danger" style="size: 5%">*</span></label>
+                                <small id="passwordHelpBlock" class="form-text text-muted">
+                                    <a href="{{asset('politica.html')}}" style="padding-left: 3.3%" target="_blank">Ознакомиться с политикой конфеденциальности</a>
+                                </small>
                             </div>
                             <div class="col-md-12 form-group contact-forms" >
                                 <input class="form-check-input" type="checkbox" id="Notifications" name="Notifications" value="1"  style="margin-left: 0px !important;">
-                                <label class="form-check-label" for="Notifications" style="margin-left: 20px !important;" >Подписаться на уведомления о новых экскурсиях и скидках.</label>
+                                <label class="form-check-label text-muted" for="Notifications" style="font-size: 15px; margin-left: 20px !important;" >Подписаться на уведомления о новых экскурсиях и скидках.</label>
                             </div>
 
                             <script>
@@ -221,7 +229,7 @@
                                                         });
                                                 },
                                             });
-                                            //$("#amswerForPromt").mask("+7 (999) 99-99-999");
+
                                         }
                                     })
 
@@ -229,9 +237,7 @@
 
                                     $('select[name="Name_Category_Source"]').change(function (Retailer) {
                                         if ($("#Name_Category_Source option:selected").text() != "От знакомых") {
-                                            //$("#Sources").addClass('animateSelect').fadeIn('fast');
-                                            //$("#SourcesDiv").removeClass('col-md-12').fadeIn('fast');
-                                            //$("#SourcesDiv").addClass('col-sm-6').fadeIn('fast');
+
                                             if ($("#Name_Category_Source option:selected").text() == "Другое"){
                                                 if (!$("#Name_Source").length && !$("#Phone_Customer_Inviter").length){
                                                     $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input id="Name_Source" type="text" class="form-control" name="Name_Source" required placeholder="А именно?">');
@@ -241,25 +247,7 @@
                                                     $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('<input id="Name_Source" type="text" class="form-control" name="Name_Source" required placeholder="А именно?">');
                                                 }
                                             }
-                                            // else {
-                                            //     if (!$("#Name_Source").length && !$("#Number_Customers_Inviter").length){
-                                            //         $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('' +
-                                            //             '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
-                                            //             '<option value="" disabled selected>Выберите источник</option>' +
-                                            //             '</select>');
-                                            //     }
-                                            //     else {
-                                            //         $('#Number_Customers_Inviter').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('' +
-                                            //             '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
-                                            //             '<option value="" disabled selected>Выберите источник</option>' +
-                                            //             '</select>');
-                                            //         $('#Name_Source').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).replaceWith('' +
-                                            //             '<select class="form-control" id="Name_Source" name="Name_Source" required disabled="">' +
-                                            //             '<option value="" disabled selected>Выберите источник</option>' +
-                                            //             '</select>');
-                                            //     }
-                                            // }
-                                            //$("#Name_Source").prop('disabled', false);
+ 
                                         } else if ($("#Name_Category_Source option:selected").text() == "От знакомых") {
                                             if (!$("#Name_Source").length && !$("#Phone_Customer_Inviter").length){
                                                 $('#addSelect').slideUp( 0 ).delay( 150 ).fadeIn( 1000 ).append('<input type="text" class="form-control" id="Phone_Customer_Inviter" placeholder="Телефон знакомого" name="Phone_Customer_Inviter" required autocomplete="tel" >');

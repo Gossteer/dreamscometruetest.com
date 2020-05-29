@@ -152,6 +152,18 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Phone_Customer_Inviter" >Телефон пригласившего</label>
+                                    <div class="col-lg-6">
+                                        <input  type="tel" class="form-control @error('Phone_Customer_Inviter') is-invalid @enderror" value="{{ old('Phone_Customer_Inviter') }}" placeholder="Пригласивший" >
+                                        @error('Phone_Customer_Inviter')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Description" >Описание</label>
                                     <div class="col-lg-6">
                                         <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" maxlength="191" placeholder="Описание">{{ old('Description') }}</textarea>
@@ -242,6 +254,24 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Condition" >Статус<span class="text-danger">*</span></label>
+                                    <div class="col-lg-6">
+                                        <select class="custom-select mr-sm-2 form-control @error('Condition') is-invalid @enderror" id="Condition" name="Condition">
+                                            <option value="-1" title="У пользователя будет заблокирована возможность записи на мероприятие"  @if(old('Condition') == -1) selected @endif>Ненадёжный</option>
+                                            <option value="0" title="У пользователя будет заблокирована возможность записи на мероприятие" @if(old('Condition') == 0) selected @endif>Неподтверждён</option>
+                                            <option value="1"  @if(old('Condition') == 1) selected @endif>Подтверждён</option>
+                                            <option value="2" @if(old('Condition') == 2) selected @endif>Золотой клиент</option>
+                                        </select>
+                                        @error('Condition')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Category_Source" >Источник<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <select class="custom-select mr-sm-2 form-control @error('Name_Category_Source') is-invalid @enderror" id="Name_Category_Source" name="Name_Category_Source">
@@ -256,7 +286,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
                                 <!--
                                 КАК БУДЕТ РЕАЛИЗОВАНАЯ СИСТЕМА ИСТОЧНИКОВ ПОПРАВИТЬ ЕЙ В ВЫВОДЕ КОНКРЕТНОЙ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
                                 -->
@@ -307,6 +336,9 @@
                                         <div class="col-md-12 form-group contact-forms" style="margin-top: 15px !important;">
                                             <input class="form-check-input" type="checkbox" id="Processing_Personal_Data" name="Processing_Personal_Data" value="1" style="margin-left: -12px !important;" required>
                                             <label class="form-check-label" for="Processing_Personal_Data" style="margin-left: 20px !important;" >Разрешить обработку персональных данных.<span class="text-danger">*</span></label>
+                                            <small style="margin-left: 3.3% !important;" id="passwordHelpBlock" class="form-text text-muted">
+                                                <a href="{{asset('politica.html')}}" target="_blank">Ознакомиться с политикой конфеденциальности</a>
+                                            </small>
                                         </div>
                                         <div class="col-md-12 form-group contact-forms" >
                                             <input class="form-check-input" type="checkbox" id="Notifications" name="Notifications" value="1"  style="margin-left: -12px !important;">

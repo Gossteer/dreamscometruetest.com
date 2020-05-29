@@ -9,6 +9,7 @@ class Transort extends Model
     protected $fillable = [
         'buses_id',
         'tour_id',
+        'Main_Transort'
     ];
 
     public function bus()

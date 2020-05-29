@@ -15,7 +15,7 @@ class CreatePhoneNombersTable extends Migration
     {
         Schema::create('phone_nombers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('partners_id')->unsigned();
+            $table->bigInteger('partners_id')->unsigned()->nullable();
             $table->string('Representative',191)->default('Не имеется');
             $table->string('Phone_Number',20);
             $table->boolean('LogicalDelete')->default(0);

@@ -12,7 +12,19 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
+.datalivesearchstyle {
+	display: grid !important;
+}
 
+.pacagesunitbutton {
+    font-size: 1rem;
+    background-color: #047ffc;
+    margin-top: 15px;
+    margin-left: 12.8%;
+    padding-top: 7px;
+    width: 75%;
+    height: 43px;
+}
 
 .priceforsinglepachage{
 	color: #fff;
@@ -61,7 +73,60 @@ body {
 
 }
 
+.divamoutplace{
+	width: 70px !important; 
+	height: 70px !important; 
+	line-height: 75px !important;
+	margin-left: 1px !important;
+	border-radius: 20% !important;
+}
 
+.divamoutplace2{
+	width: 70px !important; 
+	height: 70px !important; 
+	line-height: 75px !important;
+	margin-right: 1px !important;
+	border-radius: 20% !important;
+}
+
+.divamoutplacelast{
+	width: 70px !important; 
+	height: 70px !important; 
+	line-height: 75px !important;
+	padding-bottom: 2%; 
+	border-radius: 20% !important;
+}
+
+@media (max-width: 350px) {
+	.divamoutplace{
+		width: 60px !important; 
+		height: 60px !important; 
+		line-height: 65px !important;
+		margin-left: 1px !important;
+		border-radius: 20% !important;
+	}
+	
+	.divamoutplace2{
+		width: 60px !important; 
+		height: 60px !important; 
+		line-height: 65px !important;
+		margin-right: 1px !important;
+		border-radius: 20% !important;
+	}
+	
+	.daddivamoutplacelast{
+		padding-left: 1.5% !important;
+		padding-right: 1.5% !important;
+	}
+
+	.divamoutplacelast{
+		width: 60px !important; 
+		height: 60px !important;
+		line-height: 65px !important; 
+		padding-bottom: 2%; 
+		border-radius: 20% !important;
+	}
+}
 
 @media (max-width: 991px) {
 	.hrsingle{

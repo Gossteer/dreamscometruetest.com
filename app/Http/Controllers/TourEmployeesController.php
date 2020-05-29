@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Tour;
 use App\Tour_employees;
 use Illuminate\Http\Request;
 use DB;
@@ -49,7 +50,7 @@ class TourEmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $res = Tour_employees::Create([
+        $employee = Tour_employees::Create([
             'Salary' => $request->Salary ?? 0,
             'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
             'tour_id' => $request->tour_id,
@@ -58,16 +59,22 @@ class TourEmployeesController extends Controller
             'partner_id' => $request->partner_id
         ]);
 
-        $employee = Employee::find($request->employee_id);
+        if($request->Occupied_Place_Bus != null){
+            Tour::find($request->tour_id)->increment('Occupied_Place');
+        };
+
+        tour::find($request->tour_id)->increment('Expenses', $request->Salary);
+        
 
         $data = [
-            'id' => $res->id,
+            'id' => $employee->id,
             'Salary' => number_format($request->Salary, 0, ',', ' ') . '₽' ?? 0,
-            'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
+            'Occupied_Place_Bus' => $request->Occupied_Place_Bus ?? 'Без места',
+            'partner_id' => $request->partner->Name_Partners ?? 'Частное лицо',
             'tour_id' => $request->tour_id,
-            'FIO_Full' => $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name,
-            'FIO' => $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : ''),
-            'Job' => $employee->job != null ? $employee->job->Company . ' ' . $employee->job->Job_Title . ' зп: ' . (($employee->job->Salary == null)? 'договорная': number_format($employee->job->Salary, 0, ',', ' ') . '₽') : 'Не назначена',
+            'FIO_Full' => $employee->employee->Surname . ' ' . $employee->employee->Name  . ' ' . $employee->employee->Middle_Name,
+            'FIO' => $employee->employee->Surname . ' ' . mb_substr($employee->employee->Name, 0, 1)  . '. ' . mb_substr($employee->employee->Middle_Name, 0, 1) . ($employee->employee->Middle_Name != '' ? '.' : ''),
+            'Job' => $employee->employee->job != null ? $employee->employee->job->Company . ' ' . $employee->employee->job->Job_Title . ' зп: ' . (($employee->employee->job->Salary == null)? 'договорная': number_format($employee->employee->job->Salary, 0, ',', ' ') . '₽') : 'Не назначена',
             'Confidentiality' => $request->Confidentiality == 1 ? 'Да' : 'Нет',
             'Class_Style' => $request->Confidentiality == 1 ? 'label gradient-2 btn-rounded' : 'label gradient-1 btn-rounded'
             ];
@@ -106,7 +113,11 @@ class TourEmployeesController extends Controller
      */
     public function update(Request $request)
     {
-        Tour_employees::find($request->id)->update([
+        $employee = Tour_employees::find($request->id);
+        tour::find($request->tour_id)->increment('Expenses', $request->Salary);
+        tour::find($request->tour_id)->decrement('Expenses', $employee->Salary);
+
+        $employee->update([
             'Salary' => $request->Salary ?? 0,
             'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
             'tour_id' => $request->tour_id,
@@ -115,16 +126,22 @@ class TourEmployeesController extends Controller
             'partner_id' => $request->partner_id
         ]);
 
-        $employee = Employee::find($request->employee_id);
+
+        if($request->Occupied_Place_Bus != null){
+            Tour::find($request->tour_id)->increment('Occupied_Place');
+        } elseif ($request->Occupied_Place_Bus == null) {
+            Tour::find($request->tour_id)->decrement('Occupied_Place');
+        }
 
         $data = [
-            'id' => $request->id,
+            'id' => $employee->id,
             'Salary' => number_format($request->Salary, 0, ',', ' ') . '₽' ?? 0,
-            'Occupied_Place_Bus' => $request->Occupied_Place_Bus,
+            'Occupied_Place_Bus' => $request->Occupied_Place_Bus ?? 'Без места',
+            'partner_id' => $request->partner->Name_Partners ?? 'Частное лицо',
             'tour_id' => $request->tour_id,
-            'FIO_Full' => $employee->Surname . ' ' . $employee->Name  . ' ' . $employee->Middle_Name,
-            'FIO' => $employee->Surname . ' ' . mb_substr($employee->Name, 0, 1)  . '. ' . mb_substr($employee->Middle_Name, 0, 1) . ($employee->Middle_Name != '' ? '.' : ''),
-            'Job' => $employee->job != null ? $employee->job->Company . ' ' . $employee->job->Job_Title . ' зп: ' . (($employee->job->Salary == null)? 'договорная': number_format($employee->job->Salary, 0, ',', ' ') . '₽') : 'Не назначена',
+            'FIO_Full' => $employee->employee->Surname . ' ' . $employee->employee->Name  . ' ' . $employee->employee->Middle_Name,
+            'FIO' => $employee->employee->Surname . ' ' . mb_substr($employee->employee->Name, 0, 1)  . '. ' . mb_substr($employee->employee->Middle_Name, 0, 1) . ($employee->employee->Middle_Name != '' ? '.' : ''),
+            'Job' => $employee->employee->job != null ? $employee->employee->job->Company . ' ' . $employee->employee->job->Job_Title . ' зп: ' . (($employee->employee->job->Salary == null)? 'договорная': number_format($employee->employee->job->Salary, 0, ',', ' ') . '₽') : 'Не назначена',
             'Confidentiality' => $request->Confidentiality == 1 ? 'Да' : 'Нет',
             'Class_Style' => $request->Confidentiality == 1 ? 'label gradient-2 btn-rounded' : 'label gradient-1 btn-rounded'
         ];
@@ -140,7 +157,14 @@ class TourEmployeesController extends Controller
      */
     public function destroy(Request $request)
     {
-        Tour_employees::find($request->id)->delete();
+        $destroy_rabotnik = Tour_employees::find($request->id);
+        tour::find($destroy_rabotnik->tour_id)->decrement('Expenses', $destroy_rabotnik->Salary);
+
+        if($destroy_rabotnik->Occupied_Place_Bus != null){
+            Tour::find($destroy_rabotnik->tour_id)->decrement('Occupied_Place');
+        };
+
+        $destroy_rabotnik->delete();
 
         $date = 1;
 

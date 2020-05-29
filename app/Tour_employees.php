@@ -9,7 +9,7 @@ class Tour_employees extends Model
     //protected $table = 'tour_employees';
 
     protected $fillable = [
-      'tour_id', 'employee_id','Occupied_Place_Bus','Salary','Confidentiality', 'partner_id'
+      'tour_id', 'employee_id','Occupied_Place_Bus','Salary','Confidentiality', 'partner_id', 'LogicalDelete',
     ];
 
     public function tour()

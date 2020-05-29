@@ -11,161 +11,145 @@
                                 <h4 class="">{{$tour->Name_Tours}} - Пассажиры</h4>
                             </div>
                             <div class="col-sm-12 col-md-5">
-                                <a href="{{ route('printpastour', [$tour]) }}" data-toggle="tooltip" onclick="return false;" title="Функция будет добавлена в последующих обновлениях!" data-placement="top" class="btn btn-info btn-rounded btnheader" style="cursor: default; color: DarkGray; float: right;">Список</a>
-                                <a href="" data-toggle="tooltip"  data-placement="top" onclick="return false;" title="Функция будет добавлена в последующих обновлениях!" class="btn btn-info btn-rounded btnheader" style="cursor: default; color: DarkGray; float: right; margin-right: 3px">Добавить</a>
+                                @if ($tour->Confirmation_Tours == 0)
+                                    <a href="{{route('tourgoadmin', $tour)}}" data-toggle="tooltip"  data-placement="top"  class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Добавить/Изменить/Удалить</a>
+                                @else
+                                    <a href="" onclick="return false;" class="btn btn-info btn-rounded btnheader" title="После подтверждения экскурсии, все её изменения запрещены" style="cursor: default; color: currentColor; float: right; margin-right: 3px">Добавить/Изменить/Удалить</a>
+                                @endif
+                                <a href="{{route('printpastour', $tour)}}" data-toggle="tooltip"  data-placement="top"  class="btn btn-info btn-rounded btnheader" style="float: right; margin-right: 3px">Список</a>
                             </div>
                         </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped verticle-middle text-center">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ФИО</th>
+                                    <th scope="col" title="Телеофон">Тел.</th>
+                                    <th scope="col" title="Место">М.</th>
+                                    <th scope="col" title="Платные/бесплатные">Дети</th>
+                                    <th scope="col" title="Сопровождающий">Сопр.</th>
+                                    <th scope="col">С.О.</th>
+                                    <th scope="col">Отзыв</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($passengers as $passenger)
+                                <tr title="Дата записи: {{ date('H:i d.m.Y ',strtotime($passenger->created_at))}}" @if($passenger->Paid == 1) style="background-color: lightsalmon" @else style="background-color: lightgreen" @endif>
+                                    <td>  <a href="{{ route('customer.edit', $passenger->customer->id) }}" title="Просмотреть">{{ $passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name }}</a></td>
+                                    <td> {{ $passenger->customer->Phone_Number_Customer }}</td>
+                                    <td> {{ $passenger->Occupied_Place_Bus }}</td>
+                                    <td>
+                                        <span title="Платные/бесплатные">{{$passenger->Amount_Children}}/{{$passenger->Free_Children}}</span>
+                                    </td>
+                                    <td> {{ $passenger->Accompanying == 0 ? 'Нет' : 'Да'}}</td>
+                                    <td> {{ $passenger->Payment_method == 1 ? 'Безнал.' : 'Нал.'}}</td>
+                                    <td> {{ ($passenger->Stars or $passenger->Comment_Customer) ? ('Оценка: ' . $passenger->Stars . '. Комментарий: ' . $passenger->Comment_Customer) : 'Отсутствует'}} </td>
+                                    @if ($tour->Confirmation_Tours == 0)
+                                    <td align="center">
+                                        <span>
+                                            @if($passenger->Paid == 1) 
+                                                <a style="cursor: pointer !important;" onclick="if(confirm('Отменить подтверждение оплаты?')){document.getElementById('form1{{$passenger->id}}').submit();}else{return false}" title="Отменить подтверждение оплаты"><i class="fa fa-close color-muted m-r-5"></i></a>
+                                            @else  
+                                                <a style="cursor: pointer !important;" onclick="if(confirm('Подтвердить оплату?')){document.getElementById('form1{{$passenger->id}}').submit();}else{return false}"  title="Подтвердить оплату"><i  class="fa fa-check  color-muted m-r-5"></i></a>
+                                            @endif
+                                            <a  title="Удалить" style="cursor: pointer;" onclick="if(confirm('Удалить?')){document.getElementById('form2{{$passenger->id}}').submit();}else{return false}"><i class="fa fa-trash color-danger"></i></a>
+                                            <form hidden onsubmit="" id="form1{{$passenger->id}}" action="{{route('complitepaid',$tour)}}" method="post">
+                                                <input type="number" hidden name="Paid" value="{{$passenger->Paid}}">
+                                                <input type="number" hidden name="customers_id" value="{{$passenger->customer->id}}">
+                                                @csrf
+                                            </form>
+                                            <form hidden onsubmit="" id="form2{{$passenger->id}}" action="{{route('destroyadmin',$tour)}}" method="post">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="number" hidden name="customers_id" value="{{$passenger->customer->id}}">
+                                                @csrf
+                                            </form>
+                                        </span>
+                                    </td>
+                                    @endif
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped verticle-middle">
-                            <thead>
-                            <tr>
-                                <th scope="col">ФИО</th>
-                                <th scope="col">Льготник</th>
-                                <th scope="col">Дата записи</th>
-                                <th scope="col">Действие</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($passengers as $passenger)
-                            <tr>
-                                {{--Модельное окно для партнёров и работников--}}
+                                </tr>
+                                    @endforeach
+                                </tbody>
 
-
-                                <td style="{{ ( ($passenger->Presence == 1) ?
-                                           'color: green !important;' :
-                                            (($passenger->Presence == -1) ?
-                                           'color: red !important;' : 'lol')) }}"> {{ $passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name }}</td>
-                                <td>
-                                    {{ ($passenger->Preferential_Terms == 1) ? 'Да' : 'Нет' }}
-                                </td>
-                                <td> {{ $passenger->tour->created_at }}</td>
-                                <td>
-                                    <script>
-                                        function alert_precence_true ()
-                                        {
-                                            dialog.alert({
-                                                title: "Уведомление",
-                                                message: "Вы уже отметили пользователя, как присутствуещего!",
-                                            });
-
-                                            return false
-                                        }
-
-
-                                        function alert_occupaid_true_forfalse ()
-                                        {
-                                            dialog.confirm({
-                                                title: "Предупреждение",
-                                                message: "Вы действительно хотите изменить состояние клиента на 'Присутствовал'?",
-                                                cancel: "Нет",
-                                                button: "Да",
-                                                required: true,
-                                                callback: function(value){
-                                                    if (value == 1)
-                                                        $("#Precence_True").submit()
-                                                    else
-                                                        return false
-                                                }
-                                            });
-                                        }
-
-                                        function alert_occupaid_false_fortrue ()
-                                        {
-                                            dialog.confirm({
-                                                title: "Предупреждение",
-                                                message: "Вы действительно хотите изменить состояние клиента на 'Отсутствовал'?",
-                                                cancel: "Нет",
-                                                button: "Да",
-                                                required: true,
-                                                callback: function(value){
-                                                    if (value == 1)
-                                                        $("#Precence_False").submit()
-                                                    else
-                                                        return false
-                                                }
-                                            });
-                                        }
-
-                                        function Precence_True_submit ($lol)
-                                        {
-                                            $($lol).submit()
-                                        }
-
-                                        function alert_occupaid_false ()
-                                        {
-                                            dialog.alert({
-                                                title: "Уведомление",
-                                                message: "Вы уже отметили пользователя, как отсутсвующего!",
-                                            });
-
-                                            return false
-                                        }
-                                    </script>
-                                    <span>
-                                        <form id="Precence_True" action="{{ route('passengers.update', $passenger) }}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" name="_method" value="put">
-                                            <input id="" type="hidden" name="Presence" value="1">
-                                             <a  style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;"
-                                                     onclick="{{ (
-                                            ($passenger->Presence == 1) ?
-                                           'alert_precence_true ()' :
-                                            (($passenger->Presence == -1) ?
-                                           'alert_occupaid_true_forfalse ()' : 'Precence_True_submit (Precence_True)'))
-                                               }}"
-                                                data-toggle="tooltip" data-placement="top" title="Присутствовал"><i class="fa fa-check color-muted m-r-5"></i>
-                                             </a>
-
-                                        </form>
-
-                                        <form id="Precence_False" action="{{ route('passengers.update', $passenger) }}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <input id="" type="hidden" name="Presence" value="-1">
-                                            <input type="hidden" name="_method" value="put">
-                                             <a style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;"
-                                                     onclick="{{ (
-                                            ($passenger->Presence == -1) ?
-                                           'alert_occupaid_false ()' :
-                                            (($passenger->Presence == 1) ?
-                                           'alert_occupaid_false_fortrue ()' : 'Precence_True_submit (Precence_False)'))
-                                               }}"
-                                                     data-toggle="tooltip" data-placement="top" title="Отсутствовал"><i class="fa fa-upload color-muted m-r-5"></i>
-                                        </a>
-                                        </form>
-
-
-
-                                        <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('passengers.destroy',$passenger)}}" method="post">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            @csrf
-
-
-                                            <button type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fa fa-close color-danger"></i></button>
-                                        </form>
-
-                                    </span>
-                                </td>
-
-                            </tr>
-                                @endforeach
-                            </tbody>
-
-                        </table>
+                            </table>
+                        </div>
                         @if($passengers->total() > $passengers->count())
-                            <div class="bootstrap-pagination">
+                        <div class="row mt-3 justify-content-center">
+                            <div class="bootstrap-pagination" >
                                 <nav>
                                     <ul class="pagination">
-                                        {{ $passengers->links() }}
+                                        {{$passengers->links() }}
                                     </ul>
                                 </nav>
                             </div>
+                        </div>
                         @endif
                     </div>
                 </div>
-                </div>
             </div>
         </div>
+
+        <script>
+            function alert_precence_true ()
+            {
+                dialog.alert({
+                    title: "Уведомление",
+                    message: "Вы уже отметили пользователя, как присутствуещего!",
+                });
+
+                return false
+            }
+
+
+            function alert_occupaid_true_forfalse ()
+            {
+                dialog.confirm({
+                    title: "Предупреждение",
+                    message: "Вы действительно хотите изменить состояние клиента на 'Присутствовал'?",
+                    cancel: "Нет",
+                    button: "Да",
+                    required: true,
+                    callback: function(value){
+                        if (value == 1)
+                            $("#Precence_True").submit()
+                        else
+                            return false
+                    }
+                });
+            }
+
+            function alert_occupaid_false_fortrue ()
+            {
+                dialog.confirm({
+                    title: "Предупреждение",
+                    message: "Вы действительно хотите изменить состояние клиента на 'Отсутствовал'?",
+                    cancel: "Нет",
+                    button: "Да",
+                    required: true,
+                    callback: function(value){
+                        if (value == 1)
+                            $("#Precence_False").submit()
+                        else
+                            return false
+                    }
+                });
+            }
+
+            function Precence_True_submit ($lol)
+            {
+                $($lol).submit()
+            }
+
+            function alert_occupaid_false ()
+            {
+                dialog.alert({
+                    title: "Уведомление",
+                    message: "Вы уже отметили пользователя, как отсутсвующего!",
+                });
+
+                return false
+            }
+        </script>
 
         
         <div class="row">
@@ -208,7 +192,7 @@
                                                     '</td><td  align="center">'+
                                                     '<span>'+
                                                     '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle2" onclick="index_tour_contract(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
-                                                    '<a  id="'+data['id']+'" style="cursor: pointer;"   data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_contract(this.id)}else{return false}"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '<a  id="'+data['id']+'" style="cursor: pointer;"   data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_contract(this.id)}else{return false}"  title="Удалить"><i class="fa fa-trash color-danger"></i></a>'+
                                                     '</span>'+
                                                     '</td></tr>';
 
@@ -248,7 +232,7 @@
                                                     '</td><td  align="center">'+
                                                     '<span>'+
                                                     '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle2" onclick="index_tour_contract(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
-                                                    '<a  id="'+data['id']+'" style="cursor: pointer;"   data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_contract(this.id)}else{return false}"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '<a  id="'+data['id']+'" style="cursor: pointer;"   data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_contract(this.id)}else{return false}"  title="Удалить"><i class="fa fa-trash color-danger"></i></a>'+
                                                     '</span>'+
                                                     '</td></tr>';
                                                 $('#save2').text('Добавить');
@@ -274,7 +258,7 @@
 
                                     function index_tour_contract(id) {
                                         $('#save2').text('Редактировать');
-                                        $.ajax({
+                                       $.ajax({
                                             url: '{{ route('Contract.index') }}',
                                             type: "POST",
                                             data: {id:id},
@@ -296,10 +280,11 @@
                                         });
                                     };
                                     function destroy_tour_contract(id) {
+                                        var tour_id = document.getElementById('idtour').dataset.idi;
                                         $.ajax({
                                             url: '{{ route('Contract.destroy') }}',
                                             type: "POST",
-                                            data: {id:id},
+                                            data: {id:id,tours_id:tour_id},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
@@ -315,8 +300,11 @@
                                     };
 
                                 </script>
-
-                                <a href="" data-toggle="modal" data-target="#addArticle2" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
+                                @if ($tour->Confirmation_Tours == 0)
+                                    <a href="" data-toggle="modal" data-target="#addArticle2" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
+                                @else
+                                    <a href="" onclick="return false;" title="После подтверждения экскурсии, все её изменения запрещены" class="btn btn-info btn-rounded btnheader" style="cursor: default; color: currentColor; float: right;">Добавить</a>
+                                @endif
                                 <div class="modal fade" id="addArticle2" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -396,16 +384,14 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped verticle-middle" id="table_for_contract">
+                            <table class="table table-bordered table-striped verticle-middle text-center" id="table_for_contract">
                                 <thead>
                                 <tr>
                                     <th scope="col">Партнёр</th>
                                     <th scope="col">Название</th>
                                     <th scope="col">Договор</th>
                                     <th scope="col">Стоимость</th>
-                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -415,27 +401,30 @@
                                         <td> {{ $contract->Name_Contract_doc }} </td>
                                         <td> <a href="">{{ $contract->Document_Contract }}</a></td>
                                         <td> {{ $contract->Salary }} </td>
-                                        <td align="center">
-                                            <span>
-                                                <a href="" id="{{ $contract->id }}" data-toggle="modal" data-target="#addArticle2" onclick="index_tour_contract(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>
-                                                <a style="cursor: pointer;" id="{{ $contract->id }}" data-toggle="tooltip" data-placement="top" onclick="if(confirm('Удалить?')){return destroy_tour_contract(this.id)}else{return false}" title="Удалить"><i class="fa fa-close color-danger"></i></a>
-                                            </span>
-                                        </td>
+                                        @if ($tour->Confirmation_Tours == 0)
+                                            <td align="center">
+                                                <span>
+                                                    <a href="" id="{{ $contract->id }}" data-toggle="modal" data-target="#addArticle2" onclick="index_tour_contract(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>
+                                                    <a style="cursor: pointer;" id="{{ $contract->id }}" data-toggle="tooltip" data-placement="top" onclick="if(confirm('Удалить?')){return destroy_tour_contract(this.id)}else{return false}" title="Удалить"><i class="fa fa-trash color-danger"></i></a>
+                                                </span>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
-
                             </table>
-                            @if($passengers->total() > $passengers->count())
-                                <div class="bootstrap-pagination">
-                                    <nav>
-                                        <ul class="pagination">
-                                            {{ $passengers->links() }}
-                                        </ul>
-                                    </nav>
-                                </div>
-                            @endif
                         </div>
+                        @if($contracts->total() > $contracts->count())
+                        <div class="row mt-3 justify-content-center">
+                            <div class="bootstrap-pagination" >
+                                <nav>
+                                    <ul class="pagination">
+                                        {{$contracts->links() }}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -465,7 +454,11 @@
                                 <h4 class="">{{$tour->Name_Tours}} - Работники</h4>
                             </div>
                             <div class="col-sm-12 col-md-5">
-                                <a href="" id="dobavit_employee" data-toggle="modal" data-target="#addArticle3" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
+                                @if ($tour->Confirmation_Tours == 0)
+                                    <a href="" id="dobavit_employee" data-toggle="modal" data-target="#addArticle3" class="btn btn-info btn-rounded btnheader" style="float: right;">Добавить</a>
+                                @else
+                                    <a href="" onclick="return false;" title="После подтверждения экскурсии, все её изменения запрещены" class="btn btn-info btn-rounded btnheader" style="cursor: default; color: currentColor; float: right;">Добавить</a>
+                                @endif
                                 <div class="modal fade" id="addArticle3" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content" >
@@ -510,11 +503,12 @@
                                                     </span>
                                                     @enderror
                                                 </div>
+                                                @if($place_transport and ($place_transport->bus->Type_Transport == 'Автобус' or $place_transport->bus->Type_Transport == 'Микроавтобус'))
                                                 <div class="form-group">
                                                     <label for="Occupied_Place_Bus">Место</label>
                                                     <select class="custom-select @error('Occupied_Place_Bus') is-invalid @enderror" id="Occupied_Place_Bus" name="Occupied_Place_Bus"  required>
                                                         <option value="0" disabled selected hidden>Выберете место</option>
-                                                        @for($i = 1; $i <= $tour->Amount_Place; $i++)
+                                                        @for($i = 1; $i <= $place_transport->bus->Amount_Place_Bus; $i++)
                                                             <option value="{{ $i }}" id="{{ $i }}" @if(\App\Passenger::where('Occupied_Place_Bus',$i)->exists()) hidden disabled @endif>{{$i}}</option>
                                                         @endfor
                                                     </select>
@@ -524,6 +518,7 @@
                                                     </span>
                                                     @enderror
                                                 </div>
+                                                @endif
                                                 <div class="form-group">
                                                     <label for="Confidentiality">Скрытый</label>
                                                     <input class="form-check-input" type="checkbox" id="Confidentiality" name="Confidentiality" style="margin-left: 5px !important; border: 1px solid #ced4da;" value="1" >
@@ -541,9 +536,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
+                                @if ($tour->Confirmation_Tours == 0)
                                 <script>
                                     function create_tour_employee() {
                                         var employee_id = $('#employee_id').val();
@@ -574,6 +567,7 @@
                                                 $('.alert').removeClass('show').addClass('hidden');
                                                 var str = '<tr id="tour_employee'+data['id']+'"><td title="'+data['FIO_Full']+'">'+data['FIO']+
                                                     '</td><td>'+data['Job']+
+                                                    '</td><td>'+data['partner_id']+
                                                     '</td><td>'+data['Occupied_Place_Bus']+
                                                     '</td><td>'+data['Salary']+
                                                     '</td><td>'+
@@ -583,7 +577,7 @@
                                                     '</td><td  align="center">'+
                                                     '<span>'+
                                                     '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
-                                                    '<a style="cursor: pointer;"  id="'+data['id']+'"  data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_employee(this.id)}else{return false}"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '<a style="cursor: pointer;"  id="'+data['id']+'"  data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_employee(this.id)}else{return false}"  title="Удалить"><i class="fa fa-trash color-danger"></i></a>'+
                                                     '</span>'+
                                                     '</td></tr>';
 
@@ -624,6 +618,7 @@
                                                 $('#Confidentiality').prop('checked', false);
                                                 var str = '<tr id="tour_employee'+data['id']+'"><td title="'+data['FIO_Full']+'">'+data['FIO']+
                                                     '</td><td>'+data['Job']+
+                                                    '</td><td>'+data['partner_id']+
                                                     '</td><td>'+data['Occupied_Place_Bus']+
                                                     '</td><td>'+data['Salary']+
                                                     '</td><td>'+
@@ -633,7 +628,7 @@
                                                     '</td><td  align="center">'+
                                                     '<span>'+
                                                     '<a href="" id="'+data['id']+'" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>'+
-                                                    '<a style="cursor: pointer;"  id="'+data['id']+'" data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_employee(this.id)}else{return false}"  title="Удалить"><i class="fa fa-close color-danger"></i></a>'+
+                                                    '<a style="cursor: pointer;"  id="'+data['id']+'" data-toggle="tooltip" data-placement="top" onclick="if(confirm(\'Удалить?\')){return destroy_tour_employee(this.id)}else{return false}"  title="Удалить"><i class="fa fa-trash color-danger"></i></a>'+
                                                     '</span>'+
                                                     '</td></tr>';
                                                 $('#save3').text('Добавить');
@@ -702,11 +697,11 @@
                                     };
 
                                 </script>
+                                @endif
                             </div>
                         </div>
-
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped verticle-middle" id="table_for_employees">
+                            <table class="table table-bordered table-striped verticle-middle text-center" id="table_for_employees">
                                 <thead>
                                 <tr>
                                     <th scope="col">ФИО</th>
@@ -715,14 +710,13 @@
                                     <th scope="col">Место</th>
                                     <th scope="col">Стоимость</th>
                                     <th scope="col">Скрытый</th>
-                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($tour_employees as $tour_employee)
                                     <tr id="tour_employee{{$tour_employee->id}}" >
                                         <td  title="{{ $tour_employee->employee->Surname . ' ' . $tour_employee->employee->Name  . ' ' . $tour_employee->employee->Middle_Name}}">
-                                            {{ $tour_employee->employee->Surname . ' ' . mb_substr($tour_employee->employee->Name, 0, 1)  . '. ' . mb_substr($tour_employee->employee->Middle_Name, 0, 1) . ($tour_employee->employee->Middle_Name != '' ? '.' : '') }}
+                                            <a href="{{ route('employees.edit', $tour_employee->employee->id) }}" title="Просмотреть">{{ $tour_employee->employee->Surname . ' ' . mb_substr($tour_employee->employee->Name, 0, 1)  . '. ' . mb_substr($tour_employee->employee->Middle_Name, 0, 1) . ($tour_employee->employee->Middle_Name != '' ? '.' : '') }}</a>
                                         </td>
                                         <td>
                                                 @if($tour_employee->employee->jobs_id != null && isset($tour_employee->employee->job))
@@ -751,26 +745,30 @@
                                                 </span>
                                             @endif
                                         </td>
+                                        @if ($tour->Confirmation_Tours == 0)
                                         <td align="center">
                                             <span>
                                                 <a href="" id="{{ $tour_employee->id }}" data-toggle="modal" data-target="#addArticle3" onclick="index_tour_employee(this.id)"  title="Редактировать"><i  class="fa fa-pencil color-muted m-r-5"></i></a>
-                                                <a style="cursor: pointer;" id="{{ $tour_employee->id }}" data-toggle="tooltip" data-placement="top" onclick="if(confirm('Удалить?')){return destroy_tour_employee(this.id)}else{return false}" title="Удалить"><i class="fa fa-close color-danger"></i></a>
+                                                <a style="cursor: pointer;" id="{{ $tour_employee->id }}" data-toggle="tooltip" data-placement="top" onclick="if(confirm('Удалить?')){return destroy_tour_employee(this.id)}else{return false}" title="Удалить"><i class="fa fa-trash color-danger"></i></a>
                                             </span>
                                         </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            @if($tour_employees->total() > $tour_employees->count())
-                                <div class="pagination justify-content-center" >
-                                    <nav>
-                                        <ul class="pagination">
-                                            {{ $tour_employees->links() }}
-                                        </ul>
-                                    </nav>
-                                </div>
-                            @endif
                         </div>
+                        @if($tour_employees->total() > $tour_employees->count())
+                        <div class="row mt-3 justify-content-center">
+                            <div class="bootstrap-pagination" >
+                                <nav>
+                                    <ul class="pagination">
+                                        {{$tour_employees->links() }}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

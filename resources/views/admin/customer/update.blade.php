@@ -153,6 +153,18 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Phone_Customer_Inviter" >Телефон пригласившего</label>
+                                    <div class="col-lg-6">
+                                        <input  type="tel" class="form-control @error('Phone_Customer_Inviter') is-invalid @enderror" title="{{(App\Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first()->Name ?? '') . ' ' . (App\Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first()->Surname ?? '') . ' ' . (App\Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first()->Middle_Name ?? '')}}" name="Phone_Customer_Inviter" id="Phone_Customer_Inviter" value="{{ $customer->Phone_Customer_Inviter }}" placeholder="Пригласивший" >
+                                        @error('Phone_Customer_Inviter')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Description" >Описание</label>
                                     <div class="col-lg-6">
                                         <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" maxlength="191" placeholder="Описание">{{ $customer->Description }}</textarea>
@@ -235,12 +247,30 @@
                                             <option value="1" @if($customer->floor == 1) selected @endif>Женский</option>
                                         </select>
                                         @error('floor')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Condition" >Статус<span class="text-danger">*</span></label>
+                                    <div class="col-lg-6">
+                                        <select class="custom-select mr-sm-2 form-control @error('Condition') is-invalid @enderror" id="Condition" name="Condition">
+                                            <option value="-1" title="У пользователя будет заблокирована возможность записи на мероприятие"  @if($customer->Condition == -1) selected @endif>Ненадёжный</option>
+                                            <option value="0" title="У пользователя будет заблокирована возможность записи на мероприятие" @if($customer->Condition == 0) selected @endif>Неподтверждён</option>
+                                            <option value="1"  @if($customer->Condition == 1) selected @endif>Подтверждён</option>
+                                            <option value="2" @if($customer->Condition == 2) selected @endif>Золотой клиент</option>
+                                        </select>
+                                        @error('Condition')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
 
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Category_Source" >Источник<span class="text-danger">*</span></label>
@@ -251,7 +281,7 @@
                                             <option value="2">Другое</option>
                                         </select>
                                         @error('Name_Category_Source')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
@@ -304,6 +334,9 @@
                                         <div class="col-md-12 form-group contact-forms" style="margin-top: 15px !important;">
                                             <input class="form-check-input" type="checkbox" id="Processing_Personal_Data" name="Processing_Personal_Data" @if($user->Processing_Personal_Data == 1) checked @endif value="1" style="margin-left: -12px !important;" required>
                                             <label class="form-check-label" for="Processing_Personal_Data" style="margin-left: 20px !important;" >Разрешить обработку персональных данных.<span class="text-danger">*</span></label>
+                                            <small style="margin-left: 3.3% !important;" id="passwordHelpBlock" class="form-text text-muted">
+                                                <a href="{{asset('politica.html')}}" target="_blank">Ознакомиться с политикой конфеденциальности</a>
+                                            </small>
                                         </div>
                                         <div class="col-md-12 form-group contact-forms" >
                                             <input class="form-check-input" type="checkbox" id="Notifications" name="Notifications" value="1" @if($user->Notifications == 1) checked @endif  style="margin-left: -12px !important;">

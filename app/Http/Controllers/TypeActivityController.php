@@ -14,9 +14,11 @@ class TypeActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $Type_Activity = Type_Activity::find($request->id);
+
+        return $Type_Activity;
     }
 
     /**
@@ -37,20 +39,22 @@ class TypeActivityController extends Controller
      */
     public function store(Request $request)
     {
-        \Validator::make($request->all(), [
-            'Name_Type_Activity' => ['required', 'unique:type_activities', 'min:2', 'max:191'],
-        ],[
-            'Name_Type_Activity.unique' => 'Уже существует!',
-            'Name_Type_Activity.required' => 'Обязательно к заполнению!',
-        ])->validate();
+        // \Validator::make($request->all(), [
+        //     'Name_Type_Activity' => ['required', 'unique:type_activities', 'min:2', 'max:191'],
+        // ],[
+        //     'Name_Type_Activity.unique' => 'Уже существует!',
+        //     'Name_Type_Activity.required' => 'Обязательно к заполнению!',
+        // ])->validate();
 
-       $res = Type_Activity::Create([
+       $res = Type_Activity::firstOrCreate([
          'Name_Type_Activity' => $request->Name_Type_Activity,
        ]);
 
-       $data = ['id' => $res->id, 'Name_Type_Activity' => $request->Name_Type_Activity];
+       $res->update([
+            'LogicalDelete' => 0,
+       ]);
 
-        return $data;
+        return $res;
     }
 
     /**
@@ -88,9 +92,37 @@ class TypeActivityController extends Controller
      * @param  \App\Type_Activity  $type_Activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Type_Activity $type_Activity)
+    public function update(Request $request)
     {
-        //
+        $res = Type_Activity::where('Name_Type_Activity', $request->Name_Type_Activity);
+        if($res->exists() and $res->first()->id != $request->id){
+            $res = $res->first();
+            $res->update([
+                'LogicalDelete' => 0,
+            ]);
+            Type_Activity::find($request->id)->update([
+                'LogicalDelete' => 1,
+            ]);
+        } else{
+            Type_Activity::find($request->id)->update([
+                'Name_Type_Activity' => $request->Name_Type_Activity,
+            ]);
+
+            $res = Type_Activity::find($request->id);
+        }
+        // $res = Type_Activity::where('Name_Type_Activity', $request->Name_Type_Activity)->firstOr(function (Request $request) {
+        //     Type_Activity::find($request->id)->update([
+        //         'Name_Type_Activity' => $request->Name_Type_Activity,
+        //     ]);
+
+        //     return Type_Activity::find($request->id);
+        // });
+
+        
+
+        
+
+        return $res;
     }
 
     /**
@@ -101,9 +133,12 @@ class TypeActivityController extends Controller
      */
     public function destroy(Request $request)
     {
-        Type_Activity::find($request->typeactivity)->delete();
+        Type_Activity::find($request->typeactivity)->update([
+            'LogicalDelete' => 1,
+        ]);
 
-        $datas = '1';
+        $datas = Partner::where('type_activities_id', $request->typeactivity)->get();
+
         return $datas;
     }
 }

@@ -28,7 +28,6 @@ class CreateBusesTable extends Migration
             $table->date('Validity_Date')->nullable();
             $table->smallInteger('Amount_Place_Bus');
             $table->boolean('Tachograph')->default(0);
-            $table->boolean('Main_Transort')->default(0);
             $table->boolean('Glonas_GPS')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 

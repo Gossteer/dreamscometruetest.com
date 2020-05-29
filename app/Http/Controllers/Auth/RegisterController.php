@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Carbon\Carbon;
-
+use DB;
 
 class RegisterController extends Controller
 {
@@ -52,6 +52,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $data['date'] = Carbon::today();
+
         return Validator::make($data, [
             'Phone_Number_Customer' => ['required', 'string', 'unique:customers'],
             'login' => ['required', 'string','min:2', 'max:20', 'unique:users'],
@@ -61,7 +62,7 @@ class RegisterController extends Controller
             'Name' => ['required','string', 'min:2','max:50'],
             'Middle_Name' => ['string', 'min:2','max:50'],
             'g-recaptcha-response' => 'required|captcha',
-            'Floor' => ['required'],
+            'Floor' => ['required','integer', 'min:0','max:1'],
             'Name_Category_Source' => ['required'],
             'Date_Birth_Customer' => ['required','date','before_or_equal:date']
         ],[
@@ -85,6 +86,7 @@ class RegisterController extends Controller
             'g-recaptcha-response.required' => 'Пожалуйста подтвердите, что вы не робот!',
             'required' => 'Это поле обязательно к заполнению!'
         ]);
+        
     }
 
     /**
@@ -95,6 +97,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if (($data['Phone_Customer_Inviter'] ?? false) and $data['Phone_Customer_Inviter'] == $data['Phone_Number_Customer']) {
+            $data['number_error'] = false;
+            \Validator::make($data, [
+                'number_error' => ['accepted'],
+            ],[
+                'number_error.accepted' => 'Невозможно пригласить самого себя!',
+            ])->validate();
+        }
+
 
         $user = User::create([
             'login' => $data['login'],
@@ -104,6 +115,8 @@ class RegisterController extends Controller
             'Notifications' => $data['Notifications'] ?? 0,
         ]);
 
+
+
         Customer::create([
             'users_id' => $user->id,
             'Surname' => $data['Surname'],
@@ -112,20 +125,20 @@ class RegisterController extends Controller
             'Date_Birth_Customer' => date('Y-m-d', strtotime( $data['Date_Birth_Customer'])),
             'Phone_Number_Customer' => $data['Phone_Number_Customer'],
             'Floor' => $data['Floor'],
-            'Description' => $data['Description'] ?? 'Отсуствует',
             'Phone_Customer_Inviter' =>  $data['Phone_Customer_Inviter'] ?? null,
-            'Amount_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->count(),
-            'Age_Group' => ((Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60 &&  $data['Floor'] == 0) || (Carbon::parse($data['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 65 && $data['Floor'] == 1)) ? 1 : 0,
+            'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->where('Condition', '>', 0)->count(),
+            'Age_customer' => Carbon::parse($data['Date_Birth_Customer'])->diffInYears(),
 
         ]);
 
 
-        if(isset($data['Phone_Customer_Inviter']) and Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->exists())
+        // if(isset($data['Phone_Customer_Inviter']) and Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->exists())
             // DB::table('customers')->where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->
             // update(['Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
-        Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->update([
-           'Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
-        ]);
+            // Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->increment('Amount_Customers_Listed');
+        // Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->update([
+        //    'Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $data['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
+        // ]);
 
        // if(\Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->exists())
            // Customer::where('Phone_Customer_Inviter', $data['Phone_Number_Customer'])->update([

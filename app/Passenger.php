@@ -7,12 +7,45 @@ use Illuminate\Database\Eloquent\Model;
 class Passenger extends Model
 {
 
-    protected $fillable = [ 'tours_id', 'customers_id', 'Preferential_Terms', 'Presence',
+    protected $fillable = [ 
+        'tours_id', 
+        'customers_id', 
+        'Preferential_Terms', 
+        'Presence', 
+        'Occupied_Place_Bus', 
+        'Payment_method',
+        'LogicalDelete',
+        'Comment_Customer',
+        'Stars',
+        'Paid',
+        'Amount_Children',
+        'Accompanying',
+        'Final_Price',
+        'Presence',
+        'Amount_Children',
+        'Free_Children',
+        'Comment_Employee',
+        
     ];
+
+    public static function fullname($tour, $place)
+    {
+        $passenger = Passenger::where('tours_id', $tour)->where('Occupied_Place_Bus', $place)->first();
+        $fullname = $passenger->customer->Name . ' ' .  $passenger->customer->Surname . ' ' .  $passenger->customer->Middle_Name ?? '';
+        
+        return $fullname;
+    }
+
+    public static function fullnameemploye($tour, $place)
+    {
+        $passenger = Tour_employees::where('tour_id', $tour)->where('Occupied_Place_Bus', $place)->first();
+        $fullname = $passenger->employee->Name . ' ' .  $passenger->employee->Surname . ' ' .  $passenger->employee->Middle_Name ?? '';
+        
+        return $fullname;
+    }
 
     protected $hidden = [
 
-        'Amount_Children',
     ];
 
     public function dept()

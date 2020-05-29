@@ -30,17 +30,17 @@
                                                 <option  value="{{ $type_tour->id }}" id="{{ $type_tour->id }}" @if(old('type_tours_id') == $type_tour->id) selected @endif>{{$type_tour->Name_Type_Tours}}</option>
                                             @endforeach
                                         </select>
-                                        @error('type_tours_id')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                         <div class="input-group-append">
                                             <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append" id="div_updatebutton">
                                             <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
+                                        @error('type_tours_id')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 {{-- <script>
@@ -80,8 +80,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" id="delete" name="delete" data-dismiss="modal">Удалить</button>
-                                                <button type="button" id="ubdate" name="ubdate" class="btn btn-primary">Изменить</button>
+                                                <button type="button" class="btn btn-default" id="delete_type" name="delete_type" data-dismiss="modal">Удалить</button>
+                                                <button type="button" id="ubdate_type" name="ubdate_type" class="btn btn-primary">Изменить</button>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" id="close" name="close" data-dismiss="modal">Закрыть</button>
-                                                <button type="button" id="save" name="save" class="btn btn-primary">Сохранить</button>
+                                                <button type="button" id="save_type" name="save_type" class="btn btn-primary">Сохранить</button>
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +125,7 @@
                                         //     }
                                         // });
 
-                                        $("#save").on('click',function(){
+                                        $("#save_type").on('click',function(){
                                             var Name_Type_Tours = $('#Name_Type_Tours').val();
                                             $.ajax({
                                                 url: '{{ route('typetour.store') }}',
@@ -135,10 +135,10 @@
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
                                                 success: function (data) {
-                                                    $('#Name_Type_Tours').val(' ');
                                                     $('#addArticle').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
+                                                    $('#Name_Type_Tours').val('');
                                                     var str = '<option value="'+data['id']+'" selected>'+data['Name_Type_Tours']+'</option>';
                                                     $('#type_tours_id:last').append(str);
                                                     //document.querySelector("#updatebutton").classList.remove("diableddeletedbutton");
@@ -171,7 +171,7 @@
                                             });
                                         });
 
-                                        $('#ubdate').on('click',function(){
+                                        $('#ubdate_type').on('click',function(){
                                             var typetourid = $('#type_tours_id').val();
                                             var Name_Type_Tours = $('#Name_Type_Tours1').val();
 
@@ -198,7 +198,7 @@
                                             });
                                         });
 
-                                        $('#delete').on('click',function(){
+                                        $('#delete_type').on('click',function(){
                                             var typetourid = $('#type_tours_id').val();
 
                                             $.ajax({
@@ -227,25 +227,32 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="buses_id" >Транспорт</label>
                                     <div class="col-lg-6 input-group">
-                                        <select class="custom-select @error('buses_id') is-invalid @enderror" id="buses_id" onchange="chenge_ubdate_button(this, 'updatebutton2')" multiple name="buses_id[]">
+                                        <select class="custom-select @error('buses_id') is-invalid @enderror" id="buses_id" onchange="chenge_ubdate_button(this, 'updatebutton2'), chenge_Main_Transport(this)" multiple name="buses_id[]">
                                             <option value="null" id="dont_select_bus" selected @if($buses_ids->count() == 0) hidden @endif>Без выбора</option>
                                             @foreach($buses_ids as $buses_id)
-                                                <option title="{{ $buses_id->Description }}" value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if(old('buses_id') == $buses_id->id) selected @endif>{{ $buses_id->Type_Transport . ' ' . $buses_id->Title_Transport . ' ' .   $buses_id->Amount_Place_Bus . 'м '}} @if(($buses_id->Type_Transport == 'Автобус' or $buses_id->Type_Transport == 'Микроавтобус') and $buses_id->employee != null) {{date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}} @endif</option>
+                                                <option title="{{ $buses_id->Description }}" data-amountPlace="{{ $buses_id->Amount_Place_Bus }}" value="{{ $buses_id->id }}" id="{{ $buses_id->id }}" @if(old('buses_id') == $buses_id->id) selected @endif>{{ $buses_id->Type_Transport . ' ' . $buses_id->Title_Transport . ' ' .   $buses_id->Amount_Place_Bus . 'м '}} @if(($buses_id->Type_Transport == 'Автобус' or $buses_id->Type_Transport == 'Микроавтобус') and $buses_id->employee != null) {{date('d.m.Y', strtotime($buses_id->Year_Issue)) . ' ' . $buses_id->employee->Surname . ' ' . mb_substr($buses_id->employee->Name, 0, 1)  . '. ' . mb_substr($buses_id->employee->Middle_Name, 0, 1) . ($buses_id->employee->Middle_Name != '' ? '.' : '')}} @endif</option>
                                             @endforeach
                                         </select>
-                                        @error('buses_id')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                         <div class="input-group-append">
                                             <a  data-toggle="modal" data-target="#addArticle2" class="btn input-group-text selectedbutton" onclick="close_chenge_tour_bus()" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append"  id="div_updatebutton2">
                                             <a class="btn input-group-text selectedbutton diableddeletedbutton " data-toggle="modal" data-target="#addArticle2" id="updatebutton2" style="" name="updatebutton2"  onclick="index_tour_bus()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
+                                        @error('buses_id')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                        @error('bus_Main_Transort')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <input type="number" hidden id="bus_Main_Transort" name="bus_Main_Transort" data-idi="" data-amountplace="0"  title="{{ old('bus_Main_Transort.title') }}" value="{{ old('bus_Main_Transort') }}">
 
                                 <div class="modal fade" id="addArticle2" tabindex="-1" role="dialog" aria-labelledby="addArticleLabel">
                                     <div class="modal-dialog" role="document">
@@ -266,7 +273,7 @@
                                                         <option value="Другой..." id="6">Другой...</option>
                                                     </select>
                                                     @error('Type_Transport')
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="invalid-feedback d-block" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
@@ -371,7 +378,7 @@
                                                         @endforeach
                                                     </select>
                                                     @error('employee_id')
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="invalid-feedback d-block" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
@@ -413,6 +420,32 @@
                                 </div>
 
                                 <script>
+                                    // $(function() {
+
+                                    //     $('#buses_id').change(function(buses_id) {
+                                    //         // если значение не равно пустой строке
+                                    //         var updatebutton2 = document.querySelector("#updatebutton")
+                                    //         if($('#buses_id').val() == "0") {
+                                    //             updatebutton2.classList.add("diableddeletedbutton");
+                                    //         } else {
+                                    //             updatebutton2.classList.remove("diableddeletedbutton");
+                                    //         }
+                                    //     });
+                                    // });
+                                    function chenge_Main_Transport(value){
+                                        var buses_id = $( "#buses_id" ).val() || [];
+                                        if (!buses_id.includes(bus_Main_Transort.dataset.idi)) {
+                                            document.getElementById('bus_Main_Transort').dataset.amountPlace = 0;
+                                            document.getElementById('bus_Main_Transort').value = "0";
+                                            $('#bus_Main_Transort').prop('title', '');
+                                        } else{
+                                            //$( "#buses_id" )toArray().map(item => item.text).join();
+                                            document.getElementById('bus_Main_Transort').dataset.amountPlace = $("#buses_id :selected").map(function(i, el) {if(bus_Main_Transort.dataset.idi == el.value){return el.dataset.amountPlace;}}).get();
+                                            document.getElementById('bus_Main_Transort').value = bus_Main_Transort.dataset.idi;
+                                            $('#bus_Main_Transort').prop('title',  $("#buses_id :selected").map(function(i, el) { if(bus_Main_Transort.dataset.idi == el.value){return el.text;}  }).get());
+                                        }
+                                    };
+
                                     function Hidden_All_Transport(){
                                         Description_Transport_div.hidden = true;
                                         Title_Transport_div.hidden = true;
@@ -469,19 +502,7 @@
                                             Title_Transport.placeholder = 'Название';
                                         }
                                     };
-                                    // $(function() {
-
-                                    //     $('#buses_id').change(function(buses_id) {
-                                    //         // если значение не равно пустой строке
-                                    //         var updatebutton2 = document.querySelector("#updatebutton")
-                                    //         if($('#buses_id').val() == "0") {
-                                    //             updatebutton2.classList.add("diableddeletedbutton");
-                                    //         } else {
-                                    //             updatebutton2.classList.remove("diableddeletedbutton");
-                                    //         }
-                                    //     });
-                                    // });
-
+                                    
                                     function create_tour_bus() {
                                         var Title_Transport = $('#Title_Transport').val();
                                         var State_Registration_Number = $('#State_Registration_Number').val();
@@ -500,7 +521,7 @@
                                             var Glonas_GPS = 0;
                                         
                                         if ($('#Main_Transort').prop('checked'))
-                                            var Main_Transort = 1;
+                                            var Main_Transort = 1; 
                                         else
                                             var Main_Transort = 0;
 
@@ -508,10 +529,11 @@
                                             var Tachograph = 1;
                                         else
                                             var Tachograph = 0;
+                                        
                                         $.ajax({
                                             url: '{{ route('bus.store') }}',
                                             type: "POST",
-                                            data: {Title_Transport:Title_Transport,Description:Description,Classes:Classes,Type_Transport:Type_Transport,
+                                            data: { Title_Transport:Title_Transport, Description:Description,Classes:Classes, Type_Transport:Type_Transport,
                                                 Company:Company, State_Registration_Number:State_Registration_Number,Main_Transort:Main_Transort,
                                                 Year_Issue:Year_Issue, Diagnostic_card:Diagnostic_card, Validity_Date:Validity_Date,
                                                 Amount_Place_Bus:Amount_Place_Bus, employee_id:employee_id, Glonas_GPS:Glonas_GPS, Tachograph:Tachograph},
@@ -532,16 +554,25 @@
                                                 $('#Validity_Date').val('');
                                                 $('#Amount_Place_Bus').val('0');
                                                 $('#employee_id').val('0');
-                                                $('#Glonas_GPS').prop('checked', false);
                                                 $('#dont_select_bus').prop('hidden', false);
-                                                $('#dont_select_bus').prop('selected', false);
+                                                $('#Glonas_GPS').prop('checked', false);
                                                 $('#Tachograph').prop('checked', false);
                                                 $('#Main_Transort').prop('checked', false);
                                                 $('#addArticle2').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
-                                                var str = '<option value="'+data['id']+'" id="'+data['id']+'" title= "'+data['Description']+'" selected>'+data['String']+'</option>';
+                                                document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].selected = false;
+                                                var str = '<option value="'+data['id']+'" data-amountPlace="'+data['Amount_Place_Bus']+'" id="'+data['id']+'" title= "'+data['Description']+'" selected>'+data['String']+'</option>';
                                                 $('#buses_id:last').append(str);
+                                                if(Main_Transort == 1){
+                                                    document.getElementById('bus_Main_Transort').value = data['id'];
+                                                    bus_Main_Transort.title = data['String'];
+                                                    document.getElementById('bus_Main_Transort').dataset.amountPlace = data['Amount_Place_Bus'];
+                                                    document.getElementById('bus_Main_Transort').dataset.idi = data['id'];
+                                                }
+                                                    // $('#bus_Main_Transort').val('1');
+                                                    // $('#bus_Main_Transort').data('idi', data['id'];
+                                                $('#dont_select_bus').prop('selected', false);
                                                 chenge_ubdate_button($('#buses_id'), 'updatebutton2');
                                                 alert('Добавлено');
                                             },
@@ -552,6 +583,7 @@
                                     };
 
                                     function update_tour_bus() {
+
                                         var Title_Transport = $('#Title_Transport').val();
                                         var State_Registration_Number = $('#State_Registration_Number').val();
                                         var Description = $('#Description_Transport').val();
@@ -594,8 +626,22 @@
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
                                                 close_chenge_tour_bus();
+                                                $('#dont_select_bus').prop('selected', false);
+                                                if(data['Main_Transort'] == 1){
+                                                    document.getElementById('bus_Main_Transort').value = data['id'];
+                                                    bus_Main_Transort.title = data['String'];
+                                                    document.getElementById('bus_Main_Transort').dataset.amountPlace = data['Amount_Place_Bus'];
+                                                    document.getElementById('bus_Main_Transort').dataset.idi = data['id'];
+                                                } else if(data['Main_Transort'] == 0 &&  document.getElementById('bus_Main_Transort').value == buses_id){
+                                                    document.getElementById('bus_Main_Transort').value = 0;
+                                                    document.getElementById('bus_Main_Transort').dataset.amountPlace = 0;
+                                                    document.getElementById('bus_Main_Transort').dataset.idi = 0;
+                                                    bus_Main_Transort.title = '';
+                                                }
+                                                document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].dataset.amountPlace = data['Amount_Place_Bus'];
                                                 document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].text = data['String'];
                                                 alert('Изменено');
+
                                             },
                                             error: function (msg) {
                                                 alert('Ошибка');
@@ -604,6 +650,16 @@
                                     };
 
                                     function close_chenge_tour_bus() {
+                                        if(document.getElementById('bus_Main_Transort').dataset.idi == null || document.getElementById('bus_Main_Transort').dataset.idi == 0){
+                                                    $('#Main_Transort').prop('checked', 0);
+                                                    $('#Main_Transort').prop('disabled', false);
+                                                    $('#Main_Transort').prop('title', '');
+                                                }
+                                                else {
+                                                    $('#Main_Transort').prop('checked', 0);
+                                                    $('#Main_Transort').prop('disabled', true);
+                                                    $('#Main_Transort').prop('title', 'Основной транспорт уже назначен: ' + $("#buses_id option[value='"+bus_Main_Transort.dataset.idi+"']").text());
+                                                }
                                         Hidden_All_Transport();
                                                 $('#Title_Transport').val('');
                                                 $('#Description_Transport').val('');
@@ -618,12 +674,11 @@
                                                 $('#employee_id').val('0');
                                                 $('#Glonas_GPS').prop('checked', false);
                                                 $('#Tachograph').prop('checked', false);
-                                                $('#Main_Transort').prop('checked', false);
                                         $('#save2').text('Добавить');
                                         $('#save2').attr("onclick","create_tour_bus()");
                                         $('#close2').text('Закрыть');
                                         $('#close2').attr("onclick","");
-                                    };
+                                    }
 
                                     function index_tour_bus() {
                                         var id = $('#buses_id').val();
@@ -650,7 +705,20 @@
                                                 $('#employee_id').val(data['employee_id']);
                                                 $('#Glonas_GPS').prop('checked', data['Glonas_GPS']);
                                                 $('#Tachograph').prop('checked', data['Tachograph']);
-                                                $('#Main_Transort').prop('checked', data['Main_Transort']);
+                                                if(document.getElementById('bus_Main_Transort').value == data['id']){
+                                                    $('#Main_Transort').prop('checked', 1);
+                                                    $('#Main_Transort').prop('disabled', false);
+                                                }
+                                                else if(document.getElementById('bus_Main_Transort').dataset.idi == null || document.getElementById('bus_Main_Transort').dataset.idi == 0){
+                                                    $('#Main_Transort').prop('checked', 0);
+                                                    $('#Main_Transort').prop('disabled', false);
+                                                    $('#Main_Transort').prop('title', '');
+                                                }
+                                                else {
+                                                    $('#Main_Transort').prop('checked', 0);
+                                                    $('#Main_Transort').prop('disabled', true);
+                                                    $('#Main_Transort').prop('title', 'Основной транспорт уже назначен: ' + $("#buses_id option[value='"+bus_Main_Transort.dataset.idi+"']").text());
+                                                }
                                                 $('#save2').text('Изменить');
                                                 $('#close2').text('Удалить');
                                                 $('#save2').attr("onclick","update_tour_bus()");
@@ -661,13 +729,12 @@
                                             }
                                         });
                                     };
-                                    
                                     function destroy_tour_bus() {
                                         var buses_id = $('#buses_id').val();
                                         $.ajax({
                                             url: "{{route('bus.destroy')}}",
                                             type: "POST",
-                                            data: {id:buses_id[0], tour_id:null},
+                                            data: {id:buses_id[0]},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
@@ -676,6 +743,12 @@
                                                 document.querySelector("#updatebutton2").classList.add("diableddeletedbutton");
                                                 document.getElementById('buses_id').options[document.getElementById('buses_id').selectedIndex].remove();
                                                 $('#dont_select_bus').prop('selected', true);
+                                                if(document.getElementById('bus_Main_Transort').value == buses_id){
+                                                    document.getElementById('bus_Main_Transort').dataset.amountPlace = 0;
+                                                    document.getElementById('bus_Main_Transort').value = "0";
+                                                    document.getElementById('bus_Main_Transort').dataset.idi = 0;
+                                                    $('#bus_Main_Transort').prop('title', '');
+                                                }
                                                 //$('#buses_id').val('0');
                                                 close_chenge_tour_bus();
                                                 alert('Удалено');
@@ -697,17 +770,17 @@
                                                 <option value="{{ $routes_id->id }}" id="{{ $routes_id->id }}" @if(old('routes_id') == $routes_id->id) selected @endif>{{$routes_id->Itinerary_Route}}</option>
                                             @endforeach
                                         </select>
-                                        @error('$routes_id')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                         <div class="input-group-append">
                                             <a  data-toggle="modal" data-target="#addArticle3" class="btn input-group-text selectedbutton" onclick="close_chenge_tour_route()" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append"  id="div_updatebutton3">
                                             <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle3" id="updatebutton3" style="" name="updatebutton3"  onclick="index_tour_route()" title="Изменить"><i class="fa fa-pencil color-danger"></i></a>
                                         </div>
+                                        @error('$routes_id')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -1011,7 +1084,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Start_point" >Место отправления<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
-                                        <input id="login" type="text" class="form-control @error('Start_point') is-invalid @enderror" name="Start_point" minlength="2" maxlength="191" value="{{ old('Start_point') }}" required  placeholder="Название">
+                                        <input id="Start_point" type="text" class="form-control @error('Start_point') is-invalid @enderror" name="Start_point" minlength="2" maxlength="191" value="{{ old('Start_point') }}" required  placeholder="Название">
                                         @error('Start_point')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -1084,7 +1157,7 @@
                                     <label class="col-lg-4 col-form-label" for="Expenses" >Прибль</label>
                                     <div class="col-lg-6">
                                         <input  type="number" class="form-control @error('Profit') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ old('Profit') }}" name="Profit" id="Profit" placeholder="Прибль">
-                                        @error('Expenses')
+                                        @error('Profit')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -1105,6 +1178,18 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="Occupied_Place" >Занятых мест</label>
+                                    <div class="col-lg-6">
+                                        <input  type="number" class="form-control @error('Occupied_Place') is-invalid @enderror" min="0" max="1000" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" value="{{ old('Occupied_Place') }}" name="Occupied_Place" id="Occupied_Place" placeholder="Количество мест" >
+                                        @error('Occupied_Place')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Description" >Описание</label>
                                     <div class="col-lg-6">
                                         <textarea  type="text" class="form-control @error('Description') is-invalid @enderror" name="Description" id="Description" placeholder="Описание">{{ old('Description') }}</textarea>
@@ -1115,6 +1200,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Program" >Программа</label>
                                     <div class="col-lg-6">
@@ -1169,7 +1255,7 @@
                                             <option value="1" @if(old('Seating') == 1) selected @endif>Да</option>
                                         </select>
                                         @error('Seating')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
@@ -1177,7 +1263,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="Confidentiality" >Скрытый<span class="text-danger"></span></label>
+                                    <label class="col-lg-4 col-form-label" for="Confidentiality" >Скрытый<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <select class="custom-select mr-sm-2" id="Confidentiality" name="Confidentiality" required>
                                             <option value="" disabled selected hidden>Есть?</option>
@@ -1185,7 +1271,7 @@
                                             <option value="1" @if(old('Confidentiality') == 1) selected @endif>Да</option>
                                         </select>
                                         @error('Confidentiality')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
@@ -1201,7 +1287,7 @@
                                             <option value="1" @if(old('Popular') == 1) selected @endif>Да</option>
                                         </select>
                                         @error('Popular')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
@@ -1212,7 +1298,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-8 ml-auto">
-                                        <button type="submit" class="btn btn-primary">Добавить</button>
+                                        <button type="submit" onclick="if(document.getElementById('bus_Main_Transort').value != 0 && document.getElementById('bus_Main_Transort').value != null && document.getElementById('bus_Main_Transort').dataset.amountplace !=  Amount_Place.value)if(confirm('Количество мест указанных в экскурсии: ' + Amount_Place.value + ', отличается от количества мест на основном транспорте: '+ document.getElementById('bus_Main_Transort').dataset.amountplace + '. Пользователь увидит количество мест указанных в самой экскурсии. Желаете продолжить?')){return true}else{return false} "  class="btn btn-primary">Добавить</button>
                                     </div>
                                 </div>
                             </form>

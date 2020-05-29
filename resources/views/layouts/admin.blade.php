@@ -25,7 +25,7 @@
 
 
 
-    <!-- Fonts -->
+    <!-- Fonts https://fontawesome.com/v4.7.0/icons/ -->
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/jquery.dialog.min.css') }}">
@@ -61,11 +61,11 @@
     <div class="nav-header">
         <div class="brand-logo">
             <a href="{{ route('/') }}">
-                <b class="logo-abbr"><img src=" {{ asset('images/logo.png') }} " alt=""> </b>
-                <span class="logo-compact"><img src="{{ asset('images/logo-compact.png') }}" alt=""></span>
-                <span class="brand-title">
+                <b class="logo-abbr mr-2"><img src=" {{ asset('images/logo.png') }} " alt=""> </b>
+                <span class="logo-compact "><img src="{{ asset('images/logo-compact.png') }}" alt=""></span>
+                <span class="brand-title ml-4 mt-2">
                         <img src="{{ asset('images/logo-text.png') }}" alt="">
-                    </span>
+                </span>
             </a>
         </div>
     </div>
@@ -89,23 +89,51 @@
                 <ul class="clearfix">
                     <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                             <i class="mdi mdi-email-outline"></i>
-                            <span class="badge gradient-1 badge-pill badge-primary">0</span>
+                            <span class="badge gradient-1 badge-pill badge-primary">{{\App\Passenger::where('Stars', '!=' ,0)->where('LogicalDelete', 0)->orderByDesc('updated_at')->paginate(3)->count()}}</span>
                         </a>
                         <div class="drop-down animated fadeIn dropdown-menu">
-                            <div class="dropdown-content-heading d-flex justify-content-between">
-                                <span class="">Новые сообщения</span>
-
+                            <div class="dropdown-content-heading ">
+                                <ul class="row">
+                                    <li class="mb-1">Последние отзывы:</li>
+                                    <li>                                
+                                        @foreach (\App\Passenger::where('Stars', '!=' ,0)->where('LogicalDelete', 0)->orderByDesc('updated_at')->paginate(3) as $passeger)
+                                            <a href="{{route('tours.show', $passeger->tours_id)}}">{{$passeger->customer->Name . ' ' . $passeger->customer->Surname . ' ' . ($passeger->customer->Middle_Name ?? '') . '. Экскурсия: ' . $passeger->tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($passeger->tour->Start_Date_Tours))}}</a>
+                                        @endforeach
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </li>
                     <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                             <i class="mdi mdi-bell-outline"></i>
-                            <span class="badge badge-pill gradient-2 badge-primary">0</span>
+                            <span class="badge badge-pill gradient-2 badge-primary">{{\App\Customer::where('Condition',0)->orderByDesc('created_at')->paginate(3)->count() + \App\tour::whereRaw('Start_Date_Tours >= ? and Start_Date_Tours <= ? ',[Carbon\Carbon::now(),Carbon\Carbon::now()->addDays(14)])->where('LogicalDelete', 0)->orderBy('Start_Date_Tours')->paginate(3)->count() + \App\tour::where('End_Date_Tours', '<=' ,Carbon\Carbon::now())->where('LogicalDelete', 0)->where('Confirmation_Tours', 0)->orderByDesc('created_at')->paginate(3)->count()}}</span>
                         </a>
                         <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
-                            <div class="dropdown-content-heading d-flex justify-content-between">
-                                <span class="">Новые уведомления</span>
-
+                            <div class="dropdown-content-heading ">
+                                <ul class="row">
+                                    <li class="mb-2">Последние не подтверждённые пользователи:</li>
+                                    <li>                                
+                                        @foreach (\App\Customer::where('Condition',0)->where('LogicalDelete', 0)->orderByDesc('created_at')->paginate(3) as $customer)
+                                            <a href="{{route('customer.edit', $customer->id)}}">{{$customer->Name . ' ' . $customer->Surname . ' ' . $customer->Middle_Name ?? ''}}</a>
+                                        @endforeach
+                                    </li>
+                                </ul>
+                                <ul class="row mt-3">
+                                    <li class="mb-2">Скорые мероприятия:</li>
+                                    <li>                     
+                                        @foreach (\App\tour::whereRaw('Start_Date_Tours >= ? and Start_Date_Tours <= ? ',[Carbon\Carbon::now(),Carbon\Carbon::now()->addDays(14)])->where('LogicalDelete', 0)->orderBy('Start_Date_Tours')->paginate(3) as $tour)
+                                            <a href="{{route('tours.show', $tour->id)}}">{{$tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($tour->Start_Date_Tours))}}</a>
+                                        @endforeach
+                                    </li>
+                                </ul>
+                                <ul class="row mt-3">
+                                    <li class="mb-2">Мероприятия ожидающие подтверждения:</li>
+                                    <li>                     
+                                        @foreach (\App\tour::where('End_Date_Tours', '<=' ,Carbon\Carbon::now())->where('LogicalDelete', 0)->where('Confirmation_Tours', 0)->orderByDesc('created_at')->paginate(3) as $tour)
+                                            <a href="{{route('tourcomplite', $tour->id)}}">{{$tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($tour->Start_Date_Tours))}}</a>
+                                        @endforeach
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </li>
@@ -116,8 +144,8 @@
                         <div class="drop-down dropdown-language animated fadeIn  dropdown-menu">
                             <div class="dropdown-content-body">
                                 <ul>
-                                    <li><a href="javascript:void()">Русский</a></li>
-                                    <li><a href="javascript:void()">В разработке</a></li>
+                                    <li><a href="">Русский</a></li>
+                                    <li><a href="">В разработке</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -145,6 +173,11 @@
 
                                     <hr class="my-2">
                                     <li>
+                                        <a  class="icon-key" href="{{ route('/') }}"
+                                        onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();" style="display: inline !important;">
+                                            На главную
+                                        </a>
                                         <a  class="icon-key" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" style="display: inline !important;">
@@ -247,7 +280,7 @@
     ***********************************-->
     <div class="footer">
         <div class="copyright">
-            <p>&copy;  <a href="https://themeforest.net/user/quixlab">Мечты сбываются</a> 2019</p>
+            <p>&copy;  <a href="https://themeforest.net/user/quixlab">Мечты сбываются</a> 2020</p>
         </div>
     </div>
     <!--**********************************

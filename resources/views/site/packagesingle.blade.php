@@ -77,8 +77,63 @@
 									</div>
 								</div>
 							</div>
-							<div title="Функция будет добавлена в последующих обновлениях!">
-								<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;"  id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Записаться</a>
+							<div>
+								
+								@if(Auth::check())
+									@if(Auth::user()->customer != null)
+										@if($tour->Start_Date_Tours <= $Cardon_hot)
+											<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;"  id="pacagesunit" >Записаться</a>
+											<small id="passwordHelpBlock" class="form-text text-center text-muted">
+												Экскурсия закончилась! 
+											</small>
+										@else
+											@if(18 > Auth::user()->customer->Age_customer)
+												<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;"  id="pacagesunit" >Записаться</a>
+												<small id="passwordHelpBlock" class="form-text text-center text-muted">
+													Вы не достигли своего совершеннолетия, пожалуйста обратитесь к нам по телефону или другими возможными способами, мы постараемся решить это! 
+												</small>
+											@elseif($PassengerCompliteRecord)
+												<a class="btn btn-success col-md-12 bypackeg" href="{{route('tourgo',[$tour, str_slug($tour->Name_Tours, '-')])}}" style="color: white" id="pacagesunit" >Изменить запись</a>
+											@else
+												@if($tour->Occupied_Place == $tour->Amount_Place)
+													<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;"  id="pacagesunit" >Записаться</a>
+													<small id="passwordHelpBlock" class="form-text text-center text-muted">
+														Свободные места закончились! Информация по свободным местам обновляется ежедневно, проверяйте. 
+													</small>
+												@else
+													@switch(Auth::user()->customer->Condition)
+														@case(-1)
+															<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;  id="pacagesunit" >Записаться</a>
+															<small id="passwordHelpBlock" class="form-text text-center text-muted">
+																Вы отмечены как ненадёжный клиент, вам заблокирована возможность записи на мероприятия. Для уточнения подробностей пожалуйста свяжитесь с нами!
+															</small>
+															@break
+														@case(0)
+															<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;"  id="pacagesunit" >Записаться</a>
+															<small id="passwordHelpBlock" class="form-text text-center text-muted">
+																Ваш аккаунт в процессе подтверждения, пока вам заблокирована возможность записи на мероприятия через сайт. Если процесс затянулся пожалуйста обратитьесь к нам!
+															</small>
+															@break
+														@default
+															<a class="btn btn-success col-md-12 bypackeg" href="{{route('tourgo',[$tour, str_slug($tour->Name_Tours, '-')])}}" style="color: white" id="pacagesunit" >Записаться</a>
+															@break
+													@endswitch
+												@endif
+											@endif
+										@endif
+									@else
+										<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;"  id="pacagesunit" >Записаться</a>
+										<small id="passwordHelpBlock" class="form-text text-center text-muted">
+											Для записи на мероприятие пожалуйста создайте учётную запись клиента! 
+										</small>
+									@endif
+								@else
+									<a class="btn btn-success  col-md-12 bypackeg" style="cursor: default; color: currentColor;" onclick="return false;"  id="pacagesunit" >Записаться</a>
+									<small id="passwordHelpBlock" class="form-text text-center text-muted">
+										Для записи на мероприятие пожалуйста <a href="{{ route('login') }}">авторизайтесь</a>(<a href="{{ route('login') }}">войдите</a>) на сайте! 
+									</small>
+								@endif
+								
 							</div>
 							
 						</div>
@@ -95,12 +150,27 @@
 								@endforeach
 							</h6>
 							<div class="pro-rating sin-pro-rating f-right">
-								<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a>
-								<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a>
-								<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a>
-								<a href="#" tabindex="0"><i class="zmdi zmdi-star-half"></i></a>
-								<a href="#" tabindex="0"><i class="zmdi zmdi-star-outline"></i></a>
-								<span class="text-black-5">( 27 Оценок )</span>
+								@if($Avg_Stars != 0 and $Avg_Stars >= 5 and $Avg_Stars > $tour->Assessment)
+									<a  tabindex="0"><i class="zmdi @if($Avg_Stars < 1) zmdi-star-half @else zmdi-star @endif"></i></a>
+									<a  tabindex="0"><i class="zmdi @if($Avg_Stars < 2) zmdi-star-outline @elseif($Avg_Stars > 2 and $Avg_Stars < 3) zmdi-star-half @else zmdi-star @endif"></i></a>
+									<a  tabindex="0"><i class="zmdi @if($Avg_Stars < 4) zmdi-star-outline @elseif($Avg_Stars >= 4 and $Avg_Stars < 5) zmdi-star-half @else zmdi-star @endif"></i></a>
+									<a  tabindex="0"><i class="zmdi @if($Avg_Stars < 6) zmdi-star-outline @elseif($Avg_Stars >= 6 and $Avg_Stars < 7) zmdi-star-half @else zmdi-star @endif"></i></a>
+									<a  tabindex="0"><i class="zmdi @if($Avg_Stars < 8) zmdi-star-outline @elseif($Avg_Stars >= 8 and $Avg_Stars < 9) zmdi-star-half @else zmdi-star @endif"></i></a>
+								@elseif($tour->Assessment != 0)
+									<a  tabindex="0"><i class="zmdi @if($tour->Assessment < 1) zmdi-star-half @else zmdi-star @endif"></i></a>
+									<a  tabindex="0"><i class="zmdi @if($tour->Assessment < 2) zmdi-star-outline @elseif($tour->Assessment > 2 and $tour->Assessment < 3) zmdi-star-half @else zmdi-star @endif"></i></a>
+									<a  tabindex="0"><i class="zmdi @if($tour->Assessment < 4) zmdi-star-outline @elseif($tour->Assessment >= 4 and $tour->Assessment < 5) zmdi-star-half @else zmdi-star @endif"></i></a>
+									<a  tabindex="0"><i class="zmdi @if($tour->Assessment < 6) zmdi-star-outline @elseif($tour->Assessment >= 6 and $tour->Assessment < 7) zmdi-star-half @else zmdi-star @endif"></i></a>
+									<a  tabindex="0"><i class="zmdi @if($tour->Assessment < 8) zmdi-star-outline @elseif($tour->Assessment >= 8 and $tour->Assessment < 9) zmdi-star-half @else zmdi-star @endif"></i></a>
+								@else
+									<a  tabindex="0"><i class="zmdi zmdi-star"></i></a>
+									<a  tabindex="0"><i class="zmdi zmdi-star"></i></a>
+									<a  tabindex="0"><i class="zmdi zmdi-star"></i></a>
+									<a  tabindex="0"><i class="zmdi zmdi-star"></i></a>
+									<a  tabindex="0"><i class="zmdi zmdi-star-half"></i></a>
+								@endif
+								
+								<span class="text-black-5">( {{$Count_Star == 0 ? 1 : $Count_Star}} ) </span>
 							</div>
 							<!-- hr -->
 							<hr class="hrsingle">
@@ -167,7 +237,17 @@
 									</div>
 									<div class="col-lg-4 col-6 counter">
 										<span class="fa fa-smile-o singledescriptioninfo2"></span>
-										<div class="timer count-title count-number singledescriptioninfo1 colorsingledescriptioninfo1">{{ ($tour->Amount_Place - $tour->Occupied_Place) }}</div>
+										<div class="timer count-title count-number singledescriptioninfo1 colorsingledescriptioninfo1" {{$pesent = round(100 - ($tour->Occupied_Place / $tour->Amount_Place * 100), 0)}}>
+											@if($pesent > 0 and $pesent <= 30)
+												Мало
+											@elseif($pesent > 30 and $pesent < 70)
+												Есть
+											@elseif($pesent >= 70 and $pesent <= 100)
+												Много
+											@elseif($tour->Occupied_Place == $tour->Amount_Place)
+												Нет
+											@endif
+										 </div>
 										<p class="count-text text-uppercase colorsingledescriptioninfo2">Свободных мест</p>
 									</div>
 
@@ -176,7 +256,7 @@
 							<hr style="margin-top: 12px ">
 							<div class="">
 								<p class="colorsingledescriptioninfo3">Место отправления: {{$tour->Start_point ?? "Подробности по телефону"}}</p>
-								<p class="colorsingledescriptioninfo3" {{$duration = strtotime($tour->End_Date_Tours) - strtotime($tour->Start_Date_Tours)}}>Примерная продолжительность: {{ date('n', $duration)-1 == 0 ? '' : date('n', $duration)-1 . 'м.'}} {{ date('j', $duration)-1 == 0 ? '' : date('j', $duration)-1 . 'дн.'}} {{date('G', $duration) == 0 ? '' : date('G', $duration)-2 . 'ч.'}}</p>
+								<p class="colorsingledescriptioninfo3" {{$duration = strtotime($tour->End_Date_Tours) - strtotime($tour->Start_Date_Tours)}}>Примерная продолжительность: {{ date('n', $duration)-1 == 0 ? '' : date('n', $duration)-1 . 'м.'}} {{ date('j', $duration)-1 == 0 ? '' : date('j', $duration)-1 . 'дн.'}} {{date('G', $duration)-3 == 0 ? '' : date('G', $duration)-3 . 'ч.'}}</p>
 								<p class="colorsingledescriptioninfo3">Дополнительные услуги: </p>
 								<p class="colorsingledescriptioninfo3" style="padding-left: 10px"><strong>В разработке; </strong></p>
 								<p class="colorsingledescriptioninfo3" {{$number_bus = 1}}>Транспорт: </p>
@@ -240,47 +320,48 @@
 					</div>
 				</div>
 				<div class="row">
-									@foreach($tours as $tour)
-			<div class="col-lg-3 col-sm-6 mb-5" href="">
-				<div class="image-tour position-relative">
-					<a href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}"><img src="{{asset('images/banner1.jpg')}}" alt="" class="img-fluid" /></a>
-					<p><span class="fa fa-tags"></span> <span id="{{$tour->id}}">
-							{{ number_format((($tour->Privilegens_Price > $tour->Children_price and $tour->Children_price != null) ? $tour->Children_price : $tour->Privilegens_Price) ?? $tour->Price, 0, ',', ' ') }}₽
-						</span></p>
-				</div>
-				<script>
-					function alert_occupaid ()
-					{
-						dialog.alert({
-							title: "Уведомление",
-							message: "Вы уже записаны на данное мероприятие!",
-						});
+				@foreach($tours as $tour)
+					<div class="col-lg-3 col-sm-6 mb-5" href="">
+						<div class="image-tour position-relative">
+							<a href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}"><img src="{{asset('images/banner1.jpg')}}" alt="" class="img-fluid" /></a>
+							<p><span class="fa fa-tags"></span> <span id="{{$tour->id}}">
+									{{ number_format((($tour->Privilegens_Price > $tour->Children_price and $tour->Children_price != null) ? $tour->Children_price : $tour->Privilegens_Price) ?? $tour->Price, 0, ',', ' ') }}₽
+								</span></p>
+						</div>
+						<script>
+							document.getElementsByClassName('caret')[0].setAttribute('hidden', true);
 
-						return false
-					}
+							function alert_occupaid ()
+							{
+								dialog.alert({
+									title: "Уведомление",
+									message: "Вы уже записаны на данное мероприятие!",
+								});
 
-					function alert_occupaid_null_plase ()
-					{
-						dialog.alert({
-							title: "Уведомление",
-							message: "На данный момент места заняты.",
-						});
+								return false
+							}
 
-						return false
-					}
-				</script>
-				<div class="package-info">
-					<h6 class="mt-1" style="font-family: Open Sans, sans-serif;"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
-					<h5 class="my-2" style="font-family: Open Sans, sans-serif;">{{ $tour->Name_Tours }}</h5>
-					<p class="" style="font-family: Open Sans, sans-serif;">{{str_limit($tour->Description,20,'...')}}</p>
-					<ul class="listing mt-3" style="font-family: Open Sans, sans-serif;">
-						<li><span  class="fa fa-clock-o mr-2" ></span>Дата: <span @if(date('d-m-Y', strtotime($Carbon))  >= date('d-m-Y',strtotime($tour->Start_Date_Tours)) and $Cardon_hot <= $tour->Start_Date_Tours) style="color: red;" title="Экскурсия состоится мене чем через 2 недели. Успейте записаться!" @endif @if(date('d-m-Y', strtotime($Carbon))  < date('d-m-Y',strtotime($tour->Start_Date_Tours))) style="color: green;" @endif> {{date('d-m-Y H:i', strtotime($tour->Start_Date_Tours)) }}</span></li>
-					</ul>
-					<a class="btn btn-success" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
-				</div>
-			</div>
+							function alert_occupaid_null_plase ()
+							{
+								dialog.alert({
+									title: "Уведомление",
+									message: "На данный момент места заняты.",
+								});
+
+								return false
+							}
+						</script>
+						<div class="package-info">
+							<h6 class="mt-1" style="font-family: Open Sans, sans-serif;"><span class="fa fa-map-marker mr-2"></span>{{ $tour->Name_Tours }}</h6>
+							<h5 class="my-2" style="font-family: Open Sans, sans-serif;">{{ $tour->Name_Tours }}</h5>
+							<p class="" style="font-family: Open Sans, sans-serif;">{{str_limit($tour->Description,20,'...')}}</p>
+							<ul class="listing mt-3" style="font-family: Open Sans, sans-serif;">
+								<li><span  class="fa fa-clock-o mr-2" ></span>Дата: <span @if($Carbon  >= $tour->Start_Date_Tours and $Cardon_hot <= $tour->Start_Date_Tours) style="color: red;" title="Экскурсия состоится мене чем через 2 недели. Успейте записаться!" @endif @if($Carbon  < $tour->Start_Date_Tours) style="color: green;" @endif> {{date('d-m-Y H:i', strtotime($tour->Start_Date_Tours)) }}</span></span></li>
+							</ul>
+							<a class="btn btn-success" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
+						</div>
+					</div>
 				@endforeach
-
 				</div>
 			</div>
 	</section>

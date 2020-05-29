@@ -12,9 +12,9 @@ class PhoneNomberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Phone_nomber::find($request->id);
     }
 
     /**
@@ -35,7 +35,10 @@ class PhoneNomberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Phone_nomber::create([
+            'Phone_Number' => $request->Phone_Number,
+            'Representative' => $request->Representative,
+        ]);
     }
 
     /**
@@ -67,9 +70,14 @@ class PhoneNomberController extends Controller
      * @param  \App\Phone_nomber  $phone_nomber
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Phone_nomber $phone_nomber)
+    public function update(Request $request)
     {
-        //
+        Phone_nomber::find($request->id)->update([
+            'Phone_Number' => $request->Phone_Number,
+            'Representative' => $request->Representative,
+        ]);
+
+        return $request;
     }
 
     /**
@@ -78,8 +86,10 @@ class PhoneNomberController extends Controller
      * @param  \App\Phone_nomber  $phone_nomber
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Phone_nomber $phone_nomber)
+    public function destroy(Request $request)
     {
-        //
+        Phone_nomber::find($request->id)->delete();
+
+        return 1;
     }
 }

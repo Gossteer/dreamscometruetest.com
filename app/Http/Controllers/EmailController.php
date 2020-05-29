@@ -12,9 +12,9 @@ class EmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Email::find($request->id);
     }
 
     /**
@@ -35,7 +35,10 @@ class EmailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Email::create([
+            'Representative_Email' => $request->Representative_Email,
+            'Email' => $request->Email,
+        ]);
     }
 
     /**
@@ -67,9 +70,14 @@ class EmailController extends Controller
      * @param  \App\Email  $email
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Email $email)
+    public function update(Request $request)
     {
-        //
+        Email::find($request->id)->update([
+            'Representative_Email' => $request->Representative_Email,
+            'Email' => $request->Email,
+        ]);
+
+        return $request;
     }
 
     /**
@@ -78,8 +86,10 @@ class EmailController extends Controller
      * @param  \App\Email  $email
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Email $email)
+    public function destroy(Request $request)
     {
-        //
+        Email::find($request->id)->delete();
+
+        return 1;
     }
 }

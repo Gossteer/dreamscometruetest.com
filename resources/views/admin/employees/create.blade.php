@@ -267,17 +267,17 @@
                                                 <option value="{{ $job->id }}" id="{{ $job->id }}" @if(old('jobs_id') == $job->id) selected @endif>{{$job->Company}} {{ $job->Job_Title}} зп: {{( ($job->Salary == null)? 'договорная': number_format($job->Salary, 0, ',', ' ') . '₽')}} </option>
                                                 @endforeach
                                         </select>
-                                        @error('jobs_id')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                         <div class="input-group-append">
                                             <a  data-toggle="modal" data-target="#addArticle" class="btn input-group-text selectedbutton" style="color: #495057;" title="Добавить"><i class="fa fa-plus-circle color-muted m-r-5"></i></a>
                                         </div>
                                         <div class="input-group-append">
                                             <a class="btn input-group-text selectedbutton diableddeletedbutton" data-toggle="modal" data-target="#addArticle1" id="updatebutton" style="" name="updatebutton" title="Изменить"><i class="fa fa-pencil color-muted m-r-5"></i></a>
                                         </div>
+                                        @error('jobs_id')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -373,7 +373,7 @@
                                     function Set_Permission_hidden_Shenge(value){
                                         if(value == 0){
                                             Set_Permission_hidden.hidden = true;
-                                            Man_brought.value = ' ';
+                                            Man_brought.value = '';
                                         }
                                             else
                                             Set_Permission_hidden.hidden = false;
@@ -392,7 +392,7 @@
                                     $(function() {
                                         if(Set_Permission.value == 0){
                                             Set_Permission_hidden.hidden = true;
-                                            Man_brought.value = ' ';
+                                            Man_brought.value = '';
                                         }
                                         else
                                             Set_Permission_hidden.hidden = false;
@@ -410,9 +410,9 @@
                                                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                                 },
                                                 success: function (data) {
-                                                    $('#Job_Title').val(' ');
-                                                    $('#Salary').val(' ');
-                                                    $('#Company').val(' ');
+                                                    $('#Job_Title').val('');
+                                                    $('#Salary').val('');
+                                                    $('#Company').val('');
                                                     $('#addArticle').modal('hide');
                                                     $('#articles-wrap').removeClass('hidden').addClass('show');
                                                     $('.alert').removeClass('show').addClass('hidden');
@@ -439,7 +439,7 @@
                                                 },
                                                 success:function (data)
                                                 {
-                                                    $('#Company1').val(((data['Company'] == null) ? ' ':data['Company']));
+                                                    $('#Company1').val(((data['Company'] == null) ? '' :data['Company']));
                                                     $('#Job_Title1').val(data['Job_Title']);
                                                     $('#Salary1').val(data['Salary']);
                                                 },
@@ -511,7 +511,7 @@
                                             <option value="1" @if(old('Type_User') == 1) selected @endif>С правами</option>
                                         </select>
                                         @error('Type_User')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
@@ -527,7 +527,7 @@
                                             <option value="1" @if(old('Set_Permission') == 1) selected @endif>Присуствует</option>
                                         </select>
                                         @error('Set_Permission')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror

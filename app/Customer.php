@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Request;
 
 class Customer extends Model
 {
@@ -12,7 +13,7 @@ class Customer extends Model
     ];
 
     protected $hidden = [
-      'White_Days', 'Black_Days', 'Condition','Age_Group',
+      'White_Days', 'Black_Days', 'Condition','Age_customer',
     ];
 
 

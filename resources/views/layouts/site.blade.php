@@ -20,27 +20,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<title>{{ config('app.name', 'Laravel') }}</title>
 
 
-
+	
 
 	<!-- Theme main style -->
-	<link rel="stylesheet" href="{{ asset('single/style.css') }}">
+		<link rel="stylesheet" href="{{ asset('single/style.css') }}">
 	<!-- Scripts -->
-	<script src="{{ asset('js/bootstrap.js') }}" defer></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="https://kit.fontawesome.com/6947640373.js"></script>
-	<script src="https://unpkg.com/tooltip.js"></script>
-	<script src="https://unpkg.com/popper.js"></script>
-	<script src="{{ asset('js/jquery.maskedinput.min.js') }}" defer></script>
-	<script src="{{ asset('js/jquery.dialog.min.js') }}" defer></script>
+		<script src="{{ asset('js/bootstrap.js') }}" defer></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://kit.fontawesome.com/6947640373.js"></script>
+		<script src="https://unpkg.com/tooltip.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<script src="{{ asset('js/jquery.maskedinput.min.js') }}" defer></script>
+		<script src="{{ asset('js/jquery.dialog.min.js') }}" defer></script>
 
 
 	<!-- Fonts -->
-	<link rel="stylesheet" href="{{ asset('css/jquery.dialog.min.css') }}">
-	<link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
-	<link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css' /><!-- custom css -->
-	<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"><!-- fontawesome css -->
-	<link href="{{ asset('css/css_slider.css') }}" type="text/css" rel="stylesheet" media="all">
-	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+		<link rel="stylesheet" href="{{ asset('css/jquery.dialog.min.css') }}">
+		<link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
+		<link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css' /><!-- custom css -->
+		<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"><!-- fontawesome css -->
+		<link href="{{ asset('css/css_slider.css') }}" type="text/css" rel="stylesheet" media="all">
+		<link rel="dns-prefetch" href="//fonts.gstatic.com">
+
 
 	<script>
 		addEventListener("load", function () {
@@ -75,6 +77,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			});
 		});
 	</script>
+
+
+{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
+{{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> --}}
+
+
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+
 
 </head>
 <body>
@@ -111,11 +127,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" id="navbarDropdownActiv">
-							<a  class="dropdown-item" href="{{ route('logout') }}"
-							   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" style="display: inline !important;">
-								Выйти
-							</a>
 							@if(\App\Employee::where('users_id',(Auth::user()->id))->first() != null and Auth::user()->Type_User == 1)
 							<a  class="dropdown-item" href="{{ route('/admin') }}">
 								Админка
@@ -126,6 +137,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								Профиль
 							</a>
 							@endif
+							<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: inline !important;">Выйти</a>
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 								@csrf
 							</form>
@@ -199,7 +211,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!-- copyright -->
 <div class="copyright py-2 text-center">
-	<p>© 2019 Мечты Сбываются. Все права защищены </p>
+	<p>© 2020 Мечты Сбываются. Все права защищены </p>
 </div>
 <!-- //copyright -->
 

@@ -15,7 +15,7 @@ class CreateWebsitesTable extends Migration
     {
         Schema::create('websites', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('partners_id')->unsigned();
+            $table->bigInteger('partners_id')->unsigned()->nullable();
             $table->string('Site', 191);
             $table->boolean('LogicalDelete')->default(0);
 

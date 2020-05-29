@@ -103,7 +103,7 @@ class TypeTourController extends Controller
             ]);
         }
 
-        $data = Type_Tour::where('Name_Type_Tours',$request->Name_Type_Tours)->first;
+        $data = Type_Tour::where('Name_Type_Tours',$request->Name_Type_Tours)->first();
         return $data;
     }
 

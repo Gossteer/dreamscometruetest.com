@@ -15,22 +15,53 @@ use App\Tour;
 use Carbon\Carbon;
 
 Route::group(['middleware' => ['auth', 'type.user']], function () {
-    Route::resource('admin/tours', 'TourController');
     Route::resource('admin/partners', 'PartnerController');
 
+    Route::resource('admin/tours', 'TourController');
+    Route::post('admin/tourscomplite', 'TourController@complite')->name('tours.complite');
+    Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
+    Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
+    Route::get('admin/tours/{tour}/passengers/printspisoc', 'PassengerController@printpastour')->name('printpastour');
+    Route::get('admin/tours/{tour}/tourcomplite', 'TourController@tourcomplite')->name('tourcomplite');
+    Route::put('admin/tours/{tour}/tourcomplite/complite', 'TourController@tourcomplitesubmit')->name('tourcomplitesubmit');
+    Route::post('admin/tours/{tour}/complitepaid', 'PassengerController@complitepaid')->name('complitepaid');
+    Route::post('admin/tours/complitetourforcustomer', 'PassengerController@complitetourforcustomer')->name('complitetourforcustomer');
+    Route::get('admin/tours/{tour}/record', 'TourController@tourgoadmin')->name('tourgoadmin');
+    Route::delete('admin/tours/{tour}/passenger/delete', 'PassengerController@destroyadmin')->name('destroyadmin');
+    Route::post('admin/tourscustomeridnex', 'TourController@customeridnex')->name('customer.indexrecord'); 
+
     Route::resource('admin/customer', 'CustomerController');
+    Route::post('admin/customercomplite', 'CustomerController@condition_complite')->name('customer.condition_complite');
     Route::post('admin/customer/fullindex', 'CustomerController@indexfull')->name('customer.index.full');
 
     Route::get('/admin', 'SiteController@adminindex')->name('/admin');
 
-    Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
-    Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
-    Route::get('admin/tours/{tour}/passengers/printspisoc', 'PassengerController@printpastour')->name('printpastour');
-
     Route::post('admin/employees/fullindex', 'EmployeeController@indexfull')->name('employees.index.full');
     Route::resource('admin/employees', 'EmployeeController');
 
-    Route::post('admin/typeactivity', 'TypeActivityController@store')->name('typeactivity.store');
+    Route::post('admin/addressstore', 'AddressController@store')->name('address.store');
+    Route::post('admin/addressindex', 'AddressController@index')->name('address.index');
+    Route::post('admin/addressupdate', 'AddressController@update')->name('address.update');
+    Route::post('admin/deleteaddress', 'AddressController@destroy')->name('address.destroy');
+
+    Route::post('admin/phonenomberstore', 'PhoneNomberController@store')->name('phonenomber.store');
+    Route::post('admin/phonenomberindex', 'PhoneNomberController@index')->name('phonenomber.index');
+    Route::post('admin/phonenomberupdate', 'PhoneNomberController@update')->name('phonenomber.update');
+    Route::post('admin/deletephonenomber', 'PhoneNomberController@destroy')->name('phonenomber.destroy');
+
+    Route::post('admin/emailstore', 'EmailController@store')->name('email.store');
+    Route::post('admin/emailindex', 'EmailController@index')->name('email.index');
+    Route::post('admin/emailupdate', 'EmailController@update')->name('email.update');
+    Route::post('admin/deleteemail', 'EmailController@destroy')->name('email.destroy');
+
+    Route::post('admin/websitestore', 'WebsiteController@store')->name('website.store');
+    Route::post('admin/websiteindex', 'WebsiteController@index')->name('website.index');
+    Route::post('admin/websiteupdate', 'WebsiteController@update')->name('website.update');
+    Route::post('admin/deletewebsite', 'WebsiteController@destroy')->name('website.destroy');
+
+    Route::post('admin/typeactivitystore', 'TypeActivityController@store')->name('typeactivity.store');
+    Route::post('admin/typeactivityindex', 'TypeActivityController@index')->name('typeactivity.index');
+    Route::post('admin/ypeactivityupdate', 'TypeActivityController@update')->name('typeactivity.update');
     Route::post('admin/deletetypeactivity', 'TypeActivityController@destroy')->name('typeactivity.destroy');
     Route::post('admin/partnerupdatetypeactivity', 'TypeActivityController@partnerupdate')->name('typeactivity.partner.update');
 
@@ -66,24 +97,29 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::post('admin/routeupdate', 'RouteController@update')->name('route.update');
     Route::post('admin/routedestroy', 'RouteController@destroy')->name('route.destroy');
 
-    Route::post('admin/tours/passengers', 'PassengerController@store')->name('passengers.store');
+    
+    Route::post('admin/tours/{tour}/record/storepassengers', 'PassengerController@createadmin')->name('passengers.createadmin');
     Route::get('admin/tours/passengers', 'PassengerController@index')->name('passengers.index');
-    Route::put('admin/tours/passengers/{passenger}', 'PassengerController@update')->name('passengers.update');
     Route::get('admin/tours/passengers/{passenger}/edit', 'PassengerController@edit')->name('passengers.edit');
 });
 
 Route::group(['middleware' => ['auth']], function () {
-Route::delete('admin/tours/passengers/{passenger}', 'PassengerController@destroy')->name('passengers.destroy');
-Route::get('admin/tours/passengers/create', 'PassengerController@create')->name('passengers.create');
+Route::post('/packages/createstarpassengers', 'PassengerController@createstar')->name('passengers.createstar');
+Route::post('/packages/indexforcustomerpassengers', 'PassengerController@indexforcustomer')->name('passengers.indexforcustomer');
+Route::put('/packages/{tour}/updatepassengers/{passenger}/update', 'PassengerController@update')->name('passengers.update')->middleware('check.amountplace');
+Route::delete('/packages/{tour}/passengers/{passenger}', 'PassengerController@destroy')->name('passengers.destroy')->middleware('check.amountplace');
+Route::post('/packages{tour}/storepassengers', 'PassengerController@create')->name('passengers.create')->middleware('check.amountplace');
+Route::post('/packages/{tour}/create_notbuspassengers', 'PassengerController@create_notbus')->name('passengers.create_notbus')->middleware('check.amountplace');
 });
 
 Route::get('/packages', 'SiteController@packages')->name('/packages');
 Route::get('/packages/{tour}/{Name_Tours}', 'TourController@tourdescript')->name('tourdescript');
+Route::get('/packages/{tour}/{Name_Tours}/record', 'TourController@tourgo')->name('tourgo')->middleware('check.amountplace', 'auth');
 
 Route::get('/ухади', 'SiteController@type_user_false')->name('typeuserfalse');
 
 Route::get('/', function () {
-    return view('site.index', ['Carbon' => Carbon::now()->addDays(14), 'Cardon_hot' =>Carbon::now(), 'tours' => Tour::where('Confidentiality',0)->orderByDesc('Price')->paginate(4)]);
+    return view('site.index', ['Carbon' => Carbon::now()->addDays(14), 'Cardon_hot' =>Carbon::now(), 'tours' => Tour::where('Confidentiality',0)->orderByDesc('Start_Date_Tours')->paginate(4)]);
 })->name('/');
 
 Route::get('/about', function () {

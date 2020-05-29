@@ -9,6 +9,7 @@ use App\Partner;
 use App\Phone_nomber;
 use App\Type_Activity;
 use App\Website;
+use DB;
 use Illuminate\Http\Request;
 
 class PartnerController extends Controller
@@ -20,7 +21,8 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        return view('admin.partner', ['partners' => Partner::where('LogicalDelete',0)->paginate(12),'type_activities' => Type_Activity::all()]);
+        //dd();
+        return view('admin.partner', ['partners' => Partner::where('LogicalDelete',0)->paginate(12),'type_activities' => DB::table('type_activities')->leftJoin('partners', 'partners.type_activities_id', '=', 'type_activities.id')->where('type_activities.LogicalDelete', '=', 0)->orWhereIn('partners.type_activities_id', Partner::select('type_activities_id')->where('LogicalDelete',0)->get()->toArray())->select('type_activities.*')->distinct()->get()]);
     }
 
     /**
@@ -30,7 +32,7 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        return view('admin.partner.create', ['type_activities' => Type_Activity::all()]);
+        return view('admin.partner.create', ['type_activities' => Type_Activity::where('LogicalDelete',0)->get()]);
     }
 
     /**
@@ -41,68 +43,121 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists()){
+        if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1 and INN = ?', [$request->Name_Partners, $request->INN])->exists()){
+            Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1 and INN = ?', [$request->Name_Partners, $request->INN])->update([
+                'type_activities_id' => $request->select_type_activitie,
+                'Phone_Number' => $request->Phone_Number,
+                'LogicalDelete' => 0,
+            ]);
+            return redirect()->route('partners.index');
+        }
+        elseif (Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists()){
             Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->update([
-                'type_activities_id' =>$request->select_type_activitie,
-                'Name_Partners' => $request->Name_Partners,
+                'type_activities_id' => $request->select_type_activitie,
+                'Phone_Number' => $request->Phone_Number,
                 'INN' => $request->INN,
                 'LogicalDelete' => 0,
             ]);
-        }
-        else
-        {
+            return redirect()->route('partners.index');
+        } elseif(Partner::whereRaw('INN = ? and LogicalDelete = 1', [$request->INN])->exists()){
+            Partner::whereRaw('INN = ? and LogicalDelete = 1', [$request->INN])->update([
+                'type_activities_id' => $request->select_type_activitie,
+                'Phone_Number' => $request->Phone_Number,
+                'Name_Partners' => $request->Name_Partners,
+                'LogicalDelete' => 0,
+            ]);
+            return redirect()->route('partners.index');
+        }else {
             \Validator::make($request->all(), [
                 'Name_Partners' => ['required', 'unique:partners', 'string'],
             ],[
-                'Name_Partners.unique' => 'Данный партнёр уже существует!',
-                'Name_Partners.required' => 'Обязательно к заполнению!',
+                'unique' => 'Данный партнёр уже существует!',
+                'required' => 'Обязательно к заполнению!',
             ])->validate();
 
-            Partner::firstOrCreate([
+            $partner = Partner::Create([
                 'type_activities_id' => $request->select_type_activitie,
                 'Name_Partners' => $request->Name_Partners,
                 'INN' => $request->INN ]);
 
         }
 
-        if($request->Address != null)
-        {
-            for ($i = 0; $i != count($request->Address); $i++){
-                Address::firstOrCreate([
-                    'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
-                    'Address' => $request->Address[$i],
-                ]);
-            }
-        }
-        if($request->Phone_Number != null)
-        {
-            for ($i = 0; $i != count($request->Phone_Number); $i++){
-                Phone_nomber::firstOrCreate([
-                    'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
-                    'Representative' => $request->Representative[$i],
-                    'Phone_Number' => $request->Phone_Number[$i],
-                ]);
-            }
-        }
-        if($request->Email != null)
-        {
-            for ($i = 0; $i != count($request->Email); $i++){
-                Email::firstOrCreate([
-                    'Representative_Email' => $request->Representative_Email[$i],
-                    'Email' => $request->Email[$i],
-                    'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
-                ]);
-            }
-        }
-        if($request->Site != null)
-        {
-            for ($i = 0; $i != count($request->Site); $i++){
-                Website::firstOrCreate([
-                    'Site' => $request->Site[$i],
-                    'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
-                ]);
-            }
-        }
+        if ($request->Address)
+            for ($i=0; $i < count($request->Address); $i++) { 
+                if ($request->Address[$i] != "null") {
+                    Address::find($request->Address[$i])->update([
+                        'partners_id'=> $partner->id
+                    ]);
+                }
+            };
+            Address::where('partners_id', null)->delete();
+
+        if ($request->Phone_Number)
+            for ($i=0; $i < count($request->Phone_Number); $i++) { 
+                if ($request->Phone_Number[$i] != "null")
+                    Phone_nomber::find($request->Phone_Number[$i])->update([
+                        'partners_id'=> $partner->id
+                    ]);
+            };
+            Phone_nomber::where('partners_id', null)->delete();
+
+            if ($request->Email)
+            for ($i=0; $i < count($request->Email); $i++) { 
+                if ($request->Email[$i] != "null") {
+                    Email::find($request->Email[$i])->update([
+                        'partners_id'=> $partner->id
+                    ]);
+                }
+            };
+            Email::where('partners_id', null)->delete();
+
+        if ($request->Websites)
+            for ($i=0; $i < count($request->Websites); $i++) { 
+                if ($request->Websites[$i] != "null")
+                    Website::find($request->Websites[$i])->update([
+                        'partners_id'=> $partner->id
+                    ]);
+            };
+            Website::where('partners_id', null)->delete();
+
+        // if($request->Address != null)
+        // {
+        //     for ($i = 0; $i != count($request->Address); $i++){
+        //         Address::firstOrCreate([
+        //             'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
+        //             'Address' => $request->Address[$i],
+        //         ]);
+        //     }
+        // }
+        // if($request->Phone_Number != null)
+        // {
+        //     for ($i = 0; $i != count($request->Phone_Number); $i++){
+        //         Phone_nomber::firstOrCreate([
+        //             'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
+        //             'Representative' => $request->Representative[$i],
+        //             'Phone_Number' => $request->Phone_Number[$i],
+        //         ]);
+        //     }
+        // }
+        // if($request->Email != null)
+        // {
+        //     for ($i = 0; $i != count($request->Email); $i++){
+        //         Email::firstOrCreate([
+        //             'Representative_Email' => $request->Representative_Email[$i],
+        //             'Email' => $request->Email[$i],
+        //             'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
+        //         ]);
+        //     }
+        // }
+        // if($request->Site != null)
+        // {
+        //     for ($i = 0; $i != count($request->Site); $i++){
+        //         Website::firstOrCreate([
+        //             'Site' => $request->Site[$i],
+        //             'partners_id' => Partner::where('Name_Partners', [$request->Name_Partners])->first()->id,
+        //         ]);
+        //     }
+        // }
 
         return redirect()->route('partners.index');
     }
@@ -126,8 +181,10 @@ class PartnerController extends Controller
      */
     public function edit(Partner $partner)
     {
-        return view('admin.partner.update', ['partner' => $partner, 'type_activities' => Type_Activity::all(),
-            'address' => Address::where('partners_id', $partner->id)->get(), 'phone_nomber' => Phone_nomber::all(), 'email' => Email::all(), 'website' => Website::all()]);
+        //dd(DB::table('type_activities')->leftJoin('partners', 'partners.type_activities_id', '=', 'type_activities.id')->where('type_activities.LogicalDelete', '=', 0)->orWhere('partners.type_activities_id', '=', $partner->type_activities_id)->select('type_activities.*')->distinct()->get());
+
+        return view('admin.partner.update', ['partner' => $partner, 'type_activities' =>  DB::table('type_activities')->leftJoin('partners', 'partners.type_activities_id', '=', 'type_activities.id')->where('type_activities.LogicalDelete', '=', 0)->orWhere('partners.type_activities_id', '=', $partner->type_activities_id)->select('type_activities.*')->distinct()->get(),
+            'address' => Address::where('partners_id', $partner->id)->get(), 'phone_nombers' => Phone_nomber::where('partners_id', $partner->id)->get(), 'emails' => Email::where('partners_id', $partner->id)->get(), 'websites' => Website::where('partners_id', $partner->id)->get()]);
     }
 
     /**
@@ -139,26 +196,120 @@ class PartnerController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
-        if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists()){
-            Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->update([
-                'type_activities_id' => $request->type_activities_id,
+        //dd($request);
+
+        if(Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1 and INN = ?', [$request->Name_Partners, $request->INN])->exists()){
+            Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1 and INN = ?', [$request->Name_Partners, $request->INN])->update([
+                'type_activities_id' => $request->select_type_activitie,
                 'Phone_Number' => $request->Phone_Number,
-                'Address' => $request->Address,
                 'LogicalDelete' => 0,
             ]);
             return redirect()->route('partners.index');
         }
-
-        else
+        elseif (Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->exists()){
+            Partner::whereRaw('Name_Partners = ? and LogicalDelete = 1', [$request->Name_Partners])->update([
+                'type_activities_id' => $request->select_type_activitie,
+                'Phone_Number' => $request->Phone_Number,
+                'INN' => $request->INN,
+                'LogicalDelete' => 0,
+            ]);
+            return redirect()->route('partners.index');
+        } elseif(Partner::whereRaw('INN = ? and LogicalDelete = 1', [$request->INN])->exists()){
+            Partner::whereRaw('INN = ? and LogicalDelete = 1', [$request->INN])->update([
+                'type_activities_id' => $request->select_type_activitie,
+                'Phone_Number' => $request->Phone_Number,
+                'Name_Partners' => $request->Name_Partners,
+                'LogicalDelete' => 0,
+            ]);
+            return redirect()->route('partners.index');
+        }else {
             \Validator::make($request->all(), [
-                'Name_Partners' => ['required', 'unique:partners', 'string'],
+                'Name_Partners' => ['required', 'unique:partners,Name_Partners,' . $partner->id, 'string'],
             ],[
-                'Name_Partners.unique' => 'Данный партнёр уже существует!',
-                'Name_Partners.required' => 'Обязательно к заполнению!',
+                'unique' => $request->Name_Partners . ' данный партнёр уже существует!',
+                'required' => 'Обязательно к заполнению!',
             ])->validate();
 
-        $partner->update(['type_activities_id' => $request->type_activities_id,
-            'Name_Partners' => $request->Name_Partners, 'Phone_Number' => $request->Phone_Number, 'Address' => ($request->Address === null) ? 'Нет' : $request->Address,]);
+        $partner->update([
+            'type_activities_id' => $request->select_type_activitie,
+            'Name_Partners' => $request->Name_Partners, 
+            'Phone_Number' => $request->Phone_Number, 
+            ]);
+        }
+
+        
+        if ($request->Address){
+            //dd(Route::where('id', $request->routes_id[0])->exists());
+            for ($i=0; $i < count($request->Address); $i++) { 
+                if($request->Address[$i] != "null")
+                    Address::find($request->Address[$i])->update([
+                        'partners_id'=> $partner->id
+                    ]);
+                    
+            };
+            Address::where('partners_id', null)->delete();
+            
+            $Address = Address::select('id')->where('partners_id', $partner->id)->get()->toArray();
+            for ($i=0; $i < count($Address); $i++) { 
+                if(!in_array($Address[$i]['id'], $request->Address))
+                     Address::find($Address[$i]['id'])->delete();
+            };
+        } 
+
+        if ($request->Phone_Number){
+            //dd(Route::where('id', $request->routes_id[0])->exists());
+            for ($i=0; $i < count($request->Phone_Number); $i++) { 
+                if($request->Phone_Number[$i] != "null")
+                    Phone_nomber::find($request->Phone_Number[$i])->update([
+                        'partners_id'=> $partner->id
+                    ]);
+                    
+            };
+            Phone_nomber::where('partners_id', null)->delete();
+            
+            $Phone_Number = Phone_nomber::select('id')->where('partners_id', $partner->id)->get()->toArray();
+            for ($i=0; $i < count($Phone_Number); $i++) { 
+                if(!in_array($Phone_Number[$i]['id'], $request->Phone_Number))
+                Phone_nomber::find($Phone_Number[$i]['id'])->delete();
+            };
+        } 
+
+        if ($request->Email){
+            //dd(Route::where('id', $request->routes_id[0])->exists());
+            for ($i=0; $i < count($request->Email); $i++) { 
+                if($request->Email[$i] != "null")
+                    Email::find($request->Email[$i])->update([
+                        'partners_id'=> $partner->id
+                    ]);
+                    
+            };
+            Email::where('partners_id', null)->delete();
+            
+            $Email = Email::select('id')->where('partners_id', $partner->id)->get()->toArray();
+            for ($i=0; $i < count($Email); $i++) { 
+                if(!in_array($Email[$i]['id'], $request->Email))
+                     Email::find($Email[$i]['id'])->delete();
+            };
+        } 
+
+        if ($request->Websites){
+            //dd(Route::where('id', $request->routes_id[0])->exists());
+            for ($i=0; $i < count($request->Websites); $i++) { 
+                if($request->Websites[$i] != "null")
+                    Website::find($request->Websites[$i])->update([
+                        'partners_id'=> $partner->id
+                    ]);
+                    
+            };
+            Website::where('partners_id', null)->delete();
+            
+            $Websites = Website::select('id')->where('partners_id', $partner->id)->get()->toArray();
+            for ($i=0; $i < count($Websites); $i++) { 
+                if(!in_array($Websites[$i]['id'], $request->Websites))
+                    Website::find($Websites[$i]['id'])->delete();
+            };
+        } 
+           
 
         return redirect()->route('partners.index');
     }

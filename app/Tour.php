@@ -17,6 +17,7 @@ class Tour extends Model
         'Amount_Place',
         'Start_Date_Tours',
         'Seating',
+        'Occupied_Place',
         'Assessment',
         'Children_price',
         'Popular',
@@ -28,6 +29,7 @@ class Tour extends Model
         'LogicalDelete',
         'Profit',
         'created_at',
+        'bus_Main_Transort',
     ];
 
 

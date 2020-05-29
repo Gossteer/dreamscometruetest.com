@@ -3293,7 +3293,7 @@ tbody.collapse.show {
 }
 
 .dropdown-menu.show {
-  display: block;
+  display: grid;
 }
 
 .dropdown-header {
@@ -4725,6 +4725,7 @@ tbody.collapse.show {
   padding-left: 0;
   list-style: none;
   border-radius: 0.25rem;
+  position: static;
 }
 
 .page-link {
@@ -8799,7 +8800,7 @@ button.bg-dark:focus {
 }
 
 .text-capitalize {
-  ;
+  
 }
 
 .font-weight-light {

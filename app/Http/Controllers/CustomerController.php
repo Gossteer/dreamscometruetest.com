@@ -21,26 +21,33 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('admin.customer', ['customers' => Customer::paginate(12)]);
+        return view('admin.customer', ['customers' => Customer::where('LogicalDelete', 0)->orderByDesc('created_at')->paginate(12)]);
     }
 
 
     public function account()
     {
-        return view('site.account', ['passengers' => Passenger::where('customers_id', Customer::where('users_id', Auth::user()->id)->first()->id)->paginate(12)
-            , 'customer' => Customer::where('users_id', Auth::user()->id)->first(), ]);
+
+        $Carbon_add14 = Carbon::now()->addDays(14);
+        $Carbon_now = Carbon::now();
+        //dd(DB::table('passengers')->leftJoin('tours', 'passengers.tours_id', '=', 'tours.id')->where('passengers.customers_id', '=', Customer::where('users_id', Auth::user()->id)->first()->id)->where('passengers.LogicalDelete', '=', 0)->Where('tours.Confirmation_Tours', '=', 0)->select('passengers.*')->distinct()->paginate(8,['*'],'tours_hots'));
+        return view('site.account', ['Carbon' => $Carbon_add14, 'Cardon_hot' => $Carbon_now,
+        'passengers_end' => DB::table('passengers')->Join('tours', 'passengers.tours_id', '=', 'tours.id')->where('passengers.customers_id', '=', Customer::where('users_id', Auth::user()->id)->first()->id)->where('passengers.LogicalDelete', '=', 0)->Where('tours.Confidentiality', '=', 0)->where('Start_Date_Tours', '<=' , $Carbon_now)->select('tours.*', 'passengers.Paid', 'passengers.Comment_Customer', 'passengers.Stars')->distinct()->paginate(8,['*'],'tours_hots'), 
+        'passengers' => DB::table('passengers')->Join('tours', 'passengers.tours_id', '=', 'tours.id')->where('Start_Date_Tours', '>' , $Carbon_now)->where('passengers.customers_id', '=', Customer::where('users_id', Auth::user()->id)->first()->id)->where('passengers.LogicalDelete', '=', 0)->Where('tours.Confidentiality', '=', 0)->select('tours.*', 'passengers.Paid')->distinct()->paginate(8,['*'],'tours_hots'), 
+        'customer' => Customer::where('users_id', Auth::user()->id)->first(), 
+        ]);
     }
 
     public function indexfull(Request $request)
     {
         $res = Customer::find($request->customer);
         $Inviter = Customer::where('Phone_Number_Customer', $res->Phone_Customer_Inviter)->first();
-        $Phone_Customer_Inviter_Title = $Inviter->Name . ' ' . $Inviter->Surname . ' ' . $Inviter->Middle_Name;
+        $Phone_Customer_Inviter_Title = $Inviter != null ? $Inviter->Name . ' ' . $Inviter->Surname . ' ' . $Inviter->Middle_Name : null;
         $us = User::find($res->users_id);
         $data = ['Phone_Customer_Inviter' => $res->Phone_Customer_Inviter,'login' => $us->login, 'email' => $us->email, 'Description'=> $res->Description,
             'White_Days' => $res->White_Days, 'floor' => $res->floor == 0 ? 'М':'Ж',
              'The_amount_of_tokens_spent' => $res->The_amount_of_tokens_spent , 'Amount_Customers_Listed' => $res->Amount_Customers_Listed,
-            'Age_Group' => $res->Age_Group, 'Debt' => $res->Debt, 'Phone_Customer_Inviter_Title' => $Phone_Customer_Inviter_Title];
+            'Age_customer' => $res->Age_customer, 'Debt' => $res->Debt, 'Phone_Customer_Inviter_Title' => $Phone_Customer_Inviter_Title];
 
         return $data;
     }
@@ -80,9 +87,10 @@ class CustomerController extends Controller
             'login' => ['required', 'string','min:2', 'max:20', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'password' => ['required', 'string', 'min:8','max:16', 'confirmed'],
+            'Condition' => ['required','between:-1,2', 'integer'],
             'Surname' => ['required','string', 'min:2','max:50'],
             'Name' => ['required','string', 'min:2','max:50'],
-            'Middle_Name' => ['string', 'min:2','max:50'],
+            'Middle_Name' => ['string', 'min:2','max:50', 'nullable'],
             'floor' => ['required'],
             'Date_Birth_Customer' => ['required','date','before_or_equal:date']
         ],[
@@ -117,30 +125,38 @@ class CustomerController extends Controller
 
         // $Phone_Customer_Inviter = ();
 
-            Customer::Create([
+        $customer =   Customer::Create([
                 'users_id' => $user->id,
                 'Surname' => $request['Surname'],
                 'Name' => $request['Name'],
+                'Condition' => $request['Condition'],
                 'Middle_Name' => $request['Middle_Name'],
                 'Date_Birth_Customer' => date('Y-m-d', strtotime( $request['Date_Birth_Customer'])),
                 'Phone_Number_Customer' => $request['Phone_Number_Customer'],
                 'White_Days' => $request['White_Days'] ?? 0,
                 'Black_Days' => $request['Black_Days'] ?? 0,
-                'Description' => $request['Description'] ?? 'Отсуствует',
+                'Description' => $request['Description'],
                 'The_amount_of_tokens_spent' => $request['The_amount_of_tokens_spent'] ?? 0,
                 'floor' => $request['floor'],
-                'Photo' => $request['Photo'] ?? null,
+                'Photo' => "В процессе доработки",
                 'Phone_Customer_Inviter' =>  $request['Phone_Customer_Inviter'],
-                'Amount_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
-                'Age_Group' => ((Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60 &&  $request['Floor'] == 0) || (Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 65 &&  $request['Floor'] == 1)) ? 1 : 0,
+                'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count(),
+                'Age_customer' => Carbon::parse($request->Date_Birth_Customer)->diffInYears(),
+                //((Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60 &&  $request['Floor'] == 0) || (Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 65 &&  $request['Floor'] == 1)) ? 1 : 0
             ]);
 
-        if(Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->exists())
+            if ($customer->Phone_Customer_Inviter and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
+                Customer::where('Phone_Customer_Inviter', $customer->Phone_Customer_Inviter)->first()->update([
+                    'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count()
+                 ]);
+            }
+        // if(Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->exists())
             // DB::table('customers')->where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->
             // update(['Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
-        Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->update([
-           'Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
-        ]);
+            // Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->increment('Amount_Customers_Listed');
+        // Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->update([
+        //    Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->increment('Amount_Customers_Listed');
+        // ]);
 
         return redirect()->route('customer.index');
     }
@@ -154,6 +170,32 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         //
+    }
+
+    public function condition_complite(Request $request)
+    {
+        $customer = Customer::find($request->id);
+        if($request->answer == 1){
+            if ($customer->Phone_Customer_Inviter and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
+                Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first()->update([
+                    'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count()
+                 ]);
+            }
+            $customer->update([
+                'Condition' => 1,
+            ]);
+        } else{
+            if ($customer->Phone_Customer_Inviter and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
+                Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first()->update([
+                   'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count()
+                ]);
+            }
+            $customer->update([
+                'Condition' => 0,
+            ]);
+        }
+            
+        return $request->id;
     }
 
     /**
@@ -185,9 +227,10 @@ class CustomerController extends Controller
             'login' => ['required', 'string','min:2', 'max:20', 'unique:users,login,' . $customer->users_id],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users,email,' . $customer->users_id],
             'password' => ['confirmed'],
+            'Condition' => ['required','between:-1,2', 'integer'],
             'Surname' => ['required','string', 'min:2','max:50'],
             'Name' => ['required','string', 'min:2','max:50'],
-            'Middle_Name' => ['string', 'min:2','max:50'],
+            'Middle_Name' => ['min:2','max:50', 'nullable'],
             'floor' => ['required'],
             'Date_Birth_Customer' => ['required','date','before_or_equal:date']
         ],[
@@ -217,22 +260,42 @@ class CustomerController extends Controller
             'Notifications' => $request['Notifications'] ?? 0,
         ]);
 
-        Customer::find($customer->id)->update([
+        $customer_update = Customer::find($customer->id);
+        
+
+        
+        if ($request['Phone_Customer_Inviter'] and $customer_update->Condition != 1 and $customer_update->Condition != 2 and $request['Condition'] > 0 and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
+            Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->update([
+                'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count()
+             ]);
+        } elseif($request['Phone_Customer_Inviter'] and ($customer_update->Condition == 1 or $customer_update->Condition == 2) and $request['Condition'] <= 0 and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()){
+            Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->decrement('Amount_Customers_Listed');
+        }
+
+        $customer_update->update([
             'Surname' => $request['Surname'],
             'Name' => $request['Name'],
+            'Condition' => $request['Condition'],
             'Middle_Name' => $request['Middle_Name'],
             'Date_Birth_Customer' => date('Y-m-d', strtotime( $request['Date_Birth_Customer'])),
             'Phone_Number_Customer' => $request['Phone_Number_Customer'],
             'White_Days' => $request['White_Days'] ?? 0,
             'Black_Days' => $request['Black_Days'] ?? 0,
-            'Description' => $request['Description'] ?? 'Отсуствует',
+            'Description' => $request['Description'],
             'The_amount_of_tokens_spent' => $request['The_amount_of_tokens_spent'] ?? 0,
             'floor' => $request['floor'],
-            'Photo' => $request['Photo'] ?? null,
+            'Photo' => "В процессе доработки",
             'Phone_Customer_Inviter' =>  $request['Phone_Customer_Inviter'] ?? null,
-            'Amount_Customers_Listed' => \Illuminate\Support\Facades\DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->count(),
-            'Age_Group' => ((Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 60 &&  $request['Floor'] == 0) || (Carbon::parse($request['Date_Birth_Customer'])->diff(Carbon::parse(Carbon::today()->toDateString()))->y >= 65 &&  $request['Floor'] == 1)) ? 1 : 0,
+            'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count(),
+            'Age_customer' => Carbon::parse($request->Date_Birth_Customer)->diffInYears(),
         ]);
+        // if(Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->exists())
+        // DB::table('customers')->where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->
+        // update(['Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
+        // Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->increment('Amount_Customers_Listed');
+    // Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->update([
+    //    Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->increment('Amount_Customers_Listed');
+    // ]);
 
         return redirect()->route('customer.index');
     }
@@ -245,8 +308,10 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->delete();
+        $customer->update([
+            'LogicalDelete' => 1
+        ]);
 
-        return redirect()->route('customer.index');
+        return back();
     }
 }

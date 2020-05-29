@@ -14,8 +14,8 @@
 						<div class="overlay">
 							<div class="container">
 								<div class="w3layouts-banner-info">
-									<h3 class="text-wh" style="text-transform: inherit !important;">Никогда не позволяй своему прошлому быть ярче, своих мечтаний!</h3>
-									<h4 class="text-wh">(Что-то красивое)</h4>
+									<h3 class="text-wh" style="text-transform: inherit !important;">Никогда не позволяй своему прошлому быть ярче своих мечтаний!</h3>
+									<h4 class="text-wh" style="text-transform: inherit !important;">«Жизнь во время путешествия – это мечта в чистом виде.» © Агата Кристи</h4>
 									<div class="buttons mt-4">
 										<a href="{{ route('/about') }}" class="btn mr-2">О нас</a>
 										<a href="{{ route('/contact') }}" class="btn">Написать нам</a>
@@ -30,11 +30,11 @@
 						<div class="overlay">
 							<div class="container">
 								<div class="w3layouts-banner-info">
-									<h3 class="text-wh">(Слова, которые вас возбудят)</h3>
-									<h4 class="text-wh">(Аррр)</h4>
+									<h3 class="text-wh" style="text-transform: inherit !important;">Лови момент</h3>
+									<h4 class="text-wh"  style="text-transform: inherit !important;">«Не думай о том, что будешь рассказывать, когда вернешься. Время – это здесь и сейча.» © Пауло Коэльо</h4>
 									<div class="buttons mt-4">
-										<a href="{{ route('/about') }}" class="btn mr-2">О нас</a>
-										<a href="{{ route('/contact') }}" class="btn">Написать нам</a>
+										<a href="{{ route('/packages') }}" class="btn mr-2">Горячие предложения</a>
+										<a href="{{ route('/contact') }}" class="btn">Индивидуальное путешествие</a>
 									</div>
 								</div>
 							</div>
@@ -46,11 +46,11 @@
 						<div class="overlay">
 							<div class="container">
 								<div class="w3layouts-banner-info">
-									<h3 class="text-wh">(Надеюсь у вас хорошее настроение)</h3>
-									<h4 class="text-wh">(Мы очень на это надеимся)</h4>
+									<h3 class="text-wh" style="text-transform: inherit !important;">Организовываем лишь самое лучшее для вас!</h3>
+									<h4 class="text-wh" style="text-transform: inherit !important;">«Путешествие, как самая великая наука и серьезная наука, помогает нам вновь обрести себя.» © Альбер Камю</h4>
 									<div class="buttons mt-4">
-										<a href="{{ route('/about') }}" class="btn mr-2">О нас</a>
-										<a href="{{ route('/contact') }}" class="btn">Написать нам</a>
+										<a href="{{ route('/about') }}" class="btn mr-2">Узнать больше</a>
+										<a href="{{ route('/packages') }}" class="btn">Наши предложения</a>
 									</div>
 								</div>
 							</div>
@@ -62,11 +62,11 @@
 						<div class="overlay1">
 							<div class="container">
 								<div class="w3layouts-banner-info">
-									<h3 class="text-wh">It is better to travel than to arrive. Let's Be Adventurers.</h3>
-									<h4 class="text-wh">tristique senectus et netus et malesuada</h4>
+									<h3 class="text-wh">Побывали в более 200+ местах нашей страны!</h3>
+									<h4 class="text-wh">«Чтобы изменить мир, надо его увидеть.» © Уилл Трэвелер </h4>
 									<div class="buttons mt-4">
-										<a href="about.html" class="btn mr-2">About Us</a>
-										<a href="booking.html" class="btn">Book a Tour</a>
+										<a href="{{ route('/packages') }}" class="btn mr-2">Путешествуй с нами!</a>
+										<a href="{{ route('/contact') }}" class="btn">Ваши пожелания!</a>
 									</div>
 								</div>
 							</div>
@@ -179,14 +179,14 @@
 					<h5 class="my-2" style="font-family: Open Sans, sans-serif;">{{ $tour->Name_Tours }}</h5>
 					<p class="" style="font-family: Open Sans, sans-serif;">{{str_limit($tour->Description,20,'...')}}</p>
 					<ul class="listing mt-3" style="font-family: Open Sans, sans-serif;">
-						<li><span  class="fa fa-clock-o mr-2" ></span>Дата: <span @if(date('d-m-Y', strtotime($Carbon))  >= date('d-m-Y',strtotime($tour->Start_Date_Tours)) and $Cardon_hot <= $tour->Start_Date_Tours) style="color: red;" title="Экскурсия состоится мене чем через 2 недели. Успейте записаться!" @endif @if(date('d-m-Y', strtotime($Carbon))  < date('d-m-Y',strtotime($tour->Start_Date_Tours))) style="color: green;" @endif> {{date('d-m-Y H:i', strtotime($tour->Start_Date_Tours)) }}</span></li>
+						<li><span  class="fa fa-clock-o mr-2" ></span>Дата: <span @if($Carbon  >= $tour->Start_Date_Tours and $Cardon_hot <= $tour->Start_Date_Tours) style="color: red;" title="Экскурсия состоится мене чем через 2 недели. Успейте записаться!" @endif @if($Carbon  < $tour->Start_Date_Tours) style="color: green;" @endif> {{date('d-m-Y H:i', strtotime($tour->Start_Date_Tours)) }}</span></li>
 					</ul>
 					<a class="btn btn-success" id="pacagesunit" href="{{route('tourdescript',[$tour, str_slug($tour->Name_Tours, '-')])}}">Подробнее</a>
 				</div>
 			</div>
 				@endforeach
 			</div>
-			<div class="view-package text-center mt-4">
+			<div class="view-package text-center mt-2">
 				<a id="ViewAll" href="{{ route('/packages') }}" >Посмотреть все</a>
 				<a href="{{ route('/contact') }}">Индивидуальный заказ</a>
 			</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contract;
 use App\Partner;
+use App\Tour;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
@@ -45,6 +46,7 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
+        tour::find($request->tours_id)->increment('Expenses', $request->Salary);
         $tour_Contract = Contract::Create([
             'Name_Contract_doc' =>  $request->Name_Contract_doc,
             'Salary' =>  $request->Salary ?? 0,
@@ -98,7 +100,11 @@ class ContractController extends Controller
      */
     public function update(Request $request)
     {
-        Contract::find($request->id)->update([
+        $tour_Contract =Contract::find($request->id);
+        tour::find($request->tours_id)->increment('Expenses', $request->Salary);
+        tour::find($request->tours_id)->decrement('Expenses', $tour_Contract->Salary);
+        
+        $tour_Contract->update([
             'Name_Contract_doc' =>  $request->Name_Contract_doc,
             'Salary' =>  $request->Salary ?? 0,
             'Document_Contract' =>  'Я ещё не сделан',
@@ -106,12 +112,14 @@ class ContractController extends Controller
         ]);
 
         $date = [
-            'id' => $request->id,
-            'Name_Contract_doc' =>  $request->Name_Contract_doc,
-            'Salary' =>  $request->Salary ?? 0,
+            'id' => $tour_Contract->id,
+            'Name_Contract_doc' =>  $tour_Contract->Name_Contract_doc,
+            'Salary' =>  $tour_Contract->Salary,
+            'tours_id' => $request->tours_id,
             'Document_Contract' =>  'Я ещё не сделан',
-            'partners_id' =>  $request->partners_id,
-            'title' => Contract::find($request->id)->partner->INN . ' ' . Contract::find($request->id)->partner->type_activity->Name_Type_Activity,
+            'partners_id' =>  $tour_Contract->partners_id,
+            'Name_Partners' =>  $tour_Contract->partner->Name_Partners,
+            'title' =>  $tour_Contract->partner->INN . ' ' . $tour_Contract->partner->type_activity->Name_Type_Activity,
         ];
 
         return $date;
@@ -125,7 +133,9 @@ class ContractController extends Controller
      */
     public function destroy(Request $request)
     {
-        Contract::find($request->id)->delete();
+        $contract =Contract::find($request->id);
+        tour::find($request->tours_id)->decrement('Expenses', $contract->Salary);
+        $contract->delete();
 
         $date = 1;
 

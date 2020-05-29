@@ -17,6 +17,7 @@ class CreateTransortsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('buses_id')->unsigned();
             $table->bigInteger('tour_id')->unsigned();
+            $table->boolean('Main_Transort')->default(0);
 
             $table->foreign('buses_id')->references('id')
             ->on('buses');

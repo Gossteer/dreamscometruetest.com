@@ -19,7 +19,7 @@ class CreatePartnersTable extends Migration
             $table->bigInteger('type_activities_id')->unsigned();
             $table->string('Name_Partners', 191)->unique();
             $table->string('Conract_Partners', 191)->nullable();
-            $table->string('INN', 191)->unique()->nullable();
+            $table->string('INN', 191)->nullable();
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('type_activities_id')->references('id')

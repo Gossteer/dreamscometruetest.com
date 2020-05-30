@@ -15,7 +15,7 @@
 							<div class="container">
 								<div class="w3layouts-banner-info">
 									<h3 class="text-wh" style="text-transform: inherit !important;">Никогда не позволяй своему прошлому быть ярче своих мечтаний!</h3>
-									<h4 class="text-wh" style="text-transform: inherit !important;">«Жизнь во время путешествия – это мечта в чистом виде.» © Агата Кристи</h4>
+									<h4 class="text-wh" style="text-transform: inherit !important;">«Жизнь во время путешествия – это мечта в чистом виде» © Агата Кристи</h4>
 									<div class="buttons mt-4">
 										<a href="{{ route('/about') }}" class="btn mr-2">О нас</a>
 										<a href="{{ route('/contact') }}" class="btn">Написать нам</a>
@@ -31,7 +31,7 @@
 							<div class="container">
 								<div class="w3layouts-banner-info">
 									<h3 class="text-wh" style="text-transform: inherit !important;">Лови момент</h3>
-									<h4 class="text-wh"  style="text-transform: inherit !important;">«Не думай о том, что будешь рассказывать, когда вернешься. Время – это здесь и сейча.» © Пауло Коэльо</h4>
+									<h4 class="text-wh"  style="text-transform: inherit !important;">«Не думай о том, что будешь рассказывать, когда вернешься. Время – это здесь и сейча» © Пауло Коэльо</h4>
 									<div class="buttons mt-4">
 										<a href="{{ route('/packages') }}" class="btn mr-2">Горячие предложения</a>
 										<a href="{{ route('/contact') }}" class="btn">Индивидуальное путешествие</a>
@@ -47,7 +47,7 @@
 							<div class="container">
 								<div class="w3layouts-banner-info">
 									<h3 class="text-wh" style="text-transform: inherit !important;">Организовываем лишь самое лучшее для вас!</h3>
-									<h4 class="text-wh" style="text-transform: inherit !important;">«Путешествие, как самая великая наука и серьезная наука, помогает нам вновь обрести себя.» © Альбер Камю</h4>
+									<h4 class="text-wh" style="text-transform: inherit !important;">«Путешествие, как самая великая наука и серьезная наука, помогает нам вновь обрести себя» © Альбер Камю</h4>
 									<div class="buttons mt-4">
 										<a href="{{ route('/about') }}" class="btn mr-2">Узнать больше</a>
 										<a href="{{ route('/packages') }}" class="btn">Наши предложения</a>
@@ -63,7 +63,7 @@
 							<div class="container">
 								<div class="w3layouts-banner-info">
 									<h3 class="text-wh">Побывали в более 200+ местах нашей страны!</h3>
-									<h4 class="text-wh">«Чтобы изменить мир, надо его увидеть.» © Уилл Трэвелер </h4>
+									<h4 class="text-wh">«Чтобы изменить мир, надо его увидеть» © Уилл Трэвелер </h4>
 									<div class="buttons mt-4">
 										<a href="{{ route('/packages') }}" class="btn mr-2">Путешествуй с нами!</a>
 										<a href="{{ route('/contact') }}" class="btn">Ваши пожелания!</a>

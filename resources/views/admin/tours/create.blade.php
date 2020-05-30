@@ -702,7 +702,7 @@
                                                 $('#Diagnostic_card').val(data['Diagnostic_card']);
                                                 $('#Validity_Date').val(data['Validity_Date']);
                                                 $('#Amount_Place_Bus').val(data['Amount_Place_Bus']);
-                                                $('#employee_id').val(data['employee_id']);
+                                                $('#employee_id').val(data['employee_id'] ? data['employee_id'] : '0');
                                                 $('#Glonas_GPS').prop('checked', data['Glonas_GPS']);
                                                 $('#Tachograph').prop('checked', data['Tachograph']);
                                                 if(document.getElementById('bus_Main_Transort').value == data['id']){
@@ -1154,9 +1154,9 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="Expenses" >Прибль</label>
+                                    <label class="col-lg-4 col-form-label" for="Expenses" >Прибыль</label>
                                     <div class="col-lg-6">
-                                        <input  type="number" class="form-control @error('Profit') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ old('Profit') }}" name="Profit" id="Profit" placeholder="Прибль">
+                                        <input  type="number" class="form-control @error('Profit') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ old('Profit') }}" name="Profit" id="Profit" placeholder="Прибыль">
                                         @error('Profit')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

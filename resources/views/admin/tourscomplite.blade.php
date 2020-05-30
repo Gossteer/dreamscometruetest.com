@@ -97,9 +97,9 @@
                                 @csrf
                                 <input type="number" hidden value="1" name="answer">
                                 <div class="form-group row mt-4 text-center">
-                                    <label class="col-lg-5 col-form-label" for="Expenses" >Прибль</label>
+                                    <label class="col-lg-5 col-form-label" for="Expenses" >Прибыль</label>
                                     <div class="col-lg-5">
-                                        <input  type="number" class="form-control @error('Profit') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Profit }}" name="Profit" id="Profit" placeholder="Прибль">
+                                        <input  type="number" class="form-control @error('Profit') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Profit }}" name="Profit" id="Profit" placeholder="Прибыль">
                                         @error('Profit')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -110,7 +110,7 @@
                                 <div class="form-group row mt-4 text-center">
                                     <label class="col-lg-5 col-form-label" for="Expenses" >Затраты</label>
                                     <div class="col-lg-5">
-                                        <input  type="number" class="form-control @error('Expenses') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Expenses }}" name="Expenses" id="Expenses" placeholder="Прибль">
+                                        <input  type="number" class="form-control @error('Expenses') is-invalid @enderror" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Expenses }}" name="Expenses" id="Expenses" placeholder="Прибыль">
                                         @error('Expenses')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -242,9 +242,9 @@
                             @csrf
                             <input type="number" hidden value="0" name="answer">
                             <div class="form-group row mt-4 text-center">
-                                <label class="col-lg-5 col-form-label" for="Expenses" >Прибль</label>
+                                <label class="col-lg-5 col-form-label" for="Expenses" >Прибыль</label>
                                 <div class="col-lg-5">
-                                    <input  type="number" class="form-control @error('Profit') is-invalid @enderror" min="0" max="2147483647" disabled pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Profit }}" name="Profit" id="Profit" placeholder="Прибль">
+                                    <input  type="number" class="form-control @error('Profit') is-invalid @enderror" min="0" max="2147483647" disabled pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Profit }}" name="Profit" id="Profit" placeholder="Прибыль">
                                     @error('Profit')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -255,7 +255,7 @@
                             <div class="form-group row mt-4 text-center">
                                 <label class="col-lg-5 col-form-label" for="Expenses" >Затраты</label>
                                 <div class="col-lg-5">
-                                    <input  type="number" class="form-control @error('Expenses') is-invalid @enderror" min="0" max="2147483647" disabled pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Expenses }}" name="Expenses" id="Expenses" placeholder="Прибль">
+                                    <input  type="number" class="form-control @error('Expenses') is-invalid @enderror" min="0" max="2147483647" disabled pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" value="{{ $tour->Expenses }}" name="Expenses" id="Expenses" placeholder="Прибыль">
                                     @error('Expenses')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

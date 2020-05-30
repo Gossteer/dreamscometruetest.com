@@ -46,9 +46,9 @@
                                                         @csrf
                                                         @if ($tour->End_Date_Tours <= $today)
                                                             @if ($tour->Confirmation_Tours == 0)
-                                                            <a href="{{route('tourcomplite', $tour)}}" id="tour_complite{{$tour->id}}" data-idi="{{$tour->id}}" title="Подтверждение экскурсии" data-toggle="tooltip" data-placement="top" ><i id="tour_complite_icon{{$tour->id}}" style="cursor: pointer !important;" class="fa fa-check color-muted m-r-5"></i></a>
+                                                            <a href="{{route('tourcomplite', $tour)}}" id="tour_complite{{$tour->id}}" data-idi="{{$tour->id}}" title="Подтверждение экскурсии"  ><i id="tour_complite_icon{{$tour->id}}" style="cursor: pointer !important;" class="fa fa-check color-muted m-r-5"></i></a>
                                                             @else
-                                                            <a href="{{route('tourcomplite', $tour)}}" id="tour_complite{{$tour->id}}" data-idi="{{$tour->id}}" title="Подтверждение экскурсии" data-toggle="tooltip" data-placement="top" ><i id="tour_complite_icon{{$tour->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-5"></i></a>
+                                                            <a href="{{route('tourcomplite', $tour)}}" id="tour_complite{{$tour->id}}" data-idi="{{$tour->id}}" title="Подтверждение экскурсии" ><i id="tour_complite_icon{{$tour->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-5"></i></a>
                                                             @endif
                                                         @endif
                                                         @if ($tour->Confirmation_Tours == 0)

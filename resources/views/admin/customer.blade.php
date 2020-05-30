@@ -61,7 +61,7 @@
                                             @endif
                                         </td>
                                         <td align="center"> {{  date('d-m-Y', strtotime($customer->Date_Birth_Customer)) }}</td>
-                                        <td align="center"><span style="color: #0b0b0b">{{ $customer->Black_Days }} ;</span> <span style="color: #00FFFF"><strong>{{ $customer->White_Days }}</strong> </span>
+                                        <td align="center"><span style="color:">{{ $customer->Black_Days }} ;</span> <span style="color: green"><strong>{{ $customer->White_Days }}</strong> </span>
                                         </td>
                                         <td>
                                         <span>

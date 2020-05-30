@@ -17,12 +17,12 @@
                                 <h4>
                                     <span>
                                         <a class="text-white" href="{{ route('tours.show', $tour_complit) }}" title="Дата проведения {{date('d.m.Y', strtotime($tour_complit->Start_Date_Tours))}}">{{++$number_complit_tour}}. {{ $tour_complit->Name_Tours }}</a>
-                                        <a style="font-size: 85%;" class="text-white" href="{{ route('tours.edit', $tour_complit) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i></a>
                                         @if($tour_complit->End_Date_Tours <= $today_tour)
                                             @if ($tour_complit->Confirmation_Tours == 0)
-                                                <a style="font-size: 85%;" id="tour_complite{{$tour_complit->id}}"  data-idi="{{$tour_complit->id}}" class="text-white" onclick="if(confirm('Подтвердить экскурсию?')){complite_tour(this.dataset.idi)}else{return false}" title="Подтвердить экскурсию" data-toggle="tooltip" data-placement="top" ><i id="tour_complite_icon{{$tour_complit->id}}" style="cursor: pointer !important;" class="fa fa-check color-muted m-r-5"></i></a>
+                                                <a style="font-size: 85%;" class="text-white" href="{{ route('tours.edit', $tour_complit) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i></a>
+                                                <a style="font-size: 85%;"  class="text-white" href="{{route('tourcomplite', $tour_complit->id)}}" title="Подтверждение экскурсии" ><i id="tour_complite_icon{{$tour_complit->id}}" style="cursor: pointer !important;" class="fa fa-check color-muted m-r-5"></i></a>
                                             @else
-                                                <a style="font-size: 85%;" id="tour_complite{{$tour_complit->id}}" data-idi="{{$tour_complit->id}}" class="text-white" onclick="if(confirm('Отменить подтверждение?')){notcomplite_tour(this.dataset.idi)}else{return false}" data-toggle="tooltip" data-placement="top" title="Отменить подтверждение"><i id="tour_complite_icon{{$tour_complit->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-2"></i></a>
+                                                <a style="font-size: 85%;"  class="text-white" href="{{route('tourcomplite', $tour_complit->id)}}" title="Подтверждение экскурсии"><i id="tour_complite_icon{{$tour_complit->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-2"></i></a>
                                             @endif
                                         @endif
                                     </span>
@@ -52,9 +52,9 @@
                                         <a style="font-size: 85%;" class="text-white" href="{{ route('tours.edit', $tour_not_complit) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i></a>
                                         @if($tour_not_complit->End_Date_Tours <= $today_tour)
                                             @if ($tour_not_complit->Confirmation_Tours == 0)
-                                                <a style="font-size: 85%;" id="tour_complite{{$tour_not_complit->id}}"  data-idi="{{$tour_not_complit->id}}" class="text-white" onclick="if(confirm('Подтвердить экскурсию?')){complite_tour(this.dataset.idi)}else{return false}" title="Подтвердить экскурсию" data-toggle="tooltip" data-placement="top" ><i id="tour_complite_icon{{$tour_not_complit->id}}" style="cursor: pointer !important;" class="fa fa-check color-muted m-r-5"></i></a>
+                                                <a style="font-size: 85%;"  class="text-white" href="{{route('tourcomplite', $tour_not_complit->id)}}" title="Подтверждение экскурсии"><i id="tour_complite_icon{{$tour_not_complit->id}}" style="cursor: pointer !important;" class="fa fa-check color-muted m-r-5"></i></a>
                                             @else
-                                                <a style="font-size: 85%;" id="tour_complite{{$tour_not_complit->id}}" data-idi="{{$tour_not_complit->id}}" class="text-white" onclick="if(confirm('Отменить подтверждение?')){notcomplite_tour(this.dataset.idi)}else{return false}" data-toggle="tooltip" data-placement="top" title="Отменить подтверждение"><i id="tour_complite_icon{{$tour_not_complit->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-5"></i></a>
+                                                <a style="font-size: 85%;"  class="text-white" href="{{route('tourcomplite', $tour_not_complit->id)}}" title="Подтверждение экскурсии"><i id="tour_complite_icon{{$tour_not_complit->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-5"></i></a>
                                             @endif
                                         @endif
                                     </span>
@@ -90,7 +90,9 @@
                                 <h4>
                                     <span>
                                         <a class="text-white" href="{{ route('tours.show', $last_tour) }}" title="Дата проведения {{date('d.m.Y', strtotime($last_tour->Start_Date_Tours))}}">{{++$number_tour}}. {{ $last_tour->Name_Tours }}</a>
-                                        <a style="font-size: 85%;" class="text-white" href="{{ route('tours.edit', $last_tour) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i></a>
+                                        @if ($tour_complit->Confirmation_Tours == 0)
+                                            <a style="font-size: 85%;" class="text-white" href="{{ route('tours.edit', $last_tour) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i></a>
+                                        @endif
                                     </span>
                                 </h4>
                                 <h6 class="m-t-10 text-white">+{{number_format($last_tour->Profit, 0, ',', ' ') }}₽<span class="pull-right">-{{number_format($last_tour->Expenses, 0, ',', ' ') }}₽</span></h6>
@@ -143,7 +145,7 @@
                                                     <a id="customer_complite{{$last_all_customer->id}}" data-condition="{{$last_all_customer->Condition}}"  data-idi="{{$last_all_customer->id}}" class="@if($last_all_customer->Condition == 1)text-white @else text-success @endif" onclick="if(confirm('Отменить подтверждение?')){notcomplite_customer(this.dataset.idi, this.dataset.condition)}else{return false}" data-toggle="tooltip" data-placement="top" title="Отменить подтверждение"><i id="customer_complite_icon{{$last_all_customer->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-5"></i></a>
                                                 @endif
                                              <a class="text-white" href="{{ route('customer.edit', $last_all_customer) }}" style="font-size: 85%;" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i></a>
-                                            <button class="text-white" id="buttonfordeleted" type="submit" style="font-size: 85%; padding: 0 !important; border: none !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i style="cursor: pointer !important;" class="fa fa-trash color-danger"></i></button>
+                                            <button class="text-white"  type="submit" style="font-size: 85%; padding: 0 !important; border: none !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i style="cursor: pointer !important;" class="fa fa-trash color-danger"></i></button>
                                         </form>
                                     </span>
                                 </h4>

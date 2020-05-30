@@ -24,7 +24,7 @@
 	<div class="container py-lg-4 py-sm-3">
 		<h2 class="heading text-capitalize text-center">Горящие предложения</h2>
 		<p class="text mt-2 mb-5 text-center">Успейте записаться, пока места ещё есть!</p>
-
+		@if($tours_hots->count() != 0)
             <div class="row">
 				@foreach($tours_hots as $tour)
 					<div class="col-lg-3 col-sm-6 mb-4" href="">
@@ -87,6 +87,9 @@
 					</div>
 				</div>
 			@endif
+		@else
+			<h4 class="heading text-capitalize text-center mb-5" style="text-decoration: underline">Следите за нашими новостями!</h4>
+		@endif
 	</div>
 </section>
 <!-- tour packages -->
@@ -164,44 +167,48 @@
 	<div class="container py-xl-5 py-lg-3" style="padding-top: 0 !important;">
 		<h3 class="heading text-capitalize text-center"> Популярные направления </h3>
 		<p class="text mt-2 mb-5 text-center">Лови момент</p>
-		@foreach ($tours_Popular as $tour_Popular)
-		<div class="row inner-sec-w3layouts-w3pvt-lauinfo">
-			<div class="col-lg-3 col-sm-6 mb-5 destinations-grids text-center">
-				<h4 class="destination mb-3">{{$tour_Popular->Name_Tours}}</h4>
-				<div class="image-position position-relative">
-					<img src="images/china.jpg" class="img-fluid" alt="">
-					<div class="rating">
-						<ul>
-							<li><span class="fa fa-star"></span></li>
-							<li><span class="fa fa-star"></span></li>
-							<li><span class="fa fa-star"></span></li>
-							<li><span class="fa fa-star"></span></li>
-							<li><span class="fa fa-star"></span></li>
-						</ul>
+		@if($tours_Popular->count() != 0)
+				@foreach ($tours_Popular as $tour_Popular)
+				<div class="row inner-sec-w3layouts-w3pvt-lauinfo">
+					<div class="col-lg-3 col-sm-6 mb-5 destinations-grids text-center">
+						<h4 class="destination mb-3">{{$tour_Popular->Name_Tours}}</h4>
+						<div class="image-position position-relative">
+							<img src="images/china.jpg" class="img-fluid" alt="">
+							<div class="rating">
+								<ul>
+									<li><span class="fa fa-star"></span></li>
+									<li><span class="fa fa-star"></span></li>
+									<li><span class="fa fa-star"></span></li>
+									<li><span class="fa fa-star"></span></li>
+									<li><span class="fa fa-star"></span></li>
+								</ul>
+							</div>
+						</div>
+						<div class="destinations-info">
+							<div class="caption mb-lg-3">
+								<h4>{{$tour_Popular->Name_Tours}}</h4>
+								<a href="{{route('tourdescript',[$tour_Popular, str_slug($tour_Popular->Name_Tours, '-')])}}">Подробнее</a>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="destinations-info">
-					<div class="caption mb-lg-3">
-						<h4>{{$tour_Popular->Name_Tours}}</h4>
-						<a href="{{route('tourdescript',[$tour_Popular, str_slug($tour_Popular->Name_Tours, '-')])}}">Подробнее</a>
-					</div>
-				</div>
-			</div>
 
-		</div>
-		@endforeach
-	</div>
-	@if($tours_Popular->total() > $tours_Popular->count())
-		<div class="row  mb-5 justify-content-center">
-			<div class="bootstrap-pagination" >
-				<nav>
-					<ul class="pagination">
-						{{ $tours_Popular>links() }}
-					</ul>
-				</nav>
+				</div>
+				@endforeach
 			</div>
-		</div>
-	@endif
+			@if($tours_Popular->total() > $tours_Popular->count())
+				<div class="row  mb-5 justify-content-center">
+					<div class="bootstrap-pagination" >
+						<nav>
+							<ul class="pagination">
+								{{ $tours_Popular>links() }}
+							</ul>
+						</nav>
+					</div>
+				</div>
+			@endif
+		@else
+			<h4 class="heading text-capitalize text-center mb-5" style="text-decoration: underline">Следите за нашими новостями!</h4>
+		@endif
 </section>
 <!-- destinations -->
 

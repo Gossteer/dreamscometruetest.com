@@ -23,15 +23,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
 
 
-
-
     <!-- Fonts https://fontawesome.com/v4.7.0/icons/ -->
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/jquery.dialog.min.css') }}">
     <link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
     <link href="{{ asset('css/styleadmin.css') }}" rel='stylesheet' type='text/css' /><!-- custom css -->
-
+    
 
 </head>
 <body>

@@ -71,18 +71,38 @@ class TourController extends Controller
                 'Confirmation_Tours' => $request->answer
             ]);
             foreach (Passenger::where('tours_id', $tour->id)->where('LogicalDelete', 0)->get() as $passenger) {
-                if ($passenger->Presence == 1) {
+                if ($passenger->Paid == 1) {
                     $passenger->customer->increment('White_Days');
+                    if (($passenger->customer->White_Days + $passenger->customer->Amount_Customers_Listed - $passenger->customer->Black_Days) >= 10) {
+                        $passenger->customer->update([
+                            'Condition' => 2,
+                        ]);
+                    }
                 } else {
+                    if ((($passenger->customer->White_Days + $passenger->customer->Amount_Customers_Listed - $passenger->customer->Black_Days) < 10) and $passenger->customer->Condition == 2) {
+                        $passenger->customer->update([
+                            'Condition' => 1,
+                        ]);
+                    }
                     $passenger->customer->increment('Black_Days');
                 }
             }
         } else {
             foreach (Passenger::where('tours_id', $tour->id)->where('LogicalDelete', 0)->get() as $passenger) {
-                if ($passenger->Presence == 1) {
+                if ($passenger->Paid == 1) {
                     $passenger->customer->decrement('White_Days');
+                    if ((($passenger->customer->White_Days + $passenger->customer->Amount_Customers_Listed - $passenger->customer->Black_Days) < 10) and $passenger->customer->Condition == 2) {
+                        $passenger->customer->update([
+                            'Condition' => 1,
+                        ]);
+                    }
                 } else {
                     $passenger->customer->decrement('Black_Days');
+                    if (($passenger->customer->White_Days + $passenger->customer->Amount_Customers_Listed - $passenger->customer->Black_Days) >= 10) {
+                        $passenger->customer->update([
+                            'Condition' => 2,
+                        ]);
+                    }
                 }
             }
             $tour ->update([

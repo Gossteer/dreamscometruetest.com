@@ -29,8 +29,8 @@
                                 </thead>
                                 <tbody>
                                     @foreach($tours as $tour)
-                                        <tr id="tr_tour{{$tour->id}}" align="center" style="background: @if($tour->Confirmation_Tours == 1) lightgreen @elseif ($todayadd14 >= $tour->Start_Date_Tours and $today  <= $tour->Start_Date_Tours) lightsalmon @elseif($tour->Start_Date_Tours <= $today and $today <= $tour->End_Date_Tours) LightBlue @else #F3F3F9 @endif">
-                                            <td style="font-weight: bold"> <a href="{{ route('tours.show', $tour) }}">{{ $tour->Name_Tours }}</a></td>
+                                        <tr id="tr_tour{{$tour->id}}" class="@if($tour->Confirmation_Tours == 1) divlightgreen @elseif ($todayadd14 >= $tour->Start_Date_Tours and $today  <= $tour->Start_Date_Tours) divlightsalmon @elseif($tour->Start_Date_Tours <= $today and $today <= $tour->End_Date_Tours) divLightBlue @else divf4f4f8 @endif" align="center" >
+                                            <td style="font-weight: bold;" > <a href="{{ route('tours.show', $tour) }}">{{ $tour->Name_Tours }}</a></td>
                                             <td>
                                                 <span title="Всего мест" style="font-weight: bold">{{ $tour->Amount_Place }}</span> : <span style="font-weight: bold; color: red;" title="Занято мест">{{ $tour->Occupied_Place }}</span> : <span style="font-weight: bold; color: green" title="Свободно мест">{{ ($tour->Amount_Place - $tour->Occupied_Place) }}</span>
                                             </td>

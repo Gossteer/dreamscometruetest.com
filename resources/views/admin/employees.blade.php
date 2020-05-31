@@ -83,13 +83,11 @@
                                         <td> {{ $employee->Phone_Number }}</td>
 
                                         <td>
-                                            <span class="label gradient-1 btn-rounded">
                                             @if($employee->jobs_id != null && isset($employee->job))
                                                     {{$employee->job->Company}} {{ $employee->job->Job_Title}} зп: {{(($employee->job->Salary == null)? 'договорная': number_format($employee->job->Salary, 0, ',', ' ') . '₽')}}
-                                                @else
+                                            @else
                                                 Не назначена
-                                                @endif
-                                            </span>
+                                            @endif
                                         </td>
 
                                         <td>

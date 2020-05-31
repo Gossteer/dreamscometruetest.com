@@ -12,6 +12,7 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
+
 .datalivesearchstyle {
 	display: grid !important;
 }
@@ -81,6 +82,10 @@ body {
 	border-radius: 20% !important;
 }
 
+.divamoutplace:hover{
+	background: green ; 
+}
+
 .divamoutplace2{
 	width: 70px !important; 
 	height: 70px !important; 
@@ -89,12 +94,20 @@ body {
 	border-radius: 20% !important;
 }
 
+.divamoutplace2:hover{
+	background: green ; 
+}
+
 .divamoutplacelast{
 	width: 70px !important; 
 	height: 70px !important; 
 	line-height: 75px !important;
 	padding-bottom: 2%; 
 	border-radius: 20% !important;
+}
+
+.divamoutplacelast:hover{
+	background: green ; 
 }
 
 @media (max-width: 350px) {

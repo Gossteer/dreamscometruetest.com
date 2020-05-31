@@ -131,7 +131,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text col-7 col-sm-6 mb-2" style="color: black; font-size: 18px;  ">Способ оплаты</p>
+                        <p class="text col-7 col-sm-6 mb-2" style="color: black; font-size: 18px;  ">Способ оплаты<span class="text-danger">*</span></p>
                         <div class="form-group col-5 col-sm-6 mb-2">
                             <select id="selecttypeprice" class="form-control @error('Payment_method') is-invalid @enderror"  name="Payment_method" required onchange="chengetypeprise()">
                             <option selected hidden disabled value="0">Выберете способ оплаты</option>
@@ -239,6 +239,19 @@
                             </span>
                             @enderror
                         </div>
+                        <p class="text col-7 col-sm-6 mb-1 " style="color: black; font-size: 18px; " id="Notplace_text" hidden>Без места:</p>
+                        <div class="form-group col-10 col-sm-6 mb-2" id="Notplace_div" hidden>
+                            <select id="Notplace" class="form-control" onchange="noteplaceselect(this.value)" >
+                            <option value="0" selected @if(old('Notplace') == 0) selected @endif>Нет</option>
+                            {{-- Сделать запись за наличные только за две недели до начала --}}
+                            <option value="1" @if(old('Notplace') == 1) selected @endif>Да</option>
+                            </select>
+                            @error('Notplace')
+                                <span class="invalid-feedback d-block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
                         <p class="text col-12 col-sm-6 mb-1 " style="color: black; font-size: 18px; " id="finalprice_text" >Итоговая цена:</p>
                         <div class="form-group col-11 col-sm-6 mb-2" id="Final_Price_div" >
                             <input  type="number" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" data-amountchildren="0" data-agegroop="" onKeyPress="if(this.value.length==10) return false;" class="form-control @error('Final_Price') is-invalid @enderror" name="Final_Price" disabled id="finalprice" placeholder="Итоговая цена">
@@ -313,7 +326,7 @@
                             </div>
                         </div>
                         
-                        <p class="text col-7 col-sm-6 mb-2" style="color: black; font-size: 18px;  ">Способ оплаты</p>
+                        <p class="text col-7 col-sm-6 mb-2" style="color: black; font-size: 18px;  ">Способ оплаты<span class="text-danger">*</span></p>
                         <div class="form-group col-5 col-sm-6 mb-2">
                             <select id="selecttypeprice" class="form-control  @error('Payment_method') is-invalid @enderror" name="Payment_method" onchange="chengetypeprise_notbus()">
                             <option selected hidden disabled value="0">Выберете способ оплаты</option>
@@ -417,8 +430,22 @@
                             @error('Paid')
                                 <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <p class="text col-7 col-sm-6 mb-1 " style="color: black; font-size: 18px; " id="Notplace_text" hidden>Без места:</p>
+                        <div class="form-group col-10 col-sm-6 mb-2" id="Notplace_div" hidden>
+                            <select id="Notplace" class="form-control" onchange="noteplaceselect(this.value)" >
+                            <option value="0" selected @if(old('Notplace') == 0) selected @endif>Нет</option>
+                            {{-- Сделать запись за наличные только за две недели до начала --}}
+                            <option value="1" @if(old('Notplace') == 1) selected @endif>Да</option>
+                            </select>
+                            @error('Notplace')
+                                <span class="invalid-feedback d-block" role="alert">
+                                <strong>{{ $message }}</strong>
                             </span>
-                        @enderror
+                            @enderror
+                        </div>
                         <p class="text col-12 col-sm-6 mb-1 " style="color: black; font-size: 18px; " id="finalprice_text" >Итоговая цена:</p>
                         <div class="form-group col-11 col-sm-6 mb-2" id="Final_Price_div" >
                             <input  type="number" min="0" max="2147483647" pattern="/^-?\d+\.?\d*$/" data-amountchildren="0" data-agegroop="" onKeyPress="if(this.value.length==10) return false;" class="form-control @error('Final_Price') is-invalid @enderror" name="Final_Price" disabled id="finalprice" placeholder="Итоговая цена">
@@ -497,8 +524,10 @@
                                                     if (data['exists_for_rour']) {
                                                         document.getElementById('pacagesunit').innerText = 'Изменить запись';
                                                         if (!bus_not) {
-                                                            document.getElementById('selectplaceinput').value = data['Occupied_Place_Bus']; 
+                                                            document.getElementById('selectplaceinput').value = data['Occupied_Place_Bus'];
+                                                            $('#Place'+document.getElementById('selectplace').textContent).css("background-color","#047ffc");
                                                             document.getElementById('selectplace').innerText = data['Occupied_Place_Bus'] == 0 ? 'Место' : data['Occupied_Place_Bus'] ;
+                                                            document.getElementById('Notplace').value = data['Occupied_Place_Bus'] == 0 ? 1 : 0 ;
                                                         }
                                                         document.getElementById('delete_button').hidden = false;
                                                         document.getElementById('Paid').value = data['Paid'];
@@ -508,9 +537,10 @@
                                                         document.getElementById('selecttypeprice').value = data['Payment_method'];
                                                         document.getElementById('checkselecttypeprice').value = data['Payment_method_text'];
                                                     } else {
-                                                        if (!bus_not) {
+                                                        if (!bus_not && document.getElementById('selectplaceinput').value == 0) {
                                                             document.getElementById('selectplaceinput').value = data['Occupied_Place_Bus'];
                                                             document.getElementById('selectplace').innerText = data['Occupied_Place_Bus'] == 0 ? 'Место' : data['Occupied_Place_Bus'] ;
+                                                            document.getElementById('Notplace').value = 1;
                                                         }
                                                         document.getElementById('delete_button').hidden = true;
                                                         document.getElementById('Paid').value = data['Paid'];
@@ -525,6 +555,9 @@
                                                         
                                                     }
                                                     
+                                                    document.getElementById('Notplace').hidden = false;
+                                                    document.getElementById('Notplace_text').hidden = false; 
+                                                    document.getElementById('Notplace_div').hidden = false;
                                                     document.getElementById('Paid_text').hidden = false; 
                                                     document.getElementById('Paid_div').hidden = false;
                                                     document.getElementById('full_name_customer').innerText =  data['full_name_customer'];
@@ -588,6 +621,15 @@
 		params.style.backgroundColor = "green";
 		document.getElementById('selectplace').innerText = params.dataset.idi;
 		selectplaceinput.value = params.dataset.idi;
+        document.getElementById('Notplace').value = 0;
+	}
+
+    function noteplaceselect(params) {
+        if (params == 1) {
+            $('#Place'+document.getElementById('selectplace').textContent).css("background-color","#047ffc");
+            document.getElementById('selectplaceinput').value = 0; 
+            document.getElementById('selectplace').innerText = 'Место';
+        }
 	}
 
 	function chengetypeprise() {

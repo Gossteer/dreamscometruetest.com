@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-sm-6" style="margin-top: 1%">
-            <div class="card gradient-2">
+            <div class="card gradient-4">
                 <div class="card-body" style="padding-bottom: 2%">
                     <h3 class="card-title text-white">Заработано денег</h3>
                     <div class="d-inline-block">
@@ -108,7 +108,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-sm-6" style="margin-top: 1%">
-            <div class="card gradient-3">
+            <div class="card gradient-8">
                 <div class="card-body" style="padding-bottom: 2%">
                     <h3 class="card-title text-white">Пользователей</h3>
                     <div class="d-inline-block">
@@ -192,66 +192,200 @@
         </div>
     </div>
 
+    <div class="row"  style="padding-left: 10px !important; padding-right: 10px !important;">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body pb-0 d-flex justify-content-between">
+                            <div>
+                                <h4 class="mb-1">Денежный оборот за год</h4>
+                                <p>График поделен по месяцам</p>
+                                <h3 class="m-0"> {{number_format($fullmanyforyers - $fullmanyforyersexpens, 0, ',', ' ') }}₽</h3>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+                        </div>
+                        {{-- <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="w-100 mr-2">
+                                    <h6>Pixel 2</h6>
+                                    <div class="progress" style="height: 6px">
+                                        <div class="progress-bar bg-danger" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <div class="ml-2 w-100">
+                                    <h6>iPhone X</h6>
+                                    <div class="progress" style="height: 6px">
+                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row"  style="padding-left: 10px !important; padding-right: 10px !important;">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body pb-0 d-flex justify-content-between">
+                            <div>
+                                <h4 class="mb-1">Общая статистика</h4>
+                                <p>График поделен по месяцам</p>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="line-chart" width="800" height="450"></canvas>
+                        </div>
+                        {{-- <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="w-100 mr-2">
+                                    <h6>Pixel 2</h6>
+                                    <div class="progress" style="height: 6px">
+                                        <div class="progress-bar bg-danger" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <div class="ml-2 w-100">
+                                    <h6>iPhone X</h6>
+                                    <div class="progress" style="height: 6px">
+                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <script>
+    
+new Chart(document.getElementById("bar-chart-grouped"), {
+  type: 'bar',
+  data: {
+    labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+    datasets: [{ 
+        data: [ @for ($i = 0; $i < count($summ_profit); $i++) {{$summ_profit[$i]}} ,  @endfor ], 
+        label: "Прибыль",
+        backgroundColor: "#6fd96f",
+        //fill: false
+      },{ 
+        data: [ @for ($i = 0; $i < count($sum_expenses); $i++) {{$sum_expenses[$i]}} ,  @endfor ], 
+        label: "Затраты",
+        backgroundColor: "#7571f9",
+        //fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+    }
+  }
+});
 
-function complite_customer(customer_id, condition) {             
-                    $.ajax({
-                        url: '{{ route('customer.condition_complite') }}',
-                        type: "POST",
-                        data: {id:customer_id, answer:1 },
-                        headers: {
-                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                        },
+new Chart(document.getElementById("line-chart"), {
+  type: 'bar',
+  data: {
+    labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+    datasets: [{ 
+        data: [ @for ($i = 0; $i < count($count_tours); $i++) {{$count_tours[$i]}} ,  @endfor ],
+        label: "Проведено мероприятий",
+        backgroundColor: "#6fd96f",
+        //fill: false
+      }, { 
+        data: [ @for ($i = 0; $i < count($count_customers); $i++) {{$count_customers[$i]}} ,  @endfor ],
+        label: "Зарегестрировалось людей",
+        backgroundColor: "#7571f9",
+        //fill: false
+      }, { 
+        data: [ @for ($i = 0; $i < count($count_passengers); $i++) {{$count_passengers[$i]}} ,  @endfor ],
+        label: "Человек успешно посетивших мероприятия",
+        backgroundColor: "green",
+        //fill: false
+      }, { 
+        data: [ @for ($i = 0; $i < count($avg_stars_tour); $i++) {{$avg_stars_tour[$i]}} ,  @endfor ],
+        label: "Средней отзыв на мероприятие",
+        backgroundColor: "#3cba9f",
+        //fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      
+    }
+  }
+});
 
-                        success: function (data) {
-                            if (condition == -1) {
-                                document.querySelector('#customer_complite' + customer_id).classList.remove("text-danger");
-                                document.querySelector('#customer_complite' + customer_id).classList.add("text-white");
+</script>
+
+<script>
+    function complite_customer(customer_id, condition) {             
+                        $.ajax({
+                            url: '{{ route('customer.condition_complite') }}',
+                            type: "POST",
+                            data: {id:customer_id, answer:1 },
+                            headers: {
+                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                            },
+
+                            success: function (data) {
+                                if (condition == -1) {
+                                    document.querySelector('#customer_complite' + customer_id).classList.remove("text-danger");
+                                    document.querySelector('#customer_complite' + customer_id).classList.add("text-white");
+                                    document.querySelector('#customer_complite_icon' + customer_id).classList.remove("fa-close");
+                                    document.querySelector('#customer_complite_icon' + customer_id).classList.add("fa-check");
+                                }else{
+                                    document.querySelector('#customer_complite_icon' + customer_id).classList.remove("fa-check");
+                                    document.querySelector('#customer_complite_icon' + customer_id).classList.add("fa-close");
+                                }
+                                document.getElementById('customer_complite' + customer_id ).dataset.originalTitle = "Отменить подтверждение";
+                                //$('#customer_complite' + customer_id).attr("title","Отменить подтверждение");
+                                $('#customer_complite' + customer_id).attr("onclick","if(confirm('Отменить подтверждение?')){notcomplite_customer(this.dataset.idi)}else{return false}");
+                                alert('Клиент подтвержден');
+                            },
+                            error: function (msg) {
+                                alert('Ошибка');
+                            }
+                        });
+                    };
+            
+                    function notcomplite_customer(customer_id, condition) {             
+                        $.ajax({
+                            url: '{{ route('customer.condition_complite') }}',
+                            type: "POST",
+                            data: {id:customer_id, answer:0},
+                            headers: {
+                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                            },
+
+                            success: function (data) {
+                                if (condition == 2) {
+                                    document.querySelector('#customer_complite' + customer_id).classList.remove("text-success");
+                                    document.querySelector('#customer_complite' + customer_id).classList.add("text-white");
+                                }
                                 document.querySelector('#customer_complite_icon' + customer_id).classList.remove("fa-close");
                                 document.querySelector('#customer_complite_icon' + customer_id).classList.add("fa-check");
-                            }else{
-                                document.querySelector('#customer_complite_icon' + customer_id).classList.remove("fa-check");
-                                document.querySelector('#customer_complite_icon' + customer_id).classList.add("fa-close");
+                                document.getElementById('customer_complite' + customer_id ).dataset.originalTitle = "Подтвердить клиента";
+                                //$('#customer_complite' + customer_id).attr("title","Подтвердить клиента");
+                                $('#customer_complite' + customer_id).attr("onclick","if(confirm('Подтвердить клиента?')){complite_customer(this.dataset.idi)}else{return false}");
+                                alert('Подтверждение убрано');
+                            },
+                            error: function (msg) {
+                                alert('Ошибка');
                             }
-                            document.getElementById('customer_complite' + customer_id ).dataset.originalTitle = "Отменить подтверждение";
-                            //$('#customer_complite' + customer_id).attr("title","Отменить подтверждение");
-                            $('#customer_complite' + customer_id).attr("onclick","if(confirm('Отменить подтверждение?')){notcomplite_customer(this.dataset.idi)}else{return false}");
-                            alert('Клиент подтвержден');
-                        },
-                        error: function (msg) {
-                            alert('Ошибка');
-                        }
-                    });
-                };
-        
-                function notcomplite_customer(customer_id, condition) {             
-                    $.ajax({
-                        url: '{{ route('customer.condition_complite') }}',
-                        type: "POST",
-                        data: {id:customer_id, answer:0},
-                        headers: {
-                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                        },
+                        });
+                    };
 
-                        success: function (data) {
-                            if (condition == 2) {
-                                document.querySelector('#customer_complite' + customer_id).classList.remove("text-success");
-                                document.querySelector('#customer_complite' + customer_id).classList.add("text-white");
-                            }
-                            document.querySelector('#customer_complite_icon' + customer_id).classList.remove("fa-close");
-                            document.querySelector('#customer_complite_icon' + customer_id).classList.add("fa-check");
-                            document.getElementById('customer_complite' + customer_id ).dataset.originalTitle = "Подтвердить клиента";
-                            //$('#customer_complite' + customer_id).attr("title","Подтвердить клиента");
-                            $('#customer_complite' + customer_id).attr("onclick","if(confirm('Подтвердить клиента?')){complite_customer(this.dataset.idi)}else{return false}");
-                            alert('Подтверждение убрано');
-                        },
-                        error: function (msg) {
-                            alert('Ошибка');
-                        }
-                    });
-                };
-
-function complite_tour(tour_id) {             
+    function complite_tour(tour_id) {             
                     $.ajax({
                         url: '{{ route('tours.complite') }}',
                         type: "POST",

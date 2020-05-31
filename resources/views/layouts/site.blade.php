@@ -126,18 +126,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							{{ Auth::user()->login }} <span class="caret"></span>
 						</a>
 
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" id="navbarDropdownActiv">
+						<div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown" id="navbarDropdownActiv">
 							@if(\App\Employee::where('users_id',(Auth::user()->id))->first() != null and Auth::user()->Type_User == 1)
-							<a  class="dropdown-item" href="{{ route('/admin') }}">
+							<a  class="dropdown-item fa fa-address-card-o" href="{{ route('/admin') }}">
 								Админка
 							</a>
 							@endif
 							@if(\App\Customer::where('users_id',(Auth::user()->id))->first() != null)
-							<a  class="dropdown-item" href="{{ route('AccountCustomer') }}">
+							<a  class="dropdown-item fa fa-user-o " href="{{ route('AccountCustomer') }}">
 								Профиль
 							</a>
 							@endif
-							<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: inline !important;">Выйти</a>
+							<a class="dropdown-item fa fa-sign-out" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: inline !important;">Выйти</a>
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 								@csrf
 							</form>

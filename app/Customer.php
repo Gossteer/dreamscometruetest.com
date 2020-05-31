@@ -9,11 +9,11 @@ class Customer extends Model
 {
 
     protected $guarded = [
-           'LogicalDelete',
+           
     ];
 
     protected $hidden = [
-      'White_Days', 'Black_Days', 'Condition','Age_customer',
+      'White_Days', 'Black_Days', 'Condition','Age_customer', 'LogicalDelete',
     ];
 
 

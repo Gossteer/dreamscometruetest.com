@@ -204,32 +204,52 @@ class PassengerController extends Controller
             'integer' => 'Только числа!'
         ])->validate();
 
-        $paidcomlite = Passenger::where('tours_id',$tour)->where('customers_id',$request->customers_id)->first();
-        if ($request->Paid == 1) {
-            tour::find($tour)->increment('Profit',$request->Final_Price);
-        } elseif ($request->Paid == 0 and  $paidcomlite and $paidcomlite->Paid == 1 ) {
+        $paidcomlite = Passenger::where('tours_id',$tour)->where('customers_id',$request->customers_id)->first() ?? null;
+        if ($request->Paid == 0 and  $paidcomlite and $paidcomlite->Paid == 1 ) {
             tour::find($tour)->decrement('Profit',$request->Final_Price);
         }
 
-        $passenger = Passenger::updateOrCreate([
-            'tours_id' => $tour,
-            'customers_id' => $request->customers_id,
-        ],[
-            'Paid' => $request->Paid ?? 0,
-           'Occupied_Place_Bus' => $request->Occupied_Place_Bus, 
-           'Final_Price' => $request->Final_Price, 
-           'Free_Children' => $request->Free_Children ?? 0,
-           'Amount_Children' => $request->Amount_Children ?? 0,
-           'Accompanying' => $request->Accompanying,
-           'Payment_method' => $request->Payment_method,
-            
-        ]);
+        if ($request->Paid == 1 and  $paidcomlite and $paidcomlite->Paid == 0) {
+            tour::find($tour)->increment('Profit',$request->Final_Price);
+        } 
+
+        if ($paidcomlite) {
+            $paidcomlite->update([
+                'tours_id' => $tour,
+                'customers_id' => $request->customers_id,
+                'Paid' => $request->Paid ?? 0,
+               'Occupied_Place_Bus' => $request->Occupied_Place_Bus, 
+               'Final_Price' => $request->Final_Price, 
+               'Free_Children' => $request->Free_Children ?? 0,
+               'Amount_Children' => $request->Amount_Children ?? 0,
+               'Accompanying' => $request->Accompanying,
+               'Payment_method' => $request->Payment_method,
+                
+            ]);
+        } else {
+            $passenger = Passenger::create([
+                'tours_id' => $tour,
+                'customers_id' => $request->customers_id,
+                'Paid' => $request->Paid ?? 0,
+               'Occupied_Place_Bus' => $request->Occupied_Place_Bus, 
+               'Final_Price' => $request->Final_Price, 
+               'Free_Children' => $request->Free_Children ?? 0,
+               'Amount_Children' => $request->Amount_Children ?? 0,
+               'Accompanying' => $request->Accompanying,
+               'Payment_method' => $request->Payment_method,
+                
+            ]);
+            if ($request->Paid == 1) {
+                tour::find($tour)->increment('Profit',$request->Final_Price);
+            } 
+            $passenger->tour->increment('Occupied_Place');
+        }
+
+
 
 
         
-        if ($passenger) {
-            $passenger->tour->increment('Occupied_Place');
-        }
+
         
 
         // $aa = Customer::where('users_id', Auth::user()->id)->first();
@@ -302,13 +322,14 @@ class PassengerController extends Controller
 
     public function printpastour($tour)
     {
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = new \PhpOffice\PhpWord\PhpWord(); 
         $section = $phpWord->addSection();
         $i = 1;
+        $section->addText( 'Список пассажиров',   array('name' => 'Tahoma', 'size' => 14 ), array('align' => 'center'));
         foreach (Passenger::where('tours_id', $tour)->get() as $passenger){
             $section->addText(
               $i . '. ' .$passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name . ', ' . ($passenger->Occupied_Place_Bus ? $passenger->Occupied_Place_Bus : '') . 
-              ((($passenger->customer->Age_customer >= 65 and $passenger->customer->floor == 0) or ($passenger->customer->Age_customer >= 60 and $passenger->customer->floor == 1)) ? 'льготник' : 'не льготник'). ', ' . 
+              ((($passenger->customer->Age_customer >= 65 and $passenger->customer->floor == 0) or ($passenger->customer->Age_customer >= 60 and $passenger->customer->floor == 1)) ? ', льготник' : ', не льготник'). ', ' . 
               $passenger->customer->Phone_Number_Customer . ($passenger->Accompanying == 0 ? '' : ', cопровождающий') . ($passenger->Amount_Children == 0 ? '' : ', детей: ' . $passenger->Amount_Children) . 
               ($passenger->Free_Children == 0 ? '' : ', бесплатных детей: ' . $passenger->Free_Children) . ($passenger->Payment_method == 1 ? ', наличными' : ', безналичными ') . 
               ($passenger->Paid == 0 ? ', ожидаем оплату' : ', оплатил ') . (($passenger->Presence == 0 and $passenger->tour->Confirmation_Tours == 1) ? ', не явился' : ', пришёл ') . 

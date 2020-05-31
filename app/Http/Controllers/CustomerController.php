@@ -307,7 +307,8 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Customer $customer)
-    {
+    {   
+        //dd('sadasd');
         $customer->update([
             'LogicalDelete' => 1
         ]);

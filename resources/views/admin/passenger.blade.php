@@ -34,7 +34,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($passengers as $passenger)
-                                <tr title="Дата записи: {{ date('H:i d.m.Y ',strtotime($passenger->created_at))}}" @if($passenger->Paid == 1) style="background-color: lightsalmon" @else style="background-color: lightgreen" @endif>
+                                <tr title="Дата записи: {{ date('H:i d.m.Y ',strtotime($passenger->created_at))}}" @if($passenger->Paid == 1) class="divlightsalmon" @else class="divlightgreen" @endif>
                                     <td>  <a href="{{ route('customer.edit', $passenger->customer->id) }}" title="Просмотреть">{{ $passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name }}</a></td>
                                     <td> {{ $passenger->customer->Phone_Number_Customer }}</td>
                                     <td> {{ $passenger->Occupied_Place_Bus }}</td>
@@ -736,13 +736,9 @@
                                         </td>
                                         <td>
                                             @if($tour_employee->Confidentiality == 1)
-                                                <span class="label gradient-2 btn-rounded">
                                                     Да
-                                                </span>
                                             @else
-                                                <span class="label gradient-1 btn-rounded">
                                                     Нет
-                                                </span>
                                             @endif
                                         </td>
                                         @if ($tour->Confirmation_Tours == 0)

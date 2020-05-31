@@ -21,7 +21,10 @@
     <script src="{{ asset('js/jquery.dialog.min.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js" integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
 
     <!-- Fonts https://fontawesome.com/v4.7.0/icons/ -->
     <!-- Fonts -->
@@ -29,7 +32,8 @@
     <link rel="stylesheet" href="{{ asset('css/jquery.dialog.min.css') }}">
     <link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
     <link href="{{ asset('css/styleadmin.css') }}" rel='stylesheet' type='text/css' /><!-- custom css -->
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
 
 </head>
 <body>
@@ -93,11 +97,11 @@
                             <div class="dropdown-content-heading ">
                                 <ul class="row">
                                     <li class="mb-1">Последние отзывы:</li>
-                                    <li>                                
-                                        @foreach (\App\Passenger::where('Stars', '!=' ,0)->where('LogicalDelete', 0)->orderByDesc('updated_at')->paginate(3) as $passeger)
-                                            <a href="{{route('tours.show', $passeger->tours_id)}}">{{$passeger->customer->Name . ' ' . $passeger->customer->Surname . ' ' . ($passeger->customer->Middle_Name ?? '') . '. Экскурсия: ' . $passeger->tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($passeger->tour->Start_Date_Tours))}}</a>
-                                        @endforeach
+                                    @foreach (\App\Passenger::where('Stars', '!=' ,0)->where('LogicalDelete', 0)->orderByDesc('updated_at')->paginate(3) as $passeger)
+                                    <li class="mb-1">                                
+                                        <a href="{{route('tours.show', $passeger->tours_id)}}">{{$passeger->customer->Name . ' ' . $passeger->customer->Surname . ' ' . ($passeger->customer->Middle_Name ?? '') . '. Экскурсия: ' . $passeger->tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($passeger->tour->Start_Date_Tours))}}</a>
                                     </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -110,27 +114,27 @@
                             <div class="dropdown-content-heading ">
                                 <ul class="row">
                                     <li class="mb-2">Последние не подтверждённые пользователи:</li>
-                                    <li>                                
-                                        @foreach (\App\Customer::where('Condition',0)->where('LogicalDelete', 0)->orderByDesc('created_at')->paginate(3) as $customer)
-                                            <a href="{{route('customer.edit', $customer->id)}}">{{$customer->Name . ' ' . $customer->Surname . ' ' . $customer->Middle_Name ?? ''}}</a>
-                                        @endforeach
+                                    @foreach (\App\Customer::where('Condition',0)->where('LogicalDelete', 0)->orderByDesc('created_at')->paginate(3) as $customer)
+                                    <li class="mb-1">                                
+                                        <a href="{{route('customer.edit', $customer->id)}}">{{$customer->Name . ' ' . $customer->Surname . ' ' . $customer->Middle_Name ?? ''}}</a>
                                     </li>
+                                    @endforeach
                                 </ul>
                                 <ul class="row mt-3">
                                     <li class="mb-2">Скорые мероприятия:</li>
-                                    <li>                     
-                                        @foreach (\App\tour::whereRaw('Start_Date_Tours >= ? and Start_Date_Tours <= ? ',[Carbon\Carbon::now(),Carbon\Carbon::now()->addDays(14)])->where('LogicalDelete', 0)->orderBy('Start_Date_Tours')->paginate(3) as $tour)
-                                            <a href="{{route('tours.show', $tour->id)}}">{{$tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($tour->Start_Date_Tours))}}</a>
-                                        @endforeach
+                                    @foreach (\App\tour::whereRaw('Start_Date_Tours >= ? and Start_Date_Tours <= ? ',[Carbon\Carbon::now(),Carbon\Carbon::now()->addDays(14)])->where('LogicalDelete', 0)->orderBy('Start_Date_Tours')->paginate(3) as $tour)
+                                    <li class="mb-1">                     
+                                        <a href="{{route('tours.show', $tour->id)}}">{{$tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($tour->Start_Date_Tours))}}</a>
                                     </li>
+                                    @endforeach
                                 </ul>
                                 <ul class="row mt-3">
                                     <li class="mb-2">Мероприятия ожидающие подтверждения:</li>
-                                    <li>                     
-                                        @foreach (\App\tour::where('End_Date_Tours', '<=' ,Carbon\Carbon::now())->where('LogicalDelete', 0)->where('Confirmation_Tours', 0)->orderByDesc('created_at')->paginate(3) as $tour)
-                                            <a href="{{route('tourcomplite', $tour->id)}}">{{$tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($tour->Start_Date_Tours))}}</a>
-                                        @endforeach
+                                    @foreach (\App\tour::where('End_Date_Tours', '<=' ,Carbon\Carbon::now())->where('LogicalDelete', 0)->where('Confirmation_Tours', 0)->orderByDesc('created_at')->paginate(3) as $tour)
+                                    <li class="mb-1">                     
+                                        <a href="{{route('tourcomplite', $tour->id)}}">{{$tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($tour->Start_Date_Tours))}}</a>
                                     </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -171,14 +175,14 @@
 
                                     <hr class="my-2">
                                     <li>
-                                        <a  class="icon-key" href="{{ route('/') }}"
+                                        <a  class="fa fa-window-restore" href="{{ route('/') }}"
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();" style="display: inline !important;">
                                             На главную
                                         </a>
                                     </li>
                                     <li>
-                                        <a  class="icon-key" href="{{ route('logout') }}"
+                                        <a  class="fa fa-sign-out" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" style="display: inline !important;">
                                             Выйти

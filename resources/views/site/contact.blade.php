@@ -108,12 +108,19 @@
 											$('#email').val("");
 											$('#phone_number').val("");
 											$('#message').val("");
-											setTimeout(sayHi, 3200);
+											setTimeout(sayHi, 6200);
+											$('#sendmessage').removeClass("alert alert-success");
 
-										} else {
+										} else if(data['complite'] == 0){
 											$('#sendmessage').addClass("alert alert-danger");
-											$('#sendmessage').text("При отправке сообщения произошла ошибка. Продублируйте его, пожалуйста, на почту администратора" . env('MAIL_ADMIN_EMAIL'));
+											$('#sendmessage').text("Пожалуйста подтвердите, что вы не робот!");
 											setTimeout(sayHi, 3200);
+											$('#sendmessage').removeClass("alert alert-danger");
+										}else {
+											$('#sendmessage').addClass("alert alert-danger");
+											$('#sendmessage').text("При отправке сообщения произошла ошибка. Продублируйте его на почту администратору" . env('MAIL_ADMIN_EMAIL'));
+											setTimeout(sayHi, 6200);
+											$('#sendmessage').removeClass("alert alert-danger");
 										}
 									}
 								});

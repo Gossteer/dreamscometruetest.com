@@ -11,6 +11,17 @@ class ContactController extends Controller
 
     public function send(Request $request)
     {
+        
+       $validator = \Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
+        
+        if ($validator->fails() ) {
+            return response()->json([
+                'complite' =>0,
+            ]);
+        }
+    
         $sender['email'] = $request->email;
         $sender['name'] = $request->name;
 
@@ -19,11 +30,10 @@ class ContactController extends Controller
             'email' => $request->email,
             'messagee' =>  $request->message,
             'phone_number' => $request->phone_number,
-            'g-recaptcha-response' => 'required|captcha',
         ],function ($message) use ($sender) {
             $message->from($sender['email'], $sender['name']);
 
-            $message->to('GossteerPlus@gmail.com', 'Вам сообщеение')->subject('Вам письмо!');
+            $message->to($sender['email'], 'Вам сообщеение')->subject('Вам письмо!');
         });
 
         return response()->json([

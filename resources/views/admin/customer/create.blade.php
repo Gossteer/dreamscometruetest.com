@@ -154,7 +154,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Phone_Customer_Inviter" >Телефон пригласившего</label>
                                     <div class="col-lg-6">
-                                        <input  type="tel" class="form-control @error('Phone_Customer_Inviter') is-invalid @enderror" value="{{ old('Phone_Customer_Inviter') }}" placeholder="Пригласивший" >
+                                        <input  type="tel" class="form-control @error('Phone_Customer_Inviter') is-invalid @enderror" name="Phone_Customer_Inviter" id="Phone_Customer_Inviter" value="{{ old('Phone_Customer_Inviter') }}" placeholder="Пригласивший" >
                                         @error('Phone_Customer_Inviter')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -271,7 +271,7 @@
                                 </div>
 
 
-                                <div class="form-group row">
+                                {{-- <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Category_Source" >Источник<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <select class="custom-select mr-sm-2 form-control @error('Name_Category_Source') is-invalid @enderror" id="Name_Category_Source" name="Name_Category_Source">
@@ -285,7 +285,7 @@
                                         </span>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!--
                                 КАК БУДЕТ РЕАЛИЗОВАНАЯ СИСТЕМА ИСТОЧНИКОВ ПОПРАВИТЬ ЕЙ В ВЫВОДЕ КОНКРЕТНОЙ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
                                 -->
@@ -293,7 +293,7 @@
                                 <div class="form-group row" id="addSelect">
 
                                 </div>
-
+{{-- 
                                 <script >
                                     $(function() {
 
@@ -321,11 +321,12 @@
                                                 $("#Phone_Customer_Inviter").mask("+7 (999) 999-99-99");
                                         });
                                     });
-                                </script>
+                                </script> --}}
 
                                 <script>
                                     $(function() {
                                         $("#Phone_Number_Customer").mask("+7 (999) 999-99-99");
+                                        $("#Phone_Customer_Inviter").mask("+7 (999) 999-99-99");
                                         $("#Date_Birth_Customer").mask("99-99-9999");
                                     });
                                 </script>

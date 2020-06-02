@@ -81,8 +81,8 @@ class SiteController extends Controller
         // }
         $count_tour_not_complit = tour::whereRaw('Confirmation_Tours = 0 and LogicalDelete = 0 or Start_Date_Tours >= ?',[$today_tour]);
         $present_tour = Tour::whereRaw('Confirmation_Tours = 1 and LogicalDelete = 0 and Start_Date_Tours <= ?',[$today_tour]);
-        $count_men_customers = Customer::where('Floor', 0)->count();
-        $count_women_customers = Customer::where('Floor', 1)->count();
+        $count_men_customers = Customer::where('LogicalDelete',0)->where('Floor', 0)->count();
+        $count_women_customers = Customer::where('LogicalDelete',0)->where('Floor', 1)->count();
 
         //dd($present_tour->get(), $count_tour_not_complit->count());
 

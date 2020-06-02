@@ -509,7 +509,7 @@
                                                     <select class="custom-select @error('Occupied_Place_Bus') is-invalid @enderror" id="Occupied_Place_Bus" name="Occupied_Place_Bus"  required>
                                                         <option value="0" disabled selected hidden>Выберете место</option>
                                                         @for($i = 1; $i <= $place_transport->bus->Amount_Place_Bus; $i++)
-                                                            <option value="{{ $i }}" id="{{ $i }}" @if(\App\Passenger::where('Occupied_Place_Bus',$i)->exists()) hidden disabled @endif>{{$i}}</option>
+                                                            <option value="{{ $i }}" id="{{ $i }}" @if(\App\Passenger::where('LogicalDelete',0)->where('Occupied_Place_Bus',$i)->exists()) hidden disabled @endif>{{$i}}</option>
                                                         @endfor
                                                     </select>
                                                     @error('Occupied_Place_Bus')

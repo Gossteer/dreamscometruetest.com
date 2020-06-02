@@ -569,6 +569,10 @@
                                                     bus_Main_Transort.title = data['String'];
                                                     document.getElementById('bus_Main_Transort').dataset.amountplace = data['Amount_Place_Bus'];
                                                     document.getElementById('bus_Main_Transort').dataset.idi = data['id'];
+                                                } else {
+                                                    document.getElementById('bus_Main_Transort').dataset.amountplace = 0;
+                                                    document.getElementById('bus_Main_Transort').value = "0";
+                                                    $('#bus_Main_Transort').prop('title', '');
                                                 }
                                                     // $('#bus_Main_Transort').val('1');
                                                     // $('#bus_Main_Transort').data('idi', data['id'];

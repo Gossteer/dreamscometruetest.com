@@ -140,7 +140,7 @@
                                                 @if ($last_all_customer->Condition == 0)
                                                     <a id="customer_complite{{$last_all_customer->id}}" data-condition="{{$last_all_customer->Condition}}" data-idi="{{$last_all_customer->id}}" class="text-white" onclick="if(confirm('Подтвердить клиента?')){complite_customer(this.dataset.idi, this.dataset.condition)}else{return false}" title="Подтвердить Клиента" data-toggle="tooltip" data-placement="top" ><i id="customer_complite_icon{{$last_all_customer->id}}" style="cursor: pointer !important;" class="fa fa-check color-muted m-r-5"></i></a>
                                                 @elseif($last_all_customer->Condition == -1)
-                                                    <a id="customer_complite{{$last_all_customer->id}}" data-condition="{{$last_all_customer->Condition}}"  data-idi="{{$last_all_customer->id}}"  class="text-danger" onclick="if(confirm('Отменить блокировку?')){complite_customer(this.dataset.idi, this.dataset.condition)}else{return false}" data-toggle="tooltip" data-placement="top" title="Отменить блокировку"><i id="customer_complite_icon{{$last_all_customer->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-5"></i></a>
+                                                    <a id="customer_complite{{$last_all_customer->id}}" data-condition="{{$last_all_customer->Condition}}"  data-idi="{{$last_all_customer->id}}"  class="text-danger" onclick="if(confirm('Отменить блокировку?')){complite_customer(this.dataset.idi, this.dataset.condition)}else{return false}" data-toggle="tooltip" data-placement="top" title="Отменить блокировку"><i id="customer_complite_icon{{$last_all_customer->id}}" style="cursor: pointer !important;" class="fa fa-check color-muted m-r-5"></i></a>
                                                 @else
                                                     <a id="customer_complite{{$last_all_customer->id}}" data-condition="{{$last_all_customer->Condition}}"  data-idi="{{$last_all_customer->id}}" class="@if($last_all_customer->Condition == 1)text-white @else text-success @endif" onclick="if(confirm('Отменить подтверждение?')){notcomplite_customer(this.dataset.idi, this.dataset.condition)}else{return false}" data-toggle="tooltip" data-placement="top" title="Отменить подтверждение"><i id="customer_complite_icon{{$last_all_customer->id}}" style="cursor: pointer !important;" class="fa fa-close color-muted m-r-5"></i></a>
                                                 @endif
@@ -341,8 +341,8 @@ new Chart(document.getElementById("line-chart"), {
                                 if (condition == -1) {
                                     document.querySelector('#customer_complite' + customer_id).classList.remove("text-danger");
                                     document.querySelector('#customer_complite' + customer_id).classList.add("text-white");
-                                    document.querySelector('#customer_complite_icon' + customer_id).classList.remove("fa-close");
-                                    document.querySelector('#customer_complite_icon' + customer_id).classList.add("fa-check");
+                                    document.querySelector('#customer_complite_icon' + customer_id).classList.remove("fa-check");
+                                    document.querySelector('#customer_complite_icon' + customer_id).classList.add("fa-close");
                                 }else{
                                     document.querySelector('#customer_complite_icon' + customer_id).classList.remove("fa-check");
                                     document.querySelector('#customer_complite_icon' + customer_id).classList.add("fa-close");

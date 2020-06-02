@@ -91,7 +91,7 @@
                                                     var str = '<option value="'+data['id']+'" selected>'+data['Name_Type_Activity']+'</option>';
                                                     $('#select_type_activitie:last').append(str);
                                                     alert('Добавлено');
-                                                    document.querySelector("#deletedbutton").classList.remove("diableddeletedbutton");
+                                                    document.getElementById("updatebutton_type_activitie").classList.remove("diableddeletedbutton");
                                                 },
                                                 error: function (msg) {
                                                     alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
@@ -162,6 +162,7 @@
                                                     var info = '. Данный тип занятости находится ещё в: ';
                                                     select_type_activitie.removeChild(select_type_activitie.querySelector('[value="'+ typeactivity +'"]'));
                                                     select_type_activitie.value = 0;
+                                                    document.getElementById("updatebutton_type_activitie").classList.add("diableddeletedbutton");
                                                     datas.forEach((element) => {
                                                         info += ' ' + element['Name_Partners'] + '; '
                                                         });

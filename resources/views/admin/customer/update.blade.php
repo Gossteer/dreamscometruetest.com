@@ -272,7 +272,7 @@
                                 </div>
 
 
-                                <div class="form-group row">
+                                {{-- <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="Name_Category_Source" >Источник<span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <select class="custom-select mr-sm-2 form-control @error('Name_Category_Source') is-invalid @enderror" id="Name_Category_Source" name="Name_Category_Source">
@@ -286,12 +286,12 @@
                                         </span>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group row" id="addSelect">
 
                                 </div>
-
+{{-- 
                                 <script >
                                     $(function() {
 
@@ -319,11 +319,12 @@
                                             $("#Phone_Customer_Inviter").mask("+7 (999) 999-99-99");
                                         });
                                     });
-                                </script>
+                                </script> --}}
 
                                 <script>
                                     $(function() {
                                         $("#Phone_Number_Customer").mask("+7 (999) 999-99-99");
+                                        $("#Phone_Customer_Inviter").mask("+7 (999) 999-99-99");
                                         $("#Date_Birth_Customer").mask("99-99-9999");
                                     });
                                 </script>

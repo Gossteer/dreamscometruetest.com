@@ -326,7 +326,7 @@ class PassengerController extends Controller
         $section = $phpWord->addSection();
         $i = 1;
         $section->addText( 'Список пассажиров',   array('name' => 'Tahoma', 'size' => 14 ), array('align' => 'center'));
-        foreach (Passenger::where('tours_id', $tour)->get() as $passenger){
+        foreach (Passenger::where('tours_id', 3)->get() as $passenger){
             $section->addText(
               $i . '. ' .$passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name . ', ' . ($passenger->Occupied_Place_Bus ? $passenger->Occupied_Place_Bus : '') . 
               ((($passenger->customer->Age_customer >= 65 and $passenger->customer->floor == 0) or ($passenger->customer->Age_customer >= 60 and $passenger->customer->floor == 1)) ? ', льготник' : ', не льготник'). ', ' . 
@@ -560,9 +560,15 @@ class PassengerController extends Controller
 
     public function complitepaid($tour, Request $request)
     {
-        Passenger::where('tours_id', $tour)->where('customers_id', $request->customers_id)->update([
+        $passenger = Passenger::where('tours_id', $tour)->where('customers_id', $request->customers_id)->first();
+        $passenger->update([
             'Paid' => !$request->Paid,
         ]);
+        if ($request->Paid == 1) {
+            tour::find($passenger->tours_id)->increment('Profit', $passenger->Final_Price);
+        } else {
+            tour::find($passenger->tours_id)->decrement('Profit', $passenger->Final_Price);
+        }
 
          return redirect()->back();
     }

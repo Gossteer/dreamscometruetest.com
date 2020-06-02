@@ -137,7 +137,7 @@ class TypeActivityController extends Controller
             'LogicalDelete' => 1,
         ]);
 
-        $datas = Partner::where('type_activities_id', $request->typeactivity)->get();
+        $datas = Partner::where('LogicalDelete',0)->where('type_activities_id', $request->typeactivity)->get();
 
         return $datas;
     }

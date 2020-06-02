@@ -141,7 +141,7 @@
                                                     var str = '<option value="'+data['id']+'" selected>'+data['Name_Type_Activity']+'</option>';
                                                     $('#select_type_activitie:last').append(str);
                                                     alert('Добавлено');
-                                                    document.querySelector("#deletedbutton").classList.remove("diableddeletedbutton");
+                                                    document.getElementById("updatebutton_type_activitie").classList.remove("diableddeletedbutton");
                                                 },
                                                 error: function (msg) {
                                                     alert('Ошибка: заполните обязательные для ввода поля или данная запись уже существует.');
@@ -215,6 +215,7 @@
                                                     datas.forEach((element) => {
                                                         info += ' ' + element['Name_Partners'] + '; '
                                                         });
+                                                    document.getElementById("updatebutton_type_activitie").classList.add("diableddeletedbutton");
                                                     alert('Удалено' + (datas.length != 0 ? info : ""));
                                                 },
                                                 error: function (msg) {

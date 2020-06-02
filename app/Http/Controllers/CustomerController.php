@@ -146,9 +146,15 @@ class CustomerController extends Controller
             ]);
 
             if ($customer->Phone_Customer_Inviter and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
-                Customer::where('Phone_Customer_Inviter', $customer->Phone_Customer_Inviter)->first()->update([
-                    'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count()
-                 ]);
+                $passengerfirst = Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first();
+                $passengerfirst->update([
+                    'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Customer_Inviter'])->where('Condition', '>', 0)->count()
+                ]);
+                if (($passengerfirst->White_Days + $passengerfirst->Amount_Customers_Listed - $passengerfirst->Black_Days) >= 10) {
+                    $passengerfirst->update([
+                        'Condition' => 2,
+                    ]);
+                }
             }
         // if(Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->exists())
             // DB::table('customers')->where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->
@@ -176,23 +182,35 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($request->id);
         if($request->answer == 1){
-            if ($customer->Phone_Customer_Inviter and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
-                Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first()->update([
-                    'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count()
-                 ]);
-            }
             $customer->update([
                 'Condition' => 1,
             ]);
-        } else{
             if ($customer->Phone_Customer_Inviter and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
-                Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first()->update([
-                   'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count()
-                ]);
+                $passengerfirst = Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first();
+                $passengerfirst->update([
+                    'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $customer->Phone_Customer_Inviter)->where('Condition', '>', 0)->count()
+                 ]);
+                 if (($passengerfirst->White_Days + $passengerfirst->Amount_Customers_Listed - $passengerfirst->Black_Days) >= 10) {
+                    $passengerfirst->update([
+                        'Condition' => 2,
+                    ]);
+                 }
             }
+        } else{
             $customer->update([
                 'Condition' => 0,
             ]);
+            if ($customer->Phone_Customer_Inviter and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
+                $passengerfirst = Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->first();
+                $passengerfirst->update([
+                   'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $customer->Phone_Customer_Inviter)->where('Condition', '>', 0)->count()
+                ]);
+                if ((($passengerfirst->White_Days + $passengerfirst->Amount_Customers_Listed - $passengerfirst->Black_Days) < 10) and $passengerfirst->Condition == 2) {
+                    $passengerfirst->update([
+                        'Condition' => 1,
+                    ]);
+                }
+            }
         }
             
         return $request->id;
@@ -260,19 +278,21 @@ class CustomerController extends Controller
             'Notifications' => $request['Notifications'] ?? 0,
         ]);
 
-        $customer_update = Customer::find($customer->id);
+        $customer_update_first = Customer::find($customer->id);
         
 
         
-        if ($request['Phone_Customer_Inviter'] and $customer_update->Condition != 1 and $customer_update->Condition != 2 and $request['Condition'] > 0 and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
-            Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->update([
-                'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count()
-             ]);
-        } elseif($request['Phone_Customer_Inviter'] and ($customer_update->Condition == 1 or $customer_update->Condition == 2) and $request['Condition'] <= 0 and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()){
-            Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->decrement('Amount_Customers_Listed');
-        }
+        if ($request['Phone_Customer_Inviter'] and $customer_update_first->Condition != 1 and $customer_update_first->Condition != 2 and $request['Condition'] > 0 and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()) {
+            $passengerfirst = Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first();
+            $passengerfirst->increment('Amount_Customers_Listed');
+             if (($passengerfirst->White_Days + $passengerfirst->Amount_Customers_Listed - $passengerfirst->Black_Days) >= 10) {
+                $passengerfirst->update([
+                    'Condition' => 2,
+                ]);
+            }
+        } 
 
-        $customer_update->update([
+        Customer::find($customer->id)->update([
             'Surname' => $request['Surname'],
             'Name' => $request['Name'],
             'Condition' => $request['Condition'],
@@ -289,6 +309,18 @@ class CustomerController extends Controller
             'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Number_Customer'])->where('Condition', '>', 0)->count(),
             'Age_customer' => Carbon::parse($request->Date_Birth_Customer)->diffInYears(),
         ]);
+
+        if($request['Phone_Customer_Inviter'] and ($customer_update_first->Condition == 1 or $customer_update_first->Condition == 2) and $request['Condition'] <= 0 and Customer::where('Phone_Number_Customer', $customer->Phone_Customer_Inviter)->exists()){
+            $passengerfirst = Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first();
+            $passengerfirst->update([
+                'Amount_Customers_Listed' => DB::table('customers')->where('Phone_Customer_Inviter', $request['Phone_Customer_Inviter'])->where('Condition', '>', 0)->count()
+             ]);
+            if ((($passengerfirst->White_Days + $passengerfirst->Amount_Customers_Listed - $passengerfirst->Black_Days) < 10) and $passengerfirst->Condition == 2) {
+                $passengerfirst->update([
+                    'Condition' => 1,
+                ]);
+            }
+        }
         // if(Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->exists())
         // DB::table('customers')->where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->
         // update(['Amount_Customers_Listed' => 1 + Customer::where('Phone_Number_Customer', $request['Phone_Customer_Inviter'])->first()->Amount_Customers_Listed
@@ -308,6 +340,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {   
+        //Passenger::where('Cu')
         //dd('sadasd');
         $customer->update([
             'LogicalDelete' => 1

@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'login', 'email', 'password', 'Processing_Personal_Data', 'Notifications', 'Type_User'
+        'login', 'email', 'password', 'Processing_Personal_Data', 'Notifications', 'Type_User', 'LogicalDelete'
     ];
 
     /**
@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function employee()
     {
-        return $this->belongsTo('App\Employee', 'users_id');
+        return $this->hasOne('App\Employee', 'users_id');
     }
 
     public function role()

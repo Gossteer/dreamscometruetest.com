@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Partner;
 use App\Tour;
 use App\Tour_employees;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class TourEmployeesController extends Controller
             'tour_id' => $request->tour_id,
             'employee_id' =>  $index_TourEmployees->employee_id,
             'Confidentiality' =>  $index_TourEmployees->Confidentiality == 1 ? 1 : 0,
-            'partner_id' => $index_TourEmployees->partner_id
+            'partners_id' => $index_TourEmployees->partner_id ?? 0
         ];
 
         return $date;
@@ -56,7 +57,7 @@ class TourEmployeesController extends Controller
             'tour_id' => $request->tour_id,
             'employee_id' => $request->employee_id,
             'Confidentiality' => $request->Confidentiality,
-            'partner_id' => $request->partner_id
+            'partner_id' => $request->partners_id
         ]);
 
         if($request->Occupied_Place_Bus != null){
@@ -70,7 +71,7 @@ class TourEmployeesController extends Controller
             'id' => $employee->id,
             'Salary' => number_format($request->Salary, 0, ',', ' ') . '₽' ?? 0,
             'Occupied_Place_Bus' => $request->Occupied_Place_Bus ?? 'Без места',
-            'partner_id' => $request->partner->Name_Partners ?? 'Частное лицо',
+            'partners_id' =>  Partner::find($request->partners_id)->Name_Partners ?? 'Частное лицо',
             'tour_id' => $request->tour_id,
             'FIO_Full' => $employee->employee->Surname . ' ' . $employee->employee->Name  . ' ' . $employee->employee->Middle_Name,
             'FIO' => $employee->employee->Surname . ' ' . mb_substr($employee->employee->Name, 0, 1)  . '. ' . mb_substr($employee->employee->Middle_Name, 0, 1) . ($employee->employee->Middle_Name != '' ? '.' : ''),
@@ -123,7 +124,7 @@ class TourEmployeesController extends Controller
             'tour_id' => $request->tour_id,
             'employee_id' => $request->employee_id,
             'Confidentiality' => $request->Confidentiality,
-            'partner_id' => $request->partner_id
+            'partner_id' => $request->partners_id
         ]);
 
 
@@ -137,7 +138,7 @@ class TourEmployeesController extends Controller
             'id' => $employee->id,
             'Salary' => number_format($request->Salary, 0, ',', ' ') . '₽' ?? 0,
             'Occupied_Place_Bus' => $request->Occupied_Place_Bus ?? 'Без места',
-            'partner_id' => $request->partner->Name_Partners ?? 'Частное лицо',
+            'partners_id' =>  Partner::find($request->partners_id)->Name_Partners ?? 'Частное лицо',
             'tour_id' => $request->tour_id,
             'FIO_Full' => $employee->employee->Surname . ' ' . $employee->employee->Name  . ' ' . $employee->employee->Middle_Name,
             'FIO' => $employee->employee->Surname . ' ' . mb_substr($employee->employee->Name, 0, 1)  . '. ' . mb_substr($employee->employee->Middle_Name, 0, 1) . ($employee->employee->Middle_Name != '' ? '.' : ''),

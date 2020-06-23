@@ -35,6 +35,12 @@ class PartnerController extends Controller
         return view('admin.partner.create', ['type_activities' => Type_Activity::where('LogicalDelete',0)->get()]);
     }
 
+    public function indexdelete()
+    {
+        //dd(Partner::select('type_activities_id')->where('LogicalDelete',0)->get()->toArray());
+        return view('admin.partner_delete', ['partners' => Partner::where('LogicalDelete', 1)->orderByDesc('updated_at')->paginate(12),'type_activities' => Type_Activity::where('LogicalDelete', 1)->get()]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -320,10 +326,60 @@ class PartnerController extends Controller
      * @param  \App\Partner  $partner
      * @return \Illuminate\Http\Response
      */
+
+
     public function destroy(Partner $partner)
     {
-        $partner->update(['LogicalDelete' => 1]);
+
+        $partner->update([
+            'LogicalDelete' => 1
+        ]);
 
         return redirect()->route('partners.index');
+    }
+
+    public function destroyremuve(Partner $partner)
+    {   
+
+        $partner->update([
+            'LogicalDelete' => 0
+        ]);
+
+        return back();
+    }
+
+    public function fulldestroy(Partner $partner)
+    {   
+
+        foreach ($partner->contract as $contract) {
+            $contract->delete();
+        }
+
+        foreach ($partner->address as $address) {
+            $address->delete();
+        }
+
+        foreach ($partner->email as $email) {
+            $email->delete();
+        }
+
+        foreach ($partner->tour_employees as $tour_employees) {
+            $tour_employees->update([
+                'partner_id' => null,
+            ]);
+        }
+
+        foreach ($partner->website as $website) {
+            $website->delete();
+        }
+
+        foreach ($partner->phone_nomber as $phone_nomber) {
+            $phone_nomber->delete();
+        }
+        
+        $partner->delete();
+
+
+        return back();
     }
 }

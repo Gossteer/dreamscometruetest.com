@@ -16,12 +16,15 @@ use Carbon\Carbon;
 
 Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::resource('admin/partners', 'PartnerController');
+    Route::get('admin/partnersdelete', 'PartnerController@indexdelete')->name('partners.indexdelete');
+    Route::put('admin/partnersdelete/{partner}', 'PartnerController@destroyremuve')->name('partners.destroyremuve');
+    Route::delete('admin/partnersfulldelete/{partner}', 'PartnerController@fulldestroy')->name('partners.fulldestroy');
 
     Route::resource('admin/tours', 'TourController');
     Route::post('admin/tourscomplite', 'TourController@complite')->name('tours.complite');
     Route::get('admin/printvauher/tours', 'TourController@prnpriviewvauher')->name('prnpriviewvauher');
     Route::get('admin/printspisoc/tours', 'TourController@prnpriviewspisok')->name('prnpriviewspisok');
-    Route::get('admin/tours/{tour}/passengers/printspisoc', 'PassengerController@printpastour')->name('printpastour');
+    Route::get('admin/tours/{tour}/printspisoc', 'PassengerController@printpastour')->name('printpastour');
     Route::get('admin/tours/{tour}/tourcomplite', 'TourController@tourcomplite')->name('tourcomplite');
     Route::put('admin/tours/{tour}/tourcomplite/complite', 'TourController@tourcomplitesubmit')->name('tourcomplitesubmit');
     Route::post('admin/tours/{tour}/complitepaid', 'PassengerController@complitepaid')->name('complitepaid');
@@ -33,11 +36,17 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::resource('admin/customer', 'CustomerController');
     Route::post('admin/customercomplite', 'CustomerController@condition_complite')->name('customer.condition_complite');
     Route::post('admin/customer/fullindex', 'CustomerController@indexfull')->name('customer.index.full');
+    Route::get('admin/customerdelete', 'CustomerController@indexdelete')->name('customer.indexdelete'); 
+    Route::put('admin/customerdelete/{customer}', 'CustomerController@destroyremuve')->name('customer.destroyremuve');
+    Route::delete('admin/customerfulldelete/{customer}', 'CustomerController@fulldestroy')->name('customer.fulldestroy');
 
     Route::get('/admin', 'SiteController@adminindex')->name('/admin');
 
     Route::post('admin/employees/fullindex', 'EmployeeController@indexfull')->name('employees.index.full');
     Route::resource('admin/employees', 'EmployeeController');
+    Route::get('admin/employeesdelete', 'EmployeeController@indexdelete')->name('employees.indexdelete');
+    Route::put('admin/employeesdelete/{employee}', 'EmployeeController@destroyremuve')->name('employees.destroyremuve');
+    Route::delete('admin/employeesfulldelete/{employee}', 'EmployeeController@fulldestroy')->name('employees.fulldestroy');
 
     Route::post('admin/addressstore', 'AddressController@store')->name('address.store');
     Route::post('admin/addressindex', 'AddressController@index')->name('address.index');
@@ -59,6 +68,8 @@ Route::group(['middleware' => ['auth', 'type.user']], function () {
     Route::post('admin/websiteupdate', 'WebsiteController@update')->name('website.update');
     Route::post('admin/deletewebsite', 'WebsiteController@destroy')->name('website.destroy');
 
+    Route::post('admin/typeactivityremovedeleted', 'TypeActivityController@removedeleted')->name('typeactivity.removedeleted');
+    Route::post('admin/typeactivityfulldeleted', 'TypeActivityController@fulldeleted')->name('typeactivity.fulldeleted');
     Route::post('admin/typeactivitystore', 'TypeActivityController@store')->name('typeactivity.store');
     Route::post('admin/typeactivityindex', 'TypeActivityController@index')->name('typeactivity.index');
     Route::post('admin/ypeactivityupdate', 'TypeActivityController@update')->name('typeactivity.update');

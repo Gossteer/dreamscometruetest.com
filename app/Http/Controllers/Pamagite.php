@@ -12,6 +12,6 @@ class Pamagite implements FromView
 {
     public function view(): View
     {
-        return view('admin.tours.toursspisoc', ['tours' => tour::get()]);
+        return view('admin.tours.toursspisoc', ['tours' => tour::where('LogicalDelete',0)->get()]);
     }
 }

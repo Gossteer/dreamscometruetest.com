@@ -152,7 +152,7 @@ class TourController extends Controller
 
     public function prnpriviewvauher()
     {
-        return view('admin.tours.toursvauher', ['tours' => tour::whereRaw('Start_Date_Tours >= ?',[Carbon::now()])->get()]);
+        return view('admin.tours.toursvauher', ['tours' => tour::where('LogicalDelete',0)->whereRaw('Start_Date_Tours >= ?',[Carbon::now()])->get()]);
     }
 
     public function prnpriviewspisok()
@@ -388,7 +388,7 @@ class TourController extends Controller
             'contracts' => Contract::where('LogicalDelete',0)->paginate(3,['*'],'partners_pages'),
             'partners' => Partner::where('LogicalDelete',0)->get(),
             'employees' => Employee::where('LogicalDelete',0)->get(),
-            'passenger' => Passenger::all(),
+            //'passenger' => Passenger::all(),
         ]);
 
     }

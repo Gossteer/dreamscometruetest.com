@@ -221,13 +221,14 @@
                         <li><a href="{{ route('/admin') }}">Собранные данные</a></li>
                     </ul>
                 </li>
-                <li class="nav-label">Работники/Клиенты</li>
+                <li class="nav-label">Сотрудники/Клиенты</li>
                 <li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Работники</span>
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Сотрудники</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ route('employees.index') }}">Работники</a></li>
+                        <li><a href="{{ route('employees.index') }}">Сотрудники</a></li>
+                        <li><a href="{{ route('employees.indexdelete') }}">Удалённые сотрудники</a></li>
 {{--                        <li><a href="{{ route('job.index') }}">Должности</a></li>--}}
                         <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                     </ul>
@@ -238,6 +239,7 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('customer.index') }}">Клиенты</a></li>
+                        <li><a href="{{ route('customer.indexdelete') }}">Удалённые клиенты</a></li>
                     </ul>
                 </li>
                 <li class="nav-label">Экскурсионный отдел</li>
@@ -247,6 +249,7 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('partners.index') }}">Партнёры</a></li>
+                        <li><a href="{{ route('partners.indexdelete') }}">Удалённые Партнёры</a></li>
                         <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                     </ul>
                 </li>

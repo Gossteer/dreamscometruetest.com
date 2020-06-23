@@ -141,4 +141,26 @@ class TypeActivityController extends Controller
 
         return $datas;
     }
+
+    public function removedeleted(Request $request)
+    {
+        Type_Activity::find($request->id)->update([
+            'LogicalDelete' => 0,
+        ]);
+
+        return 1;
+    }
+
+    public function fulldeleted(Request $request)
+    {
+        $datas = 1;
+        if (Partner::where('type_activities_id', $request->id)->count() != 0){
+            $datas = Partner::where('type_activities_id', $request->id)->get();
+        }else{
+            Type_Activity::find($request->id)->delete();
+        }
+
+        
+        return $datas;
+    }
 }

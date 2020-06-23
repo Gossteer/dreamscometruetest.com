@@ -22,7 +22,7 @@ class PassengerController extends Controller
      */
     public function index($id_tour)
     {
-        return view('admin.passenger', ['passengers' => Passenger::where('tours_id', $id_tour), 'id_tour' => $id_tour]);
+        return view('admin.passenger', ['passengers' => Passenger::where('LogicalDelete',0)->where('tours_id', $id_tour), 'id_tour' => $id_tour]);
     }
 
     public function indexforcustomer(Request $request)
@@ -326,9 +326,9 @@ class PassengerController extends Controller
         $section = $phpWord->addSection();
         $i = 1;
         $section->addText( 'Список пассажиров',   array('name' => 'Tahoma', 'size' => 14 ), array('align' => 'center'));
-        foreach (Passenger::where('tours_id', 3)->get() as $passenger){
+        foreach (Passenger::where('LogicalDelete',0)->where('tours_id', $tour)->get() as $passenger){
             $section->addText(
-              $i . '. ' .$passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name . ', ' . ($passenger->Occupied_Place_Bus ? $passenger->Occupied_Place_Bus : '') . 
+              $i . '. ' .$passenger->customer->Name . ' ' . $passenger->customer->Surname . ' ' . $passenger->customer->Middle_Name . ' ' . ($passenger->Occupied_Place_Bus ? $passenger->Occupied_Place_Bus : '') . 
               ((($passenger->customer->Age_customer >= 65 and $passenger->customer->floor == 0) or ($passenger->customer->Age_customer >= 60 and $passenger->customer->floor == 1)) ? ', льготник' : ', не льготник'). ', ' . 
               $passenger->customer->Phone_Number_Customer . ($passenger->Accompanying == 0 ? '' : ', cопровождающий') . ($passenger->Amount_Children == 0 ? '' : ', детей: ' . $passenger->Amount_Children) . 
               ($passenger->Free_Children == 0 ? '' : ', бесплатных детей: ' . $passenger->Free_Children) . ($passenger->Payment_method == 1 ? ', наличными' : ', безналичными ') . 
@@ -341,11 +341,11 @@ class PassengerController extends Controller
     }
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         try {
-            $objWriter->save(storage_path('TestWordFile.docx'));
+            $objWriter->save(storage_path('SpisokPassagirow.docx'));
         } catch (Exception $e) {
         }
 
-        return response()->download(storage_path('TestWordFile.docx'));
+        return response()->download(storage_path('SpisokPassagirow.docx'));
     }
 
     /**
@@ -564,7 +564,7 @@ class PassengerController extends Controller
         $passenger->update([
             'Paid' => !$request->Paid,
         ]);
-        if ($request->Paid == 1) {
+        if ($passenger->Paid == 1) {
             tour::find($passenger->tours_id)->increment('Profit', $passenger->Final_Price);
         } else {
             tour::find($passenger->tours_id)->decrement('Profit', $passenger->Final_Price);

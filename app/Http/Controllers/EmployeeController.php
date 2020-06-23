@@ -22,6 +22,11 @@ class EmployeeController extends Controller
         return view('admin.employees', ['employees' => Employee::where('LogicalDelete',0)->where('users_id', '!=', Auth::user()->id)->paginate(12), 'jobs' => Job::all()]);
     }
 
+    public function indexdelete()
+    {
+        return view('admin.employees_delete', ['employees' => Employee::where('LogicalDelete', 1)->orderByDesc('updated_at')->paginate(12)]);
+    }
+
     public function indexfull(Request $request)
     {
         $res = Employee::find($request->employeeid);
@@ -226,10 +231,46 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        $employee->user->update([
+            'LogicalDelete' => 1
+        ]);
+        
         $employee->update([
             'LogicalDelete' => 1
         ]);
 
         return redirect()->route('employees.index');
+    }
+
+    public function destroyremuve(Employee $employee)
+    {   
+        $employee->user->update([
+            'LogicalDelete' => 0
+        ]);
+        
+        $employee->update([
+            'LogicalDelete' => 0
+        ]);
+
+        return back();
+    }
+
+    public function fulldestroy(Employee $employee)
+    {   
+        foreach ($employee->tour_employees as $tour_employees) {
+            $tour_employees->delete();
+        }
+
+        foreach ($employee->bus as $bus) {
+            $bus->update([
+                'employee_id' => null,
+            ]);
+        }
+
+        $employee->user->delete();
+        $employee->delete();
+
+
+        return back();
     }
 }

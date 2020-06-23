@@ -179,7 +179,7 @@
 
                                             success: function (data) {
                                                 $('#Name_Contract_doc').val('');
-                                                $('#Salary').val('');
+                                                $('#Salary').val('0');
                                                 $('#partners_id').val('0');
                                                 $('#Document_Contract').val('');
                                                 $('#addArticle2').modal('hide');
@@ -222,7 +222,7 @@
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
                                                 $('#Name_Contract_doc').val('');
-                                                $('#Salary').val('');
+                                                $('#Salary').val('0');
                                                 $('#partners_id').val('0');
                                                 $('#Document_Contract').val('');
                                                 var str = '<tr id="contract'+data['id']+'"><td title="'+data['title']+'">'+data['Name_Partners']+
@@ -249,7 +249,7 @@
 
                                     function close_chenge_tour_contract() {
                                         $('#Name_Contract_doc').val('');
-                                        $('#Salary').val('');
+                                        $('#Salary').val('0');
                                         $('#partners_id').val('0');
                                         $('#Document_Contract').val('');
                                         $('#save2').text('Добавить');
@@ -490,14 +490,14 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="partners_id">Партнёр</label>
-                                                    <select class="custom-select @error('partners_id') is-invalid @enderror" id="partners_id" name="partners_id"  required>
+                                                    <label for="partners_foremploye_id">Партнёр</label>
+                                                    <select class="custom-select @error('partners_foremploye_id') is-invalid @enderror" id="partners_foremploye_id" name="partners_foremploye_id"  required>
                                                         <option value="0" disabled selected hidden>Партнёр</option>
                                                         @foreach($partners as $partner)
                                                             <option value="{{ $partner->id }}" id="{{ $partner->id }}" title="{{ $partner->INN . ' ' . $partner->type_activity->Name_Type_Activity }}">{{$partner->Name_Partners}} {{$partner->type_activity->Name_Type_Activity ?? ''}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('partners_id')
+                                                    @error('partners_foremploye_id')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -541,7 +541,7 @@
                                     function create_tour_employee() {
                                         var employee_id = $('#employee_id').val();
                                         var Salary = $('#Salary1').val();
-                                        var partners_id = $('#partners_id').val();
+                                        var partners_id = $('#partners_foremploye_id').val();
                                         var Occupied_Place_Bus = $('#Occupied_Place_Bus').val();
                                         if ($('#Confidentiality').prop('checked'))
                                             var Confidentiality = 1;
@@ -557,17 +557,17 @@
                                             },
 
                                             success: function (data) {
-                                                $('#Salary1').val('');
-                                                $('#Occupied_Place_Bus').val('');
+                                                $('#Salary1').val('0');
+                                                $('#Occupied_Place_Bus').val('0');
                                                 $('#employee_id').val('0');
-                                                $('#partners_id').val('0');
+                                                $('#partners_foremploye_id').val('0');
                                                 $('#Confidentiality').prop('checked', false);
                                                 $('#addArticle3').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
                                                 var str = '<tr id="tour_employee'+data['id']+'"><td title="'+data['FIO_Full']+'">'+data['FIO']+
                                                     '</td><td>'+data['Job']+
-                                                    '</td><td>'+data['partner_id']+
+                                                    '</td><td>'+data['partners_id']+
                                                     '</td><td>'+data['Occupied_Place_Bus']+
                                                     '</td><td>'+data['Salary']+
                                                     '</td><td>'+
@@ -592,7 +592,7 @@
                                     function update_tour_employee(id) {
                                         var employee_id = $('#employee_id').val();
                                         var Salary = $('#Salary1').val();
-                                        var partners_id = $('#partners_id').val();
+                                        var partners_id = $('#partners_foremploye_id').val();
                                         var Occupied_Place_Bus = $('#Occupied_Place_Bus').val();
                                         if ($('#Confidentiality').prop('checked'))
                                             var Confidentiality = 1;
@@ -603,7 +603,7 @@
                                         $.ajax({
                                             url: "{{route('touremployee.update')}}",
                                             type: "POST",
-                                            data: {id:id, employee_id:employee_id, Salary:Salary, Occupied_Place_Bus:Occupied_Place_Bus, Confidentiality:Confidentiality, tour_id:tour_id},
+                                            data: {id:id,partners_id:partners_id, employee_id:employee_id, Salary:Salary, Occupied_Place_Bus:Occupied_Place_Bus, Confidentiality:Confidentiality, tour_id:tour_id},
                                             headers: {
                                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                             },
@@ -611,14 +611,14 @@
                                                 $('#addArticle3').modal('hide');
                                                 $('#articles-wrap').removeClass('hidden').addClass('show');
                                                 $('.alert').removeClass('show').addClass('hidden');
-                                                $('#Salary1').val('');
-                                                $('#partners_id').val('0');
-                                                $('#Occupied_Place_Bus').val('');
+                                                $('#Salary1').val('0');
+                                                $('#partners_foremploye_id').val('0');
+                                                $('#Occupied_Place_Bus').val('0');
                                                 $('#employee_id').val('0');
                                                 $('#Confidentiality').prop('checked', false);
                                                 var str = '<tr id="tour_employee'+data['id']+'"><td title="'+data['FIO_Full']+'">'+data['FIO']+
                                                     '</td><td>'+data['Job']+
-                                                    '</td><td>'+data['partner_id']+
+                                                    '</td><td>'+data['partners_id']+
                                                     '</td><td>'+data['Occupied_Place_Bus']+
                                                     '</td><td>'+data['Salary']+
                                                     '</td><td>'+
@@ -644,10 +644,10 @@
                                     };
 
                                     function close_chenge_tour_employee() {
-                                        $('#Salary1').val('');
-                                        $('#Occupied_Place_Bus').val('');
+                                        $('#Salary1').val('0');
+                                        $('#Occupied_Place_Bus').val('0');
                                         $('#employee_id').val('0');
-                                        $('#partners_id').val('0');
+                                        $('#partners_foremploye_id').val('0');
                                         $('#Confidentiality').prop('checked', false);
                                         $('#save3').text('Добавить');
                                         $('#save3').attr("onclick","create_tour_employee()");
@@ -664,7 +664,7 @@
                                             },
                                             success:function (data)
                                             {
-                                                $('#partners_id').val(data['partners_id']);
+                                                $('#partners_foremploye_id').val(data['partners_id']);
                                                 $('#Salary1').val(data['Salary']);
                                                 $('#Occupied_Place_Bus').val(data['Occupied_Place_Bus']);
                                                 $('#employee_id').val(data['employee_id']);

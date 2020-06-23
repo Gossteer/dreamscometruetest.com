@@ -8,10 +8,10 @@
                     <div class="card-body">
                         <div class="row card-header" style="padding-bottom: 25px ">
                             <div class="col-sm-12 col-md-6" >
-                                <h4 class="" >Клиенты</h4>
+                                <h4 class="" >Удалённые клиенты</h4>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <a href="{{ route('customer.create') }}" class="btn btn-info btn-rounded btnheader" style="float: right">Добавить Клиента</a>
+                                
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -65,11 +65,15 @@
                                         </td>
                                         <td>
                                         <span>
-                                            <form onsubmit="if(confirm('Удалить?')){return true}else{return false}" action="{{route('customer.destroy',$customer)}}" method="post">
+                                            <form onsubmit="if(confirm('Воcстановить запись клиента?')){return true}else{return false}" action="{{route('customer.destroyremuve',$customer)}}" method="post">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                @csrf
+                                                <a  data-toggle="tooltip" data-placement="top" onclick="if(confirm('Полное удаление клиента приведёт к полному удалению его записей (записей на мероприятия, отзывы и т.д), что может нарушить правильность статистических данных, вы уверены, что полностью хотите удалить запись клиента?')){document.getElementById('form1').submit();}else{return false}"  style="cursor: pointer !important;" title="Полное удаление"><i class="fa fa-trash color-muted m-r-5"></i></a>
+                                                <button  type="submit" style="cursor: pointer !important; padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Восстановить"><i class="fa fa-check color-danger"></i></button>
+                                            </form>
+                                            <form  action="{{route('customer.fulldestroy',$customer)}}" id="form1" method="post" hidden>
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 @csrf
-                                                <a href="{{ route('customer.edit', $customer) }}" data-toggle="tooltip" data-placement="top" title="Редактировать"><i class="fa fa-pencil color-muted m-r-5"></i></a>
-                                                <button id="buttonfordeleted" type="submit" style="padding: 0 !important; border: none !important; font: inherit !important; color: inherit !important; background-color: transparent !important;" data-toggle="tooltip" data-placement="top" title="Удалить"><i style="cursor: pointer !important;" class="fa fa-trash color-danger"></i></button>
                                             </form>
                                         </span>
                                         </td>

@@ -24,6 +24,7 @@ class Employee extends Model
         'Photo',
         'Fired',
         'Reason_Fired',
+        'LogicalDelete',
         ];
 
     protected $hidden = [
@@ -42,7 +43,7 @@ class Employee extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User', 'users_id');
+        return $this->belongsTo('App\User', 'users_id');
     }
 
     public function work_schedule()

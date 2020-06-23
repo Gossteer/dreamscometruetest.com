@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Validator;
 
 class LoginController extends Controller
 {
@@ -52,6 +54,20 @@ class LoginController extends Controller
             $this->username() => 'required|string',
             'password' => 'required|string',
             'g-recaptcha-response' => 'required|captcha',
-        ]);
+            //!$this->logicalDelete() => ['accepted'],
+          ]);
+
+        //   $request->validate([
+        //         
+        //   ], [
+        //         'LogicalDelete.accepted' => 'Ваша учётная запись удалена, для восстановления пожалуйста обратитесь к нам другими средствами связи!'
+        //     ]);
+
+        // $answer['LogicalDelete'] =  !User::where('email', $request->email)->first()->LogicalDelete ?? 1;
+        // Validator::make($answer,[
+        //     'LogicalDelete' => ['accepted'],
+        // ], [
+        //     'LogicalDelete.accepted' => 'Ваша учётная запись удалена, для восстановления пожалуйста обратитесь к нам другими средствами связи!'
+        // ])->validate();
     }
 }

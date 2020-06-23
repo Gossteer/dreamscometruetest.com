@@ -205,7 +205,7 @@
                             </div>
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+                            <canvas id="bar-chart-grouped"  width="500" height="250"></canvas>
                         </div>
                         {{-- <div class="card-body">
                             <div class="d-flex justify-content-between">
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="line-chart" width="800" height="450"></canvas>
+                            <canvas id="line-chart"  width="500" height="250"></canvas>
                         </div>
                         {{-- <div class="card-body">
                             <div class="d-flex justify-content-between">
@@ -266,64 +266,154 @@
     </div>
 <script>
     
-new Chart(document.getElementById("bar-chart-grouped"), {
-  type: 'bar',
-  data: {
-    labels: [1,2,3,4,5,6,7,8,9,10,11,12],
-    datasets: [{ 
-        data: [ @for ($i = 0; $i < count($summ_profit); $i++) {{$summ_profit[$i]}} ,  @endfor ], 
-        label: "Прибыль",
-        backgroundColor: "#6fd96f",
-        //fill: false
-      },{ 
-        data: [ @for ($i = 0; $i < count($sum_expenses); $i++) {{$sum_expenses[$i]}} ,  @endfor ], 
-        label: "Затраты",
-        backgroundColor: "#7571f9",
-        //fill: false
-      }
-    ]
-  },
-  options: {
-    title: {
-      display: true,
-    }
-  }
-});
+// new Chart(document.getElementById("bar-chart-grouped"), {
+//   type: 'bar',
+//   data: {
+//     labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+//     datasets: [{ 
+//         data: [ @for ($i = 0; $i < count($summ_profit); $i++) {{$summ_profit[$i]}} ,  @endfor ], 
+//         label: "Прибыль",
+//         backgroundColor: "#6fd96f",
+//         //fill: false
+//       },{ 
+//         data: [ @for ($i = 0; $i < count($sum_expenses); $i++) {{$sum_expenses[$i]}} ,  @endfor ], 
+//         label: "Затраты",
+//         backgroundColor: "#7571f9",
+//         //fill: false
+//       }
+//     ]
+//   },
+//   options: {
+//     title: {
+//       display: true,
+//     }
+//   }
+// });
 
-new Chart(document.getElementById("line-chart"), {
-  type: 'bar',
-  data: {
-    labels: [1,2,3,4,5,6,7,8,9,10,11,12],
-    datasets: [{ 
-        data: [ @for ($i = 0; $i < count($count_tours); $i++) {{$count_tours[$i]}} ,  @endfor ],
-        label: "Проведено мероприятий",
-        backgroundColor: "#6fd96f",
-        //fill: false
-      }, { 
-        data: [ @for ($i = 0; $i < count($count_customers); $i++) {{$count_customers[$i]}} ,  @endfor ],
-        label: "Зарегестрировалось людей",
-        backgroundColor: "#7571f9",
-        //fill: false
-      }, { 
-        data: [ @for ($i = 0; $i < count($count_passengers); $i++) {{$count_passengers[$i]}} ,  @endfor ],
-        label: "Человек успешно посетивших мероприятия",
-        backgroundColor: "green",
-        //fill: false
-      }, { 
-        data: [ @for ($i = 0; $i < count($avg_stars_tour); $i++) {{$avg_stars_tour[$i]}} ,  @endfor ],
-        label: "Средней отзыв на мероприятие",
-        backgroundColor: "#3cba9f",
-        //fill: false
-      }
-    ]
-  },
-  options: {
-    title: {
-      display: true,
+var ctx = document.getElementById("bar-chart-grouped");
+    ctx.height = 150;
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+            datasets: [
+                {
+                    label: "Прибыль",
+                    data: [ @for ($i = 0; $i < count($summ_profit); $i++) {{$summ_profit[$i]}} ,  @endfor ],
+                    borderColor: "rgba(117, 113, 249, 0.9)",
+                    borderWidth: "0",
+                    backgroundColor: "rgba(117, 113, 249, 0.5)"
+                },
+                {
+                    label: "Затраты",
+                    data: [ @for ($i = 0; $i < count($sum_expenses); $i++) {{$sum_expenses[$i]}} ,  @endfor ],
+                    borderColor: "rgba(144,	104,	190,0.9)",
+                    borderWidth: "0",
+                    backgroundColor: "rgba(144,	104,	190,0.7)"
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    // Change here
+                    barPercentage: 0.5
+                }]
+            }
+        }
+    });
+
+    var ctx = document.getElementById("line-chart");
+    ctx.height = 150;
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+            datasets: [
+                {
+                    label: "Проведено мероприятий",
+                    data: [ @for ($i = 0; $i < count($count_tours); $i++) {{$count_tours[$i]}} ,  @endfor ],
+                    borderColor: "rgba(117, 113, 249, 0.9)",
+                    borderWidth: "0",
+                    backgroundColor: "rgba(117, 113, 249, 0.5)"
+                },
+                {
+                    label: "Зарегестрировалось людей",
+                    data: [ @for ($i = 0; $i < count($count_customers); $i++) {{$count_customers[$i]}} ,  @endfor ],
+                    borderColor: "rgba(144,	104,	190,0.9)",
+                    borderWidth: "0",
+                    backgroundColor: "rgba(144,	104,	190,0.7)"
+                },
+                {
+                    label: "Человек успешно посетивших мероприятия",
+                    data: [ @for ($i = 0; $i < count($count_passengers); $i++) {{$count_passengers[$i]}} ,  @endfor ],
+                    borderColor: "rgba(171,	95,	190,0.9)",
+                    borderWidth: "0",
+                    backgroundColor: "rgba(171,	95,	190,0.5)"
+                },
+                {
+                    label: "Средней отзыв на мероприятие",
+                    data: [ @for ($i = 0; $i < count($avg_stars_tour); $i++) {{$avg_stars_tour[$i]}} ,  @endfor ],
+                    borderColor: "rgba(198,	86,	190,0.9)",
+                    borderWidth: "0",
+                    backgroundColor: "rgba(198,	86,	190,0.7)"
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    // Change here
+                    barPercentage: 0.5
+                }]
+            }
+        }
+    });
+
+// new Chart(document.getElementById("line-chart"), {
+//   type: 'bar',
+//   data: {
+//     labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+//     datasets: [{ 
+//         data: [ @for ($i = 0; $i < count($count_tours); $i++) {{$count_tours[$i]}} ,  @endfor ],
+//         label: "Проведено мероприятий",
+//         backgroundColor: "#6fd96f",
+//         //fill: false
+//       }, { 
+//         data: [ @for ($i = 0; $i < count($count_customers); $i++) {{$count_customers[$i]}} ,  @endfor ],
+//         label: "Зарегестрировалось людей",
+//         backgroundColor: "#7571f9",
+//         //fill: false
+//       }, { 
+//         data: [ @for ($i = 0; $i < count($count_passengers); $i++) {{$count_passengers[$i]}} ,  @endfor ],
+//         label: "Человек успешно посетивших мероприятия",
+//         backgroundColor: "green",
+//         //fill: false
+//       }, { 
+//         data: [ @for ($i = 0; $i < count($avg_stars_tour); $i++) {{$avg_stars_tour[$i]}} ,  @endfor ],
+//         label: "Средней отзыв на мероприятие",
+//         backgroundColor: "#3cba9f",
+//         //fill: false
+//       }
+//     ]
+//   },
+//   options: {
+//     title: {
+//       display: true,
       
-    }
-  }
-});
+//     }
+//   }
+// });
 
 </script>
 

@@ -296,7 +296,7 @@
 
 		</div>
 		<div class="row justify-content-md-center">
-			<a class="btn sent-butnn col-md-6 " style="border-radius: 0.25rem !important;" href="">Оставить свой отзыв</a>
+			<a class="btn sent-butnn col-md-6 " style="border-radius: 0.25rem !important;" target="_blank" href="https://vk.com/topic-147694504_35442023">Оставить свой отзыв</a>
 		</div>
 
 	</div>

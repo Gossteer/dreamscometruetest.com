@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\tour;
+use App\Tour;
 use Faker\Generator as Faker;
 
 $factory->define(tour::class, function (Faker $faker) {

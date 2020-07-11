@@ -86,6 +86,17 @@
                             </div>
                         </div>
 
+                        <style>
+                                @media screen and (max-height: 575px){
+                                    #rc-imageselect, .g-recaptcha {
+                                        transform:scale(0.81);
+                                        -webkit-transform:scale(0.81);
+                                        transform-origin:0 0;
+                                        -webkit-transform-origin:0 0;
+                                    }
+                                }
+                        </style>
+
                         {{-- <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check" style="margin-left: 5%;">

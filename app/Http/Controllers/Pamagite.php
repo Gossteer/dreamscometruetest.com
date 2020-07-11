@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\tour;
+use App\Tour;
 use Illuminate\Http\Request;
 
 use Illuminate\Contracts\View\View;

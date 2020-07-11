@@ -4,6 +4,8 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
+
+
 html,
 body {
     margin: 0;
@@ -12,10 +14,11 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
-
 .datalivesearchstyle {
 	display: grid !important;
 }
+
+
 
 .pacagesunitbutton {
     font-size: 1rem;
@@ -109,6 +112,8 @@ body {
 .divamoutplacelast:hover{
 	background: green ; 
 }
+
+
 
 @media (max-width: 350px) {
 	.divamoutplace{

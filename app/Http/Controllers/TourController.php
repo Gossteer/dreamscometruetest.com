@@ -10,7 +10,7 @@ use App\Partner;
 use DB;
 use App\Passenger;
 use App\Route;
-use App\tour;
+use App\Tour;
 use App\Tour_employees;
 use App\Transort;
 use App\Type_Tour;

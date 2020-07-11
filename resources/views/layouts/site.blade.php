@@ -25,14 +25,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- Theme main style -->
 		<link rel="stylesheet" href="{{ asset('single/style.css') }}">
 	<!-- Scripts -->
-		<script src="{{ asset('js/bootstrap.js') }}" defer></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="https://kit.fontawesome.com/6947640373.js"></script>
-		<script src="https://unpkg.com/tooltip.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-		<script src="{{ asset('js/jquery.maskedinput.min.js') }}" defer></script>
-		<script src="{{ asset('js/jquery.dialog.min.js') }}" defer></script>
+		<script src="{{ asset('js/bootstrap.js') }}" ></script>
+		<script src="https://kit.fontawesome.com/6947640373.js" ></script>
+		<script src="https://unpkg.com/tooltip.js" ></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"  crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"  crossorigin="anonymous"></script>
+		<script src="{{ asset('js/jquery.maskedinput.min.js') }}" ></script>
+		<script src="{{ asset('js/jquery.dialog.min.js') }}" ></script>
 
 
 	<!-- Fonts -->
@@ -88,7 +88,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js" ></script>
 
 
 
@@ -223,7 +223,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 <!-- move top -->
 </body>
-
 	@stack('scripts')
 </html>
 </html>

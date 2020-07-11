@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Employee;
 use App\Passenger;
-use App\tour;
+use App\Tour;
 use App\User;
 use DB;
 use Auth;

@@ -108,7 +108,7 @@
                     </li>
                     <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                             <i class="mdi mdi-bell-outline"></i>
-                            <span class="badge badge-pill gradient-2 badge-primary">{{\App\Customer::where('Condition',0)->orderByDesc('created_at')->paginate(3)->count() + \App\tour::whereRaw('Start_Date_Tours >= ? and Start_Date_Tours <= ? ',[Carbon\Carbon::now(),Carbon\Carbon::now()->addDays(14)])->where('LogicalDelete', 0)->orderBy('Start_Date_Tours')->paginate(3)->count() + \App\tour::where('End_Date_Tours', '<=' ,Carbon\Carbon::now())->where('LogicalDelete', 0)->where('Confirmation_Tours', 0)->orderByDesc('created_at')->paginate(3)->count()}}</span>
+                            <span class="badge badge-pill gradient-2 badge-primary">{{\App\Customer::where('Condition',0)->orderByDesc('created_at')->paginate(3)->count() + \App\Tour::whereRaw('Start_Date_Tours >= ? and Start_Date_Tours <= ? ',[Carbon\Carbon::now(),Carbon\Carbon::now()->addDays(14)])->where('LogicalDelete', 0)->orderBy('Start_Date_Tours')->paginate(3)->count() + \App\Tour::where('End_Date_Tours', '<=' ,Carbon\Carbon::now())->where('LogicalDelete', 0)->where('Confirmation_Tours', 0)->orderByDesc('created_at')->paginate(3)->count()}}</span>
                         </a>
                         <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
                             <div class="dropdown-content-heading ">
@@ -122,7 +122,7 @@
                                 </ul>
                                 <ul class="row mt-3">
                                     <li class="mb-2">Скорые мероприятия:</li>
-                                    @foreach (\App\tour::whereRaw('Start_Date_Tours >= ? and Start_Date_Tours <= ? ',[Carbon\Carbon::now(),Carbon\Carbon::now()->addDays(14)])->where('LogicalDelete', 0)->orderBy('Start_Date_Tours')->paginate(3) as $tour)
+                                    @foreach (\App\Tour::whereRaw('Start_Date_Tours >= ? and Start_Date_Tours <= ? ',[Carbon\Carbon::now(),Carbon\Carbon::now()->addDays(14)])->where('LogicalDelete', 0)->orderBy('Start_Date_Tours')->paginate(3) as $tour)
                                     <li class="mb-1">                     
                                         <a href="{{route('tours.show', $tour->id)}}">{{$tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($tour->Start_Date_Tours))}}</a>
                                     </li>
@@ -130,7 +130,7 @@
                                 </ul>
                                 <ul class="row mt-3">
                                     <li class="mb-2">Мероприятия ожидающие подтверждения:</li>
-                                    @foreach (\App\tour::where('End_Date_Tours', '<=' ,Carbon\Carbon::now())->where('LogicalDelete', 0)->where('Confirmation_Tours', 0)->orderByDesc('created_at')->paginate(3) as $tour)
+                                    @foreach (\App\Tour::where('End_Date_Tours', '<=' ,Carbon\Carbon::now())->where('LogicalDelete', 0)->where('Confirmation_Tours', 0)->orderByDesc('created_at')->paginate(3) as $tour)
                                     <li class="mb-1">                     
                                         <a href="{{route('tourcomplite', $tour->id)}}">{{$tour->Name_Tours . ' ' .  date('H:i d.m.Y',strtotime($tour->Start_Date_Tours))}}</a>
                                     </li>

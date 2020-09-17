@@ -97,7 +97,7 @@
                                 }
                         </style>
 
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check" style="margin-left: 5%;">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -106,7 +106,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="form-group row ">
                             <h3 for="password" class="col-md-4 col-form-label text-md-right"></h3>

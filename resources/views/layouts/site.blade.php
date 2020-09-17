@@ -25,8 +25,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- Theme main style -->
 		<link rel="stylesheet" href="{{ asset('single/style.css') }}">
 	<!-- Scripts -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="{{ asset('js/bootstrap.js') }}" ></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="https://kit.fontawesome.com/6947640373.js" ></script>
 		<script src="https://unpkg.com/tooltip.js" ></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"  crossorigin="anonymous"></script>
@@ -128,16 +128,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 						<div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown" id="navbarDropdownActiv">
 							@if(\App\Employee::where('users_id',(Auth::user()->id))->first() != null and Auth::user()->Type_User == 1)
-							<a  class="dropdown-item fa fa-address-card-o" href="{{ route('/admin') }}">
+							<a  class="dropdown-item fa fa-address-card-o" style="font-size: 15px" href="{{ route('/admin') }}">
 								Админка
 							</a>
 							@endif
 							@if(\App\Customer::where('users_id',(Auth::user()->id))->first() != null)
-							<a  class="dropdown-item fa fa-user-o " href="{{ route('AccountCustomer') }}">
+							<a  class="dropdown-item fa fa-user-o " style="font-size: 15px" href="{{ route('AccountCustomer') }}">
 								Профиль
 							</a>
 							@endif
-							<a class="dropdown-item fa fa-sign-out" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: inline !important;">Выйти</a>
+							<a class="dropdown-item fa fa-sign-out" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: inline !important; font-size: 15px ">Выйти</a>
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 								@csrf
 							</form>

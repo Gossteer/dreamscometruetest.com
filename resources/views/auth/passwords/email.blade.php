@@ -38,6 +38,31 @@
                             </div>
                         </div>
 
+                        
+                        <div class="form-group row">
+                            <h3 for="password" class="col-md-4 col-form-label text-md-right"></h3>
+
+                            <div class="col-md-6">
+                                {!! NoCaptcha::display() !!}
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block">
+                                        <strong class="text-danger" style="font-family: Raleway, sans-serif;">{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <style>
+                            @media screen and (max-height: 575px){
+                                #rc-imageselect, .g-recaptcha {
+                                    transform:scale(0.81);
+                                    -webkit-transform:scale(0.81);
+                                    transform-origin:0 0;
+                                    -webkit-transform-origin:0 0;
+                                }
+                            }
+                        </style>
+
                         <div class="form-group row justify-content-center mb-0">
                                 <button type="submit" style="font-size: 16px; margin: 0 15px" class="col-md-5  btn btn-primary">
                                     Восстановить
@@ -51,3 +76,7 @@
 </div>
     </section>
 @endsection
+
+@push('scripts')
+    {!! NoCaptcha::renderJs() !!}
+@endpush

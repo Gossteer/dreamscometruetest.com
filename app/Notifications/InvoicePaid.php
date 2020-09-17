@@ -50,7 +50,7 @@ class InvoicePaid extends Notification
         return (new MailMessage)
             ->subject(Lang::getFromJson('Восстановление пароля'))
             ->line(Lang::getFromJson('Вы получили это письма, потому что к нам поступил запрос на сброс пароля для вашей учётной записи.'))
-            ->action(Lang::getFromJson('Восстановить пароль'), url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
+            ->action(Lang::getFromJson('Восстановить пароль'), url(route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
             ->line(Lang::getFromJson('Срок действия ссылки истекает через :count минут.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
             ->line(Lang::getFromJson('Если вы не запрашивали сброс пароля, никаких дальнейших действий не требуется.'));
     }

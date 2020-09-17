@@ -76,7 +76,19 @@
                                         <strong class="text-danger" style="font-family: Raleway, sans-serif;">{{ $errors->first('g-recaptcha-response') }}</strong>
                                     </span>
                                 @endif
-                            </div>
+							</div>
+							
+							<style>
+								@media screen and (max-height: 575px){
+									#rc-imageselect, .g-recaptcha {
+										transform:scale(0.81);
+										-webkit-transform:scale(0.81);
+										transform-origin:0 0;
+										-webkit-transform-origin:0 0;
+									}
+								}
+							</style>
+
 							<script>
 								$(function() {
 									$("#phone_number").mask("+7 (999) 999-99-99");
@@ -89,7 +101,7 @@
 					<script>
 						function sayHi() {
 							$('#sendmessage').removeClass("alert alert-success");
-							$('#sendmessage').removeClass("alert alert-success");
+							$('#sendmessage').removeClass("alert alert-danger");
 							$('#sendmessage').text("");
 						}
 
@@ -109,18 +121,18 @@
 											$('#phone_number').val("");
 											$('#message').val("");
 											setTimeout(sayHi, 6200);
-											$('#sendmessage').removeClass("alert alert-success");
+											
 
 										} else if(data['complite'] == 0){
 											$('#sendmessage').addClass("alert alert-danger");
 											$('#sendmessage').text("Пожалуйста подтвердите, что вы не робот!");
 											setTimeout(sayHi, 3200);
-											$('#sendmessage').removeClass("alert alert-danger");
+											
 										}else {
 											$('#sendmessage').addClass("alert alert-danger");
 											$('#sendmessage').text("При отправке сообщения произошла ошибка. Продублируйте его на почту администратору" . env('MAIL_ADMIN_EMAIL'));
 											setTimeout(sayHi, 6200);
-											$('#sendmessage').removeClass("alert alert-danger");
+											
 										}
 									}
 								});
@@ -139,6 +151,7 @@
 				</div>
 			</div>
 	</div>
+
 </section>
 <!-- //Contact -->
 

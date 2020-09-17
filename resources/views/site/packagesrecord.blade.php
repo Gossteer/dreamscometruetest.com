@@ -134,6 +134,16 @@
 							</span>
 						@endif
 					</div>
+
+					<style>
+						@media screen and (max-height: 575px){
+							#rc-imageselect, .g-recaptcha {
+								transform-origin:0 0;
+								-webkit-transform-origin:0 0;
+							}
+						}
+					</style>
+
 				<button type="submit"  class="btn btn-success  col-10 col-sm-6 bypackeg  @if(!$PassengerCompliteRecord) mb-4 @endif" style="color: white; line-height: 28px !important;" name="form1" onclick="if(document.getElementById('finalprice').textContent == ''){alert('Выберете пожалуйста место и способ оплаты или обновите страницу и попробуйте снова!'); return false;}; if(document.getElementById('selecttypeprice').value == 1){if(confirm('С вами свяжется наш оператор для уточнения способа безналичной оплаты.')){return true;}{return false}}{}"  id="pacagesunit">@if($PassengerCompliteRecord) Изменить запись @else Записаться @endif</button>
 					@error('exisattru')
 						<span class="invalid-feedback d-block" style="font-size: 16px;" role="alert">

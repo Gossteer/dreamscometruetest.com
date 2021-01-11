@@ -1,5 +1,6 @@
 <?php
 
+use App\Employee;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -19,5 +20,15 @@ class UserSeeder extends Seeder
         $user->password = bcrypt("123");
         $user->Type_User = 1;
         $user->save();
+
+        $employee = new Employee();
+        $employee->Name = 'User';
+        $employee->Surname = 'Users';
+        $employee->Set_Permission = 1;
+        $employee->Man_brought = 1;
+        $employee->Fired = 1;
+        $employee->users_id = $user->id;
+        $employee->save();
+
     }
 }

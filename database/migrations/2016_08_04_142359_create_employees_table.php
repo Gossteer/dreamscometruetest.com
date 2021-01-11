@@ -40,11 +40,11 @@ class CreateEmployeesTable extends Migration
             $table->foreign('jobs_id')->references('id')
                 ->on('jobs');
             $table->foreign('Passport_date_id')->references('id')
-                ->on('passport_date');
+                ->on('passport_dates');
             $table->foreign('Drivers_lisense_id')->references('id')
-                ->on('drivers_lisense');
+                ->on('drivers_lisenses');
             $table->foreign('Work_Schedule_id')->references('id')
-                ->on('Work_Schedule')->onDelete('SET NULL');
+                ->on('Work_Schedules')->onDelete('SET NULL');
             $table->foreign('users_id')->references('id')
                 ->on('users')->onDelete('SET NULL');
         });

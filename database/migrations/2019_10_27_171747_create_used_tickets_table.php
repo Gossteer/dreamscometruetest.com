@@ -15,16 +15,16 @@ class CreateUsedTicketsTable extends Migration
     {
         Schema::create('used_tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('passengers_id')->unsigned();
-            $table->bigInteger('tickets_id')->unsigned();
+            $table->bigInteger('passengers_id')->unsigned()->onDelete('SET NULL');
+            $table->bigInteger('tickets_id')->unsigned()->onDelete('CASCADE');
             $table->mediumInteger('Amount');
             $table->boolean('Confirmation')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('passengers_id')->references('id')
-                ->on('passengers')->onDelete('SET NULL');
+                ->on('passengers');
             $table->foreign('tickets_id')->references('id')
-                ->on('tickets')->onDelete('CASCADE');
+                ->on('tickets');
             $table->timestamps();
         });
     }

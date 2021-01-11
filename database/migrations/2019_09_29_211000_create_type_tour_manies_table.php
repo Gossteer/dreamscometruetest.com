@@ -15,14 +15,14 @@ class CreateTypeTourManiesTable extends Migration
     {
         Schema::create('type_tour_manies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('type_tours_id')->unsigned();
-            $table->bigInteger('tour_id')->unsigned();
+            $table->bigInteger('type_tours_id')->unsigned()->onDelete('SET NULL');
+            $table->bigInteger('tour_id')->unsigned()->onDelete('SET NULL');
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('tour_id')->references('id')
-            ->on('tours')->onDelete('SET NULL');
+            ->on('tours');
             $table->foreign('type_tours_id')->references('id')
-            ->on('type_tours')->onDelete('SET NULL');
+            ->on('type_tours');
             $table->timestamps();
         });
     }

@@ -15,15 +15,15 @@ class CreatePurchasedAdditionalServicesTable extends Migration
     {
         Schema::create('purchased_additional_services', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('passengers_id')->unsigned();
-            $table->bigInteger('additional_service_id');
+            $table->bigInteger('passengers_id')->unsigned()->onDelete('CASCADE');
+            $table->bigInteger('additional_service_id')->unsigned()->onDelete('CASCADE');
             $table->timestamps();
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('passengers_id')->references('id')
-                ->on('passengers')->onDelete('CASCADE');
+                ->on('passengers');
             $table->foreign('additional_service_id')->references('id')
-                ->on('additional_services')->onDelete('CASCADE');;
+                ->on('additional_services');
         });
     }
 

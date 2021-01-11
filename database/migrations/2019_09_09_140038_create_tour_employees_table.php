@@ -25,7 +25,7 @@ class CreateTourEmployeesTable extends Migration
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('partner_id')->references('id')
-                ->on('partner');
+                ->on('partners');
             $table->foreign('tour_id')->references('id')
                 ->on('tours');
             $table->foreign('employee_id')->references('id')

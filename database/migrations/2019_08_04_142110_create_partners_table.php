@@ -16,14 +16,14 @@ class CreatePartnersTable extends Migration
         Schema::create('partners', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->bigInteger('type_activities_id')->unsigned();
+            $table->bigInteger('type_activities_id')->unsigned()->onDelete('SET NULL');
             $table->string('Name_Partners', 191)->unique();
             $table->string('Conract_Partners', 191)->nullable();
             $table->string('INN', 191)->nullable();
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('type_activities_id')->references('id')
-                ->on('type_activities')->onDelete('SET NULL');
+                ->on('type_activities');
         });
     }
 

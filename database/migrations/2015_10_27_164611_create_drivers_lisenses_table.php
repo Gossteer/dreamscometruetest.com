@@ -18,12 +18,12 @@ class CreateDriversLisensesTable extends Migration
             $table->smallInteger('Driving_License_Series');
             $table->mediumInteger('Driver_License_Id');
             $table->date('Date_Driver_License');
-            $table->bigInteger('driving_license_categories_id')->unsigned();
+            $table->bigInteger('driving_license_categories_id')->unsigned()->onDelete('SET NULL');
             $table->boolean('Confirmation')->default(0);
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('driving_license_categories_id')->references('id')
-                ->on('driving_license_categories')->onDelete('SET NULL');
+                ->on('driving_license_categories');
             $table->timestamps();
         });
     }

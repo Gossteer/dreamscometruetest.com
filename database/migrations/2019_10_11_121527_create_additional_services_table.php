@@ -15,7 +15,7 @@ class CreateAdditionalServicesTable extends Migration
     {
         Schema::create('additional_services', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('tours_id')->unsigned();
+            $table->bigInteger('tours_id')->unsigned()->onDelete('SET NULL');
             $table->string('Name', 191);
             $table->integer('Count')->default(1);
             $table->integer('Price')->nullable();
@@ -23,8 +23,7 @@ class CreateAdditionalServicesTable extends Migration
             $table->timestamps();
             $table->boolean('LogicalDelete')->default(0);
 
-            $table->foreign('tours_id')->references('id')
-                ->on('tours')->onDelete('SET NULL');
+            $table->foreign('tours_id')->references('id')->on('tours');
         });
     }
 

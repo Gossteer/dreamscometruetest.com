@@ -26,8 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('Photo', 191)->default('default');
             $table->tinyInteger('Type_User')->default(-1);
             $table->bigInteger('roles_id')->unsigned()->nullable()->onDelete('SET NULL');
-            $table->foreign('roles_id')->references('id')
-                ->on('roles');
+            $table->foreign('roles_id')->references('id')->on('roles');
             $table->boolean('LogicalDelete')->default(0);
         });
     }

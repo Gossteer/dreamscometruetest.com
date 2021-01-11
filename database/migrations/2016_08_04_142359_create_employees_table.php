@@ -31,10 +31,10 @@ class CreateEmployeesTable extends Migration
             $table->integer('Joint_excursions')->default(0);
             $table->smallInteger('Level')->default(0);
             $table->bigInteger('jobs_id')->unsigned()->nullable();
-            $table->bigInteger('Work_Schedule_id')->unsigned()->nullable();
+            $table->bigInteger('Work_Schedule_id')->unsigned()->nullable()->onDelete('SET NULL');
             $table->bigInteger('passport_date_id')->unsigned()->nullable();
             $table->bigInteger('drivers_lisense_id')->unsigned()->nullable();
-            $table->bigInteger('users_id')->unsigned()->nullable();
+            $table->bigInteger('users_id')->unsigned()->nullable()->onDelete('SET NULL');
             $table->boolean('LogicalDelete')->default(0);
 
             $table->foreign('jobs_id')->references('id')
@@ -44,9 +44,9 @@ class CreateEmployeesTable extends Migration
             $table->foreign('Drivers_lisense_id')->references('id')
                 ->on('drivers_lisenses');
             $table->foreign('Work_Schedule_id')->references('id')
-                ->on('Work_Schedules')->onDelete('SET NULL');
+                ->on('Work_Schedules');
             $table->foreign('users_id')->references('id')
-                ->on('users')->onDelete('SET NULL');
+                ->on('users');
         });
     }
 

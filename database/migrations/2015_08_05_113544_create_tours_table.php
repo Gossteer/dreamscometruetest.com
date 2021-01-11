@@ -40,7 +40,6 @@ class CreateToursTable extends Migration
             $table->mediumInteger('Occupied_Place')->default(0);
             $table->tinyInteger('Confirmation_Tours')->default(0);
             $table->boolean('LogicalDelete')->default(0);
-
             $table->foreign('albums_id')->references('id')
                 ->on('albums')->onDelete('SET NULL');
 

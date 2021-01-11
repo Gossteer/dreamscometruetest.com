@@ -44,7 +44,7 @@ class CreateEmployeesTable extends Migration
             $table->foreign('Drivers_lisense_id')->references('id')
                 ->on('drivers_lisenses');
             $table->foreign('Work_Schedule_id')->references('id')
-                ->on('work_Schedules');
+                ->on('work_schedules');
             $table->foreign('users_id')->references('id')
                 ->on('users');
         });
